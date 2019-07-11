@@ -1,0 +1,61 @@
+require_relative 'boot'
+
+require "rails"
+# Pick the frameworks you want:
+require "active_model/railtie"
+require "active_job/railtie"
+require "active_record/railtie"
+require "active_storage/engine"
+require "action_controller/railtie"
+require "action_mailer/railtie"
+require "action_mailbox/engine"
+require "action_text/engine"
+require "action_view/railtie"
+require "action_cable/engine"
+
+# Require the gems listed in Gemfile, including any gems
+# you've limited to :test, :development, or :production.
+Bundler.require(*Rails.groups)
+
+module LifeWork
+  class Application < Rails::Application
+    # Initialize configuration defaults for originally generated Rails version.
+    config.load_defaults 6.0
+
+    # Settings in config/environments/* take precedence over those specified here.
+    # Application configuration can go into files in config/initializers
+    # -- all .rb files in that directory are automatically loaded after loading
+    # the framework and any gems in your application.
+
+    # Disable Rails 5.2 default forgery protection, which is by default by the
+    # :exception method, rather than :reset_session, which is what we want
+    config.action_controller.default_protect_from_forgery = false
+
+    config.action_dispatch.rescue_responses.merge!(
+      'AuthenticatedController::Forbidden' => :forbidden,
+      'ApplicationController::Unauthorized' => :unauthorized,
+    )
+
+    config.generators do |g|
+      g.helper         false
+      g.stylesheets    false
+      g.javascripts    false
+      g.system_tests   false
+      g.test_framework :rspec, controller_specs: false
+    end
+
+    config.lograge.enabled = true
+    config.lograge.custom_payload do |controller|
+      payload = {}
+      user = controller.current_user.try(:id)
+      payload[:user] = user if user.present?
+      payload
+    end
+    config.lograge.custom_options = lambda do |event|
+      exceptions = %w[_method action applet authenticity_token base city code commit controller format geo id mode path state utf8]
+      params = event.payload[:params].except(*exceptions)
+      # gsub is to use less-verbose new hash syntax
+      params.present? ? { params: params.deep_symbolize_keys.to_s.gsub(/(:(\w+)\s?=>\s?)/, '\\2: ') } : nil
+    end
+  end
+end
