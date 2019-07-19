@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/rails/rails.git
-  revision: 1f41f2ac6dc659be9aabcd4cc096b31aa150eb2b
+  revision: 3d2bdc1149ce7734ad03d2f39dae4838bfa7d956
   branch: 6-0-stable
   specs:
     actioncable (6.0.0.rc1)
@@ -92,7 +92,7 @@ GIT
 
 GIT
   remote: https://github.com/rails/webpacker.git
-  revision: 5d5b3b867d35b376f3fa2af7c9cee3bfdf6f0f7c
+  revision: 2c2b9ffc055d13242b0ae60807609cc382bb0337
   specs:
     webpacker (4.0.7)
       activesupport (>= 4.2)
@@ -112,7 +112,7 @@ GEM
   specs:
     ast (2.4.0)
     awesome_print (1.8.0)
-    bindex (0.7.0)
+    bindex (0.8.1)
     brakeman (4.5.1)
     builder (3.2.3)
     bullet (6.0.1)
@@ -129,7 +129,7 @@ GEM
       eventmachine
     erubi (1.8.0)
     eventmachine (1.0.9.1)
-    facter (2.5.1)
+    facter (2.5.5)
     ffi (1.11.1)
     formatador (0.2.5)
     gindex (0.1.2)
@@ -264,7 +264,7 @@ GEM
       rspec-mocks (~> 3.8.0)
       rspec-support (~> 3.8.0)
     rspec-support (3.8.2)
-    rubocop (0.72.0)
+    rubocop (0.73.0)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
       parser (>= 2.6)
@@ -292,7 +292,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    strong_migrations (0.4.0)
+    strong_migrations (0.4.1)
       activerecord (>= 5)
     systemu (2.6.5)
     temple (0.8.1)
@@ -313,7 +313,7 @@ GEM
     websocket-driver (0.7.1)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.4)
-    zeitwerk (2.1.8)
+    zeitwerk (2.1.9)
 
 PLATFORMS
   ruby
