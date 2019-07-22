@@ -12,4 +12,11 @@ html lang="en"
 
 
   body
-    = yield
+    .navbar.navbar-light.bg-white
+      .container
+        a.navbar-brand href='/'
+          = image_pack_tag 'lifework-logo.png'
+    .container-fluid
+      h2.card-header.text-center= yield :card_title
+      = yield
+      .text-right.nobr= render 'devise/shared/links'

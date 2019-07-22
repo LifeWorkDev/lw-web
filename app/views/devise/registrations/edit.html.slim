@@ -1,0 +1,31 @@
+- title = t('devise_forms.registrations.edit.title')
+- content_for :title, title
+- content_for :card_title, title
+
+.row
+  .col
+    .signup-form
+      = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
+        .row.form-group
+          label.col-sm-4.col-form-label.text-sm-right.devise for='inputName1'
+            = t('devise_forms.user.name')
+          .col-sm-8
+            = f.text_field :name, class: 'form-control form-control',
+                                    id: 'inputName1',
+                                    placeholder: t('devise_forms.user.name_placeholder'),
+                                    required: true,
+                                    autocomplete: 'name'
+
+        .row.form-group
+          label.col-sm-4.col-form-label.text-sm-right.devise for='inputEmail1'
+            = t('devise_forms.user.email')
+          .col-sm-8
+            = f.email_field :email, class: 'form-control form-control',
+                                    id: 'inputEmail1',
+                                    placeholder: t('devise_forms.user.email_placeholder'),
+                                    autofocus: true,
+                                    required: true
+
+        .row.form-group
+          .offset-sm-4.col-sm-8
+            = f.submit t('devise_forms.registrations.edit.button'), class: 'btn btn-outline-primary'

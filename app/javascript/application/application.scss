@@ -1,3 +1,6 @@
+@import '~bootstrap/scss/_functions.scss';
+@import '~bootstrap/scss/_variables.scss';
+
 $blue: #3b9de3;
 
 $font-family-serif: adobe-garamond-pro, Georgia, serif;
@@ -18,9 +21,16 @@ $btn-padding-x: 2rem;
 $headings-color: #383a3d;
 $headings-font-weight: 600;
 
+$input-bg: $body-bg;
 $input-border-radius: 0;
 $input-border-radius-lg: $input-border-radius;
 $input-border-radius-sm: $input-border-radius;
+$input-focus-bg: white;
+$input-focus-border-color: none;
+$input-focus-box-shadow: none;
+$input-font-family: $font-family-sans-serif;
+$input-padding-x: 12px;
+$input-padding-y: $input-padding-x;
 
 @import '~bootstrap/scss/bootstrap.scss';
 
@@ -28,4 +38,8 @@ $input-border-radius-sm: $input-border-radius;
   font-family: $font-family-sans-serif;
   letter-spacing: 0.2rem;
   text-transform: uppercase;
+}
+
+.navbar-brand img {
+  max-width: 160px;
 }

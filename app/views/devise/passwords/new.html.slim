@@ -1,0 +1,18 @@
+- title = t('devise_forms.passwords.new.title')
+- content_for :title, title
+- content_for :card_title, title
+
+= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
+  .row.form-group
+    label.col-sm-4.col-form-label.text-sm-right.devise for='inputEmail1'
+      = t('devise_forms.user.email')
+    .col-sm-8
+      = f.email_field :email, class: 'form-control form-control',
+                                    id: 'inputEmail1',
+                                    value: params[:email],
+                                    placeholder: t('devise_forms.user.email_placeholder'),
+                                    autofocus: true,
+                                    required: true
+  .row.form-group
+    .offset-sm-4.col-sm-8
+      = f.submit t('devise_forms.passwords.new.button'), class: 'btn btn-primary'

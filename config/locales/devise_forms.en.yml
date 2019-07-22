@@ -1,0 +1,55 @@
+en:
+  devise_forms:
+    sessions:
+      new:
+        title: "Log in"
+        button: "Log in"
+        link: "Log in"
+    passwords:
+      new:
+        title: "Set a new password"
+        button: "Send me password reset instructions"
+        link: "Forgot your password?"
+      edit:
+        title: "Change your password"
+        button: "Change my password"
+    confirmations:
+      new:
+        title: "Confirm my email"
+        button: "Re-send confirmation instructions"
+        link: "Need to confirm your email?"
+    unlocks:
+      new:
+        title: "Resend unlock instructions"
+        button: "Resend unlock instructions"
+        link: "Need to unlock your account?"
+    registrations:
+      new:
+        title: "Sign up"
+        button: "Sign up"
+        link: "Sign up"
+      edit:
+        title: "Finish setting up your account"
+        button: "Sign up"
+      cancel:
+        title: "Cancel my account"
+        lead: "Unhappy?"
+        button: "Cancel my account"
+    user:
+      name: "Name"
+      name_placeholder: 'Full Name (required)'
+      email: "Email"
+      email_placeholder: 'name@example.com (required)'
+      password: "Password"
+      password_placeholder: 'password'
+      new_password: "New password"
+      new_password_placeholder: "new password"
+      password_confirm: "Password confirmation"
+      password_confirm_placeholder: "re-enter same password"
+      current_password: "Current password"
+      remember_me: "Remember me"
+    message:
+      waiting_confirmation: "Currently waiting confirmation for: %{email}"
+      blank_if_no_change: "(leave blank if you don't want to change it)"
+      need_password_to_change: "(we need your current password to confirm your changes)"
+      minimum_password_length: "(%{min_len} characters minimum)"

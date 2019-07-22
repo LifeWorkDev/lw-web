@@ -1,0 +1,48 @@
+.row
+  .col
+    .signup-form.w-75.mt-4
+      = form_for(resource, as: resource_name, url: resource.invitation_token ? invitation_path(resource_name) : registration_path(resource_name)) do |f|
+        = f.hidden_field :invitation_token
+        .row.form-group
+          label.col-sm-4.col-form-label.text-sm-right.devise for='inputName1'
+            = t('devise_forms.user.name')
+          .col-sm-8
+            = f.text_field :name, class: 'form-control form-control',
+                                    id: 'inputName1',
+                                    placeholder: t('devise_forms.user.name_placeholder'),
+                                    autofocus: true,
+                                    required: true,
+                                    autocomplete: 'name'
+
+        .row.form-group
+          label.col-sm-4.col-form-label.text-sm-right.devise for='inputEmail1'
+            = t('devise_forms.user.email')
+          .col-sm-8
+            = f.email_field :email, class: 'form-control form-control',
+                                    id: 'inputEmail1',
+                                    placeholder: t('devise_forms.user.email_placeholder'),
+                                    required: true,
+                                    value: resource.email || params.dig(:user, :email),
+                                    autocomplete: 'email'
+
+        .row.form-group
+          label.col-sm-4.col-form-label.text-sm-right.devise for='inputPassword1'
+            = t('devise_forms.user.password')
+          .col-sm-8
+            = f.password_field :password, class: 'form-control form-control',
+                                          id: 'inputPassword1',
+                                          placeholder: t('devise_forms.message.minimum_password_length', min_len: @minimum_password_length),
+                                          autocomplete: 'new-password',
+                                          value: params.dig(:user, :password),
+                                          required: true
+
+
+        .row.form-group
+          .offset-sm-4.col-sm-8
+            = f.submit t('devise_forms.registrations.new.button'), class: 'btn btn-primary'
+.row.mt-3
+  .col
+    p.mb-0.text-center
+      small.text-muted
+        | By signing up, you are agreeing to our
+         <a href="/legal/terms-of-use">Terms of Use</a>

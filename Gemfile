@@ -4,6 +4,9 @@ ruby "~> #{`cat .ruby-version`.strip}"
 
 gem 'rails', github: 'rails/rails', branch: '6-0-stable'
 
+gem 'argon2' # More secure password hashing than default bcrypt
+gem 'devise', github: 'plataformatec/devise', branch: 'master'
+gem 'devise_invitable'
 gem 'lograge' # one-line logs
 gem 'money-rails'
 gem 'nilify_blanks', github: 'swrobel/nilify_blanks'

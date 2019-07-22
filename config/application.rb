@@ -36,6 +36,8 @@ module LifeWork
       'ApplicationController::Unauthorized' => :unauthorized,
     )
 
+    config.active_record.schema_format = :sql
+
     config.generators do |g|
       g.helper         false
       g.stylesheets    false
