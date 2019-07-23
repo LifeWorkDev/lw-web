@@ -1,0 +1,84 @@
+# frozen_string_literal: true
+
+directories %w[app config db lib spec]
+
+guard :shell do
+  # Restart puma
+  watch(%r{config/(.ruby-version|Gemfile.lock|application|environment|puma)\.rb|config/(environments/development.rb|initializers/.*\.rb)}) do |m|
+    n 'Restarting server...', "#{m[0]} changed", :pending
+
+    # https://github.com/rails/rails/blob/master/railties/lib/rails/tasks/restart.rake
+    FileUtils.mkdir_p 'tmp'
+    FileUtils.touch 'tmp/restart.txt'
+    FileUtils.rm_f 'tmp/pids/server.pid'
+    nil
+  end
+
+  # Run yarn
+  watch('config/package.json') do |m|
+    p "#{m[0]} has changed."
+    `bin/yarn`
+  end
+
+  # Run bundler
+  watch('config/Gemfile') do |m|
+    p "#{m[0]} has changed."
+    ::Bundler.with_clean_env do
+      system('bin/bundle --without production')
+    end
+  end
+end
+
+guard :rubocop, all_on_start: true, cli: ['--auto-correct'] do
+  watch(/.+\.(rb|rake)$/)
+  watch('config/Envfile')
+  watch('config/Gemfile')
+  watch(%r{(?:.+/)?\.?rubocop(?:_todo)?\.yml$}) { '.' }
+end
+
+guard :rspec, cmd: 'bin/rspec' do
+  require 'guard/rspec/dsl'
+  dsl = Guard::RSpec::Dsl.new(self)
+
+  # RSpec files
+  rspec = dsl.rspec
+  watch(rspec.spec_files)
+
+  # Ruby files
+  ruby = dsl.ruby
+  dsl.watch_spec_files_for(ruby.lib_files)
+
+  # Rails files
+  rails = dsl.rails(view_extensions: %w[erb haml slim])
+  dsl.watch_spec_files_for(rails.app_files)
+  dsl.watch_spec_files_for(rails.views)
+
+  watch(rails.controllers) do |m|
+    [
+      rspec.spec.call("routing/#{m[1]}_routing"),
+      rspec.spec.call("requests/#{m[1]}_controller"),
+      rspec.spec.call("acceptance/#{m[1]}")
+    ]
+  end
+
+  # Rails config changes
+  watch(rails.routes)          { "#{rspec.spec_dir}/routing" }
+  watch(rails.app_controller)  { "#{rspec.spec_dir}/requests" }
+
+  # Capybara features specs
+  watch(rails.view_dirs)     { |m| rspec.spec.call("features/#{m[1]}") }
+  watch(rails.layouts)       { |m| rspec.spec.call("features/#{m[1]}") }
+
+  # Rails system specs
+  watch(rails.view_dirs)     { |m| rspec.spec.call("system/#{m[1]}") }
+  watch(rails.layouts)       { |m| rspec.spec.call("system/#{m[1]}") }
+
+  # Fabricators
+  watch(%r{^spec/fabricators/(.+)_fabricator\.rb$}) { |m| "spec/models/#{m[1]}_spec.rb" }
+
+  # Concerns
+  watch(%r{^app/models/concerns/(.+)/.*\.rb$}) { |m| "spec/models/#{m[1].singularize}_spec.rb" }
+
+  # Subclasses
+  watch(%r{^app/models/(.+)/.*\.rb$}) { |m| "spec/models/#{m[1].singularize}_spec.rb" }
+end

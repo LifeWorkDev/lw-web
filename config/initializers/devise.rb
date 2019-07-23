@@ -18,7 +18,7 @@ Devise.setup do |config|
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = "LifeWork <help@lifeworkonline.com>"
+  config.mailer_sender = 'LifeWork <help@lifeworkonline.com>'
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
@@ -117,10 +117,10 @@ Devise.setup do |config|
   # config.pepper = '1709621b51f9f9974b30c7c3aff9f06bf9aac51d47766aa21047da961befc0927e300e02c1e02cea6b2d1888b6605193e4724ebaa7fabc8321b39dbb805558c9'
 
   # Send a notification to the original email when the user's email is changed.
-  # config.send_email_changed_notification = false
+  config.send_email_changed_notification = false
 
   # Send a notification email when the user's password is changed.
-  # config.send_password_change_notification = false
+  config.send_password_change_notification = false
 
   # ==> Configuration for :invitable
   # The period the generated invitation token is valid.

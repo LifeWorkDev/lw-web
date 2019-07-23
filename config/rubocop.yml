@@ -1,0 +1,165 @@
+require:
+  - rubocop-performance
+  - rubocop-rails
+  - rubocop-rspec
+
+Rails:
+  Enabled: true
+
+AllCops:
+  DisplayCopNames: true
+  DisplayStyleGuide: true
+  Exclude:
+    - bin/**/*
+    - node_modules/**/*
+    - tmp/**/*
+    - vendor/**/*
+  ExtraDetails: true
+  TargetRailsVersion: 5.2
+  TargetRubyVersion: 2.5
+
+Layout/AccessModifierIndentation:
+  Enabled: false
+
+Lint/AmbiguousBlockAssociation:
+  Exclude:
+    - spec/**/*
+
+Lint/EmptyWhen:
+  Enabled: false
+
+Lint/HandleExceptions:
+  Exclude:
+    - spec/**/*
+
+Lint/UselessAssignment:
+  Exclude:
+    - db/seeds/**/*
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - config/**/*
+    - db/**/*
+    - '**/*file'
+    - '**/*.rake'
+    - spec/*_helper.rb
+    - lib/data_integration/capta/import.rb
+  ExcludedMethods:
+    [
+      'aasm',
+      'context',
+      'describe',
+      'included',
+      'it',
+      'DoubleEntry.lock_accounts',
+      'transaction',
+    ]
+
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+Metrics/LineLength:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
+
+Metrics/ParameterLists:
+  Enabled: false
+
+Metrics/PerceivedComplexity:
+  Enabled: false
+
+Naming/AccessorMethodName:
+  Enabled: false
+
+Naming/FileName:
+  Exclude:
+    - '**/*file'
+
+Naming/VariableNumber:
+  EnforcedStyle: snake_case
+
+Rails/CreateTableWithTimestamps:
+  Exclude:
+    - db/migrate/*pghero*
+    - db/migrate/*hierarchies*
+
+Rails/DynamicFindBy:
+  Whitelist:
+    - find_by_invitation_token
+    - find_by_email
+  Exclude:
+    - spec/system/**/*
+
+Rails/LexicallyScopedActionFilter:
+  Enabled: false
+
+Rails/OutputSafety:
+  Exclude:
+    - app/helpers/devise_bootstrap_helper.rb
+
+Rails/SkipsModelValidations:
+  Exclude:
+    - db/**/*
+
+RSpec/DescribeClass:
+  Enabled: false
+
+RSpec/DescribedClass:
+  EnforcedStyle: explicit
+
+RSpec/EmptyExampleGroup:
+  Enabled: false
+
+RSpec/ExampleLength:
+  Enabled: false
+
+RSpec/ExpectChange:
+  EnforcedStyle: block
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+RSpec/NestedGroups:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/Encoding:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/MixinUsage:
+  Exclude:
+    - db/seeds/**/*
+
+Style/NumericLiterals:
+  Enabled: false
+
+Style/NumericPredicate:
+  Enabled: false
+
+Style/TrailingCommaInArrayLiteral:
+  Enabled: false
+
+Style/TrailingCommaInHashLiteral:
+  Enabled: false
+
+Style/TrailingCommaInArguments:
+  Enabled: false
+
+Style/RescueModifier:
+  Enabled: false

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   as :user do
     get 'login', to: 'devise/sessions#new', as: :new_user_session
