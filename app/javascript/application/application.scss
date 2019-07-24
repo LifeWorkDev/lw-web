@@ -26,11 +26,13 @@ $input-border-radius: 0;
 $input-border-radius-lg: $input-border-radius;
 $input-border-radius-sm: $input-border-radius;
 $input-focus-bg: white;
-$input-focus-border-color: none;
+$input-focus-border-color: $gray-600;
 $input-focus-box-shadow: none;
 $input-font-family: $font-family-sans-serif;
 $input-padding-x: 12px;
 $input-padding-y: $input-padding-x;
+
+$list-group-border-radius: none;
 
 @import '~bootstrap/scss/bootstrap.scss';
 
@@ -38,6 +40,58 @@ $input-padding-y: $input-padding-x;
   font-family: $font-family-sans-serif;
   letter-spacing: 0.2rem;
   text-transform: uppercase;
+}
+
+.list-group-item {
+  user-select: none;
+}
+
+.list-group input[type="checkbox"] {
+  display: none;
+}
+
+.list-group input[type="checkbox"] + .list-group-item {
+  cursor: pointer;
+}
+
+.list-group input[type="checkbox"] + .list-group-item:before {
+  content: "\2713";
+  color: transparent;
+  font-weight: bold;
+  margin-right: 1em;
+}
+
+.list-group input[type="checkbox"]:checked + .list-group-item {
+  background-color: #0275D8;
+  color: #FFF;
+}
+
+.list-group input[type="checkbox"]:checked + .list-group-item:before {
+  color: inherit;
+}
+
+.list-group input[type="radio"] {
+  display: none;
+}
+
+.list-group input[type="radio"] + .list-group-item {
+  cursor: pointer;
+}
+
+.list-group input[type="radio"] + .list-group-item:before {
+  content: "\25C9";
+  color: transparent;
+  font-weight: bold;
+  margin-right: 1em;
+}
+
+.list-group input[type="radio"]:checked + .list-group-item {
+  background-color: #0275D8;
+  color: #FFF;
+}
+
+.list-group input[type="radio"]:checked + .list-group-item:before {
+  color: inherit;
 }
 
 .navbar-brand img {

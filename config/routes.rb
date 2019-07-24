@@ -10,9 +10,10 @@ Rails.application.routes.draw do
   end
   devise_for :users, skip: [:sessions]
   namespace :users do
-    get ':id/impersonate' => 'impersonations#impersonate'
-    get 'stop_impersonating' => 'impersonations#stop_impersonating'
+    get ':id/impersonate', to: 'impersonations#impersonate'
+    get 'stop_impersonating', to: 'impersonations#stop_impersonating'
   end
 
-  root to: 'application#home'
+  get 'about_you', to: 'application#about_you'
+  get 'new_client', to: 'application#new_client'
 end

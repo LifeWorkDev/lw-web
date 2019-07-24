@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
-  def home; end
+  def about_you; end
+
+  def new_client; end
 end

@@ -1,0 +1,24 @@
+- content_for :card_title
+  | Welcome, Stefan!
+  br
+  | Tell us a little about you
+
+.container.mt-4
+  .list-group
+    .list-group-item
+      strong What kinds of freelance work do you do?
+    = check_box_tag 'test1'
+    label.list-group-item for='test1' Web, Mobile & Software Dev
+    = check_box_tag 'test2'
+    label.list-group-item for='test2' IT & Networking
+    = check_box_tag 'test3'
+    label.list-group-item for='test3' Data Science & Analytics
+    .list-group-item
+      strong What type of freelancer are you?
+    = radio_button_tag 'test', '4'
+    label.list-group-item for='test_4' Team Leader
+    = radio_button_tag 'test', '5'
+    label.list-group-item for='test_5' Part-Time
+    = radio_button_tag 'test', '6'
+    label.list-group-item for='test_6' Full-Time
+    
