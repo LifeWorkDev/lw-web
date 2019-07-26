@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
+require 'guard/rspec/dsl'
+
 directories %w[app config db lib spec]
+dsl = Guard::RSpec::Dsl.new(self)
 
 guard :shell do
   # Restart puma
@@ -27,6 +30,12 @@ guard :shell do
       system('bin/bundle --without production')
     end
   end
+
+  # Trigger webpack-dev-server refresh when views change
+  watch(dsl.rails(view_extensions: %w[erb haml slim]).views) do |m|
+    p "#{m[0]} has changed. Reloading."
+    `touch app/javascript/packs/application.js`
+  end
 end
 
 guard :rubocop, all_on_start: true, cli: ['--auto-correct'] do
@@ -37,9 +46,6 @@ guard :rubocop, all_on_start: true, cli: ['--auto-correct'] do
 end
 
 guard :rspec, cmd: 'bin/rspec' do
-  require 'guard/rspec/dsl'
-  dsl = Guard::RSpec::Dsl.new(self)
-
   # RSpec files
   rspec = dsl.rspec
   watch(rspec.spec_files)
