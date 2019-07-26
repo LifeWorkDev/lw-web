@@ -1,33 +1,29 @@
 # frozen_string_literal: true
 
 require 'guard/rspec/dsl'
+dsl = Guard::RSpec::Dsl.new(self)
 
 directories %w[app config db lib spec]
-dsl = Guard::RSpec::Dsl.new(self)
 
 guard :shell do
   # Restart puma
-  watch(%r{config/(.ruby-version|Gemfile.lock|application|environment|puma)\.rb|config/(environments/development.rb|initializers/.*\.rb)}) do |m|
-    n 'Restarting server...', "#{m[0]} changed", :pending
-
-    # https://github.com/rails/rails/blob/master/railties/lib/rails/tasks/restart.rake
+  watch(%r{config/((.ruby-version|Gemfile.lock)|(application|environment|puma)\.rb|(environments/development.rb|initializers/.*\.rb))}) do |m|
+    n "#{m[0]} changed, restarting server..."
+    # Copied from https://github.com/rails/rails/blob/master/railties/lib/rails/tasks/restart.rake
     FileUtils.mkdir_p 'tmp'
     FileUtils.touch 'tmp/restart.txt'
-    FileUtils.rm_f 'tmp/pids/server.pid'
     nil
   end
 
   # Run yarn
-  watch('config/package.json') do |m|
-    p "#{m[0]} has changed."
+  watch('config/package.json') do
     `bin/yarn`
   end
 
   # Run bundler
-  watch('config/Gemfile') do |m|
-    p "#{m[0]} has changed."
+  watch('config/Gemfile') do
     ::Bundler.with_clean_env do
-      system('bin/bundle --without production')
+      `bin/bundle --without production`
     end
   end
 
