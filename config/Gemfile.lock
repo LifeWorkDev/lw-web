@@ -111,6 +111,13 @@ GIT
       activesupport (>= 3.0.0)
 
 GIT
+  remote: https://github.com/swrobel/rack-toolbar.git
+  revision: 05d845241a808801894fb110a609d44e187a093b
+  branch: only-error-pages
+  specs:
+    rack-toolbar (0.1.4)
+
+GIT
   remote: https://github.com/swrobel/webpacker.git
   revision: 99e9827273e9471acdf7d32a1b6ee708b58ef7f8
   specs:
