@@ -1,0 +1,1 @@
+invoker start --certificate=config/ssl/lifework.test+4.pem --private-key=config/ssl/lifework.test+4-key.pem
