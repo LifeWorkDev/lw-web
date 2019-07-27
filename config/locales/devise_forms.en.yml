@@ -37,9 +37,9 @@ en:
         button: "Cancel my account"
     user:
       name: "Name"
-      name_placeholder: 'Full Name (required)'
+      name_placeholder: 'Full Name'
       email: "Email"
-      email_placeholder: 'name@example.com (required)'
+      email_placeholder: 'name@example.com'
       password: "Password"
       password_placeholder: 'password'
       new_password: "New password"

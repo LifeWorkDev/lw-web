@@ -1,6 +1,3 @@
-@import '~bootstrap/scss/_functions.scss';
-@import '~bootstrap/scss/_variables.scss';
-
 $blue: #3b9de3;
 
 $font-family-serif: adobe-garamond-pro, Georgia, serif;
@@ -26,20 +23,50 @@ $input-border-radius: 0;
 $input-border-radius-lg: $input-border-radius;
 $input-border-radius-sm: $input-border-radius;
 $input-focus-bg: white;
-$input-focus-border-color: $gray-600;
 $input-focus-box-shadow: none;
-$input-font-family: $font-family-sans-serif;
-$input-padding-x: 12px;
-$input-padding-y: $input-padding-x;
+$input-padding-y: 0.5rem;
 
 $list-group-border-radius: none;
 
-@import '~bootstrap/scss/bootstrap.scss';
+// Vars referencing existing bootstrap vars must
+// go in this block and have the !global flag
+// https://stackoverflow.com/a/38225564/337446
+%scope {
+  @import '~bootstrap/scss/functions';
+  @import '~bootstrap/scss/variables';
+
+  $input-focus-border-color: $gray-600 !global;
+  $input-font-family: $font-family-sans-serif !global;
+  $input-border-color: $gray-500 !global;
+  $input-placeholder-color: $gray-500 !global;
+}
+
+@import '~bootstrap/scss/bootstrap';
 
 .btn {
   font-family: $font-family-sans-serif;
   letter-spacing: 0.2rem;
   text-transform: uppercase;
+}
+
+@include media-breakpoint-down(xs) {
+  form {
+    .btn {
+      width: 100%;
+    }
+  }
+}
+
+.form-group {
+  label {
+    font-weight: 600;
+  }
+
+  label:not(.required):after {
+    content:" (optional)";
+    font-size: 85%;
+    font-style: italic;
+  }
 }
 
 .list-group-item {

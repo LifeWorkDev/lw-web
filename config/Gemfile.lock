@@ -137,6 +137,9 @@ GEM
     awesome_print (1.8.0)
     bcrypt (3.1.13)
     bindex (0.8.1)
+    bootstrap_form (4.2.0)
+      actionpack (>= 5.0)
+      activemodel (>= 5.0)
     brakeman (4.6.1)
     builder (3.2.3)
     bullet (6.0.1)
@@ -366,6 +369,7 @@ PLATFORMS
 DEPENDENCIES
   argon2
   awesome_print
+  bootstrap_form
   brakeman
   bullet
   byebug
