@@ -378,6 +378,7 @@ DEPENDENCIES
   pg (>= 0.18, < 2.0)
   pgreset
   puma (~> 3.11)
+  rack-toolbar!
   rails!
   referral
   route_downcaser

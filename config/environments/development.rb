@@ -59,4 +59,10 @@ Rails.application.configure do
   config.hosts << 'lifework.test'
 
   config.force_ssl = true
+
+  dev_server = Webpacker.config.dev_server
+  config.middleware.insert_before ActionDispatch::ShowExceptions, Rack::Toolbar,
+                                  snippet: "<script src='#{'http' + (dev_server[:https] && 's')}://#{dev_server[:host]}:#{dev_server[:port]}/webpack-dev-server.js'></script>",
+                                  insertion_point: '</head>',
+                                  insertion_method: :before
 end
