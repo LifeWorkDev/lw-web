@@ -4,37 +4,28 @@
 
 .row
   .col
-    = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
-      .row.form-group
-        label.col-sm-4.col-form-label.text-sm-right.devise for='inputEmail1'
-          = t('devise_forms.user.email')
-        .col-sm-8
-          = f.email_field :email, class: 'form-control form-control',
-                                  id: 'inputEmail1',
-                                  value: params.dig(:user, :email),
-                                  placeholder: t('devise_forms.user.email_placeholder'),
-                                  autofocus: true,
-                                  required: true,
-                                  autocomplete: 'email'
-
-      .row.form-group
-        label.col-sm-4.col-form-label.text-sm-right.devise for='inputPassword1'
-          = t('devise_forms.user.password')
-        .col-sm-8
-          = f.password_field :password, class: 'form-control form-control',
-                                        id: 'inputPassword1',
-                                        placeholder: t('devise_forms.message.minimum_password_length', min_len: resource_class.password_length.min),
-                                        autocomplete: 'current-password',
-                                        required: true
+    = bootstrap_form_with(as: resource_name, layout: :horizontal, local: true, model: resource, url: session_path(resource_name)) do |f|
+      = devise_bootstrap_error_messages!
+      
+      = f.email_field :email,
+                      autocomplete: 'email',
+                      label: t('devise_forms.user.email'),
+                      placeholder: t('devise_forms.user.email_placeholder'),
+                      required: true,
+                      value: params.dig(:user, :email)
+                      
+      = f.password_field :password,
+                         autocomplete: 'current-password',
+                         label: t('devise_forms.user.password'),
+                         placeholder: t('devise_forms.message.minimum_password_length', min_len: resource_class.password_length.min),
+                         required: true,
+                         value: params.dig(:user, :password)
 
       - if devise_mapping.rememberable?
         .row.form-group
-          .offset-sm-4.col-sm-8
-            .form-check
-              = f.check_box :remember_me, class: 'form-check-input', checked: true
-              label.devise.normal.form-check-label for='user_remember_me'
-                = t('devise_forms.user.remember_me')
+          .col.offset-sm-2.col-sm-10
+            = f.check_box :remember_me, checked: true, label: t('devise_forms.user.remember_me')
 
       .row.form-group
-        .offset-sm-4.col-sm-8
-          = f.submit t('devise_forms.sessions.new.button'), class: 'btn btn-primary'
+        .col.offset-sm-2.col-sm-10
+          = f.primary t('devise_forms.sessions.new.button')

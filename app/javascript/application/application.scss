@@ -62,7 +62,7 @@ $list-group-border-radius: none;
     font-weight: 600;
   }
 
-  label:not(.required):after {
+  label:not(.required):not(.form-check-label):after {
     content:" (optional)";
     font-size: 85%;
     font-style: italic;
