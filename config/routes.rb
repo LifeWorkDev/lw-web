@@ -17,4 +17,5 @@ Rails.application.routes.draw do
 
   get 'about_you', to: 'application#about_you'
   get 'new_client', to: 'application#new_client'
+  get 'styleguide', to: 'application#styleguide'
 end
