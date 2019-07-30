@@ -162,6 +162,7 @@ GEM
     facter (2.5.5)
     facter (2.5.5-universal-darwin)
       CFPropertyList (~> 2.2)
+    fast_blank (1.0.0)
     ffi (1.11.1)
     ffi-compiler (1.0.1)
       ffi (>= 1.0.0)
@@ -375,6 +376,7 @@ DEPENDENCIES
   byebug
   devise!
   devise_invitable
+  fast_blank
   gindex
   guard
   guard-rspec

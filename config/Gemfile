@@ -10,6 +10,7 @@ gem 'argon2' # More secure password hashing than default bcrypt
 gem 'bootstrap_form'
 gem 'devise', github: 'plataformatec/devise', branch: 'master'
 gem 'devise_invitable'
+gem 'fast_blank' # Much faster version of #blank?
 gem 'lograge' # one-line logs
 gem 'money-rails'
 gem 'nilify_blanks', github: 'swrobel/nilify_blanks'
