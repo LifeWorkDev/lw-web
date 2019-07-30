@@ -6,6 +6,7 @@ ruby "~> #{`cat .ruby-version`.strip}"
 
 gem 'rails', github: 'rails/rails', branch: '6-0-stable'
 
+gem 'aasm' # Acts as State Machine
 gem 'argon2' # More secure password hashing than default bcrypt
 gem 'bootstrap_form'
 gem 'devise', github: 'plataformatec/devise', branch: 'master'
