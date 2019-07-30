@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # https://ankane.org/devise-argon2
 
 module Argon2Encryptor

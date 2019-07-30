@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class PgExtensions < ActiveRecord::Migration[5.2]
   def change
     %w[citext fuzzystrmatch pgcrypto plpgsql pg_stat_statements].each do |ext|
