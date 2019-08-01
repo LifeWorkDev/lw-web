@@ -1,20 +1,17 @@
 - content_for :title, t('devise_forms.registrations.edit.title')
 
-.row
-  .col
-    .signup-form
-    = bootstrap_form_with(as: resource_name, layout: :horizontal, local: true, model: resource, url: registration_path(resource_name)) do |f|
-      = f.text_field :name,
-                     autocomplete: 'name',
-                     autofocus: true,
-                     label: t('devise_forms.user.name'),
-                     placeholder: t('devise_forms.user.name_placeholder'),
-                     required: true
+= bootstrap_form_with(as: resource_name, layout: :horizontal, local: true, model: resource, url: registration_path(resource_name)) do |f|  
+  = f.text_field :name,
+                 autocomplete: 'name',
+                 autofocus: true,
+                 label: t('devise_forms.user.name'),
+                 placeholder: t('devise_forms.user.name_placeholder'),
+                 required: true
 
-      = f.email_field :email,
-                      autocomplete: 'email',
-                      label: t('devise_forms.user.email'),
-                      placeholder: t('devise_forms.user.email_placeholder'),
-                      required: true
-                         
-      = render 'devise/shared/button', f: f, text: t('devise_forms.registrations.edit.button')
+  = f.email_field :email,
+                  autocomplete: 'email',
+                  label: t('devise_forms.user.email'),
+                  placeholder: t('devise_forms.user.email_placeholder'),
+                  required: true
+                     
+  = render 'devise/shared/button', f: f, text: t('devise_forms.registrations.edit.button')

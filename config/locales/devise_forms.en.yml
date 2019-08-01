@@ -2,9 +2,9 @@ en:
   devise_forms:
     sessions:
       new:
-        title: "Log in"
+        title: "Welcome! Please log in."
         button: "Log in"
-        link: "Already have an account? Log in"
+        link: "Already have an account? Log in."
     passwords:
       new:
         title: "Set a new password"
@@ -15,19 +15,19 @@ en:
         button: "Change my password"
     confirmations:
       new:
-        title: "Confirm my email"
-        button: "Re-send confirmation instructions"
+        title: "Get instructions to confirm your email"
+        button: "Send confirmation instructions"
         link: "Need to confirm your email?"
     unlocks:
       new:
-        title: "Resend unlock instructions"
-        button: "Resend unlock instructions"
+        title: "Get instructions to unlock your account"
+        button: "Send unlock instructions"
         link: "Need to unlock your account?"
     registrations:
       new:
-        title: "Sign up"
+        title: "Welcome! Please create your LifeWork account."
         button: "Sign up"
-        link: "Need an account? Sign up"
+        link: "Need an account? Sign up."
       edit:
         title: "Finish setting up your account"
         button: "Sign up"

@@ -1,0 +1,12 @@
+- content_for :title, t('devise_forms.unlocks.new.title')
+
+= bootstrap_form_with(as: resource_name, layout: :horizontal, local: true, model: resource, url: unlock_path(resource_name)) do |f|
+
+  = f.email_field :email,
+                  autofocus: true,
+                  autocomplete: 'email',
+                  label: t('devise_forms.user.email'),
+                  placeholder: t('devise_forms.user.email_placeholder'),
+                  required: true
+  
+  = render 'devise/shared/button', f: f, text: t('devise_forms.unlocks.new.button')

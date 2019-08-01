@@ -1,33 +1,31 @@
-.row
-  .col
-    .signup-form
-      = bootstrap_form_with(as: resource_name, layout: :horizontal, local: true, model: resource, url: resource.invitation_token ? invitation_path(resource_name) : registration_path(resource_name)) do |f|
-        = f.hidden_field :invitation_token
-        = f.text_field :name,
-                       autocomplete: 'name',
-                       autofocus: true,
-                       label: t('devise_forms.user.name'),
-                       placeholder: t('devise_forms.user.name_placeholder'),
-                       required: true
+= bootstrap_form_with(as: resource_name, layout: :horizontal, local: true, model: resource, url: resource.invitation_token ? invitation_path(resource_name) : registration_path(resource_name)) do |f|
+  
+  = f.hidden_field :invitation_token
+  = f.text_field :name,
+                 autocomplete: 'name',
+                 autofocus: true,
+                 label: t('devise_forms.user.name'),
+                 placeholder: t('devise_forms.user.name_placeholder'),
+                 required: true
 
-        = f.email_field :email,
-                        autocomplete: 'email',
-                        label: t('devise_forms.user.email'),
-                        placeholder: t('devise_forms.user.email_placeholder'),
-                        required: true,
-                        value: resource.email || params.dig(:user, :email)
+  = f.email_field :email,
+                  autocomplete: 'email',
+                  label: t('devise_forms.user.email'),
+                  placeholder: t('devise_forms.user.email_placeholder'),
+                  required: true,
+                  value: resource.email || params.dig(:user, :email)
 
-        = f.password_field :password,
-                           autocomplete: 'new-password',
-                           label: t('devise_forms.user.password'),
-                           placeholder: t('devise_forms.message.minimum_password_length', min_len: @minimum_password_length),
-                           required: true,
-                           value: params.dig(:user, :password)
-                           
-        .row.form-group
-           .col.offset-sm-2.col-sm-10.text-center.text-sm-left
-             small.text-muted
-               | By signing up, you are agreeing to our
-                <a href="/legal/terms-of-use">Terms of Use</a>
-                           
-        = render 'devise/shared/button', f: f, text: t('devise_forms.registrations.new.button')
+  = f.password_field :password,
+                     autocomplete: 'new-password',
+                     label: t('devise_forms.user.password'),
+                     placeholder: t('devise_forms.message.minimum_password_length', min_len: @minimum_password_length),
+                     required: true,
+                     value: params.dig(:user, :password)
+                     
+  .row.form-group
+     .col.offset-sm-2.col-sm-10.text-center.text-sm-left
+       small.text-muted
+         | By signing up, you are agreeing to our
+          <a href="/legal/terms-of-use">Terms of Use</a>
+                     
+  = render 'devise/shared/button', f: f, text: t('devise_forms.registrations.new.button')

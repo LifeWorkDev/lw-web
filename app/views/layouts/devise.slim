@@ -11,13 +11,12 @@ html lang="en"
           h2.my-4= yield :title
       
       .row
-        .col
+        .col-md-8
           = devise_bootstrap_error_messages!
           = yield
-
-      .row.text-right
-        .col
-          = render 'devise/shared/links'
+          .row
+            .col.offset-sm-2.col-sm-10= render 'devise/shared/links'
+          
             
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
     = render 'shared/analytics'
