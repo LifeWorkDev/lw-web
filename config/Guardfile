@@ -3,10 +3,10 @@ dsl = Guard::RSpec::Dsl.new(self)
 
 directories %w[app config db lib spec]
 
-guard :shell do
+guard :shell, first_match: true do
   # Restart puma
-  watch(%r{config/((.ruby-version|Gemfile.lock)|(application|environment|puma)\.rb|(environments/development.rb|initializers/.*\.rb))}) do |m|
-    n "#{m[0]} changed, restarting server..."
+  watch(%r{config/((.ruby-version|Gemfile.lock)|(application|environment|puma)\.rb|(environments/development.rb|initializers/.+\.rb))}) do |m|
+    n "#{m[0]} changed", 'Restarting server...'
     # Copied from https://github.com/rails/rails/blob/master/railties/lib/rails/tasks/restart.rake
     FileUtils.mkdir_p 'tmp'
     FileUtils.touch 'tmp/restart.txt'
@@ -26,8 +26,9 @@ guard :shell do
   end
 
   # Trigger webpack-dev-server refresh when views change
-  watch(dsl.rails(view_extensions: %w[erb haml slim]).views) do |m|
+  watch(%r{(config/locales/.+)|#{dsl.rails(view_extensions: %w[erb haml slim]).views}}) do |m|
     p "#{m[0]} has changed. Reloading."
+    # Trick Webpack into reloading browser
     `touch app/javascript/packs/application.js`
   end
 end
@@ -77,8 +78,8 @@ guard :rspec, cmd: 'bin/rspec' do
   watch(%r{^spec/fabricators/(.+)_fabricator\.rb$}) { |m| "spec/models/#{m[1]}_spec.rb" }
 
   # Concerns
-  watch(%r{^app/models/concerns/(.+)/.*\.rb$}) { |m| "spec/models/#{m[1].singularize}_spec.rb" }
+  watch(%r{^app/models/concerns/(.+)/.+\.rb$}) { |m| "spec/models/#{m[1].singularize}_spec.rb" }
 
   # Subclasses
-  watch(%r{^app/models/(.+)/.*\.rb$}) { |m| "spec/models/#{m[1].singularize}_spec.rb" }
+  watch(%r{^app/models/(.+)/.+\.rb$}) { |m| "spec/models/#{m[1].singularize}_spec.rb" }
 end
