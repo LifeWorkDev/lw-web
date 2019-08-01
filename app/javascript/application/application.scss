@@ -1,3 +1,5 @@
+// bootstrap theme overrides
+
 $blue: #3b9de3;
 
 $font-family-serif: adobe-garamond-pro, Georgia, serif;
@@ -6,6 +8,10 @@ $font-size-base: 1.125rem;
 
 $body-bg: hsl(201, 0%, 98%);
 $body-color: rgba(26, 26, 26, 0.7);
+
+$border-radius: 0;
+$border-radius-lg: $border-radius;
+$border-radius-sm: $border-radius;
 
 $btn-border-radius: 10rem; // fully rounded
 $btn-border-radius-lg: $btn-border-radius;
@@ -23,9 +29,6 @@ $headings-color: #383a3d;
 $headings-font-weight: 600;
 
 $input-bg: $body-bg;
-$input-border-radius: 0;
-$input-border-radius-lg: $input-border-radius;
-$input-border-radius-sm: $input-border-radius;
 $input-focus-bg: white;
 $input-focus-box-shadow: none;
 $input-padding-y: 0.5rem;
@@ -47,6 +50,10 @@ $list-group-border-radius: none;
 }
 
 @import '~bootstrap/scss/bootstrap';
+
+.alert {
+  box-shadow: $box-shadow;
+}
 
 .btn {
   font-family: $font-family-sans-serif;
