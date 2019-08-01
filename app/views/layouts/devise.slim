@@ -1,0 +1,23 @@
+doctype html
+html lang="en"
+  = render 'shared/head'
+
+  body
+    = render 'shared/nav_bar'
+    
+    .container
+      .row.text-center.text-sm-left
+        .col
+          h2.my-4= yield :title
+      
+      .row
+        .col
+          = devise_bootstrap_error_messages!
+          = yield
+
+      .row.text-right
+        .col
+          = render 'devise/shared/links'
+            
+    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
+    = render 'shared/analytics'

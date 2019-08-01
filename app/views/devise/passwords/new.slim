@@ -1,18 +1,12 @@
-- title = t('devise_forms.passwords.new.title')
-- content_for :title, title
-- content_for :card_title, title
+- content_for :title, t('devise_forms.passwords.new.title')
 
-= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
-  .row.form-group
-    label.col-sm-4.col-form-label.text-sm-right.devise for='inputEmail1'
-      = t('devise_forms.user.email')
-    .col-sm-8
-      = f.email_field :email, class: 'form-control form-control',
-                                    id: 'inputEmail1',
-                                    value: params[:email],
-                                    placeholder: t('devise_forms.user.email_placeholder'),
-                                    autofocus: true,
-                                    required: true
-  .row.form-group
-    .offset-sm-4.col-sm-8
-      = f.submit t('devise_forms.passwords.new.button'), class: 'btn btn-primary'
+= bootstrap_form_with(as: resource_name, layout: :horizontal, local: true, model: resource, url: password_path(resource_name)) do |f|
+  = f.email_field :email,
+                  autofocus: true,
+                  autocomplete: 'email',
+                  label: t('devise_forms.user.email'),
+                  placeholder: t('devise_forms.user.email_placeholder'),
+                  required: true,
+                  value: params[:email]
+      
+  = render 'devise/shared/button', f: f, text: t('devise_forms.passwords.new.button')

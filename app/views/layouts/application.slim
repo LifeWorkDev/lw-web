@@ -1,22 +1,14 @@
 doctype html
 html lang="en"
-  head
-    title LifeWork
-    = csrf_meta_tags
-    = csp_meta_tag
-
-    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
-    = stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
-    link rel="stylesheet" href="https://use.typekit.net/brp1ynq.css"
-    = favicon_link_tag 'https://static1.squarespace.com/static/5afad0e63c3a53f810c9c096/t/5b02d4228a922df39df37065/favicon.ico', rel: 'shortcut icon', type: 'image/x-icon'
-
+  = render 'shared/head'
 
   body
-    .navbar.navbar-light.bg-white
-      .container
-        a.navbar-brand href='/'
-          = image_pack_tag 'lifework-logo.png'
+    = render 'shared/impersonation_bar'
+    = render 'shared/nav_bar'
+    
     .container-fluid
       h2.card-header.text-center= yield :card_title
       = yield
       /.text-right.nobr= render 'devise/shared/links'
+      
+    = render 'shared/analytics'

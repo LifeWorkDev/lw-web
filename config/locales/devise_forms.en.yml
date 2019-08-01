@@ -4,11 +4,11 @@ en:
       new:
         title: "Log in"
         button: "Log in"
-        link: "Log in"
+        link: "Already have an account? Log in"
     passwords:
       new:
         title: "Set a new password"
-        button: "Send me password reset instructions"
+        button: "Email password reset instructions"
         link: "Forgot your password?"
       edit:
         title: "Change your password"
@@ -27,7 +27,7 @@ en:
       new:
         title: "Sign up"
         button: "Sign up"
-        link: "Sign up"
+        link: "Need an account? Sign up"
       edit:
         title: "Finish setting up your account"
         button: "Sign up"

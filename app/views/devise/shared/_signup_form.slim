@@ -2,7 +2,6 @@
   .col
     .signup-form
       = bootstrap_form_with(as: resource_name, layout: :horizontal, local: true, model: resource, url: resource.invitation_token ? invitation_path(resource_name) : registration_path(resource_name)) do |f|
-        = f.alert_message 'Please fix the following errors:'
         = f.hidden_field :invitation_token
         = f.text_field :name,
                        autocomplete: 'name',
@@ -24,12 +23,11 @@
                            placeholder: t('devise_forms.message.minimum_password_length', min_len: @minimum_password_length),
                            required: true,
                            value: params.dig(:user, :password)
+                           
         .row.form-group
-          .col.offset-sm-2.col-sm-10
-            = f.primary t('devise_forms.registrations.new.button')
-            
-        .row.form-group
-          .col.offset-sm-2.col-sm-10.text-center.text-sm-left
-            small.text-muted
-              | By signing up, you are agreeing to our
-               <a href="/legal/terms-of-use">Terms of Use</a>
+           .col.offset-sm-2.col-sm-10.text-center.text-sm-left
+             small.text-muted
+               | By signing up, you are agreeing to our
+                <a href="/legal/terms-of-use">Terms of Use</a>
+                           
+        = render 'devise/shared/button', f: f, text: t('devise_forms.registrations.new.button')

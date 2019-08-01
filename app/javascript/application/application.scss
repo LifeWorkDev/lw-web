@@ -11,9 +11,13 @@ $btn-border-radius: 10rem; // fully rounded
 $btn-border-radius-lg: $btn-border-radius;
 $btn-border-radius-sm: $btn-border-radius;
 $btn-font-size: 0.9rem;
+$btn-font-size-lg: $btn-font-size * 1.25;
+$btn-font-size-sm: $btn-font-size * .875;
 $btn-font-weight: 300;
 $btn-padding-y: 0.6rem;
 $btn-padding-x: 2rem;
+$btn-padding-y-sm: 0.5rem;
+$btn-padding-x-sm: 1rem;
 
 $headings-color: #383a3d;
 $headings-font-weight: 600;
@@ -46,8 +50,12 @@ $list-group-border-radius: none;
 
 .btn {
   font-family: $font-family-sans-serif;
-  letter-spacing: 0.2rem;
   text-transform: uppercase;
+  letter-spacing: 0.2rem;
+
+  &.btn-sm {
+    letter-spacing: 0.08rem;
+  }
 }
 
 @include media-breakpoint-down(xs) {

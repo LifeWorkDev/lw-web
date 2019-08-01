@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     get 'stop_impersonating', to: 'impersonations#stop_impersonating'
   end
   get 'users', to: redirect { Rails.application.routes.url_helpers.new_user_registration_path }
+  get 'users/password', to: redirect { Rails.application.routes.url_helpers.new_user_password_path }
 
   get 'about_you', to: 'application#about_you'
   get 'new_client', to: 'application#new_client'

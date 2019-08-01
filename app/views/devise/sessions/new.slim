@@ -1,12 +1,8 @@
-- title = t('devise_forms.sessions.new.title')
-- content_for :title, title
-- content_for :card_title, title
+- content_for :title, t('devise_forms.sessions.new.title')
 
 .row
   .col
     = bootstrap_form_with(as: resource_name, layout: :horizontal, local: true, model: resource, url: session_path(resource_name)) do |f|
-      = devise_bootstrap_error_messages!
-      
       = f.email_field :email,
                       autocomplete: 'email',
                       label: t('devise_forms.user.email'),
@@ -26,6 +22,4 @@
           .col.offset-sm-2.col-sm-10
             = f.check_box :remember_me, checked: true, label: t('devise_forms.user.remember_me')
 
-      .row.form-group
-        .col.offset-sm-2.col-sm-10
-          = f.primary t('devise_forms.sessions.new.button')
+      = render 'devise/shared/button', f: f, text: t('devise_forms.sessions.new.button')

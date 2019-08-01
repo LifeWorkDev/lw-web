@@ -1,31 +1,20 @@
-- title = t('devise_forms.registrations.edit.title')
-- content_for :title, title
-- content_for :card_title, title
+- content_for :title, t('devise_forms.registrations.edit.title')
 
 .row
   .col
     .signup-form
-      = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
-        .row.form-group
-          label.col-sm-4.col-form-label.text-sm-right.devise for='inputName1'
-            = t('devise_forms.user.name')
-          .col-sm-8
-            = f.text_field :name, class: 'form-control form-control',
-                                    id: 'inputName1',
-                                    placeholder: t('devise_forms.user.name_placeholder'),
-                                    required: true,
-                                    autocomplete: 'name'
+    = bootstrap_form_with(as: resource_name, layout: :horizontal, local: true, model: resource, url: registration_path(resource_name)) do |f|
+      = f.text_field :name,
+                     autocomplete: 'name',
+                     autofocus: true,
+                     label: t('devise_forms.user.name'),
+                     placeholder: t('devise_forms.user.name_placeholder'),
+                     required: true
 
-        .row.form-group
-          label.col-sm-4.col-form-label.text-sm-right.devise for='inputEmail1'
-            = t('devise_forms.user.email')
-          .col-sm-8
-            = f.email_field :email, class: 'form-control form-control',
-                                    id: 'inputEmail1',
-                                    placeholder: t('devise_forms.user.email_placeholder'),
-                                    autofocus: true,
-                                    required: true
-
-        .row.form-group
-          .offset-sm-4.col-sm-8
-            = f.submit t('devise_forms.registrations.edit.button'), class: 'btn btn-outline-primary'
+      = f.email_field :email,
+                      autocomplete: 'email',
+                      label: t('devise_forms.user.email'),
+                      placeholder: t('devise_forms.user.email_placeholder'),
+                      required: true
+                         
+      = render 'devise/shared/button', f: f, text: t('devise_forms.registrations.edit.button')

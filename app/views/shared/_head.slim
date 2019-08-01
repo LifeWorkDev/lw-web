@@ -1,0 +1,33 @@
+- default_title = 'LifeWork'
+- default_description = 'Get paid for your work. Seamlessly.'
+- default_keywords = 'freelancer, payments, escrow, gig economy, gig worker'
+
+title= yield(:title).present? ? "#{yield(:title)} | LifeWork" : default_title
+
+meta name='description' content="#{yield(:description).presence || default_description}"
+meta name='keywords' content="#{yield(:keywords).presence || default_keywords}"
+
+meta property='og:title' content="#{yield(:title).presence || default_title}"
+meta property='og:description' content="#{yield(:description).presence || default_description}"
+
+- if yield(:share_image).present?
+  meta property='og:image' content="#{yield(:share_image).presence}"
+
+- if yield(:canonical_url).present?
+  meta property='og:url' content="#{yield(:canonical_url).presence}"
+  link rel='canonical' href="#{yield(:canonical_url).presence}"
+
+/ meta property='fb:app_id' content=''
+
+meta content='text/html; charset=UTF-8' http-equiv='Content-Type'
+meta charset='utf-8'
+meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0 shrink-to-fit=no'
+= favicon_link_tag 'https://static1.squarespace.com/static/5afad0e63c3a53f810c9c096/t/5b02d4228a922df39df37065/favicon.ico', rel: 'shortcut icon', type: 'image/x-icon'
+
+= yield(:head_extra)
+
+= csrf_meta_tags
+= csp_meta_tag
+
+= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+link rel="stylesheet" href="https://use.typekit.net/brp1ynq.css"
