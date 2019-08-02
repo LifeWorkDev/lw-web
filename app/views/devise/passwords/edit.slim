@@ -1,7 +1,7 @@
 - content_for :title, t('devise_forms.passwords.edit.title')
 
 - if resource.present?
-  = bootstrap_form_with(as: resource_name, layout: :horizontal, local: true, model: resource, url: password_path(resource_name)) do |f|
+  = bootstrap_form_with(as: resource_name, layout: :horizontal, model: resource, url: password_path(resource_name)) do |f|
     = f.hidden_field :reset_password_token
     - unless resource.name.present?  
     = f.text_field :name,
