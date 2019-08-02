@@ -21,7 +21,7 @@ module.exports = {
     ecmaVersion: 2018,
     sourceType: 'module'
   },
-  plugins: ['sort-imports-es6-autofix'],
+  plugins: ['sort-imports-es6-autofix', 'sort-keys-fix'],
   rules: {
     'prettier/prettier': [
       'error',
@@ -55,6 +55,14 @@ module.exports = {
       {
         ignoreCase: true,
         memberSyntaxSortOrder: ['none', 'all', 'single', 'multiple']
+      }
+    ],
+    'sort-keys-fix/sort-keys-fix': [
+      'error',
+      'asc',
+      {
+        caseSensitive: false,
+        natural: true,
       }
     ]
   },
