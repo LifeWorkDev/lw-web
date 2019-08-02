@@ -9,12 +9,6 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery prepend: true, with: :reset_session
 
-  def about_you; end
-
-  def milestones; end
-
-  def new_client; end
-
   def styleguide; end
 
   def after_sign_out_path_for(_resource_or_scope)
