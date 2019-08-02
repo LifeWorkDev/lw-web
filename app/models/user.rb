@@ -2,7 +2,7 @@ class User < ApplicationRecord
   include AASM
   include Users::Roles
 
-  devise :confirmable, :database_authenticatable, :lockable,
+  devise :database_authenticatable, :lockable,
          :invitable, :registerable, :recoverable, :rememberable,
          :timeoutable, :trackable, :validatable
 
