@@ -6,13 +6,11 @@ Rails.application.routes.draw do
     get 'logout', to: 'devise/sessions#destroy'
     get 'sign_up', to: 'devise/registrations#new', as: :new_user_registration
   end
-  devise_for :users, skip: [:sessions]
+  devise_for :users, skip: [:sessions], controllers: { registrations: 'users/registrations' }
   namespace :users do
     get ':id/impersonate', to: 'impersonations#impersonate'
     get 'stop_impersonating', to: 'impersonations#stop_impersonating'
   end
-  get 'users', to: redirect { Rails.application.routes.url_helpers.new_user_registration_path }
-  get 'users/password', to: redirect { Rails.application.routes.url_helpers.new_user_password_path }
 
   get 'about_you', to: 'application#about_you'
   get 'milestones', to: 'application#milestones'
@@ -20,4 +18,8 @@ Rails.application.routes.draw do
   get 'styleguide', to: 'application#styleguide'
 
   get '(.well-known)/apple-app-site-association', to: proc { [404, {}, ['']] }
+
+  # Redirects
+  %w[signup users].each { |path| get path, to: redirect('/sign_up') }
+  get 'users/password', to: redirect('/passwords/new')
 end
