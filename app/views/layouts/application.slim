@@ -6,8 +6,6 @@ html lang="en"
     = render 'shared/impersonation_bar'
     = render 'shared/nav_bar'
     
-    .container-fluid
-      h2.card-header.text-center= yield :card_title
-      = yield
-      /.text-right.nobr= render 'devise/shared/links'
+    = yield
+    
     = render 'shared/analytics'
