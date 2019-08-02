@@ -15,6 +15,9 @@ Rails.application.routes.draw do
   get 'users/password', to: redirect { Rails.application.routes.url_helpers.new_user_password_path }
 
   get 'about_you', to: 'application#about_you'
+  get 'milestones', to: 'application#milestones'
   get 'new_client', to: 'application#new_client'
   get 'styleguide', to: 'application#styleguide'
+
+  get '(.well-known)/apple-app-site-association', to: proc { [404, {}, ['']] }
 end
