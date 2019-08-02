@@ -3,4 +3,7 @@
     a.navbar-brand href='/'
       = image_pack_tag 'lifework-logo.png'
     .navbar-nav
-      a.nav-item.btn.btn-outline-secondary.btn-sm href='/login' Log in
+      - if user_signed_in?
+        a.nav-item.btn.btn-link.btn-sm.text-muted href='/logout' Log out
+      - else
+        a.nav-item.btn.btn-outline-secondary.btn-sm href='/login' Log in
