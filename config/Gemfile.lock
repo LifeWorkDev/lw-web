@@ -1,4 +1,11 @@
 GIT
+  remote: https://github.com/AlexWayfer/memery.git
+  revision: 6da8df83c63a7e1f7d84e6a48dd0ffaeade77a5e
+  branch: optimize
+  specs:
+    memery (1.0.0)
+
+GIT
   remote: https://github.com/plataformatec/devise.git
   revision: 9aa17eec07719a97385dd40fa05c4029983a1cd5
   branch: master
@@ -259,6 +266,8 @@ GEM
     parallel (1.17.0)
     parser (2.6.3.0)
       ast (~> 2.4.0)
+    partially_useful (6.0.0)
+      railties (>= 4.1)
     pg (1.1.4)
     pgreset (0.1.1)
     pretender (0.3.4)
@@ -399,8 +408,10 @@ DEPENDENCIES
   listen (>= 3.0.5, < 3.2)
   logidze
   lograge
+  memery!
   money-rails
   nilify_blanks!
+  partially_useful
   pg (>= 0.18, < 2.0)
   pgreset
   pretender

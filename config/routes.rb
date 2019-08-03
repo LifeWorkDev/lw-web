@@ -12,6 +12,8 @@ Rails.application.routes.draw do
     get 'stop_impersonating', to: 'impersonations#stop_impersonating'
   end
 
+  resource :user, only: :update
+
   get 'about_you', to: 'authenticated#about_you'
   get 'milestones', to: 'authenticated#milestones'
   get 'new_client', to: 'authenticated#new_client'
