@@ -44,7 +44,6 @@ group :development do
   gem 'guard-rspec', require: false
   gem 'guard-rubocop', require: false
   gem 'guard-shell', require: false
-  gem 'guard-webpack', require: false
   gem 'invoker'
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'memery', github: 'AlexWayfer/memery', branch: 'optimize' # Memoization
