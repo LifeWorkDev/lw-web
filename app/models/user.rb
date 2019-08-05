@@ -24,6 +24,10 @@ class User < ApplicationRecord
     end
   end
 
+  jsonb_accessor :metadata,
+                 work_category: [:string, array: true, default: []],
+                 work_type: :string
+
 private
 
   def after_confirmation

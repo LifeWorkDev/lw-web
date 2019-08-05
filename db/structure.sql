@@ -103,6 +103,7 @@ CREATE TABLE public.users (
     phone public.citext,
     address public.citext,
     time_zone character varying DEFAULT 'Pacific Time (US & Canada)'::character varying,
+    metadata jsonb,
     stripe_id character varying,
     invited_by_id integer,
     invited_by_type character varying,

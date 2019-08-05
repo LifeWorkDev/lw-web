@@ -1,6 +1,8 @@
 class ApplicationRecord < ActiveRecord::Base
   self.abstract_class = true
 
+  include JsonbAccessor
+  include JsonbAccessor::QueryBuilder
   include StringEnum
 
   def self.callbacks_of_type(type, kind = :all)

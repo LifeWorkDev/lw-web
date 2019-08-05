@@ -5,11 +5,12 @@ class CreateUsers < ActiveRecord::Migration[6.0]
       t.citext :email, null: false, index: { unique: true }
 
       t.string :status, null: false, index: true
-      t.jsonb :roles, null: false, default: []
+      t.jsonb  :roles, null: false, default: []
 
       t.citext :phone
       t.citext :address
       t.string :time_zone, default: 'Pacific Time (US & Canada)'
+      t.jsonb  :metadata
 
       # Payment Processor customer id/token
       t.string :stripe_id
