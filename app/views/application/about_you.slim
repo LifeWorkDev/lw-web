@@ -6,21 +6,25 @@ h2.text-center.mt-2
 .container
   = bootstrap_form_with(model: current_user) do |f|
     = f.time_zone_select :time_zone, ActiveSupport::TimeZone.basic_us_zones, { required: true }, { control_class: 'custom-select' }
-    .list-group
-      .list-group-item
-        strong What kinds of freelance work do you do?
-      = check_box_tag 'test1'
-      label.list-group-item for='test1' Web, Mobile & Software Dev
-      = check_box_tag 'test2'
-      label.list-group-item for='test2' IT & Networking
-      = check_box_tag 'test3'
-      label.list-group-item for='test3' Data Science & Analytics
-      .list-group-item
-        strong What type of freelancer are you?
-      = radio_button_tag 'test', '4'
-      label.list-group-item for='test_4' Team Leader
+    .form-group.mb-0
+      label.required What kinds of freelance work do you do?
+    .list-group.mb-4.font-sans-serif
+      - ['Accounting & Consulting', 'Admin Support', 'Customer Service', 'Data Science & Analytics', 'Design & Creative', 'Engineering & Architecture', 'IT & Networking', 'Legal', 'Sales & Marketing', 'Translation', 'Web, Mobile & Software Dev', 'Writing', "I'm not a freelancer. I'm just interested in LifeWork"].each_with_index do |choice, index|
+        - name = "choice#{index}"
+        = check_box_tag name
+        label.list-group-item for=name = choice
+    .form-group.mb-0
+      label.required What type of freelancer are you?
+    .list-group.mb-4.font-sans-serif
       = radio_button_tag 'test', '5'
       label.list-group-item for='test_5' Part-Time
       = radio_button_tag 'test', '6'
       label.list-group-item for='test_6' Full-Time
-    
+      = radio_button_tag 'test', '4'
+      label.list-group-item for='test_4' Team Leader
+    .form-group
+      = f.primary 'Continue >', class: 'btn btn-primary float-right'
+      = f.submit '< Back', class: 'btn btn-link-secondary mr-sm-2 mt-3 mt-sm-0 float-left'
+      .clearfix
+      
+  
