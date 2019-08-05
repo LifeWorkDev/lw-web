@@ -2,7 +2,7 @@
 
 .row
   .col
-    = bootstrap_form_with(as: resource_name, layout: :horizontal, model: resource, url: session_path(resource_name)) do |f|
+    = bootstrap_form_with(as: resource_name, layout: :horizontal, local: true, model: resource, url: session_path(resource_name)) do |f|
       = f.email_field :email,
                       autocomplete: 'email',
                       label: t('devise_forms.user.email'),

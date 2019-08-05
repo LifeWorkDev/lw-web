@@ -1,6 +1,6 @@
 - content_for :title, t('devise_forms.confirmations.new.title')
 
-= bootstrap_form_with(as: resource_name, layout: :horizontal, model: resource, url: confirmation_path(resource_name)) do |f|
+= bootstrap_form_with(as: resource_name, layout: :horizontal, local: true, model: resource, url: confirmation_path(resource_name)) do |f|
 
   = f.email_field :email,
                   autofocus: true,
