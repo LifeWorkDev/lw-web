@@ -9,7 +9,7 @@ class CreateUsers < ActiveRecord::Migration[6.0]
 
       t.citext :phone
       t.citext :address
-      t.string :time_zone, default: 'Pacific Time (US & Canada)'
+      t.string :time_zone
       t.jsonb  :metadata
 
       # Payment Processor customer id/token

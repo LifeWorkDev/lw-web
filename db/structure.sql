@@ -102,7 +102,7 @@ CREATE TABLE public.users (
     roles jsonb DEFAULT '[]'::jsonb NOT NULL,
     phone public.citext,
     address public.citext,
-    time_zone character varying DEFAULT 'Pacific Time (US & Canada)'::character varying,
+    time_zone character varying,
     metadata jsonb,
     stripe_id character varying,
     invited_by_id integer,
