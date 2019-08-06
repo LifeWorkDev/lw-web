@@ -21,7 +21,6 @@ class OrganizationsController < AuthenticatedController
 
   # POST /organizations
   def create
-    pp organization_params
     @organization = Organization.new(organization_params)
 
     if @organization.save
