@@ -29,4 +29,6 @@ Rails.application.routes.draw do
   # Redirects
   %w[signup users].each { |path| get path, to: redirect('/sign_up') }
   get 'users/password', to: redirect('/passwords/new')
+
+  root to: redirect('/sign_up')
 end

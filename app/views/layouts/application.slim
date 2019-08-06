@@ -1,12 +1,13 @@
 doctype html
-html lang="en"
+html.h-100 lang="en"
   = render 'shared/head'
 
-  body
+  body.d-flex.flex-column.h-100
     = render 'shared/impersonation_bar'
     = render 'shared/nav_bar'
     
-    = yield
+    .container.flex-shrink-0
+      = yield
     
     = render 'shared/footer'
     = render 'shared/analytics'

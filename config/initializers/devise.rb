@@ -352,7 +352,3 @@ class FailureWithMetadata < Devise::FailureApp
     options
   end
 end
-
-Warden::Manager.after_set_user except: :fetch do |record, warden, options|
-  record.after_sign_in if record.respond_to?(:after_sign_in) && warden.authenticated?(options[:scope])
-end

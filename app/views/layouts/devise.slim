@@ -1,11 +1,11 @@
 doctype html
-html lang="en"
+html.h-100 lang="en"
   = render 'shared/head'
 
-  body
+  body.d-flex.flex-column.h-100
     = render 'shared/nav_bar'
     
-    .container
+    .container.flex-shrink-0
       .row.text-center.text-sm-left
         .col
           h2.my-4= yield :title
