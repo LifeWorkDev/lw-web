@@ -11,7 +11,7 @@ h2.text-center.mt-2
     .form-group.mb-0
       label.required What kinds of freelance work do you do?
     .list-group.mb-4.font-sans-serif
-      - ['Accounting & Consulting', 'Admin Support', 'Customer Service', 'Data Science & Analytics', 'Design & Creative', 'Engineering & Architecture', 'IT & Networking', 'Legal', 'Sales & Marketing', 'Translation', 'Web, Mobile & Software Dev', 'Writing', "I'm not a freelancer. I'm just interested in LifeWork"].each_with_index do |choice, index|
+      - ['Accounting & Consulting', 'Admin Support', 'Customer Service', 'Data Science & Analytics', 'Design & Creative', 'Engineering & Architecture', 'IT & Networking', 'Legal', 'Sales & Marketing', 'Translation', 'Web, Mobile & Software Dev', 'Writing'].each_with_index do |choice, index|
         - name = "choice#{index}"
         = check_box_tag name
         label.list-group-item for=name = choice
