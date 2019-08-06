@@ -2,10 +2,6 @@ class User < ApplicationRecord
   include AASM
   include Users::Roles
 
-  devise :database_authenticatable, :lockable,
-         :invitable, :registerable, :recoverable, :rememberable,
-         :timeoutable, :trackable, :validatable
-
   aasm column: :status, whiny_transitions: false, whiny_persistence: true do
     state :pending, initial: true
     state :active
@@ -23,6 +19,14 @@ class User < ApplicationRecord
       transitions from: :disabled, to: :active
     end
   end
+
+  belongs_to :organization, optional: true
+  has_many :projects, dependent: :destroy
+  has_many :clients, through: :projects, class_name: 'Organization'
+
+  devise :database_authenticatable, :lockable,
+         :invitable, :registerable, :recoverable, :rememberable,
+         :timeoutable, :trackable, :validatable
 
   jsonb_accessor :metadata,
                  work_category: [:string, array: true, default: []],

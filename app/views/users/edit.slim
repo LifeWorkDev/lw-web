@@ -1,3 +1,5 @@
+- content_for :title, 'Your Profile'
+
 h2.text-center.mt-2
   | Welcome, Stefan!
   br
@@ -22,9 +24,6 @@ h2.text-center.mt-2
       label.list-group-item for='test_6' Full-Time
       = radio_button_tag 'test', '4'
       label.list-group-item for='test_4' Team Leader
-    .form-group
-      = f.primary 'Continue >', class: 'btn btn-primary float-right'
-      = f.submit '< Back', class: 'btn btn-link-secondary mr-sm-2 mt-3 mt-sm-0 float-left'
-      .clearfix
+    = render 'shared/form_buttons', f: f
       
   

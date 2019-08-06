@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  resources :milestones
+  resources :organizations
+  resources :projects
+  resource :user, only: %i[edit update]
+
   as :user do
     get 'login', to: 'devise/sessions#new', as: :new_user_session
     post 'login', to: 'devise/sessions#create', as: :user_session
@@ -11,8 +16,6 @@ Rails.application.routes.draw do
     get ':id/impersonate', to: 'impersonations#impersonate'
     get 'stop_impersonating', to: 'impersonations#stop_impersonating'
   end
-
-  resource :user, only: :update
 
   get 'about_you', to: 'authenticated#about_you'
   get 'milestones', to: 'authenticated#milestones'

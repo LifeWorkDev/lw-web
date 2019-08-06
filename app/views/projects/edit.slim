@@ -1,0 +1,17 @@
+- content_for :title, 'Add Milestones'
+
+.text-center
+  h1 Choose your milestones.
+  p If your contract includes a deposit, please include that date as a milestone.
+
+.container.d-flex.justify-content-center
+  = bootstrap_form_with(model: @project.becomes(Project)) do |f|
+    div data-controller='flatpickr' data-flatpickr-disable-mobile='true' data-flatpickr-inline='true' data-flatpickr-mode='multiple'
+      .mb-2.text-sm-left.text-center data-target='flatpickr.selections' &nbsp;
+      template data-target='flatpickr.template'
+        span.badge.badge-primary.badge-pill.date-pill.mr-2.mb-2
+          span.selected-date
+          = hidden_field_tag 'project[milestones_attributes][][date]', nil, id: nil
+          button.close data-dismiss="alert" aria-label="Close"
+            span aria-hidden="true" &times;
+    .mt-4= render 'shared/form_buttons', f: f

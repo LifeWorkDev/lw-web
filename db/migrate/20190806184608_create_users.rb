@@ -10,6 +10,7 @@ class CreateUsers < ActiveRecord::Migration[6.0]
       t.citext :phone
       t.citext :address
       t.string :time_zone
+      t.belongs_to :organization, foreign_key: true
       t.jsonb  :metadata
 
       # Payment Processor customer id/token
@@ -55,6 +56,7 @@ class CreateUsers < ActiveRecord::Migration[6.0]
       t.timestamps null: false
     end
 
+    add_index :users, :metadata, using: :gin
     add_index :users, :roles, using: :gin
   end
 end
