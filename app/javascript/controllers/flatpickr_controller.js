@@ -3,31 +3,37 @@ import Flatpickr from 'stimulus-flatpickr'
 import flatpickr from 'flatpickr'
 
 export default class extends Flatpickr {
-  static targets = ['hiddenInput', 'selections', 'template']
+  static targets = ['selections', 'template']
 
   connect() {
     this._initializeEvents()
     this._initializeOptions()
     this._initializeDateFormats()
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent,
+    )
 
-    this.fp = flatpickr(this.hiddenInputTarget, {
+    this.fp = flatpickr(this.selectionsTarget, {
       ...this.config,
+      showMonths: isMobile ? 1 : 2,
     })
 
     this._initializeElements()
+
+    this.calendarContainerTarget.classList.add('mx-auto')
   }
 
   change(selectedDates) {
     this.selectionsTarget.innerHTML = '&nbsp;'
     selectedDates.sort(this.dateSortAsc)
     selectedDates.forEach((date, index) => {
+      const formattedDate = date.toLocaleDateString()
       const pill = document.importNode(this.templateTarget.content, true)
       const closeButton = pill.querySelector('.close')
       closeButton.setAttribute('data-action', 'flatpickr#removeDate')
       closeButton.setAttribute('data-index', index)
-      pill.querySelector(
-        '.selected-date',
-      ).textContent = date.toLocaleDateString()
+      pill.querySelector('.selected-date').textContent = formattedDate
+      pill.querySelector('input').value = formattedDate
       this.selectionsTarget.appendChild(pill)
     })
   }

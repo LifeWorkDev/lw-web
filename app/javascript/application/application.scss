@@ -91,6 +91,10 @@ $list-group-border-radius: none;
   }
 }
 
+.flatpickr-calendar {
+  border-radius: $border-radius !important;
+}
+
 span.flatpickr-day.selected {
   &, &:focus, &:hover {
     background: $blue;
