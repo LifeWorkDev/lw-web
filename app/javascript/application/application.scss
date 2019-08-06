@@ -95,13 +95,16 @@ $list-group-border-radius: none;
   border-radius: $border-radius !important;
 }
 
-span.flatpickr-day.selected {
-  &, &:focus, &:hover {
-    background: $blue;
-    border-color: $blue;
+span.flatpickr-day {
+  &.selected, &.flatpickr-disabled {
+    &, &:focus, &:hover {
+      background: $blue;
+      border-color: $blue;
+      color: white;
+    }
   }
 
-  &:hover {
+  &.selected:hover {
     opacity: 0.75;
   }
 }

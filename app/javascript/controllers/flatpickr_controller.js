@@ -21,19 +21,25 @@ export default class extends Flatpickr {
     this._initializeElements()
 
     this.calendarContainerTarget.classList.add('mx-auto')
+    this.inputTarget.classList.remove('flatpickr-input')
   }
 
   change(selectedDates) {
     this.selectionsTarget.innerHTML = '&nbsp;'
+    const existingDates = this.fp.config.defaultDate || []
     selectedDates.sort(this.dateSortAsc)
-    selectedDates.forEach((date, index) => {
-      const formattedDate = date.toLocaleDateString()
+    const addedDates = selectedDates.filter(
+      date => !existingDates.includes(date.toISOString().slice(0, 10)),
+    )
+    addedDates.forEach((date, index) => {
       const pill = document.importNode(this.templateTarget.content, true)
       const closeButton = pill.querySelector('.close')
       closeButton.setAttribute('data-action', 'flatpickr#removeDate')
       closeButton.setAttribute('data-index', index)
-      pill.querySelector('.selected-date').textContent = formattedDate
-      pill.querySelector('input').value = formattedDate
+      pill.querySelector(
+        '.selected-date',
+      ).textContent = date.toLocaleDateString()
+      pill.querySelector('input').value = date.toISOString().slice(0, 10)
       this.selectionsTarget.appendChild(pill)
     })
   }
