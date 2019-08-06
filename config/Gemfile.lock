@@ -119,7 +119,7 @@ GIT
 
 GIT
   remote: https://github.com/swrobel/rack-toolbar.git
-  revision: 05d845241a808801894fb110a609d44e187a093b
+  revision: 9f3a93d63669652a6fde3f9e42f5536e2db37139
   branch: only-error-pages
   specs:
     rack-toolbar (0.1.4)
