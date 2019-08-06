@@ -33,7 +33,7 @@ class OrganizationsController < AuthenticatedController
   # PATCH/PUT /organizations/1
   def update
     if @organization.update(organization_params)
-      redirect_to @organization, notice: 'Organization was successfully updated.'
+      redirect_to edit_project_path(@organization.projects.last), notice: 'Organization was successfully updated.'
     else
       render :edit
     end
@@ -54,6 +54,6 @@ class OrganizationsController < AuthenticatedController
 
   # Only allow a trusted parameter "white list" through.
   def organization_params
-    params.require(:organization).permit(:name, projects_attributes: :name, users_attributes: %i[name email]).to_h.deep_merge(projects_attributes: { '0': { type: MilestoneProject, user_id: current_user.id } })
+    params.require(:organization).permit(:name, projects_attributes: %i[id name], users_attributes: %i[id name email]).to_h.deep_merge(projects_attributes: { '0': { type: MilestoneProject, user_id: current_user.id } })
   end
 end
