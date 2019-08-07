@@ -6,5 +6,5 @@ class Project < ApplicationRecord
   belongs_to :org
   belongs_to :user
 
-  monetize :amount_cents, dwith_model_currency: :currency, allow_nil: true, numericality: { greater_than_or_equal_to: 0 }
+  monetize :amount_cents, with_model_currency: :currency, allow_nil: true, numericality: { greater_than_or_equal_to: 0 }
 end
