@@ -18,7 +18,14 @@ Rails.application.config.content_security_policy do |policy|
 end
 
 # If you are using UJS then enable automatic nonce generation
-Rails.application.config.content_security_policy_nonce_generator = ->(_) { SecureRandom.base64(16) }
+Rails.application.config.content_security_policy_nonce_generator = lambda { |request|
+  # https://github.com/turbolinks/turbolinks/issues/430#issuecomment-444767978
+  if request.env['HTTP_TURBOLINKS_REFERRER'].present?
+    request.env['HTTP_X_TURBOLINKS_NONCE']
+  else
+    SecureRandom.base64(16)
+  end
+}
 
 # Set the nonce only to specific directives
 Rails.application.config.content_security_policy_nonce_directives = %w[script-src]
