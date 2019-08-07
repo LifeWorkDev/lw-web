@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
   resources :milestones
   resources :orgs
-  resources :projects
+  resources :projects do
+    get 'milestones', on: :member
+    get 'payments', on: :member
+  end
   resource :user, only: %i[edit update]
 
   as :user do
@@ -17,9 +20,6 @@ Rails.application.routes.draw do
     get 'stop_impersonating', to: 'impersonations#stop_impersonating'
   end
 
-  get 'about_you', to: 'authenticated#about_you'
-  get 'milestones', to: 'authenticated#milestones'
-  get 'new_client', to: 'authenticated#new_client'
   get 'styleguide', to: 'application#styleguide'
 
   get 'legal/terms-of-use', to: 'application#tos', as: :tos

@@ -1,5 +1,5 @@
 .form-group
-  = f.primary 'Continue >', class: 'btn btn-primary float-right'
+  = f.primary 'Continue >', class: 'btn btn-primary float-right', render_as_button: true, value: defined?(submit_val) && submit_val
   - if defined?(back) && back
     = link_to '< Back', back, class: 'btn btn-link-secondary mr-sm-2 mt-3 mt-sm-0 float-left'
   .clearfix

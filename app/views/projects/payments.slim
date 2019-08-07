@@ -1,0 +1,21 @@
+- content_for :title, 'Add Payments'
+
+.text-center
+  h1 Tell us how much you should get paid.
+
+.container.d-flex.justify-content-center
+  = bootstrap_form_with(model: @project, url: project_path(@project), class: 'w-100', layout: :horizontal) do |f|
+    
+    = f.number_field :amount, label: 'Total contract amount', placeholder: '0.00', prepend: '$', required: true
+    .form-row.mb-2.font-weight-bold
+      .col-2 Date
+      /.col-2 Percent
+      .col-2 Amount
+      .col-6 Description
+    = f.fields_for :milestones do |m|
+      .form-row
+        .form-group.col.col-2= m.object.date.strftime('%-m/%-d/%Y')
+        /= m.number_field :percent, append: '%', hide_label: true, layout: :inline, placeholder: 'of total', wrapper: { class: 'col col-2' }
+        = m.number_field :amount, hide_label: true, layout: :inline, placeholder: '0.00', prepend: '$', wrapper: { class: 'col col-2' }
+        = m.text_field :description, hide_label: true, control_class: 'form-control w-100', layout: :inline, placeholder: 'Enter a description', wrapper: { class: 'col col-6' }
+    .mt-4= render 'shared/form_buttons', f: f, back: milestones_project_path(@project), submit_val: :payments

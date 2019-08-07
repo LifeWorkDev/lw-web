@@ -25,7 +25,7 @@ class OrgsController < AuthenticatedController
     @org.current_user = current_user
 
     if @org.save
-      redirect_to edit_project_path(@org.projects.last), notice: 'Org was successfully created.'
+      redirect_to milestones_project_path(@org.projects.last), notice: 'Org was successfully created.'
     else
       render :new
     end
@@ -34,7 +34,7 @@ class OrgsController < AuthenticatedController
   # PATCH/PUT /orgs/1
   def update
     if @org.update(org_params)
-      redirect_to edit_project_path(@org.projects.last), notice: 'Org was successfully updated.'
+      redirect_to milestones_project_path(@org.projects.last), notice: 'Org was successfully updated.'
     else
       render :edit
     end

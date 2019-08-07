@@ -11,4 +11,8 @@ class Milestone < ApplicationRecord
     state :paid
     state :rejected
   end
+
+  def percent
+    (amount || 0.to_money) / (project.amount || 0.to_money)
+  end
 end

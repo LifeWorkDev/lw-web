@@ -1,5 +1,5 @@
 class ProjectsController < AuthenticatedController
-  before_action :set_project, only: %i[show edit update destroy]
+  before_action :set_project, only: %i[show edit milestones payments update destroy]
 
   # GET /projects
   def index
@@ -19,9 +19,15 @@ class ProjectsController < AuthenticatedController
   # GET /projects/1/edit
   def edit; end
 
+  # GET /projects/1/milestones
+  def milestones; end
+
+  # GET /projects/1/payments
+  def payments; end
+
   # POST /projects
   def create
-    @project = Project.new(project_params)
+    @project = Project.new(project_params(@project.type))
 
     if @project.save
       redirect_to @project, notice: 'Project was successfully created.'
@@ -32,10 +38,10 @@ class ProjectsController < AuthenticatedController
 
   # PATCH/PUT /projects/1
   def update
-    if @project.update(project_params)
-      redirect_to edit_project_path(@project), notice: 'Project was successfully updated.'
+    if @project.update(project_params(@project.type))
+      redirect_to payments_project_path(@project), notice: 'Milestones successfully added.' if params[:button] == 'milestones'
     else
-      render :edit
+      render params[:button].to_sym
     end
   end
 
@@ -53,7 +59,7 @@ class ProjectsController < AuthenticatedController
   end
 
   # Only allow a trusted parameter "white list" through.
-  def project_params
-    params.require(:project).permit(:name, milestones_attributes: [:date])
+  def project_params(type)
+    params.require(type.underscore.to_sym).permit(:amount, :name, milestones_attributes: %i[amount date description id])
   end
 end
