@@ -11,19 +11,15 @@ h2.text-center.mt-2
     .form-group.mb-0
       label.required What kinds of freelance work do you do?
     .list-group.mb-4.font-sans-serif
-      - ['Accounting & Consulting', 'Admin Support', 'Customer Service', 'Data Science & Analytics', 'Design & Creative', 'Engineering & Architecture', 'IT & Networking', 'Legal', 'Sales & Marketing', 'Translation', 'Web, Mobile & Software Dev', 'Writing'].each_with_index do |choice, index|
-        - name = "choice#{index}"
-        = check_box_tag name
-        label.list-group-item for=name = choice
+      = f.collection_check_boxes_without_bootstrap :work_category, ['Accounting & Consulting', 'Admin Support', 'Customer Service', 'Data Science & Analytics', 'Design & Creative', 'Engineering & Architecture', 'IT & Networking', 'Legal', 'Sales & Marketing', 'Translation', 'Web, Mobile & Software Dev', 'Writing'], :to_s, :to_s do |cb|
+        = cb.check_box
+        = cb.label(class: 'list-group-item')
     .form-group.mb-0
       label.required What type of freelancer are you?
     .list-group.mb-4.font-sans-serif
-      = radio_button_tag 'test', '5'
-      label.list-group-item for='test_5' Part-Time
-      = radio_button_tag 'test', '6'
-      label.list-group-item for='test_6' Full-Time
-      = radio_button_tag 'test', '4'
-      label.list-group-item for='test_4' Team Leader
+      = f.collection_radio_buttons_without_bootstrap :work_type, ['Part-Time', 'Full-Time', 'Team Leader'], :to_s, :to_s do |cb|
+        = cb.radio_button
+        = cb.label(class: 'list-group-item')
     = render 'shared/form_buttons', f: f
       
   

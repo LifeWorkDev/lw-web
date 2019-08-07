@@ -16,6 +16,6 @@ class UsersController < AuthenticatedController
 private
 
   def attributes
-    params.require(:user).permit(:name, :email, :phone, :address, :time_zone, :password)
+    params.require(:user).permit(:name, :email, :phone, :address, :time_zone, :password, :work_type, work_category: [])
   end
 end
