@@ -10,6 +10,7 @@ gem 'bootstrap_form'
 gem 'devise', github: 'plataformatec/devise', branch: 'master'
 gem 'devise_invitable'
 gem 'fast_blank' # Much faster version of #blank?
+gem 'friendly_id', github: 'norman/friendly_id' # "friendly" urls like /projects/cool-project
 gem 'jsonb_accessor', github: 'volkanunsal/jsonb_accessor' # Store arbitrary model data in jsonb fields
 gem 'logidze' # version tracking
 gem 'lograge' # one-line logs

@@ -1,28 +1,10 @@
 class User < ApplicationRecord
-  include AASM
+  include Status
   include Users::Roles
 
-  aasm column: :status, whiny_transitions: false, whiny_persistence: true do
-    state :pending, initial: true
-    state :active
-    state :disabled
-
-    event :activate do
-      transitions from: :pending, to: :active
-    end
-
-    event :disable do
-      transitions from: %i[pending active], to: :disabled
-    end
-
-    event :enable do
-      transitions from: :disabled, to: :active
-    end
-  end
-
-  belongs_to :organization, optional: true
+  belongs_to :org, optional: true
   has_many :projects, dependent: :destroy
-  has_many :clients, through: :projects, class_name: 'Organization'
+  has_many :clients, through: :projects, class_name: 'Org'
 
   devise :database_authenticatable, :lockable,
          :invitable, :registerable, :recoverable, :rememberable,

@@ -15,4 +15,4 @@
           = hidden_field_tag 'project[milestones_attributes][][date]', nil, id: nil
           button.close type="button" data-dismiss="alert" aria-label="Close"
             span aria-hidden="true" &times;
-    .mt-4= render 'shared/form_buttons', f: f, back: edit_organization_path(@project.organization)
+    .mt-4= render 'shared/form_buttons', f: f, back: edit_org_path(@project.org)

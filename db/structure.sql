@@ -82,15 +82,49 @@ CREATE TABLE public.ar_internal_metadata (
 
 
 --
+-- Name: friendly_id_slugs; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.friendly_id_slugs (
+    id bigint NOT NULL,
+    slug character varying NOT NULL,
+    sluggable_id integer NOT NULL,
+    sluggable_type character varying(50),
+    scope character varying,
+    created_at timestamp without time zone
+);
+
+
+--
+-- Name: friendly_id_slugs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.friendly_id_slugs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: friendly_id_slugs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.friendly_id_slugs_id_seq OWNED BY public.friendly_id_slugs.id;
+
+
+--
 -- Name: milestones; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.milestones (
     id bigint NOT NULL,
-    date timestamp without time zone NOT NULL,
-    amount_cents integer DEFAULT 0 NOT NULL,
-    description character varying,
     project_id bigint NOT NULL,
+    date timestamp without time zone NOT NULL,
+    status character varying NOT NULL,
+    amount_cents integer,
+    description public.citext,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
@@ -116,23 +150,26 @@ ALTER SEQUENCE public.milestones_id_seq OWNED BY public.milestones.id;
 
 
 --
--- Name: organizations; Type: TABLE; Schema: public; Owner: -
+-- Name: orgs; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.organizations (
+CREATE TABLE public.orgs (
     id bigint NOT NULL,
-    name character varying,
+    name public.citext NOT NULL,
+    status character varying NOT NULL,
+    slug character varying NOT NULL,
     metadata jsonb,
+    stripe_id character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
 
 
 --
--- Name: organizations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: orgs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE public.organizations_id_seq
+CREATE SEQUENCE public.orgs_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -141,10 +178,10 @@ CREATE SEQUENCE public.organizations_id_seq
 
 
 --
--- Name: organizations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: orgs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE public.organizations_id_seq OWNED BY public.organizations.id;
+ALTER SEQUENCE public.orgs_id_seq OWNED BY public.orgs.id;
 
 
 --
@@ -153,13 +190,15 @@ ALTER SEQUENCE public.organizations_id_seq OWNED BY public.organizations.id;
 
 CREATE TABLE public.projects (
     id bigint NOT NULL,
-    name character varying,
-    amount_cents integer DEFAULT 0 NOT NULL,
-    amount_currency character varying DEFAULT 'USD'::character varying NOT NULL,
-    type character varying NOT NULL,
-    metadata jsonb,
-    organization_id bigint NOT NULL,
+    org_id bigint NOT NULL,
     user_id bigint NOT NULL,
+    name public.citext,
+    status character varying NOT NULL,
+    type character varying NOT NULL,
+    amount_cents integer DEFAULT 0 NOT NULL,
+    currency character varying DEFAULT 'USD'::character varying NOT NULL,
+    slug character varying NOT NULL,
+    metadata jsonb,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
@@ -206,9 +245,8 @@ CREATE TABLE public.users (
     phone public.citext,
     address public.citext,
     time_zone character varying,
-    organization_id bigint,
+    org_id bigint,
     metadata jsonb,
-    stripe_id character varying,
     invited_by_id integer,
     invited_by_type character varying,
     invitation_token character varying,
@@ -232,6 +270,10 @@ CREATE TABLE public.users (
     failed_attempts integer DEFAULT 0 NOT NULL,
     unlock_token character varying,
     locked_at timestamp without time zone,
+    stripe_id character varying,
+    stripe_key character varying,
+    stripe_access_token character varying,
+    stripe_refresh_token character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
@@ -257,6 +299,13 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
+-- Name: friendly_id_slugs id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.friendly_id_slugs ALTER COLUMN id SET DEFAULT nextval('public.friendly_id_slugs_id_seq'::regclass);
+
+
+--
 -- Name: milestones id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -264,10 +313,10 @@ ALTER TABLE ONLY public.milestones ALTER COLUMN id SET DEFAULT nextval('public.m
 
 
 --
--- Name: organizations id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: orgs id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.organizations ALTER COLUMN id SET DEFAULT nextval('public.organizations_id_seq'::regclass);
+ALTER TABLE ONLY public.orgs ALTER COLUMN id SET DEFAULT nextval('public.orgs_id_seq'::regclass);
 
 
 --
@@ -293,6 +342,14 @@ ALTER TABLE ONLY public.ar_internal_metadata
 
 
 --
+-- Name: friendly_id_slugs friendly_id_slugs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.friendly_id_slugs
+    ADD CONSTRAINT friendly_id_slugs_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: milestones milestones_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -301,11 +358,11 @@ ALTER TABLE ONLY public.milestones
 
 
 --
--- Name: organizations organizations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: orgs orgs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.organizations
-    ADD CONSTRAINT organizations_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.orgs
+    ADD CONSTRAINT orgs_pkey PRIMARY KEY (id);
 
 
 --
@@ -333,6 +390,27 @@ ALTER TABLE ONLY public.users
 
 
 --
+-- Name: index_friendly_id_slugs_on_slug_and_sluggable_type; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_friendly_id_slugs_on_slug_and_sluggable_type ON public.friendly_id_slugs USING btree (slug, sluggable_type);
+
+
+--
+-- Name: index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope ON public.friendly_id_slugs USING btree (slug, sluggable_type, scope);
+
+
+--
+-- Name: index_friendly_id_slugs_on_sluggable_type_and_sluggable_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_friendly_id_slugs_on_sluggable_type_and_sluggable_id ON public.friendly_id_slugs USING btree (sluggable_type, sluggable_id);
+
+
+--
 -- Name: index_milestones_on_project_id_and_date; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -340,10 +418,17 @@ CREATE INDEX index_milestones_on_project_id_and_date ON public.milestones USING 
 
 
 --
--- Name: index_organizations_on_metadata; Type: INDEX; Schema: public; Owner: -
+-- Name: index_orgs_on_metadata; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_organizations_on_metadata ON public.organizations USING gin (metadata);
+CREATE INDEX index_orgs_on_metadata ON public.orgs USING gin (metadata);
+
+
+--
+-- Name: index_orgs_on_slug; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_orgs_on_slug ON public.orgs USING btree (slug);
 
 
 --
@@ -354,17 +439,17 @@ CREATE INDEX index_projects_on_metadata ON public.projects USING gin (metadata);
 
 
 --
--- Name: index_projects_on_organization_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_projects_on_org_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_projects_on_organization_id ON public.projects USING btree (organization_id);
+CREATE INDEX index_projects_on_org_id ON public.projects USING btree (org_id);
 
 
 --
--- Name: index_projects_on_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_projects_on_user_id_and_slug; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_projects_on_user_id ON public.projects USING btree (user_id);
+CREATE UNIQUE INDEX index_projects_on_user_id_and_slug ON public.projects USING btree (user_id, slug);
 
 
 --
@@ -396,10 +481,10 @@ CREATE INDEX index_users_on_metadata ON public.users USING gin (metadata);
 
 
 --
--- Name: index_users_on_organization_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_users_on_org_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_users_on_organization_id ON public.users USING btree (organization_id);
+CREATE INDEX index_users_on_org_id ON public.users USING btree (org_id);
 
 
 --
@@ -431,11 +516,11 @@ CREATE UNIQUE INDEX index_users_on_unlock_token ON public.users USING btree (unl
 
 
 --
--- Name: projects fk_rails_9aee26923d; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: projects fk_rails_4ab09e4d6e; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.projects
-    ADD CONSTRAINT fk_rails_9aee26923d FOREIGN KEY (organization_id) REFERENCES public.organizations(id);
+    ADD CONSTRAINT fk_rails_4ab09e4d6e FOREIGN KEY (org_id) REFERENCES public.orgs(id);
 
 
 --
@@ -455,11 +540,11 @@ ALTER TABLE ONLY public.projects
 
 
 --
--- Name: users fk_rails_d7b9ff90af; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: users fk_rails_e73753bccb; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.users
-    ADD CONSTRAINT fk_rails_d7b9ff90af FOREIGN KEY (organization_id) REFERENCES public.organizations(id);
+    ADD CONSTRAINT fk_rails_e73753bccb FOREIGN KEY (org_id) REFERENCES public.orgs(id);
 
 
 --
@@ -473,6 +558,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190806000440'),
 ('20190806184608'),
 ('20190806184609'),
-('20190806184610');
+('20190806184610'),
+('20190807023127');
 
 

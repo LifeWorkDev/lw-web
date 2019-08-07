@@ -1,3 +1,5 @@
+require 'active_support/core_ext/string'
+
 require 'guard/rspec/dsl'
 dsl = Guard::RSpec::Dsl.new(self)
 

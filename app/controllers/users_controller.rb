@@ -10,7 +10,7 @@ class UsersController < AuthenticatedController
       # Don't sign user out after they change their password
       bypass_sign_in(@user) if attributes['password'] && @user.valid?
     end
-    redirect_to new_organization_path
+    redirect_to new_org_path
   end
 
 private

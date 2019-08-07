@@ -10,11 +10,8 @@ class CreateUsers < ActiveRecord::Migration[6.0]
       t.citext :phone
       t.citext :address
       t.string :time_zone
-      t.belongs_to :organization, foreign_key: true
-      t.jsonb  :metadata
-
-      # Payment Processor customer id/token
-      t.string :stripe_id
+      t.belongs_to :org, foreign_key: true
+      t.jsonb :metadata
 
       ## Invitable
       t.integer  :invited_by_id
@@ -52,6 +49,11 @@ class CreateUsers < ActiveRecord::Migration[6.0]
       t.integer  :failed_attempts, default: 0, null: false
       t.string   :unlock_token, index: { unique: true }
       t.datetime :locked_at
+
+      t.string :stripe_id
+      t.string :stripe_key
+      t.string :stripe_access_token
+      t.string :stripe_refresh_token
 
       t.timestamps null: false
     end

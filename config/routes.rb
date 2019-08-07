@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :milestones
-  resources :organizations
+  resources :orgs
   resources :projects
   resource :user, only: %i[edit update]
 

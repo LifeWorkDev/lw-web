@@ -6,6 +6,13 @@ GIT
     memery (1.0.0)
 
 GIT
+  remote: https://github.com/norman/friendly_id.git
+  revision: 6cdad240957dab08dd5c64b40dc6025db74d6e3d
+  specs:
+    friendly_id (5.2.5)
+      activerecord (>= 4.0.0)
+
+GIT
   remote: https://github.com/plataformatec/devise.git
   revision: 9aa17eec07719a97385dd40fa05c4029983a1cd5
   branch: master
@@ -405,6 +412,7 @@ DEPENDENCIES
   devise!
   devise_invitable
   fast_blank
+  friendly_id!
   gindex
   guard
   guard-rspec
