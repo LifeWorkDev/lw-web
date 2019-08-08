@@ -39,7 +39,7 @@ class ProjectsController < AuthenticatedController
   # PATCH/PUT /projects/1
   def update
     if @project.update(project_params(@project.type))
-      redirect_to payments_project_path(@project), notice: 'Milestones successfully added.' if params[:button] == 'milestones'
+      redirect_to payments_project_path(@project), notice: "#{params[:button].capitalize} were updated."
     else
       render params[:button].to_sym
     end

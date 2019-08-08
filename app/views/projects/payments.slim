@@ -3,9 +3,13 @@
 .text-center
   h1 Tell us how much you should get paid.
 
-.container.d-flex.justify-content-center
-  = bootstrap_form_with(model: @project, url: project_path(@project), class: 'w-100', layout: :horizontal) do |f|
-    
+.container.d-flex.flex-column.justify-content-center
+  - if flash[:notice].present?
+    .row
+      .col
+        .alert.alert-success
+            .alert-heading.mb-0= flash[:notice]
+  = bootstrap_form_with(model: @project, url: project_path(@project), class: 'w-100', layout: :horizontal, local: true) do |f|
     = f.number_field :amount, label: 'Total contract amount', placeholder: '0.00', prepend: '$', required: true
     .form-row.mb-2.font-weight-bold
       .col-2 Date
