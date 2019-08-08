@@ -8,7 +8,7 @@
   = bootstrap_form_with(model: @project, url: project_path(@project), local: true) do |f|
     = f.hidden_field :id
     - existing_dates = @project.milestones.pluck(:date).map(&:to_date).map(&:to_s).presence
-    div data-controller='flatpickr' data-flatpickr-default-date=existing_dates data-flatpickr-disable=existing_dates data-flatpickr-disable-mobile='true' data-flatpickr-inline='true' data-flatpickr-mode='multiple'
+    div data-controller='flatpickr' data-flatpickr-default-date=existing_dates data-flatpickr-disable-mobile='true' data-flatpickr-inline='true' data-flatpickr-min-date='today' data-flatpickr-mode='multiple'
       .mb-2.text-sm-left.text-center data-target='flatpickr.selections' &nbsp;
       template data-target='flatpickr.template'
         span.badge.badge-primary.badge-pill.date-pill.mr-2.mb-2

@@ -96,7 +96,7 @@ $list-group-border-radius: none;
 }
 
 span.flatpickr-day {
-  &.selected, &.flatpickr-disabled {
+  &.selected { // Remove , &.flatpickr-disabled until fixed: https://github.com/flatpickr/flatpickr/issues/1905
     &, &:focus, &:hover {
       background: $blue;
       border-color: $blue;
