@@ -10,7 +10,11 @@ class UsersController < AuthenticatedController
       # Don't sign user out after they change their password
       bypass_sign_in(@user) if attributes['password'] && @user.valid?
     end
-    redirect_to new_org_path
+    if params[:org].present? && (org = @user.clients.find(params[:org]))
+      redirect_to edit_org_path(org)
+    else
+      redirect_to new_org_path
+    end
   end
 
 private
