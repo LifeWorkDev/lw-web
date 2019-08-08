@@ -195,7 +195,7 @@ CREATE TABLE public.projects (
     name public.citext,
     status character varying NOT NULL,
     type character varying NOT NULL,
-    amount_cents integer DEFAULT 0 NOT NULL,
+    amount_cents integer,
     currency character varying DEFAULT 'USD'::character varying NOT NULL,
     slug character varying NOT NULL,
     metadata jsonb,
