@@ -7,8 +7,8 @@ class User < ApplicationRecord
   has_many :clients, through: :projects, source: :org
 
   devise :database_authenticatable, :lockable,
-         :invitable, :registerable, :recoverable, :rememberable,
-         :timeoutable, :trackable, :validatable
+         :invitable, :registerable, :recoverable,
+         :rememberable, :trackable, :validatable
 
   jsonb_accessor :metadata,
                  work_category: [:string, array: true, default: []],
