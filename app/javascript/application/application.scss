@@ -136,6 +136,19 @@ h3 {
   text-transform: uppercase;
 }
 
+.input-group {
+  font-family: $font-family-sans-serif;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+
+  &::-webkit-inner-spin-button, &::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
 .list-group-item {
   user-select: none;
 }
