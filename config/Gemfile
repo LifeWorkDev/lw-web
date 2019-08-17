@@ -20,6 +20,7 @@ gem 'nilify_blanks', github: 'swrobel/nilify_blanks'
 gem 'pg', '>= 0.18', '< 2.0'
 gem 'pretender' # Impersonate users
 gem 'puma'
+gem 'react-rails'
 gem 'route_downcaser' # Make routes case-insensitive
 gem 'slim-rails' # Template language, lightweight alternative to erb/haml
 gem 'strong_migrations' # complains about migration worst-practices

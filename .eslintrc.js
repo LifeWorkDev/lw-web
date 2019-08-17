@@ -9,6 +9,7 @@ module.exports = {
   extends: [
     'plugin:prettier/recommended',
     'eslint:recommended',
+    'plugin:react/recommended',
     'plugin:import/errors',
     'plugin:import/warnings'
   ],
@@ -26,6 +27,7 @@ module.exports = {
     'prettier/prettier': [
       'error',
       {
+        jsxSingleQuote: true,
         semi: false,
         singleQuote: true,
         trailingComma: 'all'
@@ -49,6 +51,9 @@ module.exports = {
         allowTemplateLiterals: false
       }
     ],
+    'react/forbid-foreign-prop-types': 'error',
+    'react/jsx-fragments': ['error', 'syntax'],
+    'react/no-typos': 'error',
     semi: ['error', 'never'],
     'sort-imports-es6-autofix/sort-imports-es6': [
       'error',
@@ -71,6 +76,7 @@ module.exports = {
       webpack: {
         config: path.resolve('config/webpack/development.js')
       }
-    }
+    },
+    react: { version: 'detect' }
   }
 }

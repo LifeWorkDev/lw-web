@@ -10,17 +10,5 @@
         .alert.alert-success
             .alert-heading.mb-0= flash[:notice]
   = bootstrap_form_with(model: @project, url: project_path(@project), class: 'w-100 mt-2', control_col: 'col-sm-6 col-md-3', label_col: 'col-sm-6 text-sm-right', layout: :horizontal, local: true) do |f|
-    = f.number_field :amount, inputmode: 'decimal', label: 'Total contract amount', placeholder: '0.00', prepend: '$', required: true
-    .form-row.mb-2.font-weight-bold.d-none.d-sm-flex
-      .col-sm-2 Date
-      .col-sm-2 Amount
-      .col-sm-2 Percent
-      .col-sm-6 Description
-    = f.fields_for :milestones do |m|
-      .form-row.justify-content-end
-        .form-group.d-flex.flex-column.justify-content-center.col-4.col-sm-2.font-sans-serif
-          span= m.object.date.strftime('%-m/%-d/%Y')
-        = m.number_field :amount, hide_label: true, input_group_class: 'input-group-sm', inputmode: 'decimal', layout: :inline, placeholder: '0.00', prepend: '$', wrapper: { class: 'col-4 col-sm-2' }
-        = m.number_field :percent, append: '%', control_class: 'form-control text-right', hide_label: true, inputmode: 'decimal', input_group_class: 'input-group-sm', layout: :inline, placeholder: 'of total', wrapper: { class: 'col-4 col-sm-2' }
-        = m.text_field :description, hide_label: true, control_class: 'form-control form-control-sm w-100', layout: :inline, placeholder: 'Enter a description', wrapper: { class: 'col-8 col-sm-6' }
-    .mt-4= render 'shared/form_buttons', f: f, back: milestones_project_path(@project), submit_val: :payments
+    = react_component('PaymentsForm', { milestones: @project.milestones, total: @project.amount.to_s })
+    = render 'shared/form_buttons', f: f, back: milestones_project_path(@project), submit_val: :payments

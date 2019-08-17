@@ -12,6 +12,15 @@ class Milestone < ApplicationRecord
     state :rejected
   end
 
+  def as_json(*)
+    {
+      id: id,
+      amount: amount.to_s,
+      date: date.strftime('%-m/%-d/%Y'),
+      description: description,
+    }
+  end
+
   def percent
     (amount || 0.to_money) / (project.amount || 0.to_money)
   end

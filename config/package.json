@@ -6,14 +6,21 @@
     "yarn": ">= 1"
   },
   "scripts": {
-    "lint": "eslint app/javascript --ext .js"
+    "lint": "eslint app/javascript --ext .js,.jsx"
   },
   "dependencies": {
     "@babel/plugin-proposal-optional-chaining": "^7.2.0",
+    "@babel/preset-react": "^7.0.0",
     "@rails/actioncable": "^6.0.0-alpha",
     "@rails/activestorage": "^6.0.0-alpha",
     "@rails/ujs": "^6.0.0-alpha",
     "@rails/webpacker": "^4.0.7",
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
+    "prop-types": "^15.7.2",
+    "react": "^16.9.0",
+    "react-day-picker": "^7.3.2",
+    "react-dom": "^16.9.0",
+    "react_ujs": "^2.6.0",
     "stimulus": "^1.1.1",
     "stimulus-flatpickr": "^1.0.0",
     "turbolinks": "^5.2.0"
@@ -27,6 +34,7 @@
     "eslint-loader": "^2.2.1",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-react": "^7.14.3",
     "eslint-plugin-sort-imports-es6-autofix": "^0.4.0",
     "eslint-plugin-sort-keys-fix": "^1.0.1",
     "prettier": "^1.18.2",
