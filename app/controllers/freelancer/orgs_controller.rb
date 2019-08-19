@@ -25,7 +25,7 @@ class Freelancer::OrgsController < AuthenticatedController
     @org.current_user = current_user
 
     if @org.save
-      redirect_to milestones_freelancer_project_path(@org.projects.last), notice: 'Org was successfully created.'
+      redirect_to milestones_freelancer_project_path(@org.projects.last), notice: 'Client was successfully created.'
     else
       render :new
     end
@@ -34,7 +34,7 @@ class Freelancer::OrgsController < AuthenticatedController
   # PATCH/PUT /orgs/1
   def update
     if @org.update(org_params)
-      redirect_to milestones_freelancer_project_path(@org.projects.last), notice: 'Org was successfully updated.'
+      redirect_to milestones_freelancer_project_path(@org.projects.last), notice: 'Client was successfully updated.'
     else
       render :edit
     end
@@ -43,7 +43,7 @@ class Freelancer::OrgsController < AuthenticatedController
   # DELETE /orgs/1
   def destroy
     @org.destroy
-    redirect_to orgs_url, notice: 'Org was successfully destroyed.'
+    redirect_to orgs_url, notice: 'Client was successfully destroyed.'
   end
 
   private
