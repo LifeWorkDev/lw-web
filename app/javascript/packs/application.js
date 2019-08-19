@@ -14,6 +14,4 @@ document.addEventListener('turbolinks:request-start', event =>
 
 require.context('../images', true)
 // Support component names relative to this directory:
-let componentRequireContext = require.context('components', true)
-let ReactRailsUJS = require('react_ujs')
-ReactRailsUJS.useContext(componentRequireContext)
+require('react_ujs').useContext(require.context('components', true))

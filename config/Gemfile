@@ -2,19 +2,19 @@ source 'https://rubygems.org'
 
 ruby "~> #{`cat .ruby-version`.strip}"
 
-gem 'rails', github: 'rails/rails', branch: '6-0-stable'
+gem 'rails', '~> 6.0.0'
 
 gem 'aasm' # Acts as State Machine
 gem 'argon2' # More secure password hashing than default bcrypt
 gem 'bootstrap_form'
-gem 'devise', github: 'plataformatec/devise', branch: 'master'
+gem 'devise' # Authentication
 gem 'devise_invitable'
 gem 'fast_blank' # Much faster version of #blank?
 gem 'friendly_id', github: 'norman/friendly_id' # "friendly" urls like /projects/cool-project
 gem 'jsonb_accessor', github: 'volkanunsal/jsonb_accessor' # Store arbitrary model data in jsonb fields
 gem 'logidze' # version tracking
 gem 'lograge' # one-line logs
-gem 'memery', github: 'AlexWayfer/memery', branch: 'optimize' # Memoization
+gem 'memery' # Memoization
 gem 'money-rails'
 gem 'nilify_blanks', github: 'swrobel/nilify_blanks'
 gem 'pg', '>= 0.18', '< 2.0'
@@ -55,7 +55,7 @@ group :development do
   gem 'terminal-notifier'
   gem 'terminal-notifier-guard'
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
-  gem 'web-console', github: 'rails/web-console'
+  gem 'web-console'
 end
 
 group :test do
