@@ -47,6 +47,7 @@ $list-group-border-radius: none;
   $input-font-family: $font-family-sans-serif !global;
   $input-border-color: $gray-500 !global;
   $input-placeholder-color: $gray-500 !global;
+  $list-group-border-color: $gray-500 !global;
 }
 
 @import '~bootstrap/scss/bootstrap';
