@@ -225,3 +225,7 @@ input[type=number] {
 select:invalid {
   color: $input-placeholder-color;
 }
+
+.table th {
+  border-top: none;
+}

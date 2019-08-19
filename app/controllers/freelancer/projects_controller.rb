@@ -1,9 +1,9 @@
-class ProjectsController < AuthenticatedController
+class Freelancer::ProjectsController < AuthenticatedController
   before_action :set_project, only: %i[show edit milestones payments update destroy]
 
   # GET /projects
   def index
-    @projects = Project.all
+    @projects = current_user.projects.all
   end
 
   # GET /projects/1
@@ -11,9 +11,8 @@ class ProjectsController < AuthenticatedController
 
   # GET /projects/new
   def new
-    @project = Project.new
     # Convert to https://stackoverflow.com/a/45740056/337446
-    @project.type = MilestoneProject
+    @project = current_user.projects.build(type: MilestoneProject)
   end
 
   # GET /projects/1/edit
@@ -27,7 +26,7 @@ class ProjectsController < AuthenticatedController
 
   # POST /projects
   def create
-    @project = Project.new(project_params(@project.type))
+    @project = current_user.projects.build(project_params(@project.type))
 
     if @project.save
       redirect_to @project, notice: 'Project was successfully created.'
@@ -38,8 +37,11 @@ class ProjectsController < AuthenticatedController
 
   # PATCH/PUT /projects/1
   def update
-    if @project.update(project_params(@project.type))
-      redirect_to payments_project_path(@project), notice: "#{params[:button].capitalize} were updated."
+    @project.assign_attributes(project_params)
+    notice = "#{params[:button].capitalize} were updated." if @project.milestones_changed?
+    if @project.save
+      path = params[:button] == 'payments' ? freelancer_projects_path : payments_freelancer_project_path(@project)
+      redirect_to path, notice: notice
     else
       render params[:button].to_sym
     end
@@ -59,7 +61,7 @@ class ProjectsController < AuthenticatedController
   end
 
   # Only allow a trusted parameter "white list" through.
-  def project_params(type)
-    params.require(type.underscore.to_sym).permit(:amount, :name, milestones_attributes: %i[amount date description id])
+  def project_params
+    params.require(@project.type.underscore.to_sym).permit(:amount, :name, milestones_attributes: %i[amount date description id])
   end
 end

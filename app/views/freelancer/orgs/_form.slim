@@ -2,7 +2,7 @@ h2.text-center.mt-2
   | Let us know who you're working with.
 
 .container
-  = bootstrap_form_with(model: @org, layout: :horizontal, local: true) do |f|
+  = bootstrap_form_with(model: @org, layout: :horizontal, local: true, url: freelancer_orgs_path) do |f|
     = f.alert_message 'Errors'
     = f.fields_for :users do |u|
       = u.hidden_field :id
@@ -12,4 +12,4 @@ h2.text-center.mt-2
     = f.fields_for :projects do |p|
       = p.hidden_field :id
       = p.text_field :name, label: 'Project Name', placeholder: 'XYZ Project', required: true
-    = render 'shared/form_buttons', f: f, back: edit_user_path(org: @org)
+    = render 'shared/form_buttons', f: f, back: :back

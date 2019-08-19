@@ -1,4 +1,4 @@
-class MilestonesController < AuthenticatedController
+class Freelancer::MilestonesController < AuthenticatedController
   before_action :set_milestone, only: %i[show edit update destroy]
 
   # GET /milestones

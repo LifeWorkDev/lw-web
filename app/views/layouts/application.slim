@@ -7,6 +7,11 @@ html.h-100 lang="en"
     = render 'shared/navbar'
     
     .container.flex-shrink-0
+      - if flash[:notice].present?
+        .row
+          .col
+            .alert.alert-success
+                .alert-heading.mb-0= flash[:notice]
       = yield
     
     = render 'shared/footer'

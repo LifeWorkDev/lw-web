@@ -1,7 +1,7 @@
 class Org < ApplicationRecord
   include Status
   extend FriendlyId
-  friendly_id :name_or_user_name
+  friendly_id :display_name
 
   attr_accessor :current_user
 
@@ -10,7 +10,7 @@ class Org < ApplicationRecord
   has_many :users, dependent: :nullify
   accepts_nested_attributes_for :users, reject_if: :existing_user
 
-  def name_or_user_name
+  def display_name
     self[:name].presence || users.first.name
   end
 

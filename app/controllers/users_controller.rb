@@ -11,9 +11,9 @@ class UsersController < AuthenticatedController
       bypass_sign_in(@user) if attributes['password'] && @user.valid?
     end
     if params[:org].present? && (org = @user.clients.find(params[:org]))
-      redirect_to edit_org_path(org)
+      redirect_to edit_freelancer_org_path(org)
     else
-      redirect_to new_org_path
+      redirect_to new_freelancer_org_path
     end
   end
 

@@ -1,11 +1,17 @@
 Rails.application.routes.draw do
-  resources :milestones
-  resources :orgs
-  resources :projects do
-    get 'milestones', on: :member
-    get 'payments', on: :member
-  end
   resource :user, only: %i[edit update]
+
+  namespace :client, path: 'c' do
+  end
+
+  namespace :freelancer, path: 'f' do
+    resources :milestones
+    resources :orgs
+    resources :projects do
+      get 'milestones', on: :member
+      get 'payments', on: :member
+    end
+  end
 
   as :user do
     get 'login', to: 'devise/sessions#new', as: :new_user_session
