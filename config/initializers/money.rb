@@ -1,3 +1,5 @@
+Money.locale_backend = :i18n
+
 class Money
   def as_json(*)
     {
