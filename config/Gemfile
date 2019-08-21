@@ -17,6 +17,7 @@ gem 'lograge' # one-line logs
 gem 'memery' # Memoization
 gem 'money-rails'
 gem 'nilify_blanks', github: 'swrobel/nilify_blanks'
+gem 'oj' # Faster json parsing/generation library
 gem 'pg', '>= 0.18', '< 2.0'
 gem 'pretender' # Impersonate users
 gem 'puma'
