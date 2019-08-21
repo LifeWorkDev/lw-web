@@ -11,6 +11,8 @@ Rails.application.routes.draw do
       get 'milestones', on: :member
       get 'payments', on: :member
     end
+    get 'stripe/callback', to: 'stripe#callback'
+    get 'stripe/connect', to: 'stripe#connect', as: :stripe_connect
   end
 
   as :user do
@@ -36,5 +38,5 @@ Rails.application.routes.draw do
   %w[signup users].each { |path| get path, to: redirect('/sign_up') }
   get 'users/password', to: redirect('/passwords/new')
 
-  root to: redirect('/sign_up')
+  root to: redirect('/f/projects')
 end

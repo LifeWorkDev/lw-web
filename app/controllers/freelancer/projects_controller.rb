@@ -40,7 +40,7 @@ class Freelancer::ProjectsController < AuthenticatedController
     @project.assign_attributes(project_params)
     notice = "#{params[:button].capitalize} were updated." if @project.milestones_changed?
     if @project.save
-      path = params[:button] == 'payments' ? freelancer_projects_path : payments_freelancer_project_path(@project)
+      path = params[:button] == 'payments' ? freelancer_stripe_connect_path : payments_freelancer_project_path(@project)
       redirect_to path, notice: notice
     else
       render params[:button].to_sym
