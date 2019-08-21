@@ -10,7 +10,7 @@ class Freelancer::StripeController < AuthenticatedController
       current_user.update!(stripe_id: stripe_resp.stripe_user_id, stripe_access_token: stripe_resp.access_token, stripe_key: stripe_resp.stripe_publishable_key, stripe_refresh_token: stripe_resp.refresh_token)
       redirect_to freelancer_projects_path, notice: 'Successfully linked to Stripe.'
     else
-      redirect_to freelancer_projects_path, alert: 'Could not link to Stripe. Please try again.'
+      redirect_to freelancer_stripe_connect_path, alert: 'Could not link to Stripe. Please try again.'
     end
   end
 end
