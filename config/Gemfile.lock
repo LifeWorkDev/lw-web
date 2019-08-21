@@ -7,7 +7,7 @@ GIT
 
 GIT
   remote: https://github.com/swrobel/nilify_blanks.git
-  revision: 3bb25570714ae4910939248e58144621a54f27ea
+  revision: 3a9dbe21f6f4cbee917d816106c8459489ec9e2f
   specs:
     nilify_blanks (1.3.0)
       activerecord (>= 3.0.0)

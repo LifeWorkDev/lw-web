@@ -17,6 +17,3 @@ private
     raise NotImplementedError, "Subclass should override method '#{caller_locations(1, 1)[0].label}'"
   end
 end
-
-# Do it this way to get gem models that inherit from ActiveRecord::Base instead of ApplicationRecord
-ActiveRecord::Base.nilify_blanks
