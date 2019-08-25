@@ -1,14 +1,14 @@
-- unless %w(sessions confirmations passwords unlocks).include?(controller_name)
+- unless %w[sessions confirmations passwords unlocks].include?(controller_name)
   = link_to t('devise_forms.sessions.new.link'), new_session_path(resource_name)
   br/
 - if devise_mapping.registerable? && controller_name != 'registrations'
   = link_to t('devise_forms.registrations.new.link'), new_registration_path(resource_name)
   br/
-- if devise_mapping.confirmable? && !%w(confirmations registrations).include?(controller_name)
+- if devise_mapping.confirmable? && !%w[confirmations registrations].include?(controller_name)
   = link_to t('devise_forms.confirmations.new.link'), new_confirmation_path(resource_name)
   br/
-- if devise_mapping.recoverable? && !%w(passwords registrations).include?(controller_name)
+- if devise_mapping.recoverable? && !%w[passwords registrations].include?(controller_name)
   = link_to t('devise_forms.passwords.new.link'), new_password_path(resource_name)
   br/
-- if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && !%w(unlocks registrations).include?(controller_name)
+- if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && !%w[unlocks registrations].include?(controller_name)
   = link_to t('devise_forms.unlocks.new.link'), new_unlock_path(resource_name)

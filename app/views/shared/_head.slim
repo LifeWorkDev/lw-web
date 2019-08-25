@@ -2,7 +2,7 @@
 - default_description = 'Get paid for your work. Seamlessly.'
 - default_keywords = 'freelancer, payments, escrow, gig economy, gig worker'
 
-title= yield(:title).present? ? "#{yield(:title)} | LifeWork" : default_title
+title = yield(:title).present? ? "#{yield(:title)} | LifeWork" : default_title
 
 meta name='description' content="#{yield(:description).presence || default_description}"
 meta name='keywords' content="#{yield(:keywords).presence || default_keywords}"

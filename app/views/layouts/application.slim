@@ -5,13 +5,13 @@ html.h-100 lang="en"
   body.d-flex.flex-column.h-100
     = render 'shared/impersonation_bar'
     = render 'shared/navbar'
-    
+
     .container.flex-shrink-0
       - if flash.notice.present?
         = render 'shared/alert', klass: 'alert-success', message: flash.notice
       - if flash.alert.present?
         = render 'shared/alert', klass: 'alert-danger', message: flash.alert
       = yield
-    
+
     = render 'shared/footer'
     = render 'shared/analytics'

@@ -8,7 +8,7 @@ h2.text-center.mt-2
 .container
   = bootstrap_form_with(model: current_user) do |f|
     = hidden_field_tag :org, params[:org] if params[:org].present?
-    = f.time_zone_select :time_zone, ActiveSupport::TimeZone.basic_us_zones, { disabled: '', prompt: 'Please select', required: true, selected: current_user.time_zone || '' }, { control_class: 'custom-select', required: true }
+    = f.time_zone_select :time_zone, ActiveSupport::TimeZone.basic_us_zones, { disabled: '', prompt: 'Please select', required: true, selected: current_user.time_zone || '' }, control_class: 'custom-select', required: true
     .form-group.mb-0
       label.required What kinds of freelance work do you do?
     .list-group.mb-4.font-sans-serif
@@ -22,5 +22,3 @@ h2.text-center.mt-2
         = cb.radio_button
         = cb.label(class: 'list-group-item')
     = render 'shared/form_buttons', f: f
-      
-  

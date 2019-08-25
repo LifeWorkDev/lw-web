@@ -14,9 +14,9 @@
     tbody
       - current_user.projects.each do |project|
         tr
-          td= link_to project.name, milestones_freelancer_project_path(project)
-          td= project.org.display_name
-          td= project.status.capitalize
-          td= project.amount.format
+          td = link_to project.name, milestones_freelancer_project_path(project)
+          td = project.org.display_name
+          td = project.status.capitalize
+          td = project.amount.format
 
 =link_to '+ Project', new_freelancer_org_path, class: 'btn btn-primary float-right'

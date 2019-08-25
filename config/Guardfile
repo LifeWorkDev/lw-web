@@ -85,3 +85,8 @@ guard :rspec, cmd: 'bin/rspec' do
   # Subclasses
   watch(%r{^app/models/(.+)/.+\.rb$}) { |m| "spec/models/#{m[1].singularize}_spec.rb" }
 end
+
+guard :slimlint do
+  watch(%r{app/views/.*\.slim$})
+  watch(%r{config/slim-lint\.yml$}) { 'app/views' }
+end

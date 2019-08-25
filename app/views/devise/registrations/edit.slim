@@ -1,6 +1,6 @@
 - content_for :title, t('devise_forms.registrations.edit.title')
 
-= bootstrap_form_with(as: resource_name, layout: :horizontal, local: true, model: resource, url: registration_path(resource_name)) do |f|  
+= bootstrap_form_with(as: resource_name, layout: :horizontal, local: true, model: resource, url: registration_path(resource_name)) do |f|
   = f.text_field :name,
                  autocomplete: 'name',
                  autofocus: true,
@@ -13,5 +13,5 @@
                   label: t('devise_forms.user.email'),
                   placeholder: t('devise_forms.user.email_placeholder'),
                   required: true
-                     
+
   = render 'devise/shared/button', f: f, text: t('devise_forms.registrations.edit.button')

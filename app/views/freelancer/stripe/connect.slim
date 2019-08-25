@@ -2,7 +2,7 @@
 
 .text-center
   h2 Connect with Stripe to receive payments
-  
+
   .mt-4
     =link_to 'Standard', Stripe::OAuth.authorize_url, class: 'btn btn-primary mr-3'
     =link_to 'Express', Stripe::OAuth.authorize_url({}, express: true), class: 'btn btn-secondary'

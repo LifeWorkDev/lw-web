@@ -9,7 +9,7 @@
                       placeholder: t('devise_forms.user.email_placeholder'),
                       required: true,
                       value: params.dig(:user, :email)
-                      
+
       = f.password_field :password,
                          autocomplete: 'current-password',
                          label: t('devise_forms.user.password'),

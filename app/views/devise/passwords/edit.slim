@@ -3,22 +3,21 @@
 - if resource.present?
   = bootstrap_form_with(as: resource_name, layout: :horizontal, local: true, model: resource, url: password_path(resource_name)) do |f|
     = f.hidden_field :reset_password_token
-    - unless resource.name.present?  
-    = f.text_field :name,
-                   autocomplete: 'name',
-                   autofocus: true,
-                   label: t('devise_forms.user.name'),
-                   placeholder: t('devise_forms.user.name_placeholder'),
-                   required: true
-                   
-     = f.password_field :password,
-                        autocomplete: 'new-password',
-                        label: t('devise_forms.user.new_password'),
-                        placeholder: t('devise_forms.message.minimum_password_length', min_len: @minimum_password_length),
-                        required: true
-                        
+    - if resource.name.blank?
+      = f.text_field :name,
+                     autocomplete: 'name',
+                     autofocus: true,
+                     label: t('devise_forms.user.name'),
+                     placeholder: t('devise_forms.user.name_placeholder'),
+                     required: true
+
+    = f.password_field :password,
+                       autocomplete: 'new-password',
+                       label: t('devise_forms.user.new_password'),
+                       placeholder: t('devise_forms.message.minimum_password_length', min_len: @minimum_password_length),
+                       required: true
+
     = render 'devise/shared/button', f: f, text: t('devise_forms.passwords.edit.button')
 
 - else
   .alert.alert-danger We're sorry but this password reset link is invalid. #{link_to 'Request a new one here', new_user_password_path, class: 'alert-link'}.
-    
