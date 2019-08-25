@@ -18,7 +18,7 @@ $btn-border-radius-lg: $btn-border-radius;
 $btn-border-radius-sm: $btn-border-radius;
 $btn-font-size: 0.9rem;
 $btn-font-size-lg: $btn-font-size * 1.25;
-$btn-font-size-sm: $btn-font-size * .875;
+$btn-font-size-sm: $btn-font-size * 0.875;
 $btn-font-weight: 300;
 $btn-padding-y: 0.6rem;
 $btn-padding-x: 2rem;
@@ -58,12 +58,12 @@ $list-group-border-radius: none;
 
 .badge {
   .close {
-		margin-left: .25rem;
-		color: inherit;
-		font-size: 100%;
+    margin-left: 0.25rem;
+    color: inherit;
+    font-size: 100%;
     line-height: 0.9;
-		text-shadow: 0 1px 0 rgba(#000, .5);
-	}
+    text-shadow: 0 1px 0 rgba(#000, 0.5);
+  }
 }
 
 .btn {
@@ -96,9 +96,12 @@ $list-group-border-radius: none;
   border-radius: $border-radius !important;
 }
 
+// Remove , &.flatpickr-disabled until fixed: https://github.com/flatpickr/flatpickr/issues/1905
 span.flatpickr-day {
-  &.selected { // Remove , &.flatpickr-disabled until fixed: https://github.com/flatpickr/flatpickr/issues/1905
-    &, &:focus, &:hover {
+  &.selected {
+    &,
+    &:focus,
+    &:hover {
       background: $blue;
       border-color: $blue;
       color: white;
@@ -111,11 +114,11 @@ span.flatpickr-day {
 }
 
 .font-serif {
-  font-family: $font-family-serif
+  font-family: $font-family-serif;
 }
 
 .font-sans-serif {
-  font-family: $font-family-sans-serif
+  font-family: $font-family-sans-serif;
 }
 
 .form-group {
@@ -124,7 +127,7 @@ span.flatpickr-day {
   }
 
   label:not(.required):not(.form-check-label):after {
-    content:" (optional)";
+    content: ' (optional)';
     font-size: 85%;
     font-style: italic;
   }
@@ -141,10 +144,11 @@ h3 {
   font-family: $font-family-sans-serif;
 }
 
-input[type=number] {
+input[type='number'] {
   -moz-appearance: textfield;
 
-  &::-webkit-inner-spin-button, &::-webkit-outer-spin-button {
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
   }
@@ -154,59 +158,59 @@ input[type=number] {
   user-select: none;
 }
 
-.list-group input[type="checkbox"] {
+.list-group input[type='checkbox'] {
   display: none;
 }
 
-.list-group input[type="checkbox"] + .list-group-item {
+.list-group input[type='checkbox'] + .list-group-item {
   cursor: pointer;
 }
 
-.list-group input[type="checkbox"] + .list-group-item:before {
-  content: "\2713";
+.list-group input[type='checkbox'] + .list-group-item:before {
+  content: '\2713';
   color: transparent;
   font-weight: bold;
   margin-right: 1em;
 }
 
-.list-group input[type="checkbox"]:not(:checked) + .list-group-item {
+.list-group input[type='checkbox']:not(:checked) + .list-group-item {
   background-color: inherit;
 }
 
-.list-group input[type="checkbox"]:checked + .list-group-item {
+.list-group input[type='checkbox']:checked + .list-group-item {
   background-color: $blue;
-  color: #FFF;
+  color: #fff;
 }
 
-.list-group input[type="checkbox"]:checked + .list-group-item:before {
+.list-group input[type='checkbox']:checked + .list-group-item:before {
   color: inherit;
 }
 
-.list-group input[type="radio"] {
+.list-group input[type='radio'] {
   display: none;
 }
 
-.list-group input[type="radio"] + .list-group-item {
+.list-group input[type='radio'] + .list-group-item {
   cursor: pointer;
 }
 
-.list-group input[type="radio"] + .list-group-item:before {
-  content: "\25C9";
+.list-group input[type='radio'] + .list-group-item:before {
+  content: '\25C9';
   color: transparent;
   font-weight: bold;
   margin-right: 1em;
 }
 
-.list-group input[type="radio"]:not(:checked) + .list-group-item {
+.list-group input[type='radio']:not(:checked) + .list-group-item {
   background-color: inherit;
 }
 
-.list-group input[type="radio"]:checked + .list-group-item {
+.list-group input[type='radio']:checked + .list-group-item {
   background-color: $blue;
-  color: #FFF;
+  color: #fff;
 }
 
-.list-group input[type="radio"]:checked + .list-group-item:before {
+.list-group input[type='radio']:checked + .list-group-item:before {
   color: inherit;
 }
 
