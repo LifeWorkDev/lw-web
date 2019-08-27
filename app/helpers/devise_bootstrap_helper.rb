@@ -12,7 +12,7 @@ module DeviseBootstrapHelper
         #{I18n.t(
           'errors.messages.not_saved',
           count: messages.size,
-          resource: resource.class.model_name.human.downcase
+          resource: resource.class.model_name.human.downcase,
         )}
       </strong>
       HTML

@@ -3,9 +3,6 @@ require:
   - rubocop-rails
   - rubocop-rspec
 
-Rails:
-  Enabled: true
-
 AllCops:
   DisplayCopNames: true
   DisplayStyleGuide: true
@@ -17,7 +14,7 @@ AllCops:
   ExtraDetails: true
 
 Layout/AccessModifierIndentation:
-  Enabled: false
+  EnforcedStyle: outdent
 
 Lint/AmbiguousBlockAssociation:
   Exclude:
@@ -144,20 +141,14 @@ Style/MixinUsage:
   Exclude:
     - db/seeds/**/*
 
-Style/NumericLiterals:
-  Enabled: false
-
 Style/NumericPredicate:
   Enabled: false
 
 Style/TrailingCommaInArrayLiteral:
-  Enabled: false
+  EnforcedStyleForMultiline: comma
 
 Style/TrailingCommaInHashLiteral:
-  Enabled: false
+  EnforcedStyleForMultiline: comma
 
 Style/TrailingCommaInArguments:
-  Enabled: false
-
-Style/RescueModifier:
-  Enabled: false
+  EnforcedStyleForMultiline: comma

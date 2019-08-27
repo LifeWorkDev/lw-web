@@ -7,8 +7,8 @@ class Money
       formatted_amount: format,
       currency: {
         code: currency.iso_code,
-        symbol: currency.symbol
-      }
+        symbol: currency.symbol,
+      },
     }
   end
 end

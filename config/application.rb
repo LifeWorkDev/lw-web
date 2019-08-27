@@ -33,7 +33,7 @@ module LifeWork
 
     config.action_dispatch.rescue_responses.merge!(
       'AuthenticatedController::Forbidden' => :forbidden,
-      'ApplicationController::Unauthorized' => :unauthorized
+      'ApplicationController::Unauthorized' => :unauthorized,
     )
 
     config.active_record.schema_format = :sql
