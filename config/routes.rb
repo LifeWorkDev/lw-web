@@ -3,9 +3,10 @@ Rails.application.routes.draw do
 
   namespace :client, path: 'c' do
     resource :org
-    resources :projects do
+    resources :milestone_projects do
       get 'payments', on: :member
     end
+    resources :projects, only: :index
   end
 
   namespace :freelancer, path: 'f' do

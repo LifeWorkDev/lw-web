@@ -1,9 +1,9 @@
-class Freelancer::ProjectsController < AuthenticatedController
+class Client::ProjectsController < AuthenticatedController
   before_action :set_project, only: %i[show edit milestones payments update destroy]
 
   # GET /projects
   def index
-    @projects = current_user.projects.all
+    @projects = current_org.projects.all
   end
 
   # GET /projects/1
@@ -12,7 +12,7 @@ class Freelancer::ProjectsController < AuthenticatedController
   # GET /projects/new
   def new
     # Convert to https://stackoverflow.com/a/45740056/337446
-    @project = current_user.projects.build(type: MilestoneProject)
+    @project = current_org.projects.build(type: MilestoneProject)
   end
 
   # GET /projects/1/edit
@@ -32,7 +32,7 @@ class Freelancer::ProjectsController < AuthenticatedController
   # PATCH/PUT /projects/1
   def update
     if @project.update(project_params)
-      redirect_to freelancer_projects_path, notice: 'Project was successfully updated.'
+      redirect_to client_projects_path, notice: 'Project was successfully updated.'
     else
       render :edit
     end
@@ -41,14 +41,14 @@ class Freelancer::ProjectsController < AuthenticatedController
   # DELETE /projects/1
   def destroy
     @project.destroy
-    redirect_to freelancer_projects_path, notice: 'Project was successfully destroyed.'
+    redirect_to client_projects_path, notice: 'Project was successfully destroyed.'
   end
 
 private
 
   # Use callbacks to share common setup or constraints between actions.
   def set_project
-    @project = current_user.projects.find(params[:id])
+    @project = current_org.projects.find(params[:id])
   end
 
   # Only allow a trusted parameter "white list" through.
