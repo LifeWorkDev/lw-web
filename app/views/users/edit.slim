@@ -9,12 +9,7 @@ h2.text-center.mt-2
   = bootstrap_form_with(model: current_user) do |f|
     = hidden_field_tag :org, params[:org] if params[:org].present?
     = f.time_zone_select :time_zone, ActiveSupport::TimeZone.basic_us_zones, { disabled: '', prompt: 'Please select', required: true, selected: current_user.time_zone || '' }, control_class: 'custom-select', required: true
-    .form-group.mb-0
-      label.required What kinds of freelance work do you do?
-    .list-group.mb-4.font-sans-serif
-      = f.collection_check_boxes_without_bootstrap :work_category, ['Accounting & Consulting', 'Admin Support', 'Customer Service', 'Data Science & Analytics', 'Design & Creative', 'Engineering & Architecture', 'IT & Networking', 'Legal', 'Sales & Marketing', 'Translation', 'Web, Mobile & Software Dev', 'Writing'], :to_s, :to_s do |cb|
-        = cb.check_box
-        = cb.label(class: 'list-group-item')
+    = render 'shared/work_category_select', f: f, label: 'What kinds of freelance work do you do?'
     .form-group.mb-0
       label.required What type of freelancer are you?
     .list-group.mb-4.font-sans-serif

@@ -1,0 +1,6 @@
+.form-group.mb-0
+  label.required = label
+.list-group.mb-4.font-sans-serif
+  = f.collection_check_boxes_without_bootstrap :work_category, ['Accounting & Consulting', 'Admin Support', 'Customer Service', 'Data Science & Analytics', 'Design & Creative', 'Engineering & Architecture', 'IT & Networking', 'Legal', 'Sales & Marketing', 'Translation', 'Web, Mobile & Software Dev', 'Writing'], :to_s, :to_s do |cb|
+    = cb.check_box
+    = cb.label(class: 'list-group-item')
