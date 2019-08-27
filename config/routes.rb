@@ -2,6 +2,10 @@ Rails.application.routes.draw do
   resource :user, only: %i[edit update]
 
   namespace :client, path: 'c' do
+    resource :org
+    resources :projects do
+      get 'payments', on: :member
+    end
   end
 
   namespace :freelancer, path: 'f' do

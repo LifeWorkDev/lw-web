@@ -1,4 +1,4 @@
-class Freelancer::OrgsController < AuthenticatedController
+class Client::OrgsController < AuthenticatedController
   before_action :set_org, only: %i[show edit update destroy]
 
   # GET /orgs
@@ -25,7 +25,7 @@ class Freelancer::OrgsController < AuthenticatedController
     @org.current_user = current_user
 
     if @org.save
-      redirect_to milestones_freelancer_project_path(@org.projects.last), notice: 'Client was successfully created.'
+      redirect_to payments_client_project_path(@org.projects.last), notice: 'Account was successfully created.'
     else
       render :new
     end
@@ -34,7 +34,7 @@ class Freelancer::OrgsController < AuthenticatedController
   # PATCH/PUT /orgs/1
   def update
     if @org.update(org_params)
-      redirect_to milestones_freelancer_project_path(@org.projects.last), notice: 'Client was successfully updated.'
+      redirect_to payments_client_project_path(@org.projects.last), notice: 'Account was successfully updated.'
     else
       render :edit
     end
@@ -43,18 +43,18 @@ class Freelancer::OrgsController < AuthenticatedController
   # DELETE /orgs/1
   def destroy
     @org.destroy
-    redirect_to orgs_url, notice: 'Client was successfully destroyed.'
+    redirect_to orgs_url, notice: 'Account was successfully destroyed.'
   end
 
 private
 
   # Use callbacks to share common setup or constraints between actions.
   def set_org
-    @org = current_user.clients.find(params[:id])
+    @org = current_user.org
   end
 
   # Only allow a trusted parameter "white list" through.
   def org_params
-    params.require(:org).permit(:name, projects_attributes: %i[id name], users_attributes: %i[id name email]).to_h.deep_merge(projects_attributes: { '0': { type: MilestoneProject, user_id: current_user.id } })
+    params.require(:org).permit(:name, :work_category, :work_frequency)
   end
 end

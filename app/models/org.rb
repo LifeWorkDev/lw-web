@@ -10,6 +10,10 @@ class Org < ApplicationRecord
   has_many :users, dependent: :nullify
   accepts_nested_attributes_for :users, reject_if: :existing_user
 
+  jsonb_accessor :metadata,
+                 work_category: [:string, array: true, default: []],
+                 work_frequency: :string
+
   def display_name
     self[:name].presence || users.first.name
   end

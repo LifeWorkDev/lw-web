@@ -43,7 +43,7 @@ class Freelancer::MilestonesController < AuthenticatedController
     redirect_to milestones_url, notice: 'Milestone was successfully destroyed.'
   end
 
-  private
+private
 
   # Use callbacks to share common setup or constraints between actions.
   def set_milestone

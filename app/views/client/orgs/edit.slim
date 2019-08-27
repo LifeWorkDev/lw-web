@@ -1,0 +1,16 @@
+- content_for :title, 'Your Account'
+
+h2.text-center.mt-2
+  | Tell us a little about you.
+
+.container
+  = bootstrap_form_with(model: [:client, @org], layout: :horizontal, local: true) do |f|
+    = f.alert_message 'Errors'
+    = render 'shared/work_category_select', f: f, label: 'What kind of freelance work do you employ?'
+    .form-group.mb-0
+      label.required How often do you utilize freelancers?
+    .list-group.mb-4.font-sans-serif
+      = f.collection_radio_buttons_without_bootstrap :work_frequency, ['Regularly', 'Sometimes', 'Rarely', 'Just this once'], :to_s, :to_s do |cb|
+        = cb.radio_button
+        = cb.label(class: 'list-group-item')
+    = render 'shared/form_buttons', f: f
