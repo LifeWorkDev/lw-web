@@ -2,6 +2,7 @@
 
 ## Developer setup
 
+1. `git clone git@github.com:swrobel/lw-web.git && cd lw-web`
 1. `brew install node yarn`
 1. `brew install postgresql`
 1. `brew services start postgresql`
