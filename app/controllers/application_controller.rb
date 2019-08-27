@@ -23,6 +23,11 @@ class ApplicationController < ActionController::Base
     stored_location_for(resource) || edit_user_path
   end
 
+  def current_namespace
+    self.class.module_parent.to_s.underscore
+  end
+  helper_method :current_namespace
+
 protected
 
   def configure_permitted_parameters

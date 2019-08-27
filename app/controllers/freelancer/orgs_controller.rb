@@ -34,7 +34,7 @@ class Freelancer::OrgsController < AuthenticatedController
   # PATCH/PUT /orgs/1
   def update
     if @org.update(org_params)
-      redirect_to [:milestones, :freelancer, @org.projects.last], notice: 'Client was successfully updated.'
+      redirect_to [:milestones, current_namespace, @org.projects.last], notice: 'Client was successfully updated.'
     else
       render :edit
     end
