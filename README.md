@@ -26,3 +26,7 @@
 * Commit early, commit often! Don't wait until the end of the day to commit your work.
 * Commits should always be descriptively named so that it's easy to figure out what was done.
 * Commits should always be atomic. This means that each commit should only reflect one unit of work. Work from different features should not be mixed together in a single commit. If you think that the git commit message will be really long to explain what you've done, you should probably break your work up into multiple commits. Make use of `git add` to only stage the files that are necessary for a particular commit. Get out of the habit of using `git add .`
+
+## Namespaces
+
+Controllers & views are namespaced under Client & Freelancer. The routes have shorthand namespaces, `/c/` for Client & `/f/` for Freelancer.
