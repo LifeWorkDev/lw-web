@@ -2,6 +2,7 @@
 
 ## Developer setup
 
+1. `brew install node yarn`
 1. `brew install postgresql`
 1. `brew services start postgresql`
 1. `brew install nss mkcert`
@@ -30,3 +31,56 @@
 ## Namespaces
 
 Controllers & views are namespaced under Client & Freelancer. The routes have shorthand namespaces, `/c/` for Client & `/f/` for Freelancer.
+
+## Code standards
+
+We use the following linters/formatters:
+
+* [rubocop](https://docs.rubocop.org/en/stable/) (Ruby/Rails format/lint)
+* [prettier](https://prettier.io/) (JavaScript/JSX format)
+* [eslint](https://eslint.org/) (JavaScript/JSX lint)
+* [slim-lint](https://github.com/sds/slim-lint) (Rails view lint)
+* [stylelint](https://stylelint.io/) (Stylesheet lint)
+
+They should all run automatically when you've started the app with `bin/server` & you should receive notifications when something fails. All rules that can be auto-fixed are set up to do so.
+
+#### Deviations from the defaults:
+
+Ruby:
+
+* Please always use keyword args when building methods that take more than one argument. ex:
+  * Good: `def method(arg)`
+  * Good: `def method(arg1:, arg2: nil)`
+  * Bad: `def method(arg1, arg2 = nil)`
+* Indent access modifiers (`protected`, `private`) the same as the class definition, ex:
+  ```ruby
+  class A
+    def method
+    end
+
+  private
+
+    def priv_method
+    end
+  end
+  ```
+* There is no limit on line-length enforced. It's assumed that your editor can wrap long lines.
+* Trailing commas at the end of multi-line hashes/arrays:
+  ```ruby
+  {
+    a: 1,
+    b: 2, # <--
+  }
+  ```
+
+JavaScript:
+
+* No semicolons at ends of lines
+* Single quotes `''` preferred
+* Trailing commas at the end of multi-line objects/arrays:
+  ```js
+  {
+    a: 1,
+    b: 2, // <--
+  }
+  ```
