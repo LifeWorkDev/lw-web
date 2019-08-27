@@ -14,7 +14,7 @@
     tbody
       - current_user.projects.each do |project|
         tr
-          td = link_to project.name, milestones_freelancer_project_path(project)
+          td = link_to project.name, [:milestones, :freelancer, project]
           td = project.org.display_name
           td = project.status.capitalize
           td = project.amount.format

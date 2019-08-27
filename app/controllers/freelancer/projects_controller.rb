@@ -18,12 +18,6 @@ class Freelancer::ProjectsController < AuthenticatedController
   # GET /projects/1/edit
   def edit; end
 
-  # GET /projects/1/milestones
-  def milestones; end
-
-  # GET /projects/1/payments
-  def payments; end
-
   # POST /projects
   def create
     @project = current_user.projects.build(project_params(@project.type))
@@ -37,13 +31,10 @@ class Freelancer::ProjectsController < AuthenticatedController
 
   # PATCH/PUT /projects/1
   def update
-    @project.assign_attributes(project_params)
-    notice = "#{params[:button].capitalize} were updated." if @project.milestones_changed?
-    if @project.save
-      path = params[:button] == 'payments' ? freelancer_stripe_connect_path : payments_freelancer_project_path(@project)
-      redirect_to path, notice: notice
+    if @project.update(project_params)
+      redirect_to freelancer_projects_path, notice: 'Project was successfully updated.'
     else
-      render params[:button].to_sym
+      render :edit
     end
   end
 

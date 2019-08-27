@@ -2,7 +2,7 @@ h2.text-center.mt-2
   | Let us know who you're working with.
 
 .container
-  = bootstrap_form_with(model: @org, layout: :horizontal, local: true, url: freelancer_orgs_path) do |f|
+  = bootstrap_form_with(model: [:freelancer, @org], layout: :horizontal, local: true) do |f|
     = f.alert_message 'Errors'
     = f.fields_for :users do |u|
       = u.hidden_field :id

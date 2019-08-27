@@ -11,10 +11,11 @@ Rails.application.routes.draw do
   namespace :freelancer, path: 'f' do
     resources :milestones
     resources :orgs
-    resources :projects do
+    resources :milestone_projects do
       get 'milestones', on: :member
       get 'payments', on: :member
     end
+    resources :projects, only: :index
     get 'stripe/callback', to: 'stripe#callback'
     get 'stripe/connect', to: 'stripe#connect', as: :stripe_connect
   end

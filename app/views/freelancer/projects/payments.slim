@@ -4,6 +4,6 @@
   h2 Tell us how much you should get paid.
 
 .container.d-flex.flex-column.justify-content-center
-  = bootstrap_form_with(model: @project, url: freelancer_project_path(@project), class: 'w-100 mt-2', control_col: 'col-sm-6 col-md-3', label_col: 'col-sm-6 text-sm-right', layout: :horizontal, local: true) do |f|
+  = bootstrap_form_with(model: [:freelancer, @project], class: 'w-100 mt-2', control_col: 'col-sm-6 col-md-3', label_col: 'col-sm-6 text-sm-right', layout: :horizontal, local: true) do |f|
     = react_component('PaymentsForm', milestones: @project.milestones, total: @project.amount.to_s)
-    = render 'shared/form_buttons', f: f, back: milestones_freelancer_project_path(@project), submit_val: :payments
+    = render 'shared/form_buttons', f: f, back: [:milestones, :freelancer, @project], submit_val: :payments
