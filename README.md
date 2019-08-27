@@ -18,7 +18,9 @@
 * Anything that is in the "Current Iteration/Backlog" in Pivotal is available to be worked on, as long as it isn't assigned to another developer.
 * Each Pivotal story should be worked on in its own branch, and submitted as a Github Pull request when done.
 * Branches should be prefixed with their pivotal story type, ex: `fea/` (feature), `bug/`, `chore/`
-* Branches should contain the Pivotal story ID, which can easily be copied from the story by clicking the ID button as shown below. ![Copy Pivotal Story ID](https://www.pivotaltracker.com/help/kb_assets/working_with_stories_2@2x.png)
+* Branches should contain the Pivotal story ID, which can easily be copied from the story by clicking the ID button as shown below.
+
+  ![Copy Pivotal Story ID](https://www.pivotaltracker.com/help/kb_assets/working_with_stories_2@2x.png)
 * Branches should be named short, but descriptively. For example, for a chore called "Convert milestones calendar to React Day Picker" with ID 168058495 a good branch name would be `chore/react-day-picker-milestones-#168058495`
 * Do not push directly to `master`
 * Commit early, commit often! Don't wait until the end of the day to commit your work.
