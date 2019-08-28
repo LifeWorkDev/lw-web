@@ -1,5 +1,7 @@
 class UsersController < AuthenticatedController
-  def edit; end
+  def edit
+    @user = current_user
+  end
 
   # PATCH /user
   def update

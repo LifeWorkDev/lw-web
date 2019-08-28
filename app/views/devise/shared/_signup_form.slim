@@ -21,6 +21,7 @@
                      placeholder: t('devise_forms.message.minimum_password_length', min_len: @minimum_password_length),
                      required: true,
                      value: params.dig(:user, :password)
+  = render 'shared/time_zone_select', f: f, label: 'Time zone' if resource.invitation_token
 
   .row.form-group
      .col.offset-sm-2.col-sm-10.text-center.text-sm-left
