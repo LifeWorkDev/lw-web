@@ -5,7 +5,7 @@ class ApplicationRecord < ActiveRecord::Base
   include JsonbAccessor::QueryBuilder
   include StringEnum
 
-  def self.callbacks_of_type(type, kind = :all)
+  def self.callbacks_of_type(type, kind: :all)
     send("_#{type}_callbacks").select do |cb|
       [:all, cb.kind].include? kind
     end.map(&:filter)
