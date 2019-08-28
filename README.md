@@ -1,5 +1,10 @@
 # LifeWork Web App
 
+* [Developer setup](#developer-setup)
+* [Workflow](#workflow)
+* [Namespaces](#namespaces)
+* [Code standards](#code-standards)
+
 ## Developer setup
 
 1. `git clone git@github.com:swrobel/lw-web.git && cd lw-web`
