@@ -11,11 +11,12 @@
 1. `brew install mailhog mkcert nss node postgresql yarn`
 1. `brew services start postgresql`
 1. `mkcert -install`
-1. `cd config/ssl && mkcert lifework.test lifework-packs.test localhost 127.0.0.1 ::1 && cd ../../`
+1. `cd config/ssl && mkcert lifework.test lifework-packs.test localhost mail.test 127.0.0.1 ::1 && cd ../../`
 1. `bin/rails db:setup`
 1. `rvmsudo invoker setup` (help available [here](http://invoker.codemancers.com/ruby_managers.html))
 1. `bin/server`
 1. Open https://lifework.test
+1. To view outbound emails, open https://mail.test
 
 ## Workflow
 
