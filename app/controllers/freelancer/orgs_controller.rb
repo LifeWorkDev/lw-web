@@ -25,7 +25,7 @@ class Freelancer::OrgsController < AuthenticatedController
     @org.current_user = current_user
 
     if @org.save
-      redirect_to @org.projects.last, notice: 'Client was successfully created.'
+      redirect_to [:milestones, current_namespace, @org.projects.last], notice: 'Client was successfully created.'
     else
       render :new
     end
