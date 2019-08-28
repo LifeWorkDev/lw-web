@@ -8,10 +8,8 @@
 ## Developer setup
 
 1. `git clone git@github.com:swrobel/lw-web.git && cd lw-web`
-1. `brew install node yarn`
-1. `brew install postgresql`
+1. `brew install mailhog mkcert nss node postgresql yarn`
 1. `brew services start postgresql`
-1. `brew install nss mkcert`
 1. `mkcert -install`
 1. `cd config/ssl && mkcert lifework.test lifework-packs.test localhost 127.0.0.1 ::1 && cd ../../`
 1. `bin/rails db:setup`
