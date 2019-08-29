@@ -15,7 +15,7 @@ class Milestone < ApplicationRecord
   def as_json(*)
     {
       id: id,
-      amount: amount.to_s,
+      amount: amount.to_f,
       date: date.strftime('%-m/%-d/%Y'),
       description: description,
     }

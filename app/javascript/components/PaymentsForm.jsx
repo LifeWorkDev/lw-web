@@ -1,6 +1,13 @@
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
 
+const Milestone = PropTypes.shape({
+  amount: PropTypes.number.isRequired,
+  date: PropTypes.string.isRequired,
+  description: PropTypes.string,
+  id: PropTypes.number.isRequired,
+})
+
 const PaymentsForm = props => {
   const [milestones, setMilestones] = useState(props.milestones)
   const [total, setTotal] = useState(Number(props.total))
@@ -94,7 +101,7 @@ const PaymentsForm = props => {
   )
 }
 PaymentsForm.propTypes = {
-  milestones: PropTypes.object.isRequired,
+  milestones: PropTypes.arrayOf(Milestone),
   total: PropTypes.number,
 }
 
@@ -173,7 +180,7 @@ const PaymentForm = React.memo(({ index, milestone, total, updateAmount }) => {
 PaymentForm.displayName = 'PaymentForm'
 PaymentForm.propTypes = {
   index: PropTypes.number.isRequired,
-  milestone: PropTypes.object.isRequired,
+  milestone: Milestone.isRequired,
   total: PropTypes.number,
   updateAmount: PropTypes.func.isRequired,
 }
