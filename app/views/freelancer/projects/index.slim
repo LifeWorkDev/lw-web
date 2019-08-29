@@ -1,7 +1,8 @@
-- content_for :title, 'Your Projects'
+- title = 'Your Projects'
+- content_for :title, title
 
 .text-center
-  h2 Your Projects
+  h2 = title
 
 .row
   table.table.table-hover.table-striped
