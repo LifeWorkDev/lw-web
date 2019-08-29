@@ -229,6 +229,11 @@ input[type='number'] {
 // Style select placeholder. This is a hack because selects have a placeholder element that's disabled & selected by default. If the select is required, then the disabled placeholder is an invalid choice.
 select:invalid {
   color: $input-placeholder-color;
+
+  // Fix for Firefox which will make all options placeholder color
+  option:not(disabled) {
+    color: $input-color;
+  }
 }
 
 .table th {
