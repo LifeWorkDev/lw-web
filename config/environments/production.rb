@@ -118,3 +118,8 @@ Rails.application.configure do
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
 end
+
+# Sentry.io config
+Raven.configure do |config|
+  config.dsn = 'https://06dd18ce85fa4ce480a50ee20ccdcc38:eaffbc91d92d4035a2afef3562218828@sentry.io/1536608'
+end
