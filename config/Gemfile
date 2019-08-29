@@ -53,7 +53,7 @@ group :development do
   gem 'guard-rubocop', require: false
   gem 'guard-shell', require: false
   gem 'guard-slimlint', github: 'swrobel/guard-slimlint', require: false
-  gem 'invoker'
+  gem 'invoker', github: 'swrobel/invoker'
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'partially_useful' # Add html comments around partials
   gem 'rack-toolbar', github: 'swrobel/rack-toolbar', branch: 'only-error-pages' # Insert arbitrary code into Rails error pages
