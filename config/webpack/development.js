@@ -21,7 +21,7 @@ environment.loaders.append('eslint', {
 
 module.exports = merge(environment.toWebpackConfig(), {
   devServer: {
-    noInfo: true,
+    stats: 'minimal',
   },
   devtool: 'inline-cheap-module-source-map',
   node: {
