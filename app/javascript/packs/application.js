@@ -5,6 +5,7 @@ import * as Sentry from '@sentry/browser'
 require('@rails/ujs').start()
 require('turbolinks').start()
 
+window.Sentry = Sentry // Make it available globally
 if (process.env.NODE_ENV === 'production') {
   Sentry.init({
     dsn: 'https://5e07926b621741b5a89eaa621d2aa1a7@sentry.io/1545031',
