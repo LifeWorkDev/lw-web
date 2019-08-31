@@ -16,12 +16,18 @@ class Milestone < ApplicationRecord
     {
       id: id,
       amount: amount.to_f,
-      date: date.strftime('%-m/%-d/%Y'),
+      date: formatted_date,
       description: description,
     }
+  end
+
+  def formatted_date
+    date&.strftime('%-m/%-d/%Y')
   end
 
   def percent
     (amount || 0.to_money) / (project.amount || 0.to_money)
   end
+
+  alias to_s formatted_date
 end
