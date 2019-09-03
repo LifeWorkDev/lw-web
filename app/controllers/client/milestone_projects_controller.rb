@@ -3,7 +3,7 @@ module Client
     # GET /milestone_projects/1/payments
     def payments
       @back = nil
-      @heading = "#{@project.user.name} has initiated the invoicing process with you. To complete the process, please approve the payment schedule and milestones below."
+      @heading = "#{@project.freelancer.name} has initiated the invoicing process with you. To complete the process, please approve the payment schedule and milestones below."
     end
 
     # PATCH/PUT /milestone_projects/1

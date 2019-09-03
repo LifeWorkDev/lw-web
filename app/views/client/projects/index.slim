@@ -17,7 +17,7 @@
       - current_user.projects.each do |project|
         tr
           td = project.name
-          td = project.user.name
+          td = project.freelancer.name
           td = project.status.capitalize
           td = project.milestones.first
           td = project.amount&.format

@@ -3,8 +3,8 @@ class Project < ApplicationRecord
   extend FriendlyId
   friendly_id :name, use: :scoped, scope: :user_id
 
-  belongs_to :org
-  belongs_to :user
+  belongs_to :client, class_name: 'Org', foreign_key: :org_id, inverse_of: :projects
+  belongs_to :freelancer, class_name: 'User', foreign_key: :user_id, inverse_of: :projects
 
   monetize :amount_cents, with_model_currency: :currency, allow_nil: true, numericality: { greater_than_or_equal_to: 0 }
 
