@@ -10,8 +10,8 @@ Rails.application.routes.draw do
   end
 
   namespace :freelancer, path: 'f' do
+    resources :orgs, path: :clients
     resources :milestones
-    resources :orgs
     resources :milestone_projects do
       get 'milestones', on: :member
       get 'payments', on: :member
