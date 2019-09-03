@@ -43,7 +43,7 @@ const PaymentsForm = props => {
           className='col-form-label col-auto px-0 required'
           htmlFor='milestone_project_amount'
         >
-          Contract amount
+          Total contract amount
         </label>
         <div className='col-auto mw-50 pr-0'>
           <div className='input-group'>
