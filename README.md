@@ -1,9 +1,32 @@
 # LifeWork Web App
 
+* [About LifeWork](#about-lifework)
 * [Developer setup](#developer-setup)
 * [Workflow](#workflow)
-* [Namespaces](#namespaces)
 * [Code standards](#code-standards)
+
+## About LifeWork
+
+Our app is designed to make it easy for independent freelancers who do not use a platform like UpWork to get paid reliably for their work. We are building a service that charges the client up-front and holds the money in escrow until work is completed, and then immediately pays the freelancer without the need for invoices, checks or transfer instructions. You can read more about us on [our website](https://www.lifeworkonline.com/).
+
+Our app consists of the following models:
+
+* User - a user can belong to an Organization (in which case they're considered a client), can be a freelancer, or both
+* Org - an organization, also known as a client when associated with a project
+* Project - something that a freelancer works on for a client. This is an [STI model](https://guides.rubyonrails.org/association_basics.html#single-table-inheritance)
+* Milestone Project - a specific type of project that has Milestones, each with a date and payment amount
+
+Here is the typical workflow:
+
+1. Freelancer creates a new Client, and a Milestone Project for that Client
+1. Freelancer chooses the Milestones for that project, entering a date and amount for each milestone
+1. LifeWork sends an invitation email to the Client informing them that the Freelancer has created a project and invites them to create an account with LifeWork, enter payment details, and confirm the project & milestones
+
+Note that the Freelancer does most of the interacting with LifeWork. We are trying to make it as low-effort as possible for Clients.
+
+#### Namespaces
+
+Controllers & views are namespaced under Client & Freelancer. The routes have shorthand namespaces, `/c/` for Client & `/f/` for Freelancer.
 
 ## Developer setup
 
@@ -32,10 +55,6 @@
 * Commit early, commit often! Don't wait until the end of the day to commit your work.
 * Commits should always be descriptively named so that it's easy to figure out what was done.
 * Commits should always be atomic. This means that each commit should only reflect one unit of work. Work from different features should not be mixed together in a single commit. If you think that the git commit message will be really long to explain what you've done, you should probably break your work up into multiple commits. Make use of `git add` to only stage the files that are necessary for a particular commit. Get out of the habit of using `git add .`
-
-## Namespaces
-
-Controllers & views are namespaced under Client & Freelancer. The routes have shorthand namespaces, `/c/` for Client & `/f/` for Freelancer.
 
 ## Code standards
 
