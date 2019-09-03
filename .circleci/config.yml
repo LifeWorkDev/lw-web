@@ -1,0 +1,80 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/lw-web
+    docker:
+      - image: circleci/ruby:2.6-buster-node-browsers
+        environment:
+          PGHOST: 127.0.0.1
+          PGUSER: lifework
+          RAILS_ENV: test
+          NODE_ENV: test
+
+    steps:
+      - checkout
+
+      - run:
+          name: Install Bundler
+          command: |
+            echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
+            source $BASH_ENV
+            gem install bundler
+
+      - run:
+          name: Install PSQL
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y postgresql-client-common postgresql-client
+          background: true
+
+      - run:
+          name: Log versions
+          command: |
+            ruby -v
+            bundle -v
+            node -v
+            yarn -v
+            chromedriver -v
+            google-chrome --version
+          background: true
+
+      - restore_cache:
+          name: Restore bundle cache
+          key: lifework-bundle-{{ checksum "Gemfile.lock" }}
+
+      - run:
+          name: Bundle Install
+          command: bin/bundle install --path vendor/bundle --jobs 5 --retry 3 --without production development
+
+      - save_cache:
+          name: Store bundle cache
+          key: lifework-bundle-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+
+      - run:
+          name: Rubocop
+          command: bin/rubocop --parallel
+
+      - run:
+          name: Slim Lint
+          command: bin/slim-lint app/views
+
+      - restore_cache:
+          name: Restore yarn cache
+          key: lifework-yarn-{{ checksum "yarn.lock" }}
+
+      - run:
+          name: Yarn Install
+          command: yarn install
+
+      - save_cache:
+          name: Store yarn cache
+          key: lifework-yarn-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.yarn-cache
+            - ~/.cache/yarn
+
+      - run:
+          name: ESLint & StyleLint
+          command: yarn lint
