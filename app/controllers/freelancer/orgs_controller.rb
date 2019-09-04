@@ -55,6 +55,6 @@ private
 
   # Only allow a trusted parameter "white list" through.
   def org_params
-    params.require(:org).permit(:name, projects_attributes: %i[id name], users_attributes: %i[id name email]).to_h.deep_merge(projects_attributes: { '0': { type: MilestoneProject, user_id: current_user.id } })
+    params.require(:org).permit(:name, projects_attributes: %i[id name], users_attributes: %i[name email]).to_h.deep_merge(projects_attributes: { '0': { type: MilestoneProject, user_id: current_user.id } })
   end
 end

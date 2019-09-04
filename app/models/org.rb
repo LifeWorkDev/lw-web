@@ -5,7 +5,7 @@ class Org < ApplicationRecord
 
   attr_accessor :current_user
 
-  has_many :projects, dependent: :destroy
+  has_many :projects, dependent: :destroy, inverse_of: :client
   accepts_nested_attributes_for :projects
   has_many :users, dependent: :nullify
   accepts_nested_attributes_for :users, reject_if: :existing_user
