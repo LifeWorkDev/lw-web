@@ -29,7 +29,7 @@ const PaymentsForm = props => {
   })
 
   if (total !== sum) {
-    errorText = 'Must sum to 100%'
+    errorText = 'Must add up to 100%'
     submitButton.disabled = true
   } else {
     errorText = null
