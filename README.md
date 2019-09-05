@@ -32,10 +32,15 @@ Controllers & views are namespaced under Client & Freelancer. The routes have sh
 
 1. `git clone git@github.com:swrobel/lw-web.git && cd lw-web`
 1. Install dependencies using [Homebrew](https://brew.sh/): `brew bundle`
+1. If on Linux: `pg_ctl -D /home/linuxbrew/.linuxbrew/var/postgres start`
 1. `mkcert -install`
 1. `cd config/ssl && mkcert lifework.test lifework-packs.test localhost mail.test 127.0.0.1 ::1 && cd ../../`
+1. `gem install bundler -v '>= 2.0.2'`
+1. `bundle`
+1. `yarn`
+1. `cp config/database.yml.example config/database.yml`
 1. `bin/rails db:setup`
-1. `rvmsudo invoker setup` (help available [here](http://invoker.codemancers.com/ruby_managers.html))
+1. `rvmsudo bin/invoker setup` (help available [here](http://invoker.codemancers.com/ruby_managers.html))
 1. `bin/server`
 1. Open https://lifework.test
 1. To view outbound emails, open https://mail.test
