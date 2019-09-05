@@ -7,7 +7,9 @@ if Rails.env.development?
   plugin :tmp_restart
 
   after_worker_boot do
-    TerminalNotifier::Guard.success('', title: 'Server started')
+    title = 'LifeWork server started'
+    defined?(TerminalNotifier) && TerminalNotifier::Guard.success('', title: title)
+    defined?(Libnotify) && Libnotify.show(summary: title)
     # Trick Webpack into reloading browser
     `touch app/javascript/packs/application.js`
   end

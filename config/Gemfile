@@ -54,12 +54,16 @@ group :development do
   gem 'guard-shell', require: false
   gem 'guard-slimlint', github: 'swrobel/guard-slimlint', require: false
   gem 'invoker', github: 'swrobel/invoker'
-  gem 'libnotify' # System notifications for Linux
+  install_if -> { RUBY_PLATFORM =~ /linux/ } do
+    gem 'libnotify' # System notifications for Linux
+  end
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'partially_useful' # Add html comments around partials
   gem 'rack-toolbar', github: 'swrobel/rack-toolbar', branch: 'only-error-pages' # Insert arbitrary code into Rails error pages
-  gem 'terminal-notifier' # System notifications for Mac
-  gem 'terminal-notifier-guard'
+  install_if -> { RUBY_PLATFORM =~ /darwin/ } do
+    gem 'terminal-notifier' # System notifications for Mac
+    gem 'terminal-notifier-guard'
+  end
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'web-console'
 end
