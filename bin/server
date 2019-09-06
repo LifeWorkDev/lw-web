@@ -1,8 +1,8 @@
-CERT=config/ssl/lifework.test+5.pem
-KEY=config/ssl/lifework.test+5-key.pem
+CERT=config/ssl/lifework.localhost+5.pem
+KEY=config/ssl/lifework.localhost+5-key.pem
 if [ -f "$CERT" -a -f "$KEY" ]; then
   bin/invoker start --certificate=$CERT --private-key=$KEY
 else
   echo "Please run this command and then try again:"
-  echo "cd config/ssl && mkcert lifework.test lifework-packs.test localhost mail.test 127.0.0.1 ::1 && cd ../../"
+  echo "cd config/ssl && mkcert lifework.localhost lifework-packs.localhost mail.localhost localhost 127.0.0.1 ::1 && cd ../../"
 fi

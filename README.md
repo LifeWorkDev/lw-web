@@ -32,18 +32,20 @@ Controllers & views are namespaced under Client & Freelancer. The routes have sh
 
 1. `git clone git@github.com:swrobel/lw-web.git && cd lw-web`
 1. Install dependencies using [Homebrew](https://brew.sh/): `brew bundle`
-1. If on Linux: `pg_ctl -D /home/linuxbrew/.linuxbrew/var/postgres start`
+1. If on Linux:
+    * `brew link --force nss`
+    * `pg_ctl -D /home/linuxbrew/.linuxbrew/var/postgres start`
 1. `mkcert -install`
-1. `cd config/ssl && mkcert lifework.test lifework-packs.test localhost mail.test 127.0.0.1 ::1 && cd ../../`
+1. `cd config/ssl && mkcert lifework.localhost lifework-packs.localhost mail.localhost localhost 127.0.0.1 ::1 && cd ../../`
 1. `gem install bundler -v '>= 2.0.2'`
 1. `bundle`
 1. `yarn`
 1. `cp config/database.yml.example config/database.yml`
 1. `bin/rails db:setup`
-1. `rvmsudo bin/invoker setup` (help available [here](http://invoker.codemancers.com/ruby_managers.html))
+1. `rvmsudo bin/invoker setup --tld localhost` (help available [here](http://invoker.codemancers.com/ruby_managers.html))
 1. `bin/server`
-1. Open https://lifework.test
-1. To view outbound emails, open https://mail.test
+1. Open https://lifework.localhost
+1. To view outbound emails, open https://mail.localhost
 
 There isn't currently any seed data. You will need to register as a new user and create a project. If you use the same email address you signed up with as the Client Email when creating a project, your same user account can be both Client & Freelancer. Access the client dashboard by going to https://lifework.test/c/projects
 
