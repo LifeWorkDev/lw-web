@@ -64,7 +64,7 @@ end
 
 host = ENV['DOMAIN'].presence
 host ||= "#{ENV['HEROKU_APP_NAME']}.herokuapp.com" if ENV['HEROKU_APP_NAME']
-host ||= 'lifework.test'
+host ||= 'lifework.localhost'
 server_url = "https://#{host}"
 
 Rails.application.routes.default_url_options = { host: server_url, protocol: 'https' }

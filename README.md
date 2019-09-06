@@ -47,7 +47,7 @@ Controllers & views are namespaced under Client & Freelancer. The routes have sh
 1. Open https://lifework.localhost
 1. To view outbound emails, open https://mail.localhost
 
-There isn't currently any seed data. You will need to register as a new user and create a project. If you use the same email address you signed up with as the Client Email when creating a project, your same user account can be both Client & Freelancer. Access the client dashboard by going to https://lifework.test/c/projects
+There isn't currently any seed data. You will need to register as a new user and create a project. If you use the same email address you signed up with as the Client Email when creating a project, your same user account can be both Client & Freelancer. Access the client dashboard by going to https://lifework.localhost/c/projects
 
 ## Workflow
 
