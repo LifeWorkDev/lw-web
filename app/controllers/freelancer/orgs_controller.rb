@@ -3,7 +3,7 @@ class Freelancer::OrgsController < AuthenticatedController
 
   # GET /orgs
   def index
-    @orgs = Org.all
+    @clients = current_user.clients
   end
 
   # GET /orgs/1

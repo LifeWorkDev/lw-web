@@ -12,7 +12,7 @@
         th Status
         th # Projects
     tbody
-      - current_user.clients.each do |client|
+      - @clients.each do |client|
         tr
           td = client.display_name
           td = client.status
