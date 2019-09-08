@@ -15,7 +15,7 @@ class Org < ApplicationRecord
                  work_frequency: :string
 
   def display_name
-    self[:name].presence || users.first.name
+    self[:name].presence || users.first&.name
   end
 
 private
