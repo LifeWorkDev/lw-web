@@ -14,7 +14,7 @@
         th Start Date
         th Amount
     tbody
-      - current_user.projects.each do |project|
+      - @projects.each do |project|
         tr
           td = project.name
           td = project.freelancer.name

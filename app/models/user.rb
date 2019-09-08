@@ -4,7 +4,7 @@ class User < ApplicationRecord
 
   belongs_to :org, optional: true
   has_many :projects, dependent: :destroy
-  has_many :clients, through: :projects
+  has_many :clients, -> { distinct }, through: :projects
   has_many :org_projects, through: :org, source: :projects
 
   devise :database_authenticatable, :lockable,

@@ -12,12 +12,14 @@
         th Client
         th Status
         th Value
+        th
     tbody
-      - current_user.projects.each do |project|
+      - @projects.each do |project|
         tr
-          td = link_to project.name, [:milestones, current_namespace, project]
+          td = project.name
           td = project.client.display_name
           td = project.status.capitalize
           td = project.amount&.format
+          td = link_to 'Edit', [:edit, current_namespace, project]
 
-=link_to '+ Project', new_freelancer_org_path, class: 'btn btn-primary float-right'
+=link_to '+ Project', new_freelancer_milestone_project_path, class: 'btn btn-primary float-right'
