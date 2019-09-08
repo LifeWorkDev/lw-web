@@ -17,7 +17,7 @@ GIT
 
 GIT
   remote: https://github.com/swrobel/invoker.git
-  revision: aa5eb38e1d0f33ff66f4959270fb2a841175e74d
+  revision: 110cb235572165e1007ab794e56cbdf0777ed438
   specs:
     invoker (1.5.7)
       colorize (~> 0.8.1)

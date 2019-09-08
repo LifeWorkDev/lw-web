@@ -8,10 +8,18 @@ class Project < ApplicationRecord
 
   monetize :amount_cents, with_model_currency: :currency, allow_nil: true, numericality: { greater_than_or_equal_to: 0 }
 
+  scope :milestone, -> { where(type: 'MilestoneProject') }
+
   def milestones_changed?
     milestones.any? do |m|
       m.nilify_blanks # So that change from nil to '' isn't considered changed?
       m.new_record? || m.marked_for_destruction? || m.changed?
     end
+  end
+
+private
+
+  def should_generate_new_friendly_id?
+    name_changed? || super
   end
 end
