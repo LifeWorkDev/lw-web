@@ -12,11 +12,11 @@
         th Client
         th Status
         th Value
-        th Action
+        th
     tbody
-      - current_user.projects.each do |project|
+      - @projects.each do |project|
         tr
-          td = link_to project.name, [:milestones, current_namespace, project]
+          td = project.name
           td = project.client.display_name
           td = project.status.capitalize
           td = project.amount&.format
