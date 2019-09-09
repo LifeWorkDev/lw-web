@@ -2,6 +2,7 @@ class Milestone < ApplicationRecord
   include AASM
 
   belongs_to :project, class_name: 'MilestoneProject'
+  has_many :comments, as: :commentable, dependent: :destroy
 
   delegate :currency, to: :project
   monetize :amount_cents, with_model_currency: :currency, allow_nil: true, numericality: { greater_than_or_equal_to: 0 }
