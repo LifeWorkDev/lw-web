@@ -33,6 +33,8 @@ gem 'webpacker', github: 'swrobel/webpacker'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'fabrication' # Fabricators for models
+  gem 'faker' # Fake data generation
   gem 'pgreset' # Automatically disconnect active pg clients when dropping database
   gem 'referral', require: false # Finds definitions & references in Ruby
   gem 'rspec-rails'

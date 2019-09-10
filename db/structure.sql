@@ -191,7 +191,7 @@ ALTER SEQUENCE public.milestones_id_seq OWNED BY public.milestones.id;
 
 CREATE TABLE public.orgs (
     id bigint NOT NULL,
-    name public.citext NOT NULL,
+    name public.citext,
     status character varying NOT NULL,
     slug character varying NOT NULL,
     metadata jsonb,
@@ -228,7 +228,7 @@ CREATE TABLE public.projects (
     id bigint NOT NULL,
     org_id bigint NOT NULL,
     user_id bigint NOT NULL,
-    name public.citext,
+    name public.citext NOT NULL,
     status character varying NOT NULL,
     type character varying NOT NULL,
     amount_cents integer,
@@ -632,6 +632,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190806184609'),
 ('20190806184610'),
 ('20190807023127'),
-('20190907180340');
+('20190907180340'),
+('20190910230917');
 
 

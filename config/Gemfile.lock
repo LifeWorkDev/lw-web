@@ -169,9 +169,12 @@ GEM
     erubi (1.8.0)
     eventmachine (1.0.9.1)
     execjs (2.7.0)
+    fabrication (2.20.2)
     facter (2.5.6)
     facter (2.5.6-universal-darwin)
       CFPropertyList (~> 2.2)
+    faker (2.2.2)
+      i18n (~> 1.6.0)
     faraday (0.15.4)
       multipart-post (>= 1.2, < 3)
     fast_blank (1.0.0)
@@ -434,6 +437,8 @@ DEPENDENCIES
   byebug
   devise
   devise_invitable
+  fabrication
+  faker
   fast_blank
   friendly_id!
   gindex
