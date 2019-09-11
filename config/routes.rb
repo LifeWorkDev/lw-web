@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     resource :org
     resources :milestone_projects do
       get 'payments', on: :member
+      resources :comments, only: :index
     end
     resources :projects, only: :index
   end
