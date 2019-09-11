@@ -33,3 +33,6 @@ en:
   date:
     formats:
       default: "%-m/%-d/%Y"
+  time:
+    formats:
+      date_only: "%-m/%-d/%Y"

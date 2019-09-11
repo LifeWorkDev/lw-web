@@ -72,6 +72,7 @@ end
 
 group :test do
   gem 'capybara'
+  gem 'colorize' # Easily colorize text output in the console
   gem 'rails-controller-testing' # Allows using assigns() to get controller instance variables in tests
   gem 'rspec-instafail', require: false
   gem 'selenium-webdriver'

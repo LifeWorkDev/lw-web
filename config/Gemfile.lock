@@ -464,6 +464,7 @@ DEPENDENCIES
   bullet
   byebug
   capybara
+  colorize
   devise
   devise_invitable
   fabrication
