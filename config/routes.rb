@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     resources :milestone_projects do
       get 'milestones', on: :member
       get 'payments', on: :member
+      resources :comments, only: :index
     end
     resources :projects, only: :index
     get 'stripe/callback', to: 'stripe#callback'

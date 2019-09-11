@@ -20,6 +20,12 @@
           td = project.client.display_name
           td = project.status.capitalize
           td = project.amount&.format
-          td = link_to 'Edit', [:edit, current_namespace, project]
+          td.action-list
+            = link_to [:edit, current_namespace, project] do
+              span.badge.badge-secondary Edit
+            = link_to [:milestones, current_namespace, project]
+              span.badge.badge-secondary Milestones
+            = link_to freelancer_milestone_project_comments_path(project)
+              span.badge.badge-secondary Comments
 
 =link_to '+ Project', new_freelancer_milestone_project_path, class: 'btn btn-primary float-right'

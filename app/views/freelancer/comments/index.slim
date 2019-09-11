@@ -1,0 +1,18 @@
+- title = 'Milestone Comments'
+- content_for :title, title
+
+.text-center
+  h2 = title
+
+- @milestones.each do |milestone|
+  .text-center
+    h5 = milestone.description
+    label = milestone.formatted_date
+    .list-group
+      - milestone.comments.order(:created_at).each do |comment|
+        .list-group-item.list-group-item-action
+          h5 = "#{comment.commenter.name}<small> at #{comment.formatted_created_at}</small>".html_safe
+          p = comment.comment
+          - if comment.read_by
+            small = "Read by #{comment.read_by.name} at #{comment.formatted_read_at}"
+    hr
