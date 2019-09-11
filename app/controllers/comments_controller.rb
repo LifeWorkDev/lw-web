@@ -3,6 +3,8 @@ class CommentsController < AuthenticatedController
 
   def index
     @milestones = @project.milestones.order(:date)
+    @project.comments.where.not(commenter: current_user)
+            .where(read_at: nil).find_each { |c| c.update(read_by_id: current_user.id, read_at: DateTime.now) }
   end
 
   def create
