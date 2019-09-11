@@ -4,15 +4,26 @@
 .text-center
   h2 = title
 
-- @milestones.each do |milestone|
-  .text-center
-    h5 = milestone.description
-    label = milestone.formatted_date
-    .list-group
-      - milestone.comments.order(:created_at).each do |comment|
-        .list-group-item.list-group-item-action
-          h5 = "#{comment.commenter.name}<small> at #{comment.formatted_created_at}</small>".html_safe
-          p = comment.comment
-          - if comment.read_by
-            small = "Read by #{comment.read_by.name} at #{comment.formatted_read_at}"
-    hr
+- if @milestones.present?
+  - @milestones.each do |milestone|
+    .text-center
+      h5 = milestone.description
+      label = milestone.formatted_date
+      .list-group
+        - milestone.comments.order(:created_at).each do |comment|
+          .list-group-item.list-group-item-action
+            h5 = "#{comment.commenter.name}<small> at #{comment.formatted_created_at}</small>".html_safe
+            p = comment.comment
+            - if comment.read_by
+              small = "Read by #{comment.read_by.name} at #{comment.formatted_read_at}"
+      hr
+  .comments-form
+    - last_milestone = @milestones.last
+    = bootstrap_form_with(model: [current_namespace, @project, last_milestone.comments.new], layout: :horizontal, local: true) do |f|
+      = f.alert_message 'Errors'
+      = f.hidden_field :commentable_id
+      = f.hidden_field :commentable_type
+      = f.text_area :comment, hide_label: true, placeholder: 'Add a reply', required: true, control_col: "col-sm-12"
+      .form-group
+        = f.primary 'Submit', class: 'btn btn-primary float-right', id: 'submit-form', render_as_button: true
+        .clearfix

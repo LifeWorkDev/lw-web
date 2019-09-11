@@ -5,6 +5,15 @@ class CommentsController < AuthenticatedController
     @milestones = @project.milestones.order(:date)
   end
 
+  def create
+    @comment = current_user.comments.new(comment_params)
+    if @comment.save
+      redirect_to [current_namespace, @project, :comments], notice: 'Comment was successfully created.'
+    else
+      redirect_to [current_namespace, @project, :comments], alert: "Failed to create comment, #{@comment.errors.full_message.join(', ')}"
+    end
+  end
+
 private
 
   def current_entity
@@ -18,6 +27,6 @@ private
 
   # Only allow a trusted parameter "white list" through.
   def comment_params
-    params.require(:comment).permit(:comment)
+    params.require(:comment).permit(:comment, :commentable_id, :commentable_type)
   end
 end

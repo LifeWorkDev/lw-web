@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     resource :org
     resources :milestone_projects do
       get 'payments', on: :member
-      resources :comments, only: :index
+      resources :comments, only: %i[index create]
     end
     resources :projects, only: :index
   end
@@ -16,7 +16,7 @@ Rails.application.routes.draw do
     resources :milestone_projects do
       get 'milestones', on: :member
       get 'payments', on: :member
-      resources :comments, only: :index
+      resources :comments, only: %i[index create]
     end
     resources :projects, only: :index
     get 'stripe/callback', to: 'stripe#callback'
