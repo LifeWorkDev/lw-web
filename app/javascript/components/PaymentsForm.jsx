@@ -60,6 +60,7 @@ const PaymentsForm = props => {
               onChange={e => setTotal(Number(e.target.value))}
               placeholder='0.00'
               required
+              step='0.01'
               type='number'
             />
           </div>

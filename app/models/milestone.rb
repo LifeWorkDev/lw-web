@@ -23,7 +23,7 @@ class Milestone < ApplicationRecord
   end
 
   def formatted_date
-    date&.strftime('%-m/%-d/%Y')
+    date && I18n.l(date, format: :date_only)
   end
 
   def percent

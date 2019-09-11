@@ -9,6 +9,10 @@ jobs:
           PGUSER: lifework
           RAILS_ENV: test
           NODE_ENV: test
+      - image: circleci/postgres:11-alpine-ram
+        environment:
+          POSTGRES_USER: lifework
+          POSTGRES_PASSWORD: ''
 
     steps:
       - checkout
@@ -78,3 +82,49 @@ jobs:
       - run:
           name: ESLint & StyleLint
           command: yarn lint
+
+      - restore_cache:
+          name: Restore webpacker cache
+          key: lifework-webpacker-{{ .Branch }}
+
+      - restore_cache:
+          name: Restore compiled packs
+          key: lifework-packs-{{ checksum "tmp/cache/webpacker/.last-compilation-digest-test" }}
+
+      - run:
+          name: Wait for DB
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+
+      - run:
+          name: Database setup
+          command: |
+            cp config/database.yml.example config/database.yml
+            bin/rake db:setup --trace
+
+      - run:
+          name: Compile packs
+          command: bin/rake webpacker:compile --trace
+
+      - save_cache:
+          name: Store webpacker cache
+          key: lifework-webpacker-{{ .Branch }}-{{ epoch }}
+          paths:
+            - tmp/cache/webpacker
+
+      - save_cache:
+          name: Store compiled packs
+          key: lifework-packs-{{ checksum "tmp/cache/webpacker/.last-compilation-digest-test" }}
+          paths:
+            - public/packs-test
+
+      - run:
+          name: Ruby tests
+          command: bin/rspec spec/
+
+      - store_artifacts:
+          path: tmp/screenshots
+          destination: screenshots
+
+      - store_artifacts:
+          path: log/test.log
+          destination: test.log

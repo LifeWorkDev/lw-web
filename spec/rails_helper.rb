@@ -7,6 +7,7 @@ abort('The Rails environment is running in production mode!') if Rails.env.produ
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 require 'money-rails/test_helpers'
+require 'webdrivers/chromedriver'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -57,8 +58,30 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
 
+  # Enable Rails system tests
+  config.before(:all, type: :system) do
+    Capybara.server = :puma, { Silent: true, Threads: '1:1' }
+    Capybara.raise_server_errors = false # Render error pages instead of blowing up
+  end
+
+  config.before(:each, type: :system) do
+    driven_by :selenium, using: :headless_chrome
+  end
+
   %i[request system].each do |type|
     config.include Devise::Test::IntegrationHelpers, type: type
+  end
+
+  # Print javascript console errors when system specs fail
+  config.after(:each, type: :system) do |example|
+    if example&.exception
+      logs = page.driver.browser.manage.logs.get(:browser)
+      errors = logs&.select { |l| l.level == 'SEVERE' }
+      if errors.any?
+        puts "\njs errors in #{example.example_group_instance.method_name}:".red
+        errors.each { |er| puts "  #{er.message.gsub('\n', "\n").gsub('\u003C', "\u003C")}".red }
+      end
+    end
   end
 end
 
