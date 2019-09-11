@@ -43,7 +43,10 @@ module LifeWork
       g.stylesheets    false
       g.javascripts    false
       g.system_tests   false
-      g.test_framework :rspec, controller_specs: false, routing_specs: false
+      g.test_framework :rspec,
+                       controller_specs: false,
+                       request_specs: false,
+                       routing_specs: false
     end
 
     # config.lograge.enabled = true
