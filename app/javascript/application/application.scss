@@ -243,3 +243,29 @@ select:invalid {
 td.action-list a {
   margin-right: 5px;
 }
+
+.milestones-list .milestone-list-item:last-child {
+  hr {
+    display: none;
+  }
+}
+
+.comments-list {
+  .list-group-item {
+    background: white;
+    color: black;
+  }
+
+  .list-group-item:nth-child(even) {
+    background: skyblue;
+    color: white;
+
+    h5 {
+      color: white;
+    }
+  }
+}
+
+.comment-form {
+  padding-top: 1rem;
+}
