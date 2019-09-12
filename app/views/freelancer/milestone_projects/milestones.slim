@@ -7,12 +7,5 @@
 .container.d-flex.justify-content-center
   = bootstrap_form_with(model: [current_namespace, @project], local: true) do |f|
     = f.hidden_field :id
-    div data-controller='flatpickr' data-flatpickr-default-date= @project.milestones.pluck(:date).map(&:to_date).map(&:to_s).presence data-flatpickr-disable-mobile='true' data-flatpickr-inline='true' data-flatpickr-min-date='today' data-flatpickr-mode='multiple'
-      .mb-2.text-sm-left.text-center data-target='flatpickr.selections' &nbsp;
-      template data-target='flatpickr.template'
-        span.badge.badge-primary.badge-pill.date-pill.mr-2.mb-2
-          span.selected-date
-          = hidden_field_tag 'milestone_project[milestones_attributes][][date]', nil, id: nil
-          button.close type="button" data-dismiss="alert" aria-label="Close"
-            span aria-hidden="true" &times;
+    = react_component('DatePicker/DatePicker')
     .mt-4 = render 'shared/form_buttons', f: f, back: [:edit, current_namespace, @project.client], submit_val: :milestones
