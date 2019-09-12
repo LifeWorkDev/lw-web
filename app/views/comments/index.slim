@@ -11,7 +11,7 @@
         h5 = milestone.description
         label = milestone.formatted_date
         .list-group.comments-list
-          - milestone.comments.order(:created_at).each do |comment|
+          - milestone.comments.each do |comment|
             .list-group-item.list-group-item-action class="#{comment.commenter == current_user ? 'text-right' : 'text-left'}"
               h5
                 span = comment.commenter.name
