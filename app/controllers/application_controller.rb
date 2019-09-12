@@ -23,6 +23,10 @@ class ApplicationController < ActionController::Base
     stored_location_for(resource) || edit_user_path
   end
 
+  def after_accept_path_for(resource)
+    [:payments, :client, resource.org_projects.first]
+  end
+
   def current_namespace
     self.class.module_parent.to_s.underscore
   end

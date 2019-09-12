@@ -1,0 +1,22 @@
+- content_for :title, 'Preview Client Email'
+
+.text-center
+  h2 Review before sending to your client.
+
+.row.pb-4
+  .card.bg-transparent.mx-auto.shadow
+    .card-header.bg-white
+      - recipient = @project.client.primary_contact
+      strong To:
+      |  #{recipient.name} &lt;#{recipient&.email}&gt;
+      br
+      strong From:
+      |  #{Devise.mailer_sender}
+      br
+      strong Subject:
+      =< t('client_mailer.invite.subject', user: current_user.name, project: @project.name)
+    .card-body.mw-600px.p-0 = render template: 'mailers/client/invite', layout: 'mailers/_body'
+
+.mw-600px.mx-auto
+  = bootstrap_form_with(url: [:activate, current_namespace, @project], class: 'w-100 mt-2', control_col: 'col-sm-6 col-md-3', label_col: 'col-sm-6 text-sm-right', layout: :horizontal, local: true, method: 'patch') do |f|
+    = render 'shared/form_buttons', f: f, back: @back, submit_val: :payments
