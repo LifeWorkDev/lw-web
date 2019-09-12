@@ -13,6 +13,25 @@ export default class DatePicker extends React.Component {
     }
   }
 
+  formatDate = date => {
+    let d = new Date(date),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear()
+
+    if (month.length < 2) month = '0' + month
+    if (day.length < 2) day = '0' + day
+
+    return [month, day, year].join('/')
+  }
+
+  removeData = index => {
+    let { selectedDays } = this.state
+    delete selectedDays[index]
+
+    this.setState({ selectedDays })
+  }
+
   handleDayClick(day, { selected }) {
     const { selectedDays } = this.state
     if (selected) {
@@ -27,8 +46,27 @@ export default class DatePicker extends React.Component {
   }
 
   render() {
+    const { selectedDays } = this.state
     return (
-      <div>
+      <div className='text-align-center'>
+        <div>
+          {selectedDays.map((day, key) => (
+            <span
+              className='badge badge-primary badge-pill date-pill mr-2 mb-2'
+              key={key}
+            >
+              <span>{this.formatDate(day)}</span>
+              <input type='hidden' name={'array'} value={day.toISOString()} />
+              <button
+                type='button'
+                className='close'
+                onClick={() => this.removeData(key)}
+              >
+                <span>×</span>
+              </button>
+            </span>
+          ))}
+        </div>
         <DayPicker
           selectedDays={this.state.selectedDays}
           onDayClick={this.handleDayClick}
