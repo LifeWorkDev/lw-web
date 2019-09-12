@@ -257,7 +257,7 @@ td.action-list a {
   }
 
   .list-group-item:nth-child(even) {
-    background: skyblue;
+    background: $primary;
     color: white;
 
     h5 {

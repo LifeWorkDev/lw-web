@@ -10,15 +10,8 @@
       .text-center.milestone-list-item
         h5 = milestone.description
         label = milestone.formatted_date
-        .list-group.comments-list
-          - milestone.comments.each do |comment|
-            .list-group-item.list-group-item-action class="#{comment.commenter == current_user ? 'text-right' : 'text-left'}"
-              h5
-                span = comment.commenter.name
-                small = " at #{comment.formatted_created_at}"
-              p = comment.comment
-              - if comment.read_by
-                small = "Read by #{comment.read_by.name} at #{comment.formatted_read_at}"
+        = react_component('CommentsList', comments: ActiveModelSerializers::SerializableResource.new(milestone.comments).serializable_hash,
+                        currentUser: UserSerializer.new(current_user).serializable_hash)
         hr
   .comment-form
     - last_milestone = @milestones.last

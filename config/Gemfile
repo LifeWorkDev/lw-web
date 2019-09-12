@@ -5,6 +5,7 @@ ruby "~> #{`cat .ruby-version`.strip}"
 gem 'rails', '~> 6.0.0'
 
 gem 'aasm' # Acts as State Machine
+gem 'active_model_serializers', '~> 0.10.0' # JSON serializer for activerecord
 gem 'argon2' # More secure password hashing than default bcrypt
 gem 'bootstrap_form'
 gem 'devise' # Authentication
