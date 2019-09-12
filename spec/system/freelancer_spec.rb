@@ -2,9 +2,9 @@ require 'rails_helper'
 
 RSpec.describe 'Freelancer views', type: :system do
   context "when unauth'd" do
-    it 'renders login form' do
+    it 'renders signup form' do
       visit '/'
-      expect(page).to have_content 'log in'
+      expect(page).to have_content 'sign up'
     end
   end
 
