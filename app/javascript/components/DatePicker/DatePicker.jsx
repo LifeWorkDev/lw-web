@@ -47,7 +47,11 @@ export default class DatePicker extends React.Component {
       )
       selectedDays.splice(selectedIndex, 1)
     } else {
-      selectedDays.push(day)
+      let minDate = new Date()
+      minDate.setDate(minDate.getDate() - 1)
+      if (day > minDate) {
+        selectedDays.push(day)
+      }
     }
     this.setState({ selectedDays })
   }
