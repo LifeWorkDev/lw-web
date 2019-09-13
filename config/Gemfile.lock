@@ -7,7 +7,7 @@ GIT
 
 GIT
   remote: https://github.com/swrobel/bootstrap-email.git
-  revision: e1b7650cf4a649c61a12142582cb48aa45d7af00
+  revision: 02af2ea1fa031d5fc98000c17fedf25a1d5820fd
   specs:
     bootstrap-email (0.2.6)
       actionmailer (>= 3)
