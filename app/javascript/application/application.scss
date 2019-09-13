@@ -210,6 +210,25 @@ td.action-list a {
 }
 
 .comments-list {
+
+  .comment-item p {
+    white-space: pre-line;
+  }
+
+  .edit {
+    cursor: pointer;
+  }
+
+  .comment-inline-edit textarea {
+    width: 100%;
+  }
+
+  .update {
+    cursor: pointer;
+    padding: 8px 20px;
+    font-size: inherit;
+  }
+
   .list-group-item.text-left {
     background: white;
     color: black;

@@ -16,13 +16,25 @@ const Comment = PropTypes.shape({
 })
 
 const CommentItem = props => {
-  const [comment] = useState(props.comment)
+  const [comment, setComment] = useState(props.comment)
   const [currentUser] = useState(props.currentUser)
   const isCurrentUser = comment.commenter.id === currentUser.id
+  const [editing, setEditing] = useState(false)
+  const [commentText, setCommentText] = useState(comment.comment)
+
+  const handleCommentChange = event => {
+    setCommentText(event.target.value)
+  }
+
+  const save = () => {
+    comment.comment = commentText
+    setComment(comment)
+    setEditing(false)
+  }
 
   return (
     <div
-      className={`list-group-item list-group-item-action ${
+      className={`comment-item list-group-item list-group-item-action ${
         isCurrentUser ? 'text-right' : 'text-left'
       }`}
     >
@@ -30,7 +42,31 @@ const CommentItem = props => {
         {comment.commenter.name}
         <small> at {comment.formatted_created_at}</small>
       </h5>
-      <p>{comment.comment}</p>
+
+      {!editing && (
+        <div className='comment'>
+          <p>{commentText}</p>
+          {isCurrentUser && (
+            <span
+              className='edit badge badge-secondary'
+              onClick={() => {
+                setEditing(true)
+              }}
+            >
+              Edit
+            </span>
+          )}
+        </div>
+      )}
+
+      {isCurrentUser && editing && (
+        <div className='comment-inline-edit'>
+          <textarea value={commentText} onChange={handleCommentChange} />
+          <span className='update badge badge-secondary' onClick={save}>
+            Save
+          </span>
+        </div>
+      )}
 
       {comment.read_by !== null && (
         <small>
