@@ -8,8 +8,21 @@ export default class DatePicker extends React.Component {
   constructor(props) {
     super(props)
     this.handleDayClick = this.handleDayClick.bind(this)
+    let defaultDate = props.defaultDate
+
+    let selectedDays = []
+    let timezoneOffset = new Date().getTimezoneOffset()
+    console.log(timezoneOffset)
+    if (defaultDate != null) {
+      defaultDate.map(day => {
+        let date = new Date(day)
+        date.setHours(date.getHours() + timezoneOffset / 60)
+        selectedDays.push(date)
+      })
+    }
+
     this.state = {
-      selectedDays: [],
+      selectedDays,
     }
   }
 
@@ -20,7 +33,7 @@ export default class DatePicker extends React.Component {
     return result
   }
 
-  formatDate = date => {
+  displayFormatDate = date => {
     let d = new Date(date),
       month = '' + (d.getMonth() + 1),
       day = '' + d.getDate(),
@@ -30,6 +43,18 @@ export default class DatePicker extends React.Component {
     if (day.length < 2) day = '0' + day
 
     return [month, day, year].join('/')
+  }
+
+  shortFormatDate = date => {
+    let d = new Date(date),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear()
+
+    if (month.length < 2) month = '0' + month
+    if (day.length < 2) day = '0' + day
+
+    return [year, month, day].join('-')
   }
 
   removeData = index => {
@@ -71,8 +96,12 @@ export default class DatePicker extends React.Component {
               className='badge badge-primary badge-pill date-pill mr-2 mb-2'
               key={key}
             >
-              <span>{this.formatDate(day)}</span>
-              <input type='hidden' name={'array'} value={day.toISOString()} />
+              <span>{this.displayFormatDate(day)}</span>
+              <input
+                type='hidden'
+                name={'milestone_project[milestones_attributes][][date]'}
+                value={this.shortFormatDate(day)}
+              />
               <button
                 type='button'
                 className='close'
