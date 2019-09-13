@@ -10,6 +10,7 @@ class Freelancer::MilestoneProjectsController < MilestoneProjectsController
 
   # PATCH/PUT /milestone_projects/1
   def update
+    @project.milestones.clear
     @project.assign_attributes(milestone_project_params)
     if params[:button].present?
       notice = "#{params[:button].capitalize} were updated." if @project.milestones_changed?
