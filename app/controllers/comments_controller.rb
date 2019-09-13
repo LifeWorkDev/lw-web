@@ -2,9 +2,9 @@ class CommentsController < AuthenticatedController
   before_action :set_project, only: %i[index new create]
 
   def index
-    @milestones = @project.milestones.includes(comments: %i[commenter read_by]).order(:date)
+    @milestones = @project.milestones.includes(comments: %i[commenter read_by])
     @project.comments.where.not(commenter: current_user)
-            .where(read_at: nil).find_each { |c| c.update(read_by_id: current_user.id, read_at: DateTime.now) }
+            .where(read_at: nil).find_each { |c| c.update(read_by_id: current_user.id, read_at: Time.current) }
   end
 
   def create

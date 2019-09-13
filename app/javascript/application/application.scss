@@ -210,12 +210,12 @@ td.action-list a {
 }
 
 .comments-list {
-  .list-group-item {
+  .list-group-item.text-left {
     background: white;
     color: black;
   }
 
-  .list-group-item:nth-child(even) {
+  .list-group-item.text-right {
     background: $primary;
     color: white;
 
