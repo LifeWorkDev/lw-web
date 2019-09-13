@@ -8,5 +8,5 @@
   = bootstrap_form_with(model: [current_namespace, @project], local: true) do |f|
     = f.hidden_field :id
     = hidden_field_tag :update_type, :dates
-    = react_component('DatePicker/DatePicker', {defaultDate: @project.milestones.pluck(:date).map(&:to_date).map(&:to_s).presence})
+    = react_component('DatePicker/DatePicker', defaultDate: @project.milestones.pluck(:date).map(&:to_date).map(&:to_s).presence)
     .mt-4 = render 'shared/form_buttons', f: f, back: [:edit, current_namespace, @project.client], submit_val: :milestones
