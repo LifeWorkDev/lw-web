@@ -8,18 +8,9 @@ export default class DatePicker extends React.Component {
   constructor(props) {
     super(props)
     this.handleDayClick = this.handleDayClick.bind(this)
-    let defaultDate = props.defaultDate
 
-    let selectedDays = []
-    let timezoneOffset = new Date().getTimezoneOffset()
-    console.log(timezoneOffset)
-    if (defaultDate != null) {
-      defaultDate.map(day => {
-        let date = new Date(day)
-        date.setHours(date.getHours() + timezoneOffset / 60)
-        selectedDays.push(date)
-      })
-    }
+    let defaultDate = props.defaultDate
+    let selectedDays = this.stringsToDates(defaultDate)
 
     this.state = {
       selectedDays,
@@ -31,6 +22,19 @@ export default class DatePicker extends React.Component {
       navigator.userAgent,
     )
     return result
+  }
+
+  stringsToDates = dayStrings => {
+    let selectedDays = []
+    let timezoneOffset = new Date().getTimezoneOffset()
+    if (dayStrings != null) {
+      dayStrings.map(day => {
+        let date = new Date(day)
+        date.setHours(date.getHours() + timezoneOffset / 60)
+        selectedDays.push(date)
+      })
+    }
+    return selectedDays
   }
 
   displayFormatDate = date => {
