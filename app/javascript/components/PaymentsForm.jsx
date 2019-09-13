@@ -129,6 +129,7 @@ const PaymentForm = React.memo(({ index, milestone, total, updateAmount }) => {
                 updateAmount({ amount: e.target.value, index: index })
               }
               placeholder='0.00'
+              step='0.01'
               type='number'
             />
           </div>

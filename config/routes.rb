@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   namespace :client, path: 'c' do
     resource :org
     resources :milestone_projects do
-      get 'payments', on: :member
+      get :payments, on: :member
       resources :comments, only: %i[index create]
     end
     resources :projects, only: :index
@@ -14,8 +14,10 @@ Rails.application.routes.draw do
     resources :orgs, path: :clients
     resources :milestones
     resources :milestone_projects do
-      get 'milestones', on: :member
-      get 'payments', on: :member
+      patch :activate, on: :member
+      get :milestones, on: :member
+      get :payments, on: :member
+      get :preview, on: :member
       resources :comments, only: %i[index create]
     end
     resources :projects, only: :index
@@ -24,11 +26,11 @@ Rails.application.routes.draw do
   end
 
   as :user do
-    get 'login', to: 'devise/sessions#new', as: :new_user_session
-    post 'login', to: 'devise/sessions#create', as: :user_session
-    delete 'logout', to: 'devise/sessions#destroy', as: :destroy_user_session
-    get 'logout', to: 'devise/sessions#destroy'
-    get 'sign_up', to: 'devise/registrations#new', as: :new_user_registration
+    get :login, to: 'devise/sessions#new', as: :new_user_session
+    post :login, to: 'devise/sessions#create', as: :user_session
+    delete :logout, to: 'devise/sessions#destroy', as: :destroy_user_session
+    get :logout, to: 'devise/sessions#destroy'
+    get :sign_up, to: 'devise/registrations#new', as: :new_user_registration
   end
   devise_for :users, skip: [:sessions], controllers: { registrations: 'users/registrations' }
   namespace :users do

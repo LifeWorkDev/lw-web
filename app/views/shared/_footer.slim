@@ -1,10 +1,11 @@
-footer.mt-auto.bg-dark.text-white
-  .container
-    .row.py-3.d-flex.align-items-center.text-center
-      .col-sm-7.text-sm-left
-        /= link_to 'Terms of Use', tos_path, class: 'mr-3 mr-md-5 text-white'
-        /= link_to 'Privacy Policy', privacy_path, class: 'mr-3 mr-md-5 text-white'
-        = link_to 'Contact', 'https://www.lifeworkonline.com/contact-us', class: 'text-white', rel: 'noopener', target: '_blank'
-      .col-sm-5.pt-3.pt-sm-0.text-sm-right
-        .small.text-muted
-          | &copy; #{Time.zone.today.year} LifeWork Holdings, Inc.
+footer.mt-auto.text-white
+  .bg-dark.mt-3
+    .container
+      .row.py-3.d-flex.align-items-center.text-center
+        .col-sm-7.text-sm-left
+          /= link_to 'Terms of Use', tos_path, class: 'mr-3 mr-md-5 text-white'
+          /= link_to 'Privacy Policy', privacy_path, class: 'mr-3 mr-md-5 text-white'
+          = link_to 'Contact', 'https://www.lifeworkonline.com/contact-us', class: 'text-white', rel: 'noopener', target: '_blank'
+        .col-sm-5.pt-3.pt-sm-0.text-sm-right
+          .small.text-muted
+            | &copy; #{Time.zone.today.year} LifeWork Holdings, Inc.

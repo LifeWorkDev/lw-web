@@ -1,39 +1,8 @@
-// bootstrap theme overrides
-
-$blue: #3b9de3;
-
-$font-family-serif: adobe-garamond-pro, Georgia, serif;
-$font-family-base: $font-family-serif;
+// https://getbootstrap.com/docs/4.3/content/typography/#responsive-font-sizes
+$enable-responsive-font-sizes: true;
 $font-size-base: 1.125rem;
 
-$body-bg: hsl(201, 0%, 98%);
-$body-color: rgba(26, 26, 26, 0.7);
-
-$border-radius: 0;
-$border-radius-lg: $border-radius;
-$border-radius-sm: $border-radius;
-
-$btn-border-radius: 10rem; // fully rounded
-$btn-border-radius-lg: $btn-border-radius;
-$btn-border-radius-sm: $btn-border-radius;
-$btn-font-size: 0.9rem;
-$btn-font-size-lg: $btn-font-size * 1.25;
-$btn-font-size-sm: $btn-font-size * 0.875;
-$btn-font-weight: 300;
-$btn-padding-y: 0.6rem;
-$btn-padding-x: 2rem;
-$btn-padding-y-sm: 0.5rem;
-$btn-padding-x-sm: 1rem;
-
-$headings-color: #383a3d;
-$headings-font-weight: 600;
-
-$input-bg: $body-bg;
-$input-focus-bg: white;
-$input-focus-box-shadow: none;
-$input-padding-y: 0.5rem;
-
-$list-group-border-radius: none;
+@import 'bootstrap-variables';
 
 // Vars referencing existing bootstrap vars must
 // go in this block and have the !global flag
@@ -42,7 +11,8 @@ $list-group-border-radius: none;
   @import '~bootstrap/scss/functions';
   @import '~bootstrap/scss/variables';
 
-  $h3-font-size: $font-size-base * 1.25 !global;
+  $body-bg: $theme-background !global;
+  $btn-font-family: $font-family-sans-serif !global;
   $input-focus-border-color: $gray-600 !global;
   $input-font-family: $font-family-sans-serif !global;
   $input-border-color: $gray-500 !global;
@@ -50,7 +20,9 @@ $list-group-border-radius: none;
   $list-group-border-color: $gray-500 !global;
 }
 
+// Needs to be imported after the above scope block
 @import '~bootstrap/scss/bootstrap';
+@import 'bootstrap-overrides';
 
 .alert {
   box-shadow: $box-shadow;
@@ -63,16 +35,6 @@ $list-group-border-radius: none;
     font-size: 100%;
     line-height: 0.9;
     text-shadow: 0 1px 0 rgba(#000, 0.5);
-  }
-}
-
-.btn {
-  font-family: $font-family-sans-serif;
-  text-transform: uppercase;
-  letter-spacing: 0.2rem;
-
-  &.btn-sm {
-    letter-spacing: 0.08rem;
   }
 }
 
@@ -131,13 +93,6 @@ span.flatpickr-day {
     font-size: 85%;
     font-style: italic;
   }
-}
-
-h3 {
-  color: hsl(205, 79%, 29%);
-  font-family: $font-family-sans-serif;
-  font-weight: 700;
-  text-transform: uppercase;
 }
 
 .input-group {
@@ -216,6 +171,10 @@ input[type='number'] {
 
 .mw-50 {
   max-width: 50%;
+}
+
+.mw-600px {
+  max-width: 600px;
 }
 
 .navbar {
