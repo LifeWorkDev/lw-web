@@ -78,6 +78,7 @@ export default class DatePicker extends React.Component {
           selectedDays={this.state.selectedDays}
           onDayClick={this.handleDayClick}
           numberOfMonths={this.isMobile() ? 1 : 2}
+          disabledDays={{ before: new Date() }}
         />
       </div>
     )
