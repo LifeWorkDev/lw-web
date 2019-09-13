@@ -54,10 +54,15 @@ export default class DatePicker extends React.Component {
 
   render() {
     const { selectedDays } = this.state
+    let orderedDays = selectedDays.sort(function(date1, date2) {
+      if (date1 > date2) return 1
+      if (date1 < date2) return -1
+      return 0
+    })
     return (
       <div className='text-align-center'>
         <div>
-          {selectedDays.map((day, key) => (
+          {orderedDays.map((day, key) => (
             <span
               className='badge badge-primary badge-pill date-pill mr-2 mb-2'
               key={key}
