@@ -10,7 +10,9 @@ class Freelancer::MilestoneProjectsController < MilestoneProjectsController
 
   # PATCH/PUT /milestone_projects/1
   def update
-    @project.milestones.clear
+    puts 'updating...' + ActiveSupport::JSON.encode(params)
+    @project.milestones.clear if params[:update_type].present? && params[:update_type] == 'dates'
+
     @project.assign_attributes(milestone_project_params)
     if params[:button].present?
       notice = "#{params[:button].capitalize} were updated." if @project.milestones_changed?
