@@ -17,6 +17,7 @@ class Freelancer::MilestoneProjectsController < MilestoneProjectsController
   # GET /f/milestone_projects/1/preview
   def preview
     @back = [:payments, current_namespace, @project]
+    @hide_email_footer = true
   end
 
   # PATCH/PUT /f/milestone_projects/1

@@ -3,7 +3,7 @@ p #{@project.freelancer.name} would like to be paid for #{@project.name} through
 - if @get_started_url.present?
   .mb-3.text-center = link_to 'Get started', @get_started_url, class: 'btn btn-primary'
 
-table.table.table-striped
+table.table.table-striped.mb-0
   thead
     tr
       th.text-center Date
