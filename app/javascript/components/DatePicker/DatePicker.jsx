@@ -13,6 +13,13 @@ export default class DatePicker extends React.Component {
     }
   }
 
+  isMobile = () => {
+    const result = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent,
+    )
+    return result
+  }
+
   formatDate = date => {
     let d = new Date(date),
       month = '' + (d.getMonth() + 1),
@@ -70,7 +77,7 @@ export default class DatePicker extends React.Component {
         <DayPicker
           selectedDays={this.state.selectedDays}
           onDayClick={this.handleDayClick}
-          numberOfMonths={2}
+          numberOfMonths={this.isMobile() ? 1 : 2}
         />
       </div>
     )
