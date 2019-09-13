@@ -1,0 +1,12 @@
+doctype html
+html lang="en"
+  head
+    meta content='text/html; charset=UTF-8' http-equiv='Content-Type'
+    link rel='stylesheet' href='https://use.typekit.net/brp1ynq.css'
+    / Premailer won't load this via webpack-dev-server with the mkcert certificate because it doesn't trust the cert store so we need to just load it over http
+    -# rubocop:disable Rails/OutputSafety
+    = stylesheet_pack_tag('application-mailer', media: :all).gsub('https', 'http').html_safe
+    -# rubocop:enable Rails/OutputSafety
+  body
+    = render 'mailers/body'
+      = yield

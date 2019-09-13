@@ -16,9 +16,13 @@ class User < ApplicationRecord
                  work_category: [:string, array: true, default: []],
                  work_type: :string
 
+  def after_database_authentication
+    activate! unless active?
+  end
+
 private
 
-  def after_confirmation
-    user.activate! unless user.active?
+  def skip_invitation
+    true # Never send default invitation email when using invite!
   end
 end
