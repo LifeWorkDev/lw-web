@@ -10,8 +10,13 @@ class Freelancer::MilestoneProjectsController < MilestoneProjectsController
 
   # PATCH/PUT /milestone_projects/1
   def update
-    puts 'updating...' + ActiveSupport::JSON.encode(params)
-    @project.milestones.clear if params[:update_type].present? && params[:update_type] == 'dates'
+    if params[:update_type].present? && params[:update_type] == 'dates'
+      milestone_dates = milestone_project_params['milestones_attributes'].map { |milestone_param| milestone_param['date'] }
+      @project.milestones.each do |milestone|
+        date_string = milestone.date.to_s.split(' ').first
+        @project.milestones.delete(milestone) unless milestone_dates.include?(date_string)
+      end
+    end
 
     @project.assign_attributes(milestone_project_params)
     if params[:button].present?
