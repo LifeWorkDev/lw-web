@@ -18,10 +18,6 @@ class CommentsController < AuthenticatedController
 
 private
 
-  def current_entity
-    current_namespace == 'client' ? current_org : current_user
-  end
-
   # Use callbacks to share common setup or constraints between actions.
   def set_project
     @project = current_entity.projects.find(params[:milestone_project_id])
