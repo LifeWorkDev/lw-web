@@ -131,6 +131,7 @@ const PaymentForm = React.memo(({ index, milestone, total, updateAmount }) => {
               placeholder='0.00'
               step='0.01'
               type='number'
+              required
             />
           </div>
         </>
@@ -168,6 +169,7 @@ const PaymentForm = React.memo(({ index, milestone, total, updateAmount }) => {
             name={`milestone_project[milestones_attributes][${index}][description]`}
             placeholder='Describe this milestone'
             type='text'
+            required
           />
           <input
             type='hidden'
