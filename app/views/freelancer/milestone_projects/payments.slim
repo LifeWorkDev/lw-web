@@ -7,3 +7,12 @@
   = bootstrap_form_with(model: [current_namespace, @project], class: 'w-100 mt-2', control_col: 'col-sm-6 col-md-3', label_col: 'col-sm-6 text-sm-right', layout: :horizontal, local: true) do |f|
     = react_component('PaymentsForm', milestones: @project.milestones, total: @project.amount.to_f)
     = render 'shared/form_buttons', f: f, back: @back, submit_val: :payments
+
+javascript:
+  var backButton = document.getElementById('btn_back');
+
+  function confirmBack() {
+    return confirm("If you have made changes & click back that you will lose any edits.")
+  }
+
+  backButton.onclick = confirmBack; //Start action on click
