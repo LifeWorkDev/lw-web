@@ -36,7 +36,7 @@ Rails.application.routes.draw do
     get 'stop_impersonating', to: 'impersonations#stop_impersonating'
   end
 
-  get 'styleguide', to: 'application#styleguide'
+  get 'styleguide', to: 'application#styleguide' if Rails.env.development?
 
   get 'legal/terms-of-use', to: 'application#tos', as: :tos
   get 'legal/privacy-policy', to: 'application#privacy', as: :privacy

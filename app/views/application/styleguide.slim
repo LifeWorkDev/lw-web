@@ -1,6 +1,5144 @@
-h1 Heading 1
-h2 Heading 2
-h3 Heading 3
-h4 Heading 4
-h5 Heading 5
-h6 Heading 6
+style
+  |  .bd-content>h1:not(:first-child), .bd-content>h2:not(:first-child), .bd-content>h3:not(:first-child) { margin-top: 1rem } .bd-example { position: relative; padding: 1rem; margin: 1rem -1rem; border: solid #f7f7f9; border-width: .2rem 0 0 } .bd-example::after { display: block; content: ""; clear: both } @media (min-width:576px) { .bd-example { padding: 1.5rem; margin-right: 0; margin-bottom: 0; margin-left: 0; border-width: .2rem } } .bd-example+p { margin-top: 2rem } .bd-example .pos-f-t { position: relative; margin: -1rem } #carouselExampleSlidesOnlyFill .carousel-inner .carousel-item, #carouselExampleSlidesOnlyFit .carousel-inner .carousel-item, #carouselExampleControls .carousel-inner .carousel-item, #carouselExampleIndicators .carousel-inner .carousel-item, #carouselExampleCaptions .carousel-inner .carousel-item { height:300px } #carouselExampleSlidesOnlyFill .carousel-inner .carousel-item img, #carouselExampleControls .carousel-inner .carousel-item img, #carouselExampleIndicators .carousel-inner .carousel-item img, #carouselExampleCaptions .carousel-inner .carousel-item img { max-width: 100%; position: absolute; top: 0; bottom: 0; left: 0; right: 0; margin: auto; } #carouselExampleSlidesOnlyFit .carousel-inner .carousel-item img { max-height: 100%; max-width: 100%; position: absolute; top: 0; bottom: 0; left: 0; right: 0; margin: auto; } @media (min-width:576px) { .bd-example .pos-f-t { margin: -1.5rem } } .bd-example>.form-control+.form-control { margin-top: .5rem } .bd-example>.alert+.alert, .bd-example>.nav+.nav, .bd-example>.navbar+.navbar, .bd-example>.progress+.btn, .bd-example>.progress+.progress { margin-top: 1rem } .bd-example>.dropdown-menu:first-child { position: static; display: block } .bd-example>.form-group:last-child { margin-bottom: 0 } .bd-example>.close { float: none } .bd-example-type .table .type-info { color: #999; vertical-align: middle } .bd-example-type .table td { padding: 1rem 0; border-color: #eee } .bd-example-type .table tr:first-child td { border-top: 0 } .bd-example-type h1, .bd-example-type h2, .bd-example-type h3, .bd-example-type h4, .bd-example-type h5, .bd-example-type h6 { margin: 0 } .bd-example-bg-classes p { padding: 1rem } .bd-example>img+img { margin-left: .5rem } .bd-example>.btn-group { margin-top: .25rem; margin-bottom: .25rem } .bd-example>.btn-toolbar+.btn-toolbar { margin-top: .5rem } .bd-example-control-sizing input[type=text]+input[type=text], .bd-example-control-sizing select { margin-top: .5rem } .bd-example-form .input-group { margin-bottom: .5rem } .bd-example>textarea.form-control { resize: vertical } .bd-example>.list-group { max-width: 400px } .bd-example .fixed-top, .bd-example .sticky-top { position: static; margin: -1rem -1rem 1rem } .bd-example .fixed-bottom { position: static; margin: 1rem -1rem -1rem } @media (min-width:576px) { .bd-example .fixed-top, .bd-example .sticky-top { margin: -1.5rem -1.5rem 1rem } .bd-example .fixed-bottom { margin: 1rem -1.5rem -1.5rem } } .bd-example .pagination { margin-top: .5rem; margin-bottom: .5rem } .bd-example-modal { background-color: #fafafa } .bd-example-modal .modal { position: relative; top: auto; right: auto; bottom: auto; left: auto; z-index: 1; display: block } .bd-example-modal .modal-dialog { left: auto; margin-right: auto; margin-left: auto } .bd-example-tabs .nav-tabs { margin-bottom: 1rem } .bd-example-tooltips { text-align: center } .bd-example-tooltips>.btn { margin-top: .25rem; margin-bottom: .25rem } .bd-example-popover-static { padding-bottom: 1.5rem; background-color: #f9f9f9 } .bd-example-popover-static .popover { position: relative; display: block; float: left; width: 260px; margin: 1.25rem } .bd-example-tooltip-static .tooltip { position: relative; display: inline-block; margin: 10px 20px; opacity: 1 } .scrollspy-example { position: relative; height: 200px; margin-top: .5rem; overflow: auto } .bd-example>.bg-danger:not(.navbar), .bd-example>.bg-faded:not(.navbar), .bd-example>.bg-info:not(.navbar), .bd-example>.bg-inverse:not(.navbar), .bd-example>.bg-primary:not(.navbar), .bd-example>.bg-success:not(.navbar), .bd-example>.bg-warning:not(.navbar) { padding: .5rem; margin-top: .5rem; margin-bottom: .5rem } .bd-example-border-utils [class^=border-] { display: inline-block; width: 6rem; height: 6rem; margin: .25rem; background-color: #f5f5f5; border: 1px solid }
+script[src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"]
+script[src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"]
+script[src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"]
+script
+  |  jQuery( document ).ready(function() { jQuery('[data-toggle="popover"]').popover(); jQuery('[data-toggle="tooltip"]').tooltip(); $( 'button.bd-toggle-animated-progress' ).click(function() { $( this ).prev().children( '.progress-bar' ).toggleClass( 'progress-bar-animated' ); }); });
+.container-fluid.bd-content
+  h1.display-4
+    | Layout
+  h1#content.bd-title
+    | Media object
+  h2#nesting
+    | Nesting
+  .bd-example
+    .media
+      img.d-flex.mr-3[alt="128px x 128px native image, 64px x 64px display size" style="width: 64px; height: 64px;" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-128x128-01.jpg"]
+      .media-body
+        h5.mt-0
+          | Media heading
+        |  Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+        .media.mt-3
+          a.d-flex.pr-3[href="#"]
+            img[alt="128px x 128px native image, 64px x 64px display size" style="width: 64px; height: 64px;" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-128x128-02.jpg"]
+          .media-body
+            h5.mt-0
+              | Media heading
+            |  Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+  h2#alignment
+    | Alignment
+  .bd-example
+    .media
+      img.d-flex.align-self-start.mr-3[alt="128px x 128px native image, 64px x 64px display size" style="width: 64px; height: 64px;" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-128x128-03.jpg"]
+      .media-body
+        h5.mt-0
+          | Top-aligned media
+        p
+          | Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+        p
+          | Donec sed odio dui. Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+  .bd-example
+    .media
+      img.d-flex.align-self-center.mr-3[alt="128px x 128px native image, 64px x 64px display size" style="width: 64px; height: 64px;" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-128x128-04.jpg"]
+      .media-body
+        h5.mt-0
+          | Center-aligned media
+        p
+          | Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+        p.mb-0
+          | Donec sed odio dui. Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+  .bd-example
+    .media
+      img.d-flex.align-self-end.mr-3[alt="128px x 128px native image, 64px x 64px display size" style="width: 64px; height: 64px;" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-128x128-05.jpg"]
+      .media-body
+        h5.mt-0
+          | Bottom-aligned media
+        p
+          | Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+        p.mb-0
+          | Donec sed odio dui. Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+  h2#order
+    | Order
+  .bd-example
+    .media
+      .media-body
+        h5.mt-0.mb-1
+          | Media object
+        |  Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+      img.d-flex.ml-3[alt="128px x 128px native image, 64px x 64px display size" style="width: 64px; height: 64px;" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-128x128-06.jpg"]
+  h2#media-list
+    | Media list
+  .bd-example
+    ul.list-unstyled
+      li.media
+        img.d-flex.mr-3[alt="128px x 128px native image, 64px x 64px display size" style="width: 64px; height: 64px;" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-128x128-07.jpg"]
+        .media-body
+          h5.mt-0.mb-1
+            | List-based media object
+          |  Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+      li.media.my-4
+        img.d-flex.mr-3[alt="128px x 128px native image, 64px x 64px display size" style="width: 64px; height: 64px;" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-128x128-08.jpg"]
+        .media-body
+          h5.mt-0.mb-1
+            | List-based media object
+          |  Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+      li.media
+        img.d-flex.mr-3[alt="128px x 128px native image, 64px x 64px display size" style="width: 64px; height: 64px;" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-128x128-09.jpg"]
+        .media-body
+          h5.mt-0.mb-1
+            | List-based media object
+          |  Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+  h1.display-4
+    | Content
+  h1#content.bd-title
+    | Reboot
+  h2#headings-and-paragraphs
+    | Headings and paragraphs
+  .bd-example
+    h1#h1-heading
+      | h1 heading
+    p
+      | Curabitur blandit tempus porttitor. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.
+    h2#h2-heading
+      | h2 heading
+    p
+      | Curabitur blandit tempus porttitor. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.
+    h3#h3-heading
+      | h3 heading
+    p
+      | Curabitur blandit tempus porttitor. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.
+    h4#h4-heading
+      | h4 heading
+    p
+      | Curabitur blandit tempus porttitor. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.
+    h5#h5-heading
+      | h5 heading
+    p
+      | Curabitur blandit tempus porttitor. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.
+    h6#h6-heading
+      | h6 heading
+    p
+      | Curabitur blandit tempus porttitor. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.
+  h2#lists
+    | Lists
+  .bd-example
+    ul
+      li
+        | Lorem ipsum dolor sit amet
+      li
+        | Consectetur adipiscing elit
+      li
+        | Integer molestie lorem at massa
+      li
+        | Facilisis in pretium nisl aliquet
+      li
+        | Nulla volutpat aliquam velit
+        ul
+          li
+            | Phasellus iaculis neque
+          li
+            | Purus sodales ultricies
+          li
+            | Vestibulum laoreet porttitor sem
+          li
+            | Ac tristique libero volutpat at
+      li
+        | Faucibus porta lacus fringilla vel
+      li
+        | Aenean sit amet erat nunc
+      li
+        | Eget porttitor lorem
+    ol
+      li
+        | Lorem ipsum dolor sit amet
+      li
+        | Consectetur adipiscing elit
+      li
+        | Integer molestie lorem at massa
+      li
+        | Facilisis in pretium nisl aliquet
+      li
+        | Nulla volutpat aliquam velit
+      li
+        | Faucibus porta lacus fringilla vel
+      li
+        | Aenean sit amet erat nunc
+      li
+        | Eget porttitor lorem
+  .bd-example
+    dl
+      dt
+        | Description lists
+      dd
+        | A description list is perfect for defining terms.
+      dt
+        | Euismod
+      dd
+        | Vestibulum id ligula porta felis euismod semper eget lacinia odio sem.
+      dd
+        | Donec id elit non mi porta gravida at eget metus.
+      dt
+        | Malesuada porta
+      dd
+        | Etiam porta sem malesuada magna mollis euismod.
+  h2#preformatted-text
+    | Preformatted text
+  .bd-example
+    pre
+      | .example-element { margin-bottom: 1rem; }
+  h2#tables
+    | Tables
+  .bd-example
+    table
+      caption
+        |  This is an example table, and this is its caption to describe the contents.
+      thead
+        tr
+          th
+            | Table heading
+          th
+            | Table heading
+          th
+            | Table heading
+          th
+            | Table heading
+      tbody
+        tr
+          td
+            | Table cell
+          td
+            | Table cell
+          td
+            | Table cell
+          td
+            | Table cell
+        tr
+          td
+            | Table cell
+          td
+            | Table cell
+          td
+            | Table cell
+          td
+            | Table cell
+        tr
+          td
+            | Table cell
+          td
+            | Table cell
+          td
+            | Table cell
+          td
+            | Table cell
+  h2#forms
+    | Forms
+  form.bd-example
+    fieldset
+      legend
+        | Example legend
+      p
+        label[for="input"]
+          | Example input
+        input#input[placeholder="Example input" type="text"]
+      p
+        label[for="select"]
+          | Example select
+        select#select
+          option[value=""]
+            | Choose...
+          optgroup[label="Option group 1"]
+            option[value=""]
+              | Option 1
+            option[value=""]
+              | Option 2
+            option[value=""]
+              | Option 3
+          optgroup[label="Option group 2"]
+            option[value=""]
+              | Option 4
+            option[value=""]
+              | Option 5
+            option[value=""]
+              | Option 6
+      p
+        label
+          input[value="" type="checkbox"]
+          |  Check this checkbox
+      p
+        label
+          input#optionsRadios1[name="optionsRadios" value="option1" checked="" type="radio"]
+          |  Option one is this and that
+        label
+          input#optionsRadios2[name="optionsRadios" value="option2" type="radio"]
+          |  Option two is something else that's also super long to demonstrate the wrapping of these fancy form controls.
+        label
+          input#optionsRadios3[name="optionsRadios" value="option3" disabled="" type="radio"]
+          |  Option three is disabled
+      p
+        label[for="textarea"]
+          | Example textarea
+        textarea#textarea[rows="3"]
+      p
+        label[for="time"]
+          | Example temporal
+        input#time[type="datetime-local"]
+      p
+        label[for="output"]
+          | Example output
+        output#output[name="result"]
+          | 100
+      p
+        button[type="submit"]
+          | Button submit
+        input[value="Input submit button" type="submit"]
+        input[value="Input button" type="button"]
+      p
+        button[type="submit" disabled=""]
+          | Button submit
+        input[value="Input submit button" disabled="" type="submit"]
+        input[value="Input button" disabled="" type="button"]
+  h2#misc-elements
+    | Misc elements
+  h3#address
+    | Address
+  .bd-example
+    address
+      strong
+        | Twitter, Inc.
+      br
+      |  1355 Market St, Suite 900
+      br
+      |  San Francisco, CA 94103
+      br
+      abbr[title="Phone"]
+        | P:
+      |  (123) 456-7890
+    address
+      strong
+        | Full Name
+      br
+      a[href="mailto:#"]
+        | first.last@example.com
+  h3#blockquote
+    | Blockquote
+  .bd-example
+    blockquote.blockquote
+      p
+        | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.
+      footer
+        | Someone famous in
+        cite[title="Source Title"]
+          | Source Title
+  h3#inline-elements
+    | Inline elements
+  .bd-example
+    |  Nulla
+    abbr[title="attribute"]
+      | attr
+    |  vitae elit libero, a pharetra augue.
+  h1#content.bd-title
+    | Typography
+  h2#headings
+    | Headings
+  .bd-example.bd-example-type
+    table.table
+      tbody
+        tr
+          td
+            h1
+              | h1. Bootstrap heading
+          td.type-info
+            | Semibold 2.5rem (40px)
+        tr
+          td
+            h2
+              | h2. Bootstrap heading
+          td.type-info
+            | Semibold 2rem (32px)
+        tr
+          td
+            h3
+              | h3. Bootstrap heading
+          td.type-info
+            | Semibold 1.75rem (28px)
+        tr
+          td
+            h4
+              | h4. Bootstrap heading
+          td.type-info
+            | Semibold 1.5rem (24px)
+        tr
+          td
+            h5
+              | h5. Bootstrap heading
+          td.type-info
+            | Semibold 1.25rem (20px)
+        tr
+          td
+            h6
+              | h6. Bootstrap heading
+          td.type-info
+            | Semibold 1rem (16px)
+  h3#customizing-headings
+    | Customizing headings
+  .bd-example
+    h3
+      | Fancy display heading
+      small.text-muted
+        | With faded secondary text
+  h2#display-headings
+    | Display headings
+  .bd-example.bd-example-type
+    table.table
+      tbody
+        tr
+          td
+            h1.display-1
+              | Display 1
+        tr
+          td
+            h1.display-2
+              | Display 2
+        tr
+          td
+            h1.display-3
+              | Display 3
+        tr
+          td
+            h1.display-4
+              | Display 4
+  h2#lead
+    | Lead
+  .bd-example
+    p.lead
+      |  Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus.
+  h2#inline-text-elements
+    | Inline text elements
+  .bd-example
+    p
+      | You can use the mark tag to
+      mark
+        | highlight
+      |  text.
+    p
+      del
+        | This line of text is meant to be treated as deleted text.
+    p
+      s
+        | This line of text is meant to be treated as no longer accurate.
+    p
+      ins
+        | This line of text is meant to be treated as an addition to the document.
+    p
+      u
+        | This line of text will render as underlined
+    p
+      small
+        | This line of text is meant to be treated as fine print.
+    p
+      strong
+        | This line rendered as bold text.
+    p
+      em
+        | This line rendered as italicized text.
+  h2#abbreviations
+    | Abbreviations
+  .bd-example
+    p
+      abbr[title="attribute"]
+        | attr
+    p
+      abbr.initialism[title="HyperText Markup Language"]
+        | HTML
+  h2#blockquotes
+    | Blockquotes
+  h3#naming-a-source
+    | Naming a source
+  .bd-example
+    blockquote.blockquote
+      p.mb-0
+        | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.
+      footer.blockquote-footer
+        | Someone famous in
+        cite[title="Source Title"]
+          | Source Title
+  h3#reverse-layout
+    | Reverse layout
+  .bd-example
+    blockquote.blockquote.blockquote-reverse
+      p.mb-0
+        | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.
+      footer.blockquote-footer
+        | Someone famous in
+        cite[title="Source Title"]
+          | Source Title
+  h2#lists
+    | Lists
+  h3#unstyled
+    | Unstyled
+  .bd-example
+    ul.list-unstyled
+      li
+        | Lorem ipsum dolor sit amet
+      li
+        | Consectetur adipiscing elit
+      li
+        | Integer molestie lorem at massa
+      li
+        | Facilisis in pretium nisl aliquet
+      li
+        | Nulla volutpat aliquam velit
+        ul
+          li
+            | Phasellus iaculis neque
+          li
+            | Purus sodales ultricies
+          li
+            | Vestibulum laoreet porttitor sem
+          li
+            | Ac tristique libero volutpat at
+      li
+        | Faucibus porta lacus fringilla vel
+      li
+        | Aenean sit amet erat nunc
+      li
+        | Eget porttitor lorem
+  h3#inline
+    | Inline
+  .bd-example
+    ul.list-inline
+      li.list-inline-item
+        | Lorem ipsum
+      li.list-inline-item
+        | Phasellus iaculis
+      li.list-inline-item
+        | Nulla volutpat
+  h3#description-list-alignment
+    | Description list alignment
+  .bd-example
+    dl.row
+      dt.col-sm-3
+        | Description lists
+      dd.col-sm-9
+        | A description list is perfect for defining terms.
+      dt.col-sm-3
+        | Euismod
+      dd.col-sm-9
+        | Vestibulum id ligula porta felis euismod semper eget lacinia odio sem nec elit.
+      dd.col-sm-9.offset-sm-3
+        | Donec id elit non mi porta gravida at eget metus.
+      dt.col-sm-3
+        | Malesuada porta
+      dd.col-sm-9
+        | Etiam porta sem malesuada magna mollis euismod.
+      dt.col-sm-3.text-truncate
+        | Truncated term is truncated
+      dd.col-sm-9
+        | Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+      dt.col-sm-3
+        | Nesting
+      dd.col-sm-9
+        dl.row
+          dt.col-sm-4
+            | Nested definition list
+          dd.col-sm-8
+            | Aenean posuere, tortor sed cursus feugiat, nunc augue blandit nunc.
+  h1#content.bd-title
+    | Code
+  h2#inline-code
+    | Inline code
+  .bd-example
+    |  For example,
+    code
+      | <section>
+    |  should be wrapped as inline.
+  h2#code-blocks
+    | Code blocks
+  .bd-example
+    pre
+      code
+        | <p>Sample text here...</p> <p>And another line of sample text here...</p>
+  h2#variables
+    | Variables
+  .bd-example
+    var
+      | y
+    |  =
+    var
+      | m
+    var
+      | x
+    |  +
+    var
+      | b
+  h2#user-input
+    | User input
+  .bd-example
+    |  To switch directories, type
+    kbd
+      | cd
+    |  followed by the name of the directory.
+    br
+    |  To edit settings, press
+    kbd
+      kbd
+        | ctrl
+      |  +
+      kbd
+        | ,
+  h2#sample-output
+    | Sample output
+  .bd-example
+    samp
+      | This text is meant to be treated as sample output from a computer program.
+  h1#content.bd-title
+    | Images
+  h2#responsive-images
+    | Responsive images
+  .bd-example
+    img.img-fluid[alt="2,00px x 500px native image, responsive display size" style="" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-2000x500-01.jpg"]
+  h2#image-thumbnails
+    | Image thumbnails
+  .bd-example.bd-example-images
+    img.img-thumbnail[alt="400px x 400px native image, 200px x 200px display size" style="width: 200px; height: 200px;" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-400x400-01.jpg"]
+  h2#aligning-images
+    | Aligning images
+  .bd-example.bd-example-images.clearfix
+    img.rounded.float-left[alt="400px x 400px native image, 200px x 200px display size" style="width: 200px; height: 200px;" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-400x400-02.jpg"]
+    img.rounded.float-right[alt="400px x 400px native image, 200px x 200px display size" style="width: 200px; height: 200px;" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-400x400-03.jpg"]
+  .bd-example.bd-example-images
+    img.rounded.mx-auto.d-block[alt="400px x 400px native image, 200px x 200px display size" style="width: 200px; height: 200px;" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-400x400-04.jpg"]
+  h1#content.bd-title
+    | Tables
+  h2#examples
+    | Examples
+  .bd-example
+    table.table
+      thead
+        tr
+          th
+            | #
+          th
+            | First Name
+          th
+            | Last Name
+          th
+            | Username
+      tbody
+        tr
+          th[scope="row"]
+            | 1
+          td
+            | Mark
+          td
+            | Otto
+          td
+            | @mdo
+        tr
+          th[scope="row"]
+            | 2
+          td
+            | Jacob
+          td
+            | Thornton
+          td
+            | @fat
+        tr
+          th[scope="row"]
+            | 3
+          td
+            | Larry
+          td
+            | the Bird
+          td
+            | @twitter
+  .bd-example
+    table.table.table-inverse
+      thead
+        tr
+          th
+            | #
+          th
+            | First Name
+          th
+            | Last Name
+          th
+            | Username
+      tbody
+        tr
+          th[scope="row"]
+            | 1
+          td
+            | Mark
+          td
+            | Otto
+          td
+            | @mdo
+        tr
+          th[scope="row"]
+            | 2
+          td
+            | Jacob
+          td
+            | Thornton
+          td
+            | @fat
+        tr
+          th[scope="row"]
+            | 3
+          td
+            | Larry
+          td
+            | the Bird
+          td
+            | @twitter
+  h2#table-head-options
+    | Table head options
+  .bd-example
+    table.table
+      thead.thead-inverse
+        tr
+          th
+            | #
+          th
+            | First Name
+          th
+            | Last Name
+          th
+            | Username
+      tbody
+        tr
+          th[scope="row"]
+            | 1
+          td
+            | Mark
+          td
+            | Otto
+          td
+            | @mdo
+        tr
+          th[scope="row"]
+            | 2
+          td
+            | Jacob
+          td
+            | Thornton
+          td
+            | @fat
+        tr
+          th[scope="row"]
+            | 3
+          td
+            | Larry
+          td
+            | the Bird
+          td
+            | @twitter
+    table.table
+      thead.thead-default
+        tr
+          th
+            | #
+          th
+            | First Name
+          th
+            | Last Name
+          th
+            | Username
+      tbody
+        tr
+          th[scope="row"]
+            | 1
+          td
+            | Mark
+          td
+            | Otto
+          td
+            | @mdo
+        tr
+          th[scope="row"]
+            | 2
+          td
+            | Jacob
+          td
+            | Thornton
+          td
+            | @fat
+        tr
+          th[scope="row"]
+            | 3
+          td
+            | Larry
+          td
+            | the Bird
+          td
+            | @twitter
+  h2#striped-rows
+    | Striped rows
+  .bd-example
+    table.table.table-striped
+      thead
+        tr
+          th
+            | #
+          th
+            | First Name
+          th
+            | Last Name
+          th
+            | Username
+      tbody
+        tr
+          th[scope="row"]
+            | 1
+          td
+            | Mark
+          td
+            | Otto
+          td
+            | @mdo
+        tr
+          th[scope="row"]
+            | 2
+          td
+            | Jacob
+          td
+            | Thornton
+          td
+            | @fat
+        tr
+          th[scope="row"]
+            | 3
+          td
+            | Larry
+          td
+            | the Bird
+          td
+            | @twitter
+  .bd-example
+    table.table.table-striped.table-inverse
+      thead
+        tr
+          th
+            | #
+          th
+            | First Name
+          th
+            | Last Name
+          th
+            | Username
+      tbody
+        tr
+          th[scope="row"]
+            | 1
+          td
+            | Mark
+          td
+            | Otto
+          td
+            | @mdo
+        tr
+          th[scope="row"]
+            | 2
+          td
+            | Jacob
+          td
+            | Thornton
+          td
+            | @fat
+        tr
+          th[scope="row"]
+            | 3
+          td
+            | Larry
+          td
+            | the Bird
+          td
+            | @twitter
+  h2#bordered-table
+    | Bordered table
+  .bd-example
+    table.table.table-bordered
+      thead
+        tr
+          th
+            | #
+          th
+            | First Name
+          th
+            | Last Name
+          th
+            | Username
+      tbody
+        tr
+          th[scope="row"]
+            | 1
+          td
+            | Mark
+          td
+            | Otto
+          td
+            | @mdo
+        tr
+          th[scope="row"]
+            | 2
+          td
+            | Mark
+          td
+            | Otto
+          td
+            | @TwBootstrap
+        tr
+          th[scope="row"]
+            | 3
+          td
+            | Jacob
+          td
+            | Thornton
+          td
+            | @fat
+        tr
+          th[scope="row"]
+            | 4
+          td[colspan="2"]
+            | Larry the Bird
+          td
+            | @twitter
+  .bd-example
+    table.table.table-bordered.table-inverse
+      thead
+        tr
+          th
+            | #
+          th
+            | First Name
+          th
+            | Last Name
+          th
+            | Username
+      tbody
+        tr
+          th[scope="row"]
+            | 1
+          td
+            | Mark
+          td
+            | Otto
+          td
+            | @mdo
+        tr
+          th[scope="row"]
+            | 2
+          td
+            | Mark
+          td
+            | Otto
+          td
+            | @TwBootstrap
+        tr
+          th[scope="row"]
+            | 3
+          td
+            | Jacob
+          td
+            | Thornton
+          td
+            | @fat
+        tr
+          th[scope="row"]
+            | 4
+          td[colspan="2"]
+            | Larry the Bird
+          td
+            | @twitter
+  h2#hoverable-rows
+    | Hoverable rows
+  .bd-example
+    table.table.table-hover
+      thead
+        tr
+          th
+            | #
+          th
+            | First Name
+          th
+            | Last Name
+          th
+            | Username
+      tbody
+        tr
+          th[scope="row"]
+            | 1
+          td
+            | Mark
+          td
+            | Otto
+          td
+            | @mdo
+        tr
+          th[scope="row"]
+            | 2
+          td
+            | Jacob
+          td
+            | Thornton
+          td
+            | @fat
+        tr
+          th[scope="row"]
+            | 3
+          td[colspan="2"]
+            | Larry the Bird
+          td
+            | @twitter
+  .bd-example
+    table.table.table-hover.table-inverse
+      thead
+        tr
+          th
+            | #
+          th
+            | First Name
+          th
+            | Last Name
+          th
+            | Username
+      tbody
+        tr
+          th[scope="row"]
+            | 1
+          td
+            | Mark
+          td
+            | Otto
+          td
+            | @mdo
+        tr
+          th[scope="row"]
+            | 2
+          td
+            | Jacob
+          td
+            | Thornton
+          td
+            | @fat
+        tr
+          th[scope="row"]
+            | 3
+          td[colspan="2"]
+            | Larry the Bird
+          td
+            | @twitter
+  h2#small-table
+    | Small table
+  .bd-example
+    table.table.table-sm
+      thead
+        tr
+          th
+            | #
+          th
+            | First Name
+          th
+            | Last Name
+          th
+            | Username
+      tbody
+        tr
+          th[scope="row"]
+            | 1
+          td
+            | Mark
+          td
+            | Otto
+          td
+            | @mdo
+        tr
+          th[scope="row"]
+            | 2
+          td
+            | Jacob
+          td
+            | Thornton
+          td
+            | @fat
+        tr
+          th[scope="row"]
+            | 3
+          td[colspan="2"]
+            | Larry the Bird
+          td
+            | @twitter
+  .bd-example
+    table.table.table-sm.table-inverse
+      thead
+        tr
+          th
+            | #
+          th
+            | First Name
+          th
+            | Last Name
+          th
+            | Username
+      tbody
+        tr
+          th[scope="row"]
+            | 1
+          td
+            | Mark
+          td
+            | Otto
+          td
+            | @mdo
+        tr
+          th[scope="row"]
+            | 2
+          td
+            | Jacob
+          td
+            | Thornton
+          td
+            | @fat
+        tr
+          th[scope="row"]
+            | 3
+          td[colspan="2"]
+            | Larry the Bird
+          td
+            | @twitter
+  h2#contextual-classes
+    | Contextual classes
+  .bd-example
+    table.table
+      thead
+        tr
+          th
+            | #
+          th
+            | Column heading
+          th
+            | Column heading
+          th
+            | Column heading
+      tbody
+        tr.table-active
+          th[scope="row"]
+            | 1
+          td
+            | Column content
+          td
+            | Column content
+          td
+            | Column content
+        tr
+          th[scope="row"]
+            | 2
+          td
+            | Column content
+          td
+            | Column content
+          td
+            | Column content
+        tr.table-success
+          th[scope="row"]
+            | 3
+          td
+            | Column content
+          td
+            | Column content
+          td
+            | Column content
+        tr
+          th[scope="row"]
+            | 4
+          td
+            | Column content
+          td
+            | Column content
+          td
+            | Column content
+        tr.table-info
+          th[scope="row"]
+            | 5
+          td
+            | Column content
+          td
+            | Column content
+          td
+            | Column content
+        tr
+          th[scope="row"]
+            | 6
+          td
+            | Column content
+          td
+            | Column content
+          td
+            | Column content
+        tr.table-warning
+          th[scope="row"]
+            | 7
+          td
+            | Column content
+          td
+            | Column content
+          td
+            | Column content
+        tr
+          th[scope="row"]
+            | 8
+          td
+            | Column content
+          td
+            | Column content
+          td
+            | Column content
+        tr.table-danger
+          th[scope="row"]
+            | 9
+          td
+            | Column content
+          td
+            | Column content
+          td
+            | Column content
+  .bd-example
+    table.table.table-inverse
+      thead
+        tr
+          th
+            | #
+          th
+            | Column heading
+          th
+            | Column heading
+          th
+            | Column heading
+      tbody
+        tr.bg-primary
+          th[scope="row"]
+            | 1
+          td
+            | Column content
+          td
+            | Column content
+          td
+            | Column content
+        tr
+          th[scope="row"]
+            | 2
+          td
+            | Column content
+          td
+            | Column content
+          td
+            | Column content
+        tr.bg-success
+          th[scope="row"]
+            | 3
+          td
+            | Column content
+          td
+            | Column content
+          td
+            | Column content
+        tr
+          th[scope="row"]
+            | 4
+          td
+            | Column content
+          td
+            | Column content
+          td
+            | Column content
+        tr.bg-info
+          th[scope="row"]
+            | 5
+          td
+            | Column content
+          td
+            | Column content
+          td
+            | Column content
+        tr
+          th[scope="row"]
+            | 6
+          td
+            | Column content
+          td
+            | Column content
+          td
+            | Column content
+        tr.bg-warning
+          th[scope="row"]
+            | 7
+          td
+            | Column content
+          td
+            | Column content
+          td
+            | Column content
+        tr
+          th[scope="row"]
+            | 8
+          td
+            | Column content
+          td
+            | Column content
+          td
+            | Column content
+        tr.bg-danger
+          th[scope="row"]
+            | 9
+          td
+            | Column content
+          td
+            | Column content
+          td
+            | Column content
+  h2#responsive-tables
+    | Responsive tables
+  .bd-example
+    table.table.table-responsive
+      thead
+        tr
+          th
+            | #
+          th
+            | Table heading
+          th
+            | Table heading
+          th
+            | Table heading
+          th
+            | Table heading
+          th
+            | Table heading
+          th
+            | Table heading
+      tbody
+        tr
+          th[scope="row"]
+            | 1
+          td
+            | Table cell
+          td
+            | Table cell
+          td
+            | Table cell
+          td
+            | Table cell
+          td
+            | Table cell
+          td
+            | Table cell
+        tr
+          th[scope="row"]
+            | 2
+          td
+            | Table cell
+          td
+            | Table cell
+          td
+            | Table cell
+          td
+            | Table cell
+          td
+            | Table cell
+          td
+            | Table cell
+        tr
+          th[scope="row"]
+            | 3
+          td
+            | Table cell
+          td
+            | Table cell
+          td
+            | Table cell
+          td
+            | Table cell
+          td
+            | Table cell
+          td
+            | Table cell
+    table.table.table-bordered.table-responsive
+      thead
+        tr
+          th
+            | #
+          th
+            | Table heading
+          th
+            | Table heading
+          th
+            | Table heading
+          th
+            | Table heading
+          th
+            | Table heading
+          th
+            | Table heading
+      tbody
+        tr
+          th[scope="row"]
+            | 1
+          td
+            | Table cell
+          td
+            | Table cell
+          td
+            | Table cell
+          td
+            | Table cell
+          td
+            | Table cell
+          td
+            | Table cell
+        tr
+          th[scope="row"]
+            | 2
+          td
+            | Table cell
+          td
+            | Table cell
+          td
+            | Table cell
+          td
+            | Table cell
+          td
+            | Table cell
+          td
+            | Table cell
+        tr
+          th[scope="row"]
+            | 3
+          td
+            | Table cell
+          td
+            | Table cell
+          td
+            | Table cell
+          td
+            | Table cell
+          td
+            | Table cell
+          td
+            | Table cell
+  h1#content.bd-title
+    | Figures
+  .bd-example
+    figure.figure
+      img.figure-img.img-fluid.rounded[alt="800px x 600px native image, 400px x 300px display size" style="width: 400px; height: 300px;" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-800x600-01.jpg"]
+      figcaption.figure-caption
+        | A caption for the above image.
+  .bd-example
+    figure.figure
+      img.figure-img.img-fluid.rounded[data-src="holder.js/400x300" alt="800px x 600px native image, 400px x 300px display size" style="width: 400px; height: 300px;" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-800x600-02.jpg"]
+      figcaption.figure-caption.text-right
+        | A caption for the above image.
+  h1.display-4
+    | Components
+  h1#content.bd-title
+    | Alerts
+  h2#examples
+    | Examples
+  h3#link-color
+    | Link color
+  .bd-example
+    .alert.alert-success[role="alert"]
+      button.close[type="button" data-dismiss="alert" aria-label="Close"]
+        span[aria-hidden="true"]
+          | ×
+      strong
+        | Well done!
+      |  You successfully read
+      a.alert-link[href="#"]
+        | this important alert message
+      | .
+    .alert.alert-info[role="alert"]
+      button.close[type="button" data-dismiss="alert" aria-label="Close"]
+        span[aria-hidden="true"]
+          | ×
+      strong
+        | Heads up!
+      |  This
+      a.alert-link[href="#"]
+        | alert needs your attention
+      | , but it's not super important.
+    .alert.alert-warning[role="alert"]
+      button.close[type="button" data-dismiss="alert" aria-label="Close"]
+        span[aria-hidden="true"]
+          | ×
+      strong
+        | Warning!
+      |  Better check yourself, you're
+      a.alert-link[href="#"]
+        | not looking too good
+      | .
+    .alert.alert-danger[role="alert"]
+      button.close[type="button" data-dismiss="alert" aria-label="Close"]
+        span[aria-hidden="true"]
+          | ×
+      strong
+        | Oh snap!
+      a.alert-link[href="#"]
+        | Change a few things up
+      |  and try submitting again.
+  h3#additional-content
+    | Additional content
+  .bd-example
+    .alert.alert-success[role="alert"]
+      h4.alert-heading
+        | Well done!
+      p
+        | Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing within an alert works with this kind of content.
+      p.mb-0
+        | Whenever you need to, be sure to use margin utilities to keep things nice and tidy.
+  h1#content.bd-title
+    | Badges
+  h2#example
+    | Example
+  .bd-example
+    h1
+      | Example heading
+      span.badge.badge-default
+        | New
+    h2
+      | Example heading
+      span.badge.badge-default
+        | New
+    h3
+      | Example heading
+      span.badge.badge-default
+        | New
+    h4
+      | Example heading
+      span.badge.badge-default
+        | New
+    h5
+      | Example heading
+      span.badge.badge-default
+        | New
+    h6
+      | Example heading
+      span.badge.badge-default
+        | New
+  h2#contextual-variations
+    | Contextual variations
+  .bd-example
+    span.badge.badge-default
+      | Default
+    span.badge.badge-primary
+      | Primary
+    span.badge.badge-success
+      | Success
+    span.badge.badge-info
+      | Info
+    span.badge.badge-warning
+      | Warning
+    span.badge.badge-danger
+      | Danger
+  h2#pill-badges
+    | Pill badges
+  .bd-example
+    span.badge.badge-pill.badge-default
+      | Default
+    span.badge.badge-pill.badge-primary
+      | Primary
+    span.badge.badge-pill.badge-success
+      | Success
+    span.badge.badge-pill.badge-info
+      | Info
+    span.badge.badge-pill.badge-warning
+      | Warning
+    span.badge.badge-pill.badge-danger
+      | Danger
+  h1#content.bd-title
+    | Breadcrumb
+  .bd-example
+    nav.breadcrumb
+      a.breadcrumb-item[href="#"]
+        | Home
+      a.breadcrumb-item[href="#"]
+        | Library
+      a.breadcrumb-item[href="#"]
+        | Data
+      span.breadcrumb-item.active
+        | Bootstrap
+  h1#content.bd-title
+    | Buttons
+  h2#examples
+    | Examples
+  .bd-example
+    button.btn.btn-primary[type="button"]
+      | Primary
+    button.btn.btn-secondary[type="button"]
+      | Secondary
+    button.btn.btn-success[type="button"]
+      | Success
+    button.btn.btn-info[type="button"]
+      | Info
+    button.btn.btn-warning[type="button"]
+      | Warning
+    button.btn.btn-danger[type="button"]
+      | Danger
+    button.btn.btn-link[type="button"]
+      | Link
+  h2#button-tags
+    | Button tags
+  .bd-example
+    a.btn.btn-primary[href="#" role="button"]
+      | Link
+    button.btn.btn-primary[type="submit"]
+      | Button
+    input.btn.btn-primary[value="Input" type="button"]
+    input.btn.btn-primary[value="Submit" type="submit"]
+    input.btn.btn-primary[value="Reset" type="reset"]
+  h2#outline-buttons
+    | Outline buttons
+  .bd-example
+    button.btn.btn-outline-primary[type="button"]
+      | Primary
+    button.btn.btn-outline-secondary[type="button"]
+      | Secondary
+    button.btn.btn-outline-success[type="button"]
+      | Success
+    button.btn.btn-outline-info[type="button"]
+      | Info
+    button.btn.btn-outline-warning[type="button"]
+      | Warning
+    button.btn.btn-outline-danger[type="button"]
+      | Danger
+  h2#sizes
+    | Sizes
+  .bd-example
+    button.btn.btn-primary.btn-lg[type="button"]
+      | Large button
+    button.btn.btn-secondary.btn-lg[type="button"]
+      | Large button
+  .bd-example
+    button.btn.btn-primary.btn-sm[type="button"]
+      | Small button
+    button.btn.btn-secondary.btn-sm[type="button"]
+      | Small button
+  .bd-example
+    button.btn.btn-primary.btn-lg.btn-block[type="button"]
+      | Block level button
+    button.btn.btn-secondary.btn-lg.btn-block[type="button"]
+      | Block level button
+  h2#active-state
+    | Active state
+  .bd-example
+    a.btn.btn-primary.btn-lg.active[href="#" role="button" aria-pressed="true"]
+      | Primary link
+    a.btn.btn-secondary.btn-lg.active[href="#" role="button" aria-pressed="true"]
+      | Link
+  h2#disabled-state
+    | Disabled state
+  .bd-example
+    button.btn.btn-lg.btn-primary[type="button" disabled=""]
+      | Primary button
+    button.btn.btn-secondary.btn-lg[type="button" disabled=""]
+      | Button
+  .bd-example
+    a.btn.btn-primary.btn-lg.disabled[href="#" role="button" aria-disabled="true"]
+      | Primary link
+    a.btn.btn-secondary.btn-lg.disabled[href="#" role="button" aria-disabled="true"]
+      | Link
+  h2#button-plugin
+    | Button plugin
+  h3#toggle-states
+    | Toggle states
+  .bd-example
+    button.btn.btn-primary[type="button" data-toggle="button" aria-pressed="false" autocomplete="off"]
+      |  Single toggle
+  h3#checkbox-and-radio-buttons
+    | Checkbox and radio buttons
+  .bd-example
+    .btn-group[data-toggle="buttons"]
+      label.btn.btn-primary.active
+        input[checked="" autocomplete="off" type="checkbox"]
+        |  Checkbox 1 (pre-checked)
+      label.btn.btn-primary
+        input[autocomplete="off" type="checkbox"]
+        |  Checkbox 2
+      label.btn.btn-primary
+        input[autocomplete="off" type="checkbox"]
+        |  Checkbox 3
+  .bd-example
+    .btn-group[data-toggle="buttons"]
+      label.btn.btn-primary.active
+        input#option1[name="options" autocomplete="off" checked="" type="radio"]
+        |  Radio 1 (preselected)
+      label.btn.btn-primary
+        input#option2[name="options" autocomplete="off" type="radio"]
+        |  Radio 2
+      label.btn.btn-primary
+        input#option3[name="options" autocomplete="off" type="radio"]
+        |  Radio 3
+  h1#content.bd-title
+    | Button group
+  h2#button-toolbar
+    | Button toolbar
+  .bd-example
+    .btn-toolbar[role="toolbar" aria-label="Toolbar with button groups"]
+      .btn-group.mr-2[role="group" aria-label="First group"]
+        button.btn.btn-secondary[type="button"]
+          | 1
+        button.btn.btn-secondary[type="button"]
+          | 2
+        button.btn.btn-secondary[type="button"]
+          | 3
+        button.btn.btn-secondary[type="button"]
+          | 4
+      .btn-group.mr-2[role="group" aria-label="Second group"]
+        button.btn.btn-secondary[type="button"]
+          | 5
+        button.btn.btn-secondary[type="button"]
+          | 6
+        button.btn.btn-secondary[type="button"]
+          | 7
+      .btn-group[role="group" aria-label="Third group"]
+        button.btn.btn-secondary[type="button"]
+          | 8
+  .bd-example
+    .btn-toolbar.mb-3[role="toolbar" aria-label="Toolbar with button groups"]
+      .btn-group.mr-2[role="group" aria-label="First group"]
+        button.btn.btn-secondary[type="button"]
+          | 1
+        button.btn.btn-secondary[type="button"]
+          | 2
+        button.btn.btn-secondary[type="button"]
+          | 3
+        button.btn.btn-secondary[type="button"]
+          | 4
+      .input-group
+        span#btnGroupAddon.input-group-text
+          | @
+        input.form-control[placeholder="Input group example" aria-describedby="btnGroupAddon" type="text"]
+    .btn-toolbar.justify-content-between[role="toolbar" aria-label="Toolbar with button groups"]
+      .btn-group[role="group" aria-label="First group"]
+        button.btn.btn-secondary[type="button"]
+          | 1
+        button.btn.btn-secondary[type="button"]
+          | 2
+        button.btn.btn-secondary[type="button"]
+          | 3
+        button.btn.btn-secondary[type="button"]
+          | 4
+      .input-group
+        span#btnGroupAddon2.input-group-text
+          | @
+        input.form-control[placeholder="Input group example" aria-describedby="btnGroupAddon2" type="text"]
+  h2#sizing
+    | Sizing
+  .bd-example
+    .btn-group.btn-group-lg[role="group" aria-label="Large button group"]
+      button.btn.btn-secondary[type="button"]
+        | Left
+      button.btn.btn-secondary[type="button"]
+        | Middle
+      button.btn.btn-secondary[type="button"]
+        | Right
+    br
+    .btn-group[role="group" aria-label="Default button group"]
+      button.btn.btn-secondary[type="button"]
+        | Left
+      button.btn.btn-secondary[type="button"]
+        | Middle
+      button.btn.btn-secondary[type="button"]
+        | Right
+    br
+    .btn-group.btn-group-sm[role="group" aria-label="Small button group"]
+      button.btn.btn-secondary[type="button"]
+        | Left
+      button.btn.btn-secondary[type="button"]
+        | Middle
+      button.btn.btn-secondary[type="button"]
+        | Right
+  h2#nesting
+    | Nesting
+  .bd-example
+    .btn-group[role="group" aria-label="Button group with nested dropdown"]
+      button.btn.btn-secondary[type="button"]
+        | 1
+      button.btn.btn-secondary[type="button"]
+        | 2
+      .btn-group[role="group"]
+        button#btnGroupDrop1.btn.btn-secondary.dropdown-toggle[type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"]
+          |  Dropdown
+        .dropdown-menu[aria-labelledby="btnGroupDrop1"]
+          a.dropdown-item[href="#"]
+            | Dropdown link
+          a.dropdown-item[href="#"]
+            | Dropdown link
+  h2#vertical-variation
+    | Vertical variation
+  .bd-example
+    .btn-group-vertical[role="group" aria-label="Vertical button group"]
+      button.btn.btn-secondary[type="button"]
+        | Button
+      button.btn.btn-secondary[type="button"]
+        | Button
+      button.btn.btn-secondary[type="button"]
+        | Button
+      button.btn.btn-secondary[type="button"]
+        | Button
+      button.btn.btn-secondary[type="button"]
+        | Button
+      button.btn.btn-secondary[type="button"]
+        | Button
+  .bd-example
+    .btn-group-vertical[role="group" aria-label="Vertical button group"]
+      button.btn.btn-secondary[type="button"]
+        | Button
+      button.btn.btn-secondary[type="button"]
+        | Button
+      .btn-group[role="group"]
+        button#btnGroupVerticalDrop1.btn.btn-secondary.dropdown-toggle[type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"]
+          |  Dropdown
+        .dropdown-menu[aria-labelledby="btnGroupVerticalDrop1"]
+          a.dropdown-item[href="#"]
+            | Dropdown link
+          a.dropdown-item[href="#"]
+            | Dropdown link
+      button.btn.btn-secondary[type="button"]
+        | Button
+      button.btn.btn-secondary[type="button"]
+        | Button
+      .btn-group[role="group"]
+        button#btnGroupVerticalDrop2.btn.btn-secondary.dropdown-toggle[type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"]
+          |  Dropdown
+        .dropdown-menu[aria-labelledby="btnGroupVerticalDrop2"]
+          a.dropdown-item[href="#"]
+            | Dropdown link
+          a.dropdown-item[href="#"]
+            | Dropdown link
+      .btn-group[role="group"]
+        button#btnGroupVerticalDrop3.btn.btn-secondary.dropdown-toggle[type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"]
+          |  Dropdown
+        .dropdown-menu[aria-labelledby="btnGroupVerticalDrop3"]
+          a.dropdown-item[href="#"]
+            | Dropdown link
+          a.dropdown-item[href="#"]
+            | Dropdown link
+      .btn-group[role="group"]
+        button#btnGroupVerticalDrop4.btn.btn-secondary.dropdown-toggle[type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"]
+          |  Dropdown
+        .dropdown-menu[aria-labelledby="btnGroupVerticalDrop4"]
+          a.dropdown-item[href="#"]
+            | Dropdown link
+          a.dropdown-item[href="#"]
+            | Dropdown link
+  h1#content.bd-title
+    | Cards
+  h2#example
+    | Example
+  .bd-example
+    .card[style="width: 20rem;"]
+      img.card-img-top[alt="636px x 180px native image, 318px x 180px display size" style="height: 180px; width: 100%; display: block;" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-636x360-01.jpg"]
+      .card-block
+        h4.card-title
+          | Card title
+        p.card-text
+          | Some quick example text to build on the card title and make up the bulk of the card's content.
+        a.btn.btn-primary[href="#"]
+          | Go somewhere
+  h2#content-types
+    | Content types
+  h3#blocks
+    | Blocks
+  .bd-example
+    .card
+      .card-block
+        |  This is some text within a card block.
+  h3#titles-text-and-links
+    | Titles, text, and links
+  .bd-example
+    .card
+      .card-block
+        h4.card-title
+          | Card title
+        h6.card-subtitle.mb-2.text-muted
+          | Card subtitle
+        p.card-text
+          | Some quick example text to build on the card title and make up the bulk of the card's content.
+        a.card-link[href="#"]
+          | Card link
+        a.card-link[href="#"]
+          | Another link
+  h3#images
+    | Images
+  .bd-example
+    .card
+      img.card-img-top.img-fluid[alt="2,000px x 500px native image, responsive display size" style="" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-2000x500-02.jpg"]
+      .card-block
+        p.card-text
+          | Some quick example text to build on the card title and make up the bulk of the card's content.
+  h3#list-groups
+    | List groups
+  .bd-example
+    .card
+      ul.list-group.list-group-flush
+        li.list-group-item
+          | Cras justo odio
+        li.list-group-item
+          | Dapibus ac facilisis in
+        li.list-group-item
+          | Vestibulum at eros
+  h3#kitchen-sink
+    | Kitchen sink
+  .bd-example
+    .card[style="width: 20rem;"]
+      img.card-img-top[alt="636px x 180px native image, 318px x 180px display size" style="height: 180px; width: 100%; display: block;" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-636x360-02.jpg"]
+      .card-block
+        h4.card-title
+          | Card title
+        p.card-text
+          | Some quick example text to build on the card title and make up the bulk of the card's content.
+      ul.list-group.list-group-flush
+        li.list-group-item
+          | Cras justo odio
+        li.list-group-item
+          | Dapibus ac facilisis in
+        li.list-group-item
+          | Vestibulum at eros
+      .card-block
+        a.card-link[href="#"]
+          | Card link
+        a.card-link[href="#"]
+          | Another link
+  h3#header-and-footer
+    | Header and footer
+  .bd-example
+    .card
+      .card-header
+        |  Featured
+      .card-block
+        h4.card-title
+          | Special title treatment
+        p.card-text
+          | With supporting text below as a natural lead-in to additional content.
+        a.btn.btn-primary[href="#"]
+          | Go somewhere
+  .bd-example
+    .card
+      h3.card-header
+        | Featured
+      .card-block
+        h4.card-title
+          | Special title treatment
+        p.card-text
+          | With supporting text below as a natural lead-in to additional content.
+        a.btn.btn-primary[href="#"]
+          | Go somewhere
+  .bd-example
+    .card
+      .card-header
+        |  Quote
+      .card-block
+        blockquote.card-blockquote
+          p
+            | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.
+          footer
+            | Someone famous in
+            cite[title="Source Title"]
+              | Source Title
+  .bd-example
+    .card.text-center
+      .card-header
+        |  Featured
+      .card-block
+        h4.card-title
+          | Special title treatment
+        p.card-text
+          | With supporting text below as a natural lead-in to additional content.
+        a.btn.btn-primary[href="#"]
+          | Go somewhere
+      .card-footer.text-muted
+        |  2 days ago
+  h2#sizing
+    | Sizing
+  h3#using-grid-markup
+    | Using grid markup
+  .bd-example
+    .row
+      .col-sm-6
+        .card
+          .card-block
+            h3.card-title
+              | Special title treatment
+            p.card-text
+              | With supporting text below as a natural lead-in to additional content.
+            a.btn.btn-primary[href="#"]
+              | Go somewhere
+      .col-sm-6
+        .card
+          .card-block
+            h3.card-title
+              | Special title treatment
+            p.card-text
+              | With supporting text below as a natural lead-in to additional content.
+            a.btn.btn-primary[href="#"]
+              | Go somewhere
+  h3#using-utilities
+    | Using utilities
+  .bd-example
+    .card.w-75
+      .card-block
+        h3.card-title
+          | Card title
+        p.card-text
+          | With supporting text below as a natural lead-in to additional content.
+        a.btn.btn-primary[href="#"]
+          | Button
+    .card.w-50
+      .card-block
+        h3.card-title
+          | Card title
+        p.card-text
+          | With supporting text below as a natural lead-in to additional content.
+        a.btn.btn-primary[href="#"]
+          | Button
+  h3#using-custom-css
+    | Using custom CSS
+  .bd-example
+    .card[style="width: 20rem;"]
+      .card-block
+        h3.card-title
+          | Special title treatment
+        p.card-text
+          | With supporting text below as a natural lead-in to additional content.
+        a.btn.btn-primary[href="#"]
+          | Go somewhere
+  h2#text-alignment
+    | Text alignment
+  .bd-example
+    .card[style="width: 20rem;"]
+      .card-block
+        h4.card-title
+          | Special title treatment
+        p.card-text
+          | With supporting text below as a natural lead-in to additional content.
+        a.btn.btn-primary[href="#"]
+          | Go somewhere
+    .card.text-center[style="width: 20rem;"]
+      .card-block
+        h4.card-title
+          | Special title treatment
+        p.card-text
+          | With supporting text below as a natural lead-in to additional content.
+        a.btn.btn-primary[href="#"]
+          | Go somewhere
+    .card.text-right[style="width: 20rem;"]
+      .card-block
+        h4.card-title
+          | Special title treatment
+        p.card-text
+          | With supporting text below as a natural lead-in to additional content.
+        a.btn.btn-primary[href="#"]
+          | Go somewhere
+  h2#navigation
+    | Navigation
+  .bd-example
+    .card.text-center
+      .card-header
+        ul.nav.nav-tabs.card-header-tabs
+          li.nav-item
+            a.nav-link.active[href="#"]
+              | Active
+          li.nav-item
+            a.nav-link[href="#"]
+              | Link
+          li.nav-item
+            a.nav-link.disabled[href="#"]
+              | Disabled
+      .card-block
+        h4.card-title
+          | Special title treatment
+        p.card-text
+          | With supporting text below as a natural lead-in to additional content.
+        a.btn.btn-primary[href="#"]
+          | Go somewhere
+  .bd-example
+    .card.text-center
+      .card-header
+        ul.nav.nav-pills.card-header-pills
+          li.nav-item
+            a.nav-link.active[href="#"]
+              | Active
+          li.nav-item
+            a.nav-link[href="#"]
+              | Link
+          li.nav-item
+            a.nav-link.disabled[href="#"]
+              | Disabled
+      .card-block
+        h4.card-title
+          | Special title treatment
+        p.card-text
+          | With supporting text below as a natural lead-in to additional content.
+        a.btn.btn-primary[href="#"]
+          | Go somewhere
+  h2#images-1
+    | Images
+  h3#image-caps
+    | Image caps
+  .bd-example
+    .card.mb-3
+      img.card-img-top.img-fluid[alt="2,000px x 500px native image, responsive display size" style="" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-2000x500-03.jpg"]
+      .card-block
+        h4.card-title
+          | Card title
+        p.card-text
+          | This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.
+        p.card-text
+          small.text-muted
+            | Last updated 3 mins ago
+    .card
+      .card-block
+        h4.card-title
+          | Card title
+        p.card-text
+          | This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.
+        p.card-text
+          small.text-muted
+            | Last updated 3 mins ago
+      img.card-img-bottom.img-fluid[alt="2,000px x 500px native image, responsive display size" style="" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-2000x500-04.jpg"]
+  h3#image-overlays
+    | Image overlays
+  .bd-example
+    .card.card-inverse
+      img.card-img.img-fluid[alt="2,000px x 500px native image, responsive display size" style="" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-2000x500-05.jpg"]
+      .card-img-overlay
+        h4.card-title[style="color:#222222;"]
+          | Card title
+        p.card-text[style="color:#222222;"]
+          | This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.
+        p.card-text
+          small.text-muted
+            | Last updated 3 mins ago
+  h2#card-styles
+    | Card styles
+  h3#inverted-text
+    | Inverted text
+  .bd-example
+    .card.card-inverse[style="background-color: #333; border-color: #333;"]
+      .card-block
+        h3.card-title
+          | Special title treatment
+        p.card-text
+          | With supporting text below as a natural lead-in to additional content.
+        a.btn.btn-primary[href="#"]
+          | Go somewhere
+  h3#background-variants
+    | Background variants
+  .bd-example
+    .card.card-inverse.card-primary.mb-3.text-center
+      .card-block
+        blockquote.card-blockquote
+          p
+            | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.
+          footer
+            | Someone famous in
+            cite[title="Source Title"]
+              | Source Title
+    .card.card-inverse.card-success.mb-3.text-center
+      .card-block
+        blockquote.card-blockquote
+          p
+            | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.
+          footer
+            | Someone famous in
+            cite[title="Source Title"]
+              | Source Title
+    .card.card-inverse.card-info.mb-3.text-center
+      .card-block
+        blockquote.card-blockquote
+          p
+            | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.
+          footer
+            | Someone famous in
+            cite[title="Source Title"]
+              | Source Title
+    .card.card-inverse.card-warning.mb-3.text-center
+      .card-block
+        blockquote.card-blockquote
+          p
+            | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.
+          footer
+            | Someone famous in
+            cite[title="Source Title"]
+              | Source Title
+    .card.card-inverse.card-danger.text-center
+      .card-block
+        blockquote.card-blockquote
+          p
+            | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.
+          footer
+            | Someone famous in
+            cite[title="Source Title"]
+              | Source Title
+  h3#outline-cards
+    | Outline cards
+  .bd-example
+    .card.card-outline-primary.mb-3.text-center
+      .card-block
+        blockquote.card-blockquote
+          p
+            | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.
+          footer
+            | Someone famous in
+            cite[title="Source Title"]
+              | Source Title
+    .card.card-outline-secondary.mb-3.text-center
+      .card-block
+        blockquote.card-blockquote
+          p
+            | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.
+          footer
+            | Someone famous in
+            cite[title="Source Title"]
+              | Source Title
+    .card.card-outline-success.mb-3.text-center
+      .card-block
+        blockquote.card-blockquote
+          p
+            | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.
+          footer
+            | Someone famous in
+            cite[title="Source Title"]
+              | Source Title
+    .card.card-outline-info.mb-3.text-center
+      .card-block
+        blockquote.card-blockquote
+          p
+            | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.
+          footer
+            | Someone famous in
+            cite[title="Source Title"]
+              | Source Title
+    .card.card-outline-warning.mb-3.text-center
+      .card-block
+        blockquote.card-blockquote
+          p
+            | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.
+          footer
+            | Someone famous in
+            cite[title="Source Title"]
+              | Source Title
+    .card.card-outline-danger.text-center
+      .card-block
+        blockquote.card-blockquote
+          p
+            | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.
+          footer
+            | Someone famous in
+            cite[title="Source Title"]
+              | Source Title
+  h2#card-layout
+    | Card layout
+  h3#card-groups
+    | Card groups
+  .bd-example
+    .card-group
+      .card
+        img.card-img-top.img-fluid[alt="636px x 180px native image, responsive display size" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-636x360-03.jpg"]
+        .card-block
+          h4.card-title
+            | Card title
+          p.card-text
+            | This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.
+          p.card-text
+            small.text-muted
+              | Last updated 3 mins ago
+      .card
+        img.card-img-top.img-fluid[alt="800px x 600px native image, responsive display size" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-800x600-03.jpg"]
+        .card-block
+          h4.card-title
+            | Card title
+          p.card-text
+            | The image above has a different aspect ratio than the other two in this card group to show that awesome height action.
+          p.card-text
+            small.text-muted
+              | Last updated 3 mins ago
+      .card
+        img.card-img-top.img-fluid[alt="636px x 180px native image, responsive display size" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-636x360-04.jpg"]
+        .card-block
+          h4.card-title
+            | Card title
+          p.card-text
+            | This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.
+          p.card-text
+            small.text-muted
+              | Last updated 3 mins ago
+  .bd-example
+    .card-group
+      .card
+        img.card-img-top.img-fluid[alt="512px x 360px native image, responsive display size" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-512x360-01.jpg"]
+        .card-block
+          h4.card-title
+            | Card title
+          p.card-text
+            | This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.
+        .card-footer
+          small.text-muted
+            | Last updated 3 mins ago
+      .card
+        img.card-img-top.img-fluid[alt="512px x 280px native image, responsive display size" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-512x280-01.jpg"]
+        .card-block
+          h4.card-title
+            | Card title
+          p.card-text
+            | This card has supporting text below as a natural lead-in to additional content. The image above has a different aspect ratio than the other two in this card group to show that awesome height action.
+        .card-footer
+          small.text-muted
+            | Last updated 3 mins ago
+      .card
+        img.card-img-top.img-fluid[alt="512px x 360px native image, responsive display size" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-512x360-02.jpg"]
+        .card-block
+          h4.card-title
+            | Card title
+          p.card-text
+            | This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.
+        .card-footer
+          small.text-muted
+            | Last updated 3 mins ago
+  h3#card-decks
+    | Card decks
+  .bd-example
+    .card-deck
+      .card
+        img.card-img-top.img-fluid[alt="512px x 280px native image, responsive display size" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-512x280-02.jpg"]
+        .card-block
+          h4.card-title
+            | Card title
+          p.card-text
+            | This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.
+          p.card-text
+            small.text-muted
+              | Last updated 3 mins ago
+      .card
+        img.card-img-top.img-fluid[alt="512px x 360px native image, responsive display size" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-512x360-03.jpg"]
+        .card-block
+          h4.card-title
+            | Card title
+          p.card-text
+            | This card has supporting text below as a natural lead-in to additional content. The image above has a different aspect ratio than the other two in this card group to show that awesome height action.
+          p.card-text
+            small.text-muted
+              | Last updated 3 mins ago
+      .card
+        img.card-img-top.img-fluid[alt="512px x 280px native image, responsive display size" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-512x280-03.jpg"]
+        .card-block
+          h4.card-title
+            | Card title
+          p.card-text
+            | This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.
+          p.card-text
+            small.text-muted
+              | Last updated 3 mins ago
+  .bd-example
+    .card-deck
+      .card
+        img.card-img-top.img-fluid[alt="512px x 360px native image, responsive display size" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-512x360-04.jpg"]
+        .card-block
+          h4.card-title
+            | Card title
+          p.card-text
+            | This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.
+        .card-footer
+          small.text-muted
+            | Last updated 3 mins ago
+      .card
+        img.card-img-top.img-fluid[alt="512px x 280px native image, responsive display size" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-512x280-04.jpg"]
+        .card-block
+          h4.card-title
+            | Card title
+          p.card-text
+            | This card has supporting text below as a natural lead-in to additional content. The image above has a different aspect ratio than the other two in this card group to show that awesome height action.
+        .card-footer
+          small.text-muted
+            | Last updated 3 mins ago
+      .card
+        img.card-img-top.img-fluid[alt="512px x 360px native image, responsive display size" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-512x360-05.jpg"]
+        .card-block
+          h4.card-title
+            | Card title
+          p.card-text
+            | This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.
+        .card-footer
+          small.text-muted
+            | Last updated 3 mins ago
+  h3#card-columns
+    | Card columns
+  .bd-example
+    .card-columns
+      .card
+        img.card-img-top.img-fluid[alt="484px x 320px native image, responsive display size" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-484x320-01.jpg"]
+        .card-block
+          h4.card-title
+            | Card title that wraps to a new line
+          p.card-text
+            | This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.
+      .card.p-3
+        blockquote.card-block.card-blockquote
+          p
+            | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.
+          footer
+            small.text-muted
+              |  Someone famous in
+              cite[title="Source Title"]
+                | Source Title
+      .card
+        img.card-img-top.img-fluid[alt="484px x 320px native image, responsive display size" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-484x280-01.jpg"]
+        .card-block
+          h4.card-title
+            | Card title
+          p.card-text
+            | This card has supporting text below as a natural lead-in to additional content.
+          p.card-text
+            small.text-muted
+              | Last updated 3 mins ago
+      .card.card-inverse.card-primary.p-3.text-center
+        blockquote.card-blockquote
+          p
+            | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat.
+          footer
+            small
+              |  Someone famous in
+              cite[title="Source Title"]
+                | Source Title
+      .card.text-center
+        .card-block
+          h4.card-title
+            | Card title
+          p.card-text
+            | This card has supporting text below as a natural lead-in to additional content.
+          p.card-text
+            small.text-muted
+              | Last updated 3 mins ago
+      .card
+        img.card-img.img-fluid[alt="484px x 320px native image, responsive display size" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-484x320-02.jpg"]
+        .card-block
+
+        .card.p-3.text-right
+          blockquote.card-blockquote
+            p
+              | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.
+            footer
+              small.text-muted
+                |  Someone famous in
+                cite[title="Source Title"]
+                  | Source Title
+        .card
+          .card-block
+            h4.card-title
+              | Card title
+            p.card-text
+              | This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.
+            p.card-text
+              small.text-muted
+                | Last updated 3 mins ago
+    h1#content.bd-title
+      | Carousel
+    h2#example
+      | Example
+    h3#slides-only
+      | Slides only - fill carousel area responsively
+    .bd-example
+      #carouselExampleSlidesOnlyFill.carousel.slide[data-ride="carousel"]
+        .carousel-inner[role="listbox"]
+          .carousel-item
+            img[alt="2,000px x 600px native image, responsive display size" style="" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-2000x600-01.jpg"]
+          .carousel-item
+            img[alt="2,000px x 600px native image, responsive display size" style="" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-2000x600-02.jpg"]
+          .carousel-item.active
+            img[alt="2,000px x 600px native image, responsive display size" style="" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-2000x600-03.jpg"]
+    h3#slides-only
+      | Slides only - fit images responsively
+    .bd-example
+      #carouselExampleSlidesOnlyFit.carousel.slide[data-ride="carousel"]
+        .carousel-inner[role="listbox"]
+          .carousel-item
+            img[alt="2,000px x 600px native image, responsive display size" style="" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-2000x600-01.jpg"]
+          .carousel-item
+            img[alt="2,000px x 600px native image, responsive display size" style="" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-2000x600-02.jpg"]
+          .carousel-item.active
+            img[alt="2,000px x 600px native image, responsive display size" style="" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-2000x600-03.jpg"]
+    h3#with-controls
+      | With controls - fill carousel area responsively
+    .bd-example
+      #carouselExampleControls.carousel.slide[data-ride="carousel"]
+        .carousel-inner[role="listbox"]
+          .carousel-inner[role="listbox"]
+            .carousel-item
+              img[alt="2,000px x 600px native image, responsive display size" style="" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-2000x600-04.jpg"]
+            .carousel-item
+              img[alt="2,000px x 600px native image, responsive display size" style="" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-2000x600-05.jpg"]
+            .carousel-item.active
+              img[alt="2,000px x 600px native image, responsive display size" style="" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-2000x600-06.jpg"]
+        a.carousel-control-prev[href="#carouselExampleControls" role="button" data-slide="prev"]
+          span.carousel-control-prev-icon[aria-hidden="true"]
+          span.sr-only
+            | Previous
+        a.carousel-control-next[href="#carouselExampleControls" role="button" data-slide="next"]
+          span.carousel-control-next-icon[aria-hidden="true"]
+          span.sr-only
+            | Next
+    h3#with-indicators
+      | With controls and indicators - fill carousel area responsively
+    .bd-example
+      #carouselExampleIndicators.carousel.slide[data-ride="carousel"]
+        ol.carousel-indicators
+          li[data-target="#carouselExampleIndicators" data-slide-to="0"]
+          li[data-target="#carouselExampleIndicators" data-slide-to="1"]
+          li.active[data-target="#carouselExampleIndicators" data-slide-to="2"]
+        .carousel-inner[role="listbox"]
+          .carousel-inner[role="listbox"]
+            .carousel-item
+              img[alt="2,000px x 600px native image, responsive display size" style="" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-2000x600-07.jpg"]
+            .carousel-item
+              img[alt="2,000px x 600px native image, responsive display size" style="" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-2000x600-08.jpg"]
+            .carousel-item.active
+              img[alt="2,000px x 600px native image, responsive display size" style="" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-2000x600-09.jpg"]
+        a.carousel-control-prev[href="#carouselExampleIndicators" role="button" data-slide="prev"]
+          span.carousel-control-prev-icon[aria-hidden="true"]
+          span.sr-only
+            | Previous
+        a.carousel-control-next[href="#carouselExampleIndicators" role="button" data-slide="next"]
+          span.carousel-control-next-icon[aria-hidden="true"]
+          span.sr-only
+            | Next
+    h3#with-captions
+      | With controls and indicators and captions - fill carousel area responsively
+    .bd-example
+      #carouselExampleCaptions.carousel.slide[data-ride="carousel"]
+        ol.carousel-indicators
+          li[data-target="#carouselExampleCaptions" data-slide-to="0"]
+          li.active[data-target="#carouselExampleCaptions" data-slide-to="1"]
+          li[data-target="#carouselExampleCaptions" data-slide-to="2"]
+        .carousel-inner[role="listbox"]
+          .carousel-item
+            img[alt="2,000px x 600px native image, responsive display size" style="" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-2000x600-10.jpg"]
+            .carousel-caption.d-none.d-md-block
+              h3
+                | First slide label
+              p
+                | Nulla vitae elit libero, a pharetra augue mollis interdum.
+          .carousel-item
+            img[alt="2,000px x 600px native image, responsive display size" style="" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-2000x600-11.jpg"]
+            .carousel-caption.d-none.d-md-block
+              h3
+                | Second slide label
+              p
+                | Nulla vitae elit libero, a pharetra augue mollis interdum.
+          .carousel-item.active
+            img[alt="2,000px x 600px native image, responsive display size" style="" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-2000x600-12.jpg"]
+            .carousel-caption.d-none.d-md-block
+              h3
+                | Third slide label
+              p
+                | Nulla vitae elit libero, a pharetra augue mollis interdum.
+        a.carousel-control-prev[href="#carouselExampleCaptions" role="button" data-slide="prev"]
+          span.carousel-control-prev-icon[aria-hidden="true"]
+          span.sr-only
+            | Previous
+        a.carousel-control-next[href="#carouselExampleCaptions" role="button" data-slide="next"]
+          span.carousel-control-next-icon[aria-hidden="true"]
+          span.sr-only
+            | Next
+    h1#content.bd-title
+      | Collapse
+    h2#example
+      | Example
+    .bd-example
+      p
+        a.btn.btn-primary[data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"]
+          |  Link with href
+        button.btn.btn-primary[type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"]
+          |  Button with data-target
+      #collapseExample.collapse
+        .card.card-block
+          |  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+    h2#accordion-example
+      | Accordion example
+    .bd-example
+      #accordion[role="tablist" aria-multiselectable="true"]
+        .card
+          #headingOne.card-header[role="tab"]
+            h5.mb-0
+              a[data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne"]
+                |  Collapsible Group Item #1
+          #collapseOne.collapse.show[role="tabpanel" aria-labelledby="headingOne"]
+            .card-block
+              |  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+        .card
+          #headingTwo.card-header[role="tab"]
+            h5.mb-0
+              a.collapsed[data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"]
+                |  Collapsible Group Item #2
+          #collapseTwo.collapse[role="tabpanel" aria-labelledby="headingTwo"]
+            .card-block
+              |  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+        .card
+          #headingThree.card-header[role="tab"]
+            h5.mb-0
+              a.collapsed[data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree"]
+                |  Collapsible Group Item #3
+          #collapseThree.collapse[role="tabpanel" aria-labelledby="headingThree"]
+            .card-block
+              |  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+    h1#content.bd-title
+      | Dropdowns
+    h2#examples
+      | Examples
+    h3#single-button-dropdowns
+      | Single button dropdowns
+    .bd-example
+      .dropdown
+        button#dropdownMenuButton.btn.btn-secondary.dropdown-toggle[type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"]
+          |  Dropdown button
+        .dropdown-menu[aria-labelledby="dropdownMenuButton"]
+          a.dropdown-item[href="#"]
+            | Action
+          a.dropdown-item[href="#"]
+            | Another action
+          a.dropdown-item[href="#"]
+            | Something else here
+    .bd-example
+      .dropdown
+        a#dropdownMenuLink.btn.btn-secondary.dropdown-toggle[href="https://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"]
+          |  Dropdown link
+        .dropdown-menu[aria-labelledby="dropdownMenuLink"]
+          a.dropdown-item[href="#"]
+            | Action
+          a.dropdown-item[href="#"]
+            | Another action
+          a.dropdown-item[href="#"]
+            | Something else here
+    .bd-example
+      .btn-group
+        button.btn.btn-primary.dropdown-toggle[type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"]
+          | Primary
+        .dropdown-menu
+          a.dropdown-item[href="#"]
+            | Action
+          a.dropdown-item[href="#"]
+            | Another action
+          a.dropdown-item[href="#"]
+            | Something else here
+          .dropdown-divider
+          a.dropdown-item[href="#"]
+            | Separated link
+      .btn-group
+        button.btn.btn-secondary.dropdown-toggle[type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"]
+          | Secondary
+        .dropdown-menu
+          a.dropdown-item[href="#"]
+            | Action
+          a.dropdown-item[href="#"]
+            | Another action
+          a.dropdown-item[href="#"]
+            | Something else here
+          .dropdown-divider
+          a.dropdown-item[href="#"]
+            | Separated link
+      .btn-group
+        button.btn.btn-success.dropdown-toggle[type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"]
+          | Success
+        .dropdown-menu
+          a.dropdown-item[href="#"]
+            | Action
+          a.dropdown-item[href="#"]
+            | Another action
+          a.dropdown-item[href="#"]
+            | Something else here
+          .dropdown-divider
+          a.dropdown-item[href="#"]
+            | Separated link
+      .btn-group
+        button.btn.btn-info.dropdown-toggle[type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"]
+          | Info
+        .dropdown-menu
+          a.dropdown-item[href="#"]
+            | Action
+          a.dropdown-item[href="#"]
+            | Another action
+          a.dropdown-item[href="#"]
+            | Something else here
+          .dropdown-divider
+          a.dropdown-item[href="#"]
+            | Separated link
+      .btn-group
+        button.btn.btn-warning.dropdown-toggle[type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"]
+          | Warning
+        .dropdown-menu
+          a.dropdown-item[href="#"]
+            | Action
+          a.dropdown-item[href="#"]
+            | Another action
+          a.dropdown-item[href="#"]
+            | Something else here
+          .dropdown-divider
+          a.dropdown-item[href="#"]
+            | Separated link
+      .btn-group
+        button.btn.btn-danger.dropdown-toggle[type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"]
+          | Danger
+        .dropdown-menu
+          a.dropdown-item[href="#"]
+            | Action
+          a.dropdown-item[href="#"]
+            | Another action
+          a.dropdown-item[href="#"]
+            | Something else here
+          .dropdown-divider
+          a.dropdown-item[href="#"]
+            | Separated link
+    h3#split-button-dropdowns
+      | Split button dropdowns
+    .bd-example
+      .btn-group
+        button.btn.btn-primary[type="button"]
+          | Primary
+        button.btn.btn-primary.dropdown-toggle.dropdown-toggle-split[type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"]
+          span.sr-only
+            | Toggle Dropdown
+        .dropdown-menu
+          a.dropdown-item[href="#"]
+            | Action
+          a.dropdown-item[href="#"]
+            | Another action
+          a.dropdown-item[href="#"]
+            | Something else here
+          .dropdown-divider
+          a.dropdown-item[href="#"]
+            | Separated link
+      .btn-group
+        button.btn.btn-secondary[type="button"]
+          | Secondary
+        button.btn.btn-secondary.dropdown-toggle.dropdown-toggle-split[type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"]
+          span.sr-only
+            | Toggle Dropdown
+        .dropdown-menu
+          a.dropdown-item[href="#"]
+            | Action
+          a.dropdown-item[href="#"]
+            | Another action
+          a.dropdown-item[href="#"]
+            | Something else here
+          .dropdown-divider
+          a.dropdown-item[href="#"]
+            | Separated link
+      .btn-group
+        button.btn.btn-success[type="button"]
+          | Success
+        button.btn.btn-success.dropdown-toggle.dropdown-toggle-split[type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"]
+          span.sr-only
+            | Toggle Dropdown
+        .dropdown-menu
+          a.dropdown-item[href="#"]
+            | Action
+          a.dropdown-item[href="#"]
+            | Another action
+          a.dropdown-item[href="#"]
+            | Something else here
+          .dropdown-divider
+          a.dropdown-item[href="#"]
+            | Separated link
+      .btn-group
+        button.btn.btn-info[type="button"]
+          | Info
+        button.btn.btn-info.dropdown-toggle.dropdown-toggle-split[type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"]
+          span.sr-only
+            | Toggle Dropdown
+        .dropdown-menu
+          a.dropdown-item[href="#"]
+            | Action
+          a.dropdown-item[href="#"]
+            | Another action
+          a.dropdown-item[href="#"]
+            | Something else here
+          .dropdown-divider
+          a.dropdown-item[href="#"]
+            | Separated link
+      .btn-group
+        button.btn.btn-warning[type="button"]
+          | Warning
+        button.btn.btn-warning.dropdown-toggle.dropdown-toggle-split[type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"]
+          span.sr-only
+            | Toggle Dropdown
+        .dropdown-menu
+          a.dropdown-item[href="#"]
+            | Action
+          a.dropdown-item[href="#"]
+            | Another action
+          a.dropdown-item[href="#"]
+            | Something else here
+          .dropdown-divider
+          a.dropdown-item[href="#"]
+            | Separated link
+      .btn-group
+        button.btn.btn-danger[type="button"]
+          | Danger
+        button.btn.btn-danger.dropdown-toggle.dropdown-toggle-split[type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"]
+          span.sr-only
+            | Toggle Dropdown
+        .dropdown-menu
+          a.dropdown-item[href="#"]
+            | Action
+          a.dropdown-item[href="#"]
+            | Another action
+          a.dropdown-item[href="#"]
+            | Something else here
+          .dropdown-divider
+          a.dropdown-item[href="#"]
+            | Separated link
+    h2#sizing
+      | Sizing
+    .bd-example
+      .btn-toolbar[role="toolbar"]
+        .btn-group
+          button.btn.btn-secondary.btn-lg.dropdown-toggle[type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"]
+            |  Large button
+          .dropdown-menu
+            a.dropdown-item[href="#"]
+              | Action
+            a.dropdown-item[href="#"]
+              | Another action
+            a.dropdown-item[href="#"]
+              | Something else here
+            .dropdown-divider
+            a.dropdown-item[href="#"]
+              | Separated link
+        .btn-group.ml-2
+          button.btn.btn-lg.btn-secondary[type="button"]
+            | Large split button
+          button.btn.btn-lg.btn-secondary.dropdown-toggle.dropdown-toggle-split[type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"]
+            span.sr-only
+              | Toggle Dropdown
+          .dropdown-menu
+            a.dropdown-item[href="#"]
+              | Action
+            a.dropdown-item[href="#"]
+              | Another action
+            a.dropdown-item[href="#"]
+              | Something else here
+            .dropdown-divider
+            a.dropdown-item[href="#"]
+              | Separated link
+      .btn-toolbar[role="toolbar"]
+        .btn-group
+          button.btn.btn-secondary.btn-sm.dropdown-toggle[type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"]
+            |  Small button
+          .dropdown-menu
+            a.dropdown-item[href="#"]
+              | Action
+            a.dropdown-item[href="#"]
+              | Another action
+            a.dropdown-item[href="#"]
+              | Something else here
+            .dropdown-divider
+            a.dropdown-item[href="#"]
+              | Separated link
+        .btn-group.ml-2
+          button.btn.btn-sm.btn-secondary[type="button"]
+            | Small split button
+          button.btn.btn-sm.btn-secondary.dropdown-toggle.dropdown-toggle-split[type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"]
+            span.sr-only
+              | Toggle Dropdown
+          .dropdown-menu
+            a.dropdown-item[href="#"]
+              | Action
+            a.dropdown-item[href="#"]
+              | Another action
+            a.dropdown-item[href="#"]
+              | Something else here
+            .dropdown-divider
+            a.dropdown-item[href="#"]
+              | Separated link
+    h2#dropup-variation
+      | Dropup variation
+    .bd-example
+      .btn-group.dropup
+        button.btn.btn-secondary.dropdown-toggle[type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"]
+          |  Dropup
+        .dropdown-menu
+          a.dropdown-item[href="#"]
+            | Action
+          a.dropdown-item[href="#"]
+            | Another action
+          a.dropdown-item[href="#"]
+            | Something else here
+          .dropdown-divider
+          a.dropdown-item[href="#"]
+            | Separated link
+      .btn-group.dropup
+        button.btn.btn-secondary[type="button"]
+          |  Split dropup
+        button.btn.btn-secondary.dropdown-toggle.dropdown-toggle-split[type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"]
+          span.sr-only
+            | Toggle Dropdown
+        .dropdown-menu
+          a.dropdown-item[href="#"]
+            | Action
+          a.dropdown-item[href="#"]
+            | Another action
+          a.dropdown-item[href="#"]
+            | Something else here
+          .dropdown-divider
+          a.dropdown-item[href="#"]
+            | Separated link
+    h2#menu-items
+      | Menu items
+    .bd-example
+      .dropdown
+        button#dropdownMenu2.btn.btn-secondary.dropdown-toggle[type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"]
+          |  Dropdown
+        .dropdown-menu[aria-labelledby="dropdownMenu2"]
+          button.dropdown-item[type="button"]
+            | Action
+          button.dropdown-item[type="button"]
+            | Another action
+          button.dropdown-item[type="button"]
+            | Something else here
+    h2#menu-alignment
+      | Menu alignment
+    .bd-example
+      .btn-group
+        button.btn.btn-secondary.dropdown-toggle[type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"]
+          |  This dropdown's menu is right-aligned
+        .dropdown-menu.dropdown-menu-right
+          button.dropdown-item[type="button"]
+            | Action
+          button.dropdown-item[type="button"]
+            | Another action
+          button.dropdown-item[type="button"]
+            | Something else here
+    h2#menu-headers
+      | Menu headers
+    .bd-example
+      .dropdown-menu
+        h6.dropdown-header
+          | Dropdown header
+        a.dropdown-item[href="#"]
+          | Action
+        a.dropdown-item[href="#"]
+          | Another action
+    h2#menu-dividers
+      | Menu dividers
+    .bd-example
+      .dropdown-menu
+        a.dropdown-item[href="#"]
+          | Action
+        a.dropdown-item[href="#"]
+          | Another action
+        a.dropdown-item[href="#"]
+          | Something else here
+        .dropdown-divider
+        a.dropdown-item[href="#"]
+          | Separated link
+    h2#disabled-menu-items
+      | Disabled menu items
+    .bd-example
+      .dropdown-menu
+        a.dropdown-item[href="#"]
+          | Regular link
+        a.dropdown-item.disabled[href="#"]
+          | Disabled link
+        a.dropdown-item[href="#"]
+          | Another link
+    h1#content.bd-title
+      | Forms
+    h2#form-controls
+      | Form controls
+    .bd-example
+      form
+        .form-group
+          label[for="exampleInputEmail1"]
+            | Email address
+          input#exampleInputEmail1.form-control[aria-describedby="emailHelp" placeholder="Enter email" type="email"]
+          small#emailHelp.form-text.text-muted
+            | We'll never share your email with anyone else.
+        .form-group
+          label[for="exampleInputPassword1"]
+            | Password
+          input#exampleInputPassword1.form-control[placeholder="Password" type="password"]
+        .form-group
+          label[for="exampleSelect1"]
+            | Example select
+          select#exampleSelect1.form-control
+            option
+              | 1
+            option
+              | 2
+            option
+              | 3
+            option
+              | 4
+            option
+              | 5
+        .form-group
+          label[for="exampleSelect2"]
+            | Example multiple select
+          select#exampleSelect2.form-control[multiple=""]
+            option
+              | 1
+            option
+              | 2
+            option
+              | 3
+            option
+              | 4
+            option
+              | 5
+        .form-group
+          label[for="exampleTextarea"]
+            | Example textarea
+          textarea#exampleTextarea.form-control[rows="3"]
+        .form-group
+          label[for="exampleInputFile"]
+            | File input
+          input#exampleInputFile.form-control-file[aria-describedby="fileHelp" type="file"]
+          small#fileHelp.form-text.text-muted
+            | This is some placeholder block-level help text for the above input. It's a bit lighter and easily wraps to a new line.
+        fieldset.form-group
+          legend
+            | Radio buttons
+          .form-check
+            label.form-check-label
+              input#optionsRadios1.form-check-input[name="optionsRadios" value="option1" checked="" type="radio"]
+              |  Option one is this and that—be sure to include why it's great
+          .form-check
+            label.form-check-label
+              input#optionsRadios2.form-check-input[name="optionsRadios" value="option2" type="radio"]
+              |  Option two can be something else and selecting it will deselect option one
+          .form-check.disabled
+            label.form-check-label
+              input#optionsRadios3.form-check-input[name="optionsRadios" value="option3" disabled="" type="radio"]
+              |  Option three is disabled
+        .form-check
+          label.form-check-label
+            input.form-check-input[type="checkbox"]
+            |  Check me out
+        button.btn.btn-primary[type="submit"]
+          | Submit
+    h3#textual-inputs
+      | Textual inputs
+    .bd-example
+      .form-group.row
+        label.col-2.col-form-label[for="example-text-input"]
+          | Text
+        .col-10
+          input#example-text-input.form-control[value="Artisanal kale" type="text"]
+      .form-group.row
+        label.col-2.col-form-label[for="example-search-input"]
+          | Search
+        .col-10
+          input#example-search-input.form-control[value="How do I shoot web" type="search"]
+      .form-group.row
+        label.col-2.col-form-label[for="example-email-input"]
+          | Email
+        .col-10
+          input#example-email-input.form-control[value="bootstrap@example.com" type="email"]
+      .form-group.row
+        label.col-2.col-form-label[for="example-url-input"]
+          | URL
+        .col-10
+          input#example-url-input.form-control[value="https://getbootstrap.com" type="url"]
+      .form-group.row
+        label.col-2.col-form-label[for="example-tel-input"]
+          | Telephone
+        .col-10
+          input#example-tel-input.form-control[value="1-(555)-555-5555" type="tel"]
+      .form-group.row
+        label.col-2.col-form-label[for="example-password-input"]
+          | Password
+        .col-10
+          input#example-password-input.form-control[value="hunter2" type="password"]
+      .form-group.row
+        label.col-2.col-form-label[for="example-number-input"]
+          | Number
+        .col-10
+          input#example-number-input.form-control[value="42" type="number"]
+      .form-group.row
+        label.col-2.col-form-label[for="example-datetime-local-input"]
+          | Date and time
+        .col-10
+          input#example-datetime-local-input.form-control[value="2011-08-19T13:45:00" type="datetime-local"]
+      .form-group.row
+        label.col-2.col-form-label[for="example-date-input"]
+          | Date
+        .col-10
+          input#example-date-input.form-control[value="2011-08-19" type="date"]
+      .form-group.row
+        label.col-2.col-form-label[for="example-month-input"]
+          | Month
+        .col-10
+          input#example-month-input.form-control[value="2011-08" type="month"]
+      .form-group.row
+        label.col-2.col-form-label[for="example-week-input"]
+          | Week
+        .col-10
+          input#example-week-input.form-control[value="2011-W33" type="week"]
+      .form-group.row
+        label.col-2.col-form-label[for="example-time-input"]
+          | Time
+        .col-10
+          input#example-time-input.form-control[value="13:45:00" type="time"]
+      .form-group.row
+        label.col-2.col-form-label[for="example-color-input"]
+          | Color
+        .col-10
+          input#example-color-input.form-control[value="#563d7c" type="color"]
+    h2#form-layouts
+      | Form layouts
+    h3#form-groups
+      | Form groups
+    .bd-example
+      form
+        .form-group
+          label[for="formGroupExampleInput"]
+            | Example label
+          input#formGroupExampleInput.form-control[placeholder="Example input" type="text"]
+        .form-group
+          label[for="formGroupExampleInput2"]
+            | Another label
+          input#formGroupExampleInput2.form-control[placeholder="Another input" type="text"]
+    h3#inline-forms
+      | Inline forms
+    .bd-example
+      form.form-inline
+        label.sr-only[for="inlineFormInput"]
+          | Name
+        input#inlineFormInput.form-control.mb-2.mr-sm-2.mb-sm-0[placeholder="Jane Doe" type="text"]
+        label.sr-only[for="inlineFormInputGroup"]
+          | Username
+        .input-group.mb-2.mr-sm-2.mb-sm-0
+          .input-group-text
+            | @
+          input#inlineFormInputGroup.form-control[placeholder="Username" type="text"]
+        .form-check.mb-2.mr-sm-2.mb-sm-0
+          label.form-check-label
+            input.form-check-input[type="checkbox"]
+            |  Remember me
+        button.btn.btn-primary[type="submit"]
+          | Submit
+    .bd-example
+      form.form-inline
+        label.mr-sm-2[for="inlineFormCustomSelect"]
+          | Preference
+        select#inlineFormCustomSelect.custom-select.mb-2.mr-sm-2.mb-sm-0
+          option[selected=""]
+            | Choose...
+          option[value="1"]
+            | One
+          option[value="2"]
+            | Two
+          option[value="3"]
+            | Three
+        label.custom-control.custom-checkbox.mb-2.mr-sm-2.mb-sm-0
+          input.custom-control-input[type="checkbox"]
+          span.custom-control-indicator
+          span.custom-control-description
+            | Remember my preference
+        button.btn.btn-primary[type="submit"]
+          | Submit
+    h3#using-the-grid
+      | Using the Grid
+    .bd-example
+      .container
+        form
+          .form-group.row
+            label.col-sm-2.col-form-label[for="inputEmail3"]
+              | Email
+            .col-sm-10
+              input#inputEmail3.form-control[placeholder="Email" type="email"]
+          .form-group.row
+            label.col-sm-2.col-form-label[for="inputPassword3"]
+              | Password
+            .col-sm-10
+              input#inputPassword3.form-control[placeholder="Password" type="password"]
+          fieldset.form-group.row
+            legend.col-form-legend.col-sm-2
+              | Radios
+            .col-sm-10
+              .form-check
+                label.form-check-label
+                  input#gridRadios1.form-check-input[name="gridRadios" value="option1" checked="" type="radio"]
+                  |  Option one is this and that—be sure to include why it's great
+              .form-check
+                label.form-check-label
+                  input#gridRadios2.form-check-input[name="gridRadios" value="option2" type="radio"]
+                  |  Option two can be something else and selecting it will deselect option one
+              .form-check.disabled
+                label.form-check-label
+                  input#gridRadios3.form-check-input[name="gridRadios" value="option3" disabled="" type="radio"]
+                  |  Option three is disabled
+          .form-group.row
+            label.col-sm-2
+              | Checkbox
+            .col-sm-10
+              .form-check
+                label.form-check-label
+                  input.form-check-input[type="checkbox"]
+                  |  Check me out
+          .form-group.row
+            .offset-sm-2.col-sm-10
+              button.btn.btn-primary[type="submit"]
+                | Sign in
+    .bd-example
+      .container
+        form
+          .form-group.row
+            label.col-sm-2.col-form-label.col-form-label-lg[for="lgFormGroupInput"]
+              | Email
+            .col-sm-10
+              input#lgFormGroupInput.form-control.form-control-lg[placeholder="you@example.com" type="email"]
+          .form-group.row
+            label.col-sm-2.col-form-label.col-form-label-sm[for="smFormGroupInput"]
+              | Email
+            .col-sm-10
+              input#smFormGroupInput.form-control.form-control-sm[placeholder="you@example.com" type="email"]
+    h2#checkboxes-and-radios
+      | Checkboxes and radios
+    h3#default-stacked
+      | Default (stacked)
+    .bd-example
+      .form-check
+        label.form-check-label
+          input.form-check-input[value="" type="checkbox"]
+          |  Option one is this and that—be sure to include why it's great
+      .form-check.disabled
+        label.form-check-label
+          input.form-check-input[value="" disabled="" type="checkbox"]
+          |  Option two is disabled
+    .bd-example
+      .form-check
+        label.form-check-label
+          input#exampleRadios1.form-check-input[name="exampleRadios" value="option1" checked="" type="radio"]
+          |  Option one is this and that—be sure to include why it's great
+      .form-check
+        label.form-check-label
+          input#exampleRadios2.form-check-input[name="exampleRadios" value="option2" type="radio"]
+          |  Option two can be something else and selecting it will deselect option one
+      .form-check.disabled
+        label.form-check-label
+          input#exampleRadios3.form-check-input[name="exampleRadios" value="option3" disabled="" type="radio"]
+          |  Option three is disabled
+    h3#inline
+      | Inline
+    .bd-example
+      .form-check.form-check-inline
+        label.form-check-label
+          input#inlineCheckbox1.form-check-input[value="option1" type="checkbox"]
+          |  1
+      .form-check.form-check-inline
+        label.form-check-label
+          input#inlineCheckbox2.form-check-input[value="option2" type="checkbox"]
+          |  2
+      .form-check.form-check-inline.disabled
+        label.form-check-label
+          input#inlineCheckbox3.form-check-input[value="option3" disabled="" type="checkbox"]
+          |  3
+    .bd-example
+      .form-check.form-check-inline
+        label.form-check-label
+          input#inlineRadio1.form-check-input[name="inlineRadioOptions" value="option1" type="radio"]
+          |  1
+      .form-check.form-check-inline
+        label.form-check-label
+          input#inlineRadio2.form-check-input[name="inlineRadioOptions" value="option2" type="radio"]
+          |  2
+      .form-check.form-check-inline.disabled
+        label.form-check-label
+          input#inlineRadio3.form-check-input[name="inlineRadioOptions" value="option3" disabled="" type="radio"]
+          |  3
+    h3#without-labels
+      | Without labels
+    .bd-example
+      .form-check
+        label.form-check-label
+          input#blankCheckbox.form-check-input[value="option1" aria-label="..." type="checkbox"]
+      .form-check
+        label.form-check-label
+          input#blankRadio1.form-check-input[name="blankRadio" value="option1" aria-label="..." type="radio"]
+    h2#static-controls
+      | Static controls
+    .bd-example
+      form
+        .form-group.row
+          label.col-sm-2.col-form-label
+            | Email
+          .col-sm-10
+            p.form-control-static
+              | email@example.com
+        .form-group.row
+          label.col-sm-2.col-form-label[for="inputPassword"]
+            | Password
+          .col-sm-10
+            input#inputPassword.form-control[placeholder="Password" type="password"]
+    .bd-example
+      form.form-inline
+        .form-group
+          label.sr-only
+            | Email
+          p.form-control-static
+            | email@example.com
+        .form-group.mx-sm-3
+          label.sr-only[for="inputPassword2"]
+            | Password
+          input#inputPassword2.form-control[placeholder="Password" type="password"]
+        button.btn.btn-primary[type="submit"]
+          | Confirm identity
+    h2#disabled-states
+      | Disabled states
+    .bd-example
+      form
+        fieldset[disabled]
+          .form-group
+            label[for="disabledTextInput"]
+              | Disabled input
+            input#disabledTextInput.form-control[placeholder="Disabled input" type="text"]
+          .form-group
+            label[for="disabledSelect"]
+              | Disabled select menu
+            select#disabledSelect.form-control
+              option
+                | Disabled select
+          .checkbox
+            label
+              input[type="checkbox"]
+              |  Can't check this
+          button.btn.btn-primary[type="submit"]
+            | Submit
+    h2#readonly-inputs
+      | Readonly inputs
+    .bd-example
+      input.form-control[placeholder="Readonly input here…" readonly type="text"]
+    h2#control-sizing
+      | Control sizing
+    .bd-example
+      input.form-control.form-control-lg[placeholder=".form-control-lg" type="text"]
+      input.form-control[placeholder="Default input" type="text"]
+      input.form-control.form-control-sm[placeholder=".form-control-sm" type="text"]
+    .bd-example
+      select.form-control.form-control-lg
+        option
+          | Large select
+      select.form-control
+        option
+          | Default select
+      select.form-control.form-control-sm
+        option
+          | Small select
+    h2#column-sizing
+      | Column sizing
+    .bd-example
+      .row
+        .col-2
+          input.form-control[placeholder=".col-2" type="text"]
+        .col-3
+          input.form-control[placeholder=".col-3" type="text"]
+        .col-4
+          input.form-control[placeholder=".col-4" type="text"]
+    h2#help-text
+      | Help text
+    h3#block-level
+      | Block level
+    .bd-example
+      label[for="inputPassword5"]
+        | Password
+      input#inputPassword5.form-control[aria-describedby="passwordHelpBlock" type="password"]
+      p#passwordHelpBlock.form-text.text-muted
+        |  Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
+    h3#inline-1
+      | Inline
+    .bd-example
+      form.form-inline
+        .form-group
+          label[for="inputPassword4"]
+            | Password
+          input#inputPassword4.form-control.mx-sm-3[aria-describedby="passwordHelpInline" type="password"]
+          small#passwordHelpInline.text-muted
+            |  Must be 8-20 characters long.
+    h2#validation
+      | Validation
+    h3#examples
+      | Examples
+    .bd-example
+      .form-group.has-success
+        label.form-control-label[for="inputSuccess1"]
+          | Input with success
+        input#inputSuccess1.form-control.form-control-success[type="text"]
+        .form-control-feedback
+          | Success! You've done it.
+        small.form-text.text-muted
+          | Example help text that remains unchanged.
+      .form-group.has-warning
+        label.form-control-label[for="inputWarning1"]
+          | Input with warning
+        input#inputWarning1.form-control.form-control-warning[type="text"]
+        .form-control-feedback
+          | Shucks, check the formatting of that and try again.
+        small.form-text.text-muted
+          | Example help text that remains unchanged.
+      .form-group.has-danger
+        label.form-control-label[for="inputDanger1"]
+          | Input with danger
+        input#inputDanger1.form-control.form-control-danger[type="text"]
+        .form-control-feedback
+          | Sorry, that username's taken. Try another?
+        small.form-text.text-muted
+          | Example help text that remains unchanged.
+    .bd-example
+      .container
+        form
+          .form-group.row.has-success
+            label.col-sm-2.col-form-label[for="inputHorizontalSuccess"]
+              | Email
+            .col-sm-10
+              input#inputHorizontalSuccess.form-control.form-control-success[placeholder="name@example.com" type="email"]
+              .form-control-feedback
+                | Success! You've done it.
+              small.form-text.text-muted
+                | Example help text that remains unchanged.
+          .form-group.row.has-warning
+            label.col-sm-2.col-form-label[for="inputHorizontalWarning"]
+              | Email
+            .col-sm-10
+              input#inputHorizontalWarning.form-control.form-control-warning[placeholder="name@example.com" type="email"]
+              .form-control-feedback
+                | Shucks, check the formatting of that and try again.
+              small.form-text.text-muted
+                | Example help text that remains unchanged.
+          .form-group.row.has-danger
+            label.col-sm-2.col-form-label[for="inputHorizontalDnger"]
+              | Email
+            .col-sm-10
+              input#inputHorizontalDnger.form-control.form-control-danger[placeholder="name@example.com" type="email"]
+              .form-control-feedback
+                | Sorry, that username's taken. Try another?
+              small.form-text.text-muted
+                | Example help text that remains unchanged.
+    .bd-example
+      .form-check.has-success
+        label.form-check-label
+          input#checkboxSuccess.form-check-input[value="option1" type="checkbox"]
+          |  Checkbox with success
+      .form-check.has-warning
+        label.form-check-label
+          input#checkboxWarning.form-check-input[value="option1" type="checkbox"]
+          |  Checkbox with warning
+      .form-check.has-danger
+        label.form-check-label
+          input#checkboxDanger.form-check-input[value="option1" type="checkbox"]
+          |  Checkbox with danger
+    h2#custom-forms
+      | Custom forms
+    h3#checkboxes-and-radios-1
+      | Checkboxes and radios
+    h4#checkboxes
+      | Checkboxes
+    .bd-example
+      label.custom-control.custom-checkbox
+        input.custom-control-input[type="checkbox"]
+        span.custom-control-indicator
+        span.custom-control-description
+          | Check this custom checkbox
+    .bd-example.bd-example-indeterminate
+      label.custom-control.custom-checkbox
+        input.custom-control-input[type="checkbox"]
+        span.custom-control-indicator
+        span.custom-control-description
+          | Check this custom checkbox
+    h4#radios
+      | Radios
+    .bd-example
+      label.custom-control.custom-radio
+        input#radio1.custom-control-input[name="radio" type="radio"]
+        span.custom-control-indicator
+        span.custom-control-description
+          | Toggle this custom radio
+      label.custom-control.custom-radio
+        input#radio2.custom-control-input[name="radio" type="radio"]
+        span.custom-control-indicator
+        span.custom-control-description
+          | Or toggle this other custom radio
+    h4#disabled
+      | Disabled
+    .bd-example
+      label.custom-control.custom-checkbox
+        input.custom-control-input[disabled="" type="checkbox"]
+        span.custom-control-indicator
+        span.custom-control-description
+          | Check this custom checkbox
+      label.custom-control.custom-radio
+        input#radio3.custom-control-input[name="radioDisabled" disabled="" type="radio"]
+        span.custom-control-indicator
+        span.custom-control-description
+          | Toggle this custom radio
+    h4#validation-states
+      | Validation states
+    .bd-example
+      .form-group.has-success
+        label.custom-control.custom-checkbox
+          input.custom-control-input[type="checkbox"]
+          span.custom-control-indicator
+          span.custom-control-description
+            | Check this custom checkbox
+      .form-group.has-warning
+        label.custom-control.custom-checkbox
+          input.custom-control-input[type="checkbox"]
+          span.custom-control-indicator
+          span.custom-control-description
+            | Check this custom checkbox
+      .form-group.has-danger.mb-0
+        label.custom-control.custom-checkbox
+          input.custom-control-input[type="checkbox"]
+          span.custom-control-indicator
+          span.custom-control-description
+            | Check this custom checkbox
+    h4#stacked
+      | Stacked
+    .bd-example
+      .custom-controls-stacked
+        label.custom-control.custom-radio
+          input#radioStacked1.custom-control-input[name="radio-stacked" type="radio"]
+          span.custom-control-indicator
+          span.custom-control-description
+            | Toggle this custom radio
+        label.custom-control.custom-radio
+          input#radioStacked2.custom-control-input[name="radio-stacked" type="radio"]
+          span.custom-control-indicator
+          span.custom-control-description
+            | Or toggle this other custom radio
+    h3#select-menu
+      | Select menu
+    .bd-example
+      select.custom-select
+        option[selected=""]
+          | Open this select menu
+        option[value="1"]
+          | One
+        option[value="2"]
+          | Two
+        option[value="3"]
+          | Three
+    h3#file-browser
+      | File browser
+    .bd-example
+      label.custom-file
+        input#file.custom-file-input[type="file"]
+        span.custom-file-control
+    h1#content.bd-title
+      | Input group
+    h2#basic-example
+      | Basic example
+    .bd-example
+      .input-group
+        .input-group-prepend
+          span#basic-addon1.input-group-text
+            | @
+        input.form-control[placeholder="Username" aria-describedby="basic-addon1" type="text"]
+      br
+      .input-group
+        input.form-control[placeholder="Recipient's username" aria-describedby="basic-addon2" type="text"]
+        .input-group-append
+          span#basic-addon2.input-group-text
+            | @example.com
+      br
+      label[for="basic-url"]
+        | Your vanity URL
+      .input-group
+        .input-group-prepend
+          span#basic-addon3.input-group-text
+            | https://example.com/users/
+        input#basic-url.form-control[aria-describedby="basic-addon3" type="text"]
+      br
+      .input-group
+        .input-group-prepend
+          span.input-group-text
+            | $
+        input.form-control[aria-label="Amount (to the nearest dollar)" type="text"]
+        .input-group-append
+          span.input-group-text
+            | .00
+    h2#sizing
+      | Sizing
+    .bd-example
+      .input-group.input-group-lg
+        .input-group-prepend
+          span#sizing-addon1.input-group-text
+            | @
+        input.form-control[placeholder="Username" aria-describedby="sizing-addon1" type="text"]
+      br
+      .input-group
+        .input-group-prepend
+          span#sizing-addon2.input-group-text
+            | @
+        input.form-control[placeholder="Username" aria-describedby="sizing-addon2" type="text"]
+    h2#checkboxes-and-radio-addons
+      | Checkboxes and radio addons
+    .bd-example
+      .row
+        .col-lg-6
+          .input-group
+            .input-group-prepend
+              span.input-group-text
+                input[aria-label="Checkbox for following text input" type="checkbox"]
+            input.form-control[aria-label="Text input with checkbox" type="text"]
+        .col-lg-6
+          .input-group
+            .input-group-prepend
+              span.input-group-text
+                input[aria-label="Radio button for following text input" type="radio"]
+            input.form-control[aria-label="Text input with radio button" type="text"]
+    h2#multiple-addons
+      | Multiple addons
+    .bd-example
+      .row
+        .col-lg-6
+          .input-group
+            .input-group-prepend
+              span.input-group-text
+                input[aria-label="Checkbox for following text input" type="checkbox"]
+              span.input-group-text
+                | $
+            input.form-control[aria-label="Text input with checkbox" type="text"]
+        .col-lg-6
+          .input-group
+            .input-group-prepend
+              span.input-group-text
+                | $
+              span.input-group-text
+                | 0.00
+            input.form-control[aria-label="Text input with radio button" type="text"]
+    h2#button-addons
+      | Button addons
+    .bd-example
+      .row
+        .col-lg-6
+          .input-group
+            .input-group-prepend
+              button.btn.btn-secondary[type="button"]
+                | Go!
+            input.form-control[placeholder="Search for..." type="text"]
+        .col-lg-6
+          .input-group
+            input.form-control[placeholder="Search for..." type="text"]
+            .input-group-append
+              button.btn.btn-secondary[type="button"]
+                | Go!
+      br
+      .row
+        .col-lg-offset-3.col-lg-6
+          .input-group
+            .input-group-prepend
+              button.btn.btn-secondary[type="button"]
+                | Hate it
+            input.form-control[placeholder="Product name" type="text"]
+            .input-group-append
+              button.btn.btn-secondary[type="button"]
+                | Love it
+    h2#buttons-with-dropdowns
+      | Buttons with dropdowns
+    .bd-example
+      .row
+        .col-lg-6
+          .input-group
+            .input-group-prepend
+              button.btn.btn-secondary.dropdown-toggle[type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"]
+                |  Action
+              .dropdown-menu
+                a.dropdown-item[href="#"]
+                  | Action
+                a.dropdown-item[href="#"]
+                  | Another action
+                a.dropdown-item[href="#"]
+                  | Something else here
+                .dropdown-divider[role="separator"]
+                a.dropdown-item[href="#"]
+                  | Separated link
+            input.form-control[aria-label="Text input with dropdown button" type="text"]
+        .col-lg-6
+          .input-group
+            input.form-control[aria-label="Text input with dropdown button" type="text"]
+            .input-group-append
+              button.btn.btn-secondary.dropdown-toggle[type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"]
+                |  Action
+              .dropdown-menu.dropdown-menu-right
+                a.dropdown-item[href="#"]
+                  | Action
+                a.dropdown-item[href="#"]
+                  | Another action
+                a.dropdown-item[href="#"]
+                  | Something else here
+                .dropdown-divider[role="separator"]
+                a.dropdown-item[href="#"]
+                  | Separated link
+    h2#segmented-buttons
+      | Segmented buttons
+    .bd-example
+      .row
+        .col-lg-6
+          .input-group
+            .input-group-prepend
+              button.btn.btn-secondary[type="button"]
+                | Action
+              button.btn.btn-secondary.dropdown-toggle.dropdown-toggle-split[type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"]
+                span.sr-only
+                  | Toggle Dropdown
+              .dropdown-menu
+                a.dropdown-item[href="#"]
+                  | Action
+                a.dropdown-item[href="#"]
+                  | Another action
+                a.dropdown-item[href="#"]
+                  | Something else here
+                .dropdown-divider[role="separator"]
+                a.dropdown-item[href="#"]
+                  | Separated link
+            input.form-control[aria-label="Text input with segmented button dropdown" type="text"]
+        .col-lg-6
+          .input-group
+            input.form-control[aria-label="Text input with segmented button dropdown" type="text"]
+            .input-group-append
+              button.btn.btn-secondary[type="button"]
+                | Action
+              button.btn.btn-secondary.dropdown-toggle.dropdown-toggle-split[type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"]
+                span.sr-only
+                  | Toggle Dropdown
+              .dropdown-menu.dropdown-menu-right
+                a.dropdown-item[href="#"]
+                  | Action
+                a.dropdown-item[href="#"]
+                  | Another action
+                a.dropdown-item[href="#"]
+                  | Something else here
+                .dropdown-divider[role="separator"]
+                a.dropdown-item[href="#"]
+                  | Separated link
+    h1#content.bd-title
+      | Jumbotron
+    h2#example
+      | Example
+    .bd-example
+      .jumbotron
+        h1.display-3
+          | Hello, world!
+        p.lead
+          | This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.
+        hr.my-4
+        p
+          | It uses utility classes for typography and spacing to space content out within the larger container.
+        p.lead
+          a.btn.btn-primary.btn-lg[href="#" role="button"]
+            | Learn more
+    .bd-example
+      .jumbotron.jumbotron-fluid
+        .container
+          h1.display-3
+            | Fluid jumbotron
+          p.lead
+            | This is a modified jumbotron that occupies the entire horizontal space of its parent.
+    h1#content.bd-title
+      | List group
+    h2#basic-example
+      | Basic example
+    .bd-example
+      ul.list-group
+        li.list-group-item
+          | Cras justo odio
+        li.list-group-item
+          | Dapibus ac facilisis in
+        li.list-group-item
+          | Morbi leo risus
+        li.list-group-item
+          | Porta ac consectetur ac
+        li.list-group-item
+          | Vestibulum at eros
+    h2#active-items
+      | Active items
+    .bd-example
+      ul.list-group
+        li.list-group-item.active
+          | Cras justo odio
+        li.list-group-item
+          | Dapibus ac facilisis in
+        li.list-group-item
+          | Morbi leo risus
+        li.list-group-item
+          | Porta ac consectetur ac
+        li.list-group-item
+          | Vestibulum at eros
+    h2#disabled-items
+      | Disabled items
+    .bd-example
+      ul.list-group
+        li.list-group-item.disabled
+          | Cras justo odio
+        li.list-group-item
+          | Dapibus ac facilisis in
+        li.list-group-item
+          | Morbi leo risus
+        li.list-group-item
+          | Porta ac consectetur ac
+        li.list-group-item
+          | Vestibulum at eros
+    h2#links-and-buttons
+      | Links and buttons
+    .bd-example
+      .list-group
+        a.list-group-item.active[href="#"]
+          |  Cras justo odio
+        a.list-group-item.list-group-item-action[href="#"]
+          | Dapibus ac facilisis in
+        a.list-group-item.list-group-item-action[href="#"]
+          | Morbi leo risus
+        a.list-group-item.list-group-item-action[href="#"]
+          | Porta ac consectetur ac
+        a.list-group-item.list-group-item-action.disabled[href="#"]
+          | Vestibulum at eros
+    .bd-example
+      .list-group
+        button.list-group-item.list-group-item-action.active[type="button"]
+          |  Cras justo odio
+        button.list-group-item.list-group-item-action[type="button"]
+          | Dapibus ac facilisis in
+        button.list-group-item.list-group-item-action[type="button"]
+          | Morbi leo risus
+        button.list-group-item.list-group-item-action[type="button"]
+          | Porta ac consectetur ac
+        button.list-group-item.list-group-item-action[type="button" disabled=""]
+          | Vestibulum at eros
+    h2#contextual-classes
+      | Contextual classes
+    .bd-example
+      ul.list-group
+        li.list-group-item
+          | Dapibus ac facilisis in
+        li.list-group-item.list-group-item-success
+          | Dapibus ac facilisis in
+        li.list-group-item.list-group-item-info
+          | Cras sit amet nibh libero
+        li.list-group-item.list-group-item-warning
+          | Porta ac consectetur ac
+        li.list-group-item.list-group-item-danger
+          | Vestibulum at eros
+    .bd-example
+      .list-group
+        a.list-group-item.list-group-item-action[href="#"]
+          | Dapibus ac facilisis in
+        a.list-group-item.list-group-item-action.list-group-item-success[href="#"]
+          | Dapibus ac facilisis in
+        a.list-group-item.list-group-item-action.list-group-item-info[href="#"]
+          | Cras sit amet nibh libero
+        a.list-group-item.list-group-item-action.list-group-item-warning[href="#"]
+          | Porta ac consectetur ac
+        a.list-group-item.list-group-item-action.list-group-item-danger[href="#"]
+          | Vestibulum at eros
+    h2#with-badges
+      | With badges
+    .bd-example
+      ul.list-group
+        li.list-group-item.justify-content-between
+          |  Cras justo odio
+          span.badge.badge-default.badge-pill
+            | 14
+        li.list-group-item.justify-content-between
+          |  Dapibus ac facilisis in
+          span.badge.badge-default.badge-pill
+            | 2
+        li.list-group-item.justify-content-between
+          |  Morbi leo risus
+          span.badge.badge-default.badge-pill
+            | 1
+    h2#custom-content
+      | Custom content
+    .bd-example
+      .list-group
+        a.list-group-item.list-group-item-action.flex-column.align-items-start.active[href="#"]
+
+        .d-flex.w-100.justify-content-between
+          h5.mb-1
+            | List group item heading
+          small
+            | 3 days ago
+        p.mb-1
+          | Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.
+        small
+          | Donec id elit non mi porta.
+        a.list-group-item.list-group-item-action.flex-column.align-items-start[href="#"]
+
+        .d-flex.w-100.justify-content-between
+          h5.mb-1
+            | List group item heading
+          small.text-muted
+            | 3 days ago
+        p.mb-1
+          | Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.
+        small.text-muted
+          | Donec id elit non mi porta.
+        a.list-group-item.list-group-item-action.flex-column.align-items-start[href="#"]
+
+        .d-flex.w-100.justify-content-between
+          h5.mb-1
+            | List group item heading
+          small.text-muted
+            | 3 days ago
+        p.mb-1
+          | Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.
+        small.text-muted
+          | Donec id elit non mi porta.
+    h1#content.bd-title
+      | Modal
+    h2#examples
+      | Examples
+    h3#modal-components
+      | Modal components
+    .bd-example.bd-example-modal
+      .modal
+        .modal-dialog[role="document"]
+          .modal-content
+            .modal-header
+              h5.modal-title
+                | Modal title
+              button.close[type="button" data-dismiss="modal" aria-label="Close"]
+                span[aria-hidden="true"]
+                  | ×
+            .modal-body
+              p
+                | Modal body text goes here.
+            .modal-footer
+              button.btn.btn-secondary[type="button" data-dismiss="modal"]
+                | Close
+              button.btn.btn-primary[type="button"]
+                | Save changes
+    h3#live-demo
+      | Live demo
+    #exampleModalLive.modal.fade[tabindex="-1" role="dialog" aria-labelledby="exampleModalLiveLabel" aria-hidden="true"]
+      .modal-dialog[role="document"]
+        .modal-content
+          .modal-header
+            h5#exampleModalLiveLabel.modal-title
+              | Modal title
+            button.close[type="button" data-dismiss="modal" aria-label="Close"]
+              span[aria-hidden="true"]
+                | ×
+          .modal-body
+            p
+              | Woohoo, you're reading this text in a modal!
+          .modal-footer
+            button.btn.btn-secondary[type="button" data-dismiss="modal"]
+              | Close
+            button.btn.btn-primary[type="button"]
+              | Save changes
+    .bd-example
+      button.btn.btn-primary[type="button" data-toggle="modal" data-target="#exampleModalLive"]
+        |  Launch demo modal
+    h3#scrolling-long-content
+      | Scrolling long content
+    #exampleModalLong.modal.fade[tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true"]
+      .modal-dialog[role="document"]
+        .modal-content
+          .modal-header
+            h5#exampleModalLongTitle.modal-title
+              | Modal title
+            button.close[type="button" data-dismiss="modal" aria-label="Close"]
+              span[aria-hidden="true"]
+                | ×
+          .modal-body
+            p
+              | Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+            p
+              | Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+            p
+              | Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
+            p
+              | Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+            p
+              | Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+            p
+              | Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
+            p
+              | Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+            p
+              | Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+            p
+              | Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
+            p
+              | Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+            p
+              | Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+            p
+              | Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
+            p
+              | Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+            p
+              | Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+            p
+              | Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
+            p
+              | Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+            p
+              | Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+            p
+              | Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
+          .modal-footer
+            button.btn.btn-secondary[type="button" data-dismiss="modal"]
+              | Close
+            button.btn.btn-primary[type="button"]
+              | Save changes
+    .bd-example
+      button.btn.btn-primary[type="button" data-toggle="modal" data-target="#exampleModalLong"]
+        |  Launch demo modal
+    h3#tooltips-and-popovers
+      | Tooltips and popovers
+    #exampleModalPopovers.modal.fade[tabindex="-1" role="dialog" aria-labelledby="exampleModalPopoversLabel" aria-hidden="true"]
+      .modal-dialog[role="document"]
+        .modal-content
+          .modal-header
+            h5#exampleModalPopoversLabel.modal-title
+              | Modal title
+            button.close[type="button" data-dismiss="modal" aria-label="Close"]
+              span[aria-hidden="true"]
+                | ×
+          .modal-body
+            h5
+              | Popover in a modal
+            p
+              | This
+              a.btn.btn-secondary.popover-test[href="#" role="button" title="" data-content="Popover body content is set in this attribute." data-original-title="Popover title"]
+                | button
+              |  triggers a popover on click.
+            hr
+            h5
+              | Tooltips in a modal
+            p
+              a.tooltip-test[href="#" title="" data-original-title="Tooltip"]
+                | This link
+              |  and
+              a.tooltip-test[href="#" title="" data-original-title="Tooltip"]
+                | that link
+              |  have tooltips on hover.
+          .modal-footer
+            button.btn.btn-secondary[type="button" data-dismiss="modal"]
+              | Close
+            button.btn.btn-primary[type="button"]
+              | Save changes
+    .bd-example
+      button.btn.btn-primary[type="button" data-toggle="modal" data-target="#exampleModalPopovers"]
+        |  Launch demo modal
+    h3#using-the-grid
+      | Using the grid
+    #gridSystemModal.modal.fade[tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" aria-hidden="true"]
+      .modal-dialog[role="document"]
+        .modal-content
+          .modal-header
+            h5#gridModalLabel.modal-title
+              | Grids in modals
+            button.close[type="button" data-dismiss="modal" aria-label="Close"]
+              span[aria-hidden="true"]
+                | ×
+          .modal-body
+            .container-fluid.bd-example-row
+              .row
+                .col-md-4
+                  | .col-md-4
+                .col-md-4.col-md-offset-4
+                  | .col-md-4 .col-md-offset-4
+              .row
+                .col-md-3.col-md-offset-3
+                  | .col-md-3 .col-md-offset-3
+                .col-md-2.col-md-offset-4
+                  | .col-md-2 .col-md-offset-4
+              .row
+                .col-md-6.col-md-offset-3
+                  | .col-md-6 .col-md-offset-3
+              .row
+                .col-sm-9
+                  |  Level 1: .col-sm-9
+                  .row
+                    .col-8.col-sm-6
+                      |  Level 2: .col-8 .col-sm-6
+                    .col-4.col-sm-6
+                      |  Level 2: .col-4 .col-sm-6
+          .modal-footer
+            button.btn.btn-secondary[type="button" data-dismiss="modal"]
+              | Close
+            button.btn.btn-primary[type="button"]
+              | Save changes
+    .bd-example
+      button.btn.btn-primary[type="button" data-toggle="modal" data-target="#gridSystemModal"]
+        |  Launch demo modal
+    h3#varying-modal-content
+      | Varying modal content
+    .bd-example
+      button.btn.btn-primary[type="button" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"]
+        | Open modal for @mdo
+      button.btn.btn-primary[type="button" data-toggle="modal" data-target="#exampleModal" data-whatever="@fat"]
+        | Open modal for @fat
+      button.btn.btn-primary[type="button" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap"]
+        | Open modal for @getbootstrap
+      #exampleModal.modal.fade[tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"]
+        .modal-dialog[role="document"]
+          .modal-content
+            .modal-header
+              h5#exampleModalLabel.modal-title
+                | New message
+              button.close[type="button" data-dismiss="modal" aria-label="Close"]
+                span[aria-hidden="true"]
+                  | ×
+            .modal-body
+              form
+                .form-group
+                  label.form-control-label[for="recipient-name"]
+                    | Recipient:
+                  input#recipient-name.form-control[type="text"]
+                .form-group
+                  label.form-control-label[for="message-text"]
+                    | Message:
+                  textarea#message-text.form-control
+            .modal-footer
+              button.btn.btn-secondary[type="button" data-dismiss="modal"]
+                | Close
+              button.btn.btn-primary[type="button"]
+                | Send message
+    h2#optional-sizes
+      | Optional sizes
+    .bd-example
+      button.btn.btn-primary[type="button" data-toggle="modal" data-target=".bd-example-modal-lg"]
+        | Large modal
+      button.btn.btn-primary[type="button" data-toggle="modal" data-target=".bd-example-modal-sm"]
+        | Small modal
+    .modal.fade.bd-example-modal-lg[tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true"]
+      .modal-dialog.modal-lg
+        .modal-content
+          .modal-header
+            h4#myLargeModalLabel.modal-title
+              | Large modal
+            button.close[type="button" data-dismiss="modal" aria-label="Close"]
+              span[aria-hidden="true"]
+                | ×
+          .modal-body
+            |  ...
+    .modal.fade.bd-example-modal-sm[tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true"]
+      .modal-dialog.modal-sm
+        .modal-content
+          .modal-header
+            h4#mySmallModalLabel.modal-title
+              | Small modal
+            button.close[type="button" data-dismiss="modal" aria-label="Close"]
+              span[aria-hidden="true"]
+                | ×
+          .modal-body
+            |  ...
+    h1#content.bd-title
+      | Navs
+    h2#base-nav
+      | Base nav
+    .bd-example
+      ul.nav
+        li.nav-item
+          a.nav-link.active[href="#"]
+            | Active
+        li.nav-item
+          a.nav-link[href="#"]
+            | Link
+        li.nav-item
+          a.nav-link[href="#"]
+            | Link
+        li.nav-item
+          a.nav-link.disabled[href="#"]
+            | Disabled
+    .bd-example
+      nav.nav
+        a.nav-link.active[href="#"]
+          | Active
+        a.nav-link[href="#"]
+          | Link
+        a.nav-link[href="#"]
+          | Link
+        a.nav-link.disabled[href="#"]
+          | Disabled
+    h2#available-styles
+      | Available styles
+    h3#horizontal-alignment
+      | Horizontal alignment
+    .bd-example
+      ul.nav.justify-content-center
+        li.nav-item
+          a.nav-link.active[href="#"]
+            | Active
+        li.nav-item
+          a.nav-link[href="#"]
+            | Link
+        li.nav-item
+          a.nav-link[href="#"]
+            | Link
+        li.nav-item
+          a.nav-link.disabled[href="#"]
+            | Disabled
+    .bd-example
+      ul.nav.justify-content-end
+        li.nav-item
+          a.nav-link.active[href="#"]
+            | Active
+        li.nav-item
+          a.nav-link[href="#"]
+            | Link
+        li.nav-item
+          a.nav-link[href="#"]
+            | Link
+        li.nav-item
+          a.nav-link.disabled[href="#"]
+            | Disabled
+    h3#vertical
+      | Vertical
+    .bd-example
+      ul.nav.flex-column
+        li.nav-item
+          a.nav-link.active[href="#"]
+            | Active
+        li.nav-item
+          a.nav-link[href="#"]
+            | Link
+        li.nav-item
+          a.nav-link[href="#"]
+            | Link
+        li.nav-item
+          a.nav-link.disabled[href="#"]
+            | Disabled
+    .bd-example
+      nav.nav.flex-column
+        a.nav-link.active[href="#"]
+          | Active
+        a.nav-link[href="#"]
+          | Link
+        a.nav-link[href="#"]
+          | Link
+        a.nav-link.disabled[href="#"]
+          | Disabled
+    h3#tabs
+      | Tabs
+    .bd-example
+      ul.nav.nav-tabs
+        li.nav-item
+          a.nav-link.active[href="#"]
+            | Active
+        li.nav-item
+          a.nav-link[href="#"]
+            | Link
+        li.nav-item
+          a.nav-link[href="#"]
+            | Link
+        li.nav-item
+          a.nav-link.disabled[href="#"]
+            | Disabled
+    h3#pills
+      | Pills
+    .bd-example
+      ul.nav.nav-pills
+        li.nav-item
+          a.nav-link.active[href="#"]
+            | Active
+        li.nav-item
+          a.nav-link[href="#"]
+            | Link
+        li.nav-item
+          a.nav-link[href="#"]
+            | Link
+        li.nav-item
+          a.nav-link.disabled[href="#"]
+            | Disabled
+    h3#fill-and-justify
+      | Fill and justify
+    .bd-example
+      ul.nav.nav-pills.nav-fill
+        li.nav-item
+          a.nav-link.active[href="#"]
+            | Active
+        li.nav-item
+          a.nav-link[href="#"]
+            | Longer nav link
+        li.nav-item
+          a.nav-link[href="#"]
+            | Link
+        li.nav-item
+          a.nav-link.disabled[href="#"]
+            | Disabled
+    .bd-example
+      ul.nav.nav-pills.nav-justified
+        li.nav-item
+          a.nav-link.active[href="#"]
+            | Active
+        li.nav-item
+          a.nav-link[href="#"]
+            | Longer nav link
+        li.nav-item
+          a.nav-link[href="#"]
+            | Link
+        li.nav-item
+          a.nav-link.disabled[href="#"]
+            | Disabled
+    h2#working-with-flex-utilities
+      | Working with flex utilities
+    .bd-example
+      nav.nav.nav-pills.flex-column.flex-sm-row
+        a.flex-sm-fill.text-sm-center.nav-link.active[href="#"]
+          | Active
+        a.flex-sm-fill.text-sm-center.nav-link[href="#"]
+          | Link
+        a.flex-sm-fill.text-sm-center.nav-link[href="#"]
+          | Link
+        a.flex-sm-fill.text-sm-center.nav-link.disabled[href="#"]
+          | Disabled
+    h2#using-dropdowns
+      | Using dropdowns
+    h3#tabs-with-dropdowns
+      | Tabs with dropdowns
+    .bd-example
+      ul.nav.nav-tabs
+        li.nav-item
+          a.nav-link.active[href="#"]
+            | Active
+        li.nav-item.dropdown
+          a.nav-link.dropdown-toggle[data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"]
+            | Dropdown
+          .dropdown-menu
+            a.dropdown-item[href="#"]
+              | Action
+            a.dropdown-item[href="#"]
+              | Another action
+            a.dropdown-item[href="#"]
+              | Something else here
+            .dropdown-divider
+            a.dropdown-item[href="#"]
+              | Separated link
+        li.nav-item
+          a.nav-link[href="#"]
+            | Link
+        li.nav-item
+          a.nav-link.disabled[href="#"]
+            | Disabled
+    h3#pills-with-dropdowns
+      | Pills with dropdowns
+    .bd-example
+      ul.nav.nav-pills
+        li.nav-item
+          a.nav-link.active[href="#"]
+            | Active
+        li.nav-item.dropdown
+          a.nav-link.dropdown-toggle[data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"]
+            | Dropdown
+          .dropdown-menu
+            a.dropdown-item[href="#"]
+              | Action
+            a.dropdown-item[href="#"]
+              | Another action
+            a.dropdown-item[href="#"]
+              | Something else here
+            .dropdown-divider
+            a.dropdown-item[href="#"]
+              | Separated link
+        li.nav-item
+          a.nav-link[href="#"]
+            | Link
+        li.nav-item
+          a.nav-link.disabled[href="#"]
+            | Disabled
+    h2#javascript-behavior
+      | JavaScript behavior
+    .bd-example.bd-example-tabs[role="tabpanel"]
+      ul#myTab.nav.nav-tabs[role="tablist"]
+        li.nav-item
+          a#home-tab.nav-link.active[data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-expanded="true"]
+            | Home
+        li.nav-item
+          a#profile-tab.nav-link[data-toggle="tab" href="#profile" role="tab" aria-controls="profile"]
+            | Profile
+        li.nav-item.dropdown
+          a.nav-link.dropdown-toggle[data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"]
+            |  Dropdown
+          .dropdown-menu
+            a#dropdown1-tab.dropdown-item[href="#dropdown1" role="tab" data-toggle="tab" aria-controls="dropdown1"]
+              | @fat
+            a#dropdown2-tab.dropdown-item[href="#dropdown2" role="tab" data-toggle="tab" aria-controls="dropdown2"]
+              | @mdo
+      #myTabContent.tab-content
+        #home.tab-pane.fade.show.active[role="tabpanel" aria-labelledby="home-tab"]
+          p
+            | Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.
+        #profile.tab-pane.fade[role="tabpanel" aria-labelledby="profile-tab"]
+          p
+            | Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar helvetica VHS salvia yr, vero magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson 8-bit, sustainable jean shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party scenester stumptown, tumblr butcher vero sint qui sapiente accusamus tattooed echo park.
+        #dropdown1.tab-pane.fade[role="tabpanel" aria-labelledby="dropdown1-tab"]
+          p
+            | Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork. Williamsburg banh mi whatever gluten-free, carles pitchfork biodiesel fixie etsy retro mlkshk vice blog. Scenester cred you probably haven't heard of them, vinyl craft beer blog stumptown. Pitchfork sustainable tofu synth chambray yr.
+        #dropdown2.tab-pane.fade[role="tabpanel" aria-labelledby="dropdown2-tab"]
+          p
+            | Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan DIY, art party locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia PBR, banh mi before they sold out farm-to-table VHS viral locavore cosby sweater. Lomo wolf viral, mustache readymade thundercats keffiyeh craft beer marfa ethical. Wolf salvia freegan, sartorial keffiyeh echo park vegan.
+    h1#content.bd-title
+      | Navbar
+    h2#supported-content
+      | Supported content
+    .bd-example
+      nav.navbar.navbar-toggleable-md.navbar-light.bg-faded
+        button.navbar-toggler.navbar-toggler-right[type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"]
+          span.navbar-toggler-icon
+        a.navbar-brand[href="#"]
+          | Navbar
+        #navbarSupportedContent.collapse.navbar-collapse
+          ul.navbar-nav.mr-auto
+            li.nav-item.active
+              a.nav-link[href="#"]
+                | Home
+                span.sr-only
+                  | (current)
+            li.nav-item
+              a.nav-link[href="#"]
+                | Link
+            li.nav-item
+              a.nav-link.disabled[href="#"]
+                | Disabled
+          form.form-inline.my-2.my-lg-0
+            input.form-control.mr-sm-2[placeholder="Search" type="text"]
+            button.btn.btn-outline-success.my-2.my-sm-0[type="submit"]
+              | Search
+    h3#brand
+      | Brand
+    .bd-example
+      nav.navbar.navbar-light.bg-faded
+        a.navbar-brand[href="#"]
+          | Navbar
+      nav.navbar.navbar-light.bg-faded
+        h1.navbar-brand.mb-0
+          | Navbar
+    .bd-example
+      nav.navbar.navbar-light.bg-faded
+        a.navbar-brand[href="#"]
+          img.d-inline-block.align-top alt="" width="30" height="30" src= asset_pack_path('media/images/lifework-logo-initials.png')
+          |  LifeWork
+    h3#nav
+      | Nav
+    .bd-example
+      nav.navbar.navbar-toggleable-md.navbar-light.bg-faded
+        button.navbar-toggler.navbar-toggler-right[type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"]
+          span.navbar-toggler-icon
+        a.navbar-brand[href="#"]
+          | Navbar
+        #navbarNavAltMarkup.collapse.navbar-collapse
+          .navbar-nav
+            a.nav-item.nav-link.active[href="#"]
+              | Home
+              span.sr-only
+                | (current)
+            a.nav-item.nav-link[href="#"]
+              | Features
+            a.nav-item.nav-link[href="#"]
+              | Pricing
+            a.nav-item.nav-link.disabled[href="#"]
+              | Disabled
+    .bd-example
+      nav.navbar.navbar-toggleable-md.navbar-light.bg-faded
+        button.navbar-toggler.navbar-toggler-right[type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation"]
+          span.navbar-toggler-icon
+        a.navbar-brand[href="#"]
+          | Navbar
+        #navbarNavDropdown.collapse.navbar-collapse
+          ul.navbar-nav
+            li.nav-item.active
+              a.nav-link[href="#"]
+                | Home
+                span.sr-only
+                  | (current)
+            li.nav-item
+              a.nav-link[href="#"]
+                | Features
+            li.nav-item
+              a.nav-link[href="#"]
+                | Pricing
+            li.nav-item.dropdown
+              a#navbarDropdownMenuLink.nav-link.dropdown-toggle[href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"]
+                |  Dropdown link
+              .dropdown-menu[aria-labelledby="navbarDropdownMenuLink"]
+                a.dropdown-item[href="#"]
+                  | Action
+                a.dropdown-item[href="#"]
+                  | Another action
+                a.dropdown-item[href="#"]
+                  | Something else here
+    h3#forms
+      | Forms
+    .bd-example
+      nav.navbar.navbar-light.bg-faded
+        form.form-inline
+          input.form-control.mr-sm-2[placeholder="Search" type="text"]
+          button.btn.btn-outline-success.my-2.my-sm-0[type="submit"]
+            | Search
+    .bd-example
+      nav.navbar.navbar-light.bg-faded.justify-content-between
+        a.navbar-brand
+          | Navbar
+        form.form-inline
+          input.form-control.mr-sm-2[placeholder="Search" type="text"]
+          button.btn.btn-outline-success.my-2.my-sm-0[type="submit"]
+            | Search
+    .bd-example
+      nav.navbar.navbar-light.bg-faded
+        form.form-inline
+          .input-group
+            .input-group-prepend
+              span#basic-addon1.input-group-text
+                | @
+            input.form-control[placeholder="Username" aria-describedby="basic-addon1" type="text"]
+    .bd-example
+      nav.navbar.navbar-light.bg-faded
+        form.form-inline
+          button.btn.btn-outline-success[type="button"]
+            | Main button
+          button.btn.btn-sm.align-middle.btn-outline-secondary[type="button"]
+            | Smaller button
+    h3#text
+      | Text
+    .bd-example
+      nav.navbar.navbar-light.bg-faded
+        span.navbar-text
+          |  Navbar text with an inline element
+    .bd-example
+      nav.navbar.navbar-toggleable-md.navbar-light.bg-faded
+        button.navbar-toggler.navbar-toggler-right[type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation"]
+          span.navbar-toggler-icon
+        a.navbar-brand[href="#"]
+          | Navbar w/ text
+        #navbarText.collapse.navbar-collapse
+          ul.navbar-nav.mr-auto
+            li.nav-item.active
+              a.nav-link[href="#"]
+                | Home
+                span.sr-only
+                  | (current)
+            li.nav-item
+              a.nav-link[href="#"]
+                | Features
+            li.nav-item
+              a.nav-link[href="#"]
+                | Pricing
+          span.navbar-text
+            |  Navbar text with an inline element
+    h2#color-schemes
+      | Color schemes
+    .bd-example
+      nav.navbar.navbar-toggleable-md.navbar-inverse.bg-inverse
+        button.navbar-toggler.navbar-toggler-right[type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation"]
+          span.navbar-toggler-icon
+        a.navbar-brand[href="#"]
+          | Navbar
+        #navbarColor01.collapse.navbar-collapse
+          ul.navbar-nav.mr-auto
+            li.nav-item.active
+              a.nav-link[href="#"]
+                | Home
+                span.sr-only
+                  | (current)
+            li.nav-item
+              a.nav-link[href="#"]
+                | Features
+            li.nav-item
+              a.nav-link[href="#"]
+                | Pricing
+            li.nav-item
+              a.nav-link[href="#"]
+                | About
+          form.form-inline
+            input.form-control.mr-sm-2[placeholder="Search" type="text"]
+            button.btn.btn-outline-info.my-2.my-sm-0[type="submit"]
+              | Search
+      nav.navbar.navbar-toggleable-md.navbar-inverse.bg-primary
+        button.navbar-toggler.navbar-toggler-right[type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation"]
+          span.navbar-toggler-icon
+        a.navbar-brand[href="#"]
+          | Navbar
+        #navbarColor02.collapse.navbar-collapse
+          ul.navbar-nav.mr-auto
+            li.nav-item.active
+              a.nav-link[href="#"]
+                | Home
+                span.sr-only
+                  | (current)
+            li.nav-item
+              a.nav-link[href="#"]
+                | Features
+            li.nav-item
+              a.nav-link[href="#"]
+                | Pricing
+            li.nav-item
+              a.nav-link[href="#"]
+                | About
+          form.form-inline
+            input.form-control.mr-sm-2[placeholder="Search" type="text"]
+            button.btn.btn-outline-secondary.my-2.my-sm-0[type="submit"]
+              | Search
+      nav.navbar.navbar-toggleable-md.navbar-light[style="background-color: #e3f2fd;"]
+        button.navbar-toggler.navbar-toggler-right[type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation"]
+          span.navbar-toggler-icon
+        a.navbar-brand[href="#"]
+          | Navbar
+        #navbarColor03.collapse.navbar-collapse
+          ul.navbar-nav.mr-auto
+            li.nav-item.active
+              a.nav-link[href="#"]
+                | Home
+                span.sr-only
+                  | (current)
+            li.nav-item
+              a.nav-link[href="#"]
+                | Features
+            li.nav-item
+              a.nav-link[href="#"]
+                | Pricing
+            li.nav-item
+              a.nav-link[href="#"]
+                | About
+          form.form-inline
+            input.form-control.mr-sm-2[placeholder="Search" type="text"]
+            button.btn.btn-outline-primary.my-2.my-sm-0[type="submit"]
+              | Search
+    h2#containers
+      | Containers
+    .bd-example
+      .container
+        nav.navbar.navbar-toggleable-md.navbar-light.bg-faded
+          a.navbar-brand[href="#"]
+            | Navbar
+    .bd-example
+      nav.navbar.navbar-toggleable-md.navbar-light.bg-faded
+        .container
+          a.navbar-brand[href="#"]
+            | Navbar
+    h2#placement
+      | Placement
+    .bd-example
+      nav.navbar.navbar-light.bg-faded
+        a.navbar-brand[href="#"]
+          | Full width
+    .bd-example
+      nav.navbar.fixed-top.navbar-light.bg-faded
+        a.navbar-brand[href="#"]
+          | Fixed top
+    .bd-example
+      nav.navbar.fixed-bottom.navbar-light.bg-faded
+        a.navbar-brand[href="#"]
+          | Fixed bottom
+    .bd-example
+      nav.navbar.sticky-top.navbar-light.bg-faded
+        a.navbar-brand[href="#"]
+          | Sticky top
+    h2#responsive-behaviors
+      | Responsive behaviors
+    h3#toggler
+      | Toggler
+    .bd-example
+      nav.navbar.navbar-toggleable-md.navbar-light.bg-faded
+        button.navbar-toggler[type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation"]
+          span.navbar-toggler-icon
+        #navbarTogglerDemo01.collapse.navbar-collapse
+          a.navbar-brand[href="#"]
+            | Hidden brand
+          ul.navbar-nav.mr-auto.mt-2.mt-lg-0
+            li.nav-item.active
+              a.nav-link[href="#"]
+                | Home
+                span.sr-only
+                  | (current)
+            li.nav-item
+              a.nav-link[href="#"]
+                | Link
+            li.nav-item
+              a.nav-link.disabled[href="#"]
+                | Disabled
+          form.form-inline.my-2.my-lg-0
+            input.form-control.mr-sm-2[placeholder="Search" type="text"]
+            button.btn.btn-outline-success.my-2.my-sm-0[type="submit"]
+              | Search
+    .bd-example
+      nav.navbar.navbar-toggleable-md.navbar-light.bg-faded
+        button.navbar-toggler.navbar-toggler-right[type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation"]
+          span.navbar-toggler-icon
+        a.navbar-brand[href="#"]
+          | Navbar
+        #navbarTogglerDemo02.collapse.navbar-collapse
+          ul.navbar-nav.mr-auto.mt-2.mt-md-0
+            li.nav-item.active
+              a.nav-link[href="#"]
+                | Home
+                span.sr-only
+                  | (current)
+            li.nav-item
+              a.nav-link[href="#"]
+                | Link
+            li.nav-item
+              a.nav-link.disabled[href="#"]
+                | Disabled
+          form.form-inline.my-2.my-lg-0
+            input.form-control.mr-sm-2[placeholder="Search" type="text"]
+            button.btn.btn-outline-success.my-2.my-sm-0[type="submit"]
+              | Search
+    h3#external-content
+      | External content
+    .bd-example
+      .pos-f-t
+        #navbarToggleExternalContent.collapse
+          .bg-inverse.p-4
+            h4.text-white
+              | Collapsed content
+            span.text-muted
+              | Toggleable via the navbar brand.
+        nav.navbar.navbar-inverse.bg-inverse
+          button.navbar-toggler[type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation"]
+            span.navbar-toggler-icon
+    h1#content.bd-title
+      | Pagination
+    h2#overview
+      | Overview
+    .bd-example
+      nav[aria-label="Page navigation example"]
+        ul.pagination
+          li.page-item
+            a.page-link[href="#"]
+              | Previous
+          li.page-item
+            a.page-link[href="#"]
+              | 1
+          li.page-item
+            a.page-link[href="#"]
+              | 2
+          li.page-item
+            a.page-link[href="#"]
+              | 3
+          li.page-item
+            a.page-link[href="#"]
+              | Next
+    h2#working-with-icons
+      | Working with icons
+    .bd-example
+      nav[aria-label="Page navigation example"]
+        ul.pagination
+          li.page-item
+            a.page-link[href="#" aria-label="Previous"]
+              span[aria-hidden="true"]
+                | «
+              span.sr-only
+                | Previous
+          li.page-item
+            a.page-link[href="#"]
+              | 1
+          li.page-item
+            a.page-link[href="#"]
+              | 2
+          li.page-item
+            a.page-link[href="#"]
+              | 3
+          li.page-item
+            a.page-link[href="#" aria-label="Next"]
+              span[aria-hidden="true"]
+                | »
+              span.sr-only
+                | Next
+    h2#disabled-and-active-states
+      | Disabled and active states
+    .bd-example
+      nav[aria-label="..."]
+        ul.pagination
+          li.page-item.disabled
+            a.page-link[href="#" tabindex="-1"]
+              | Previous
+          li.page-item
+            a.page-link[href="#"]
+              | 1
+          li.page-item.active
+            a.page-link[href="#"]
+              | 2
+              span.sr-only
+                | (current)
+          li.page-item
+            a.page-link[href="#"]
+              | 3
+          li.page-item
+            a.page-link[href="#"]
+              | Next
+    .bd-example
+      nav[aria-label="..."]
+        ul.pagination
+          li.page-item.disabled
+            span.page-link
+              | Previous
+          li.page-item
+            a.page-link[href="#"]
+              | 1
+          li.page-item.active
+            span.page-link
+              |  2
+              span.sr-only
+                | (current)
+          li.page-item
+            a.page-link[href="#"]
+              | 3
+          li.page-item
+            a.page-link[href="#"]
+              | Next
+    h2#sizing
+      | Sizing
+    .bd-example
+      nav[aria-label="..."]
+        ul.pagination.pagination-lg
+          li.page-item.disabled
+            a.page-link[href="#" tabindex="-1"]
+              | Previous
+          li.page-item
+            a.page-link[href="#"]
+              | 1
+          li.page-item
+            a.page-link[href="#"]
+              | 2
+          li.page-item
+            a.page-link[href="#"]
+              | 3
+          li.page-item
+            a.page-link[href="#"]
+              | Next
+    .bd-example
+      nav[aria-label="..."]
+        ul.pagination.pagination-sm
+          li.page-item.disabled
+            a.page-link[href="#" tabindex="-1"]
+              | Previous
+          li.page-item
+            a.page-link[href="#"]
+              | 1
+          li.page-item
+            a.page-link[href="#"]
+              | 2
+          li.page-item
+            a.page-link[href="#"]
+              | 3
+          li.page-item
+            a.page-link[href="#"]
+              | Next
+    h2#alignment
+      | Alignment
+    .bd-example
+      nav[aria-label="Page navigation example"]
+        ul.pagination.justify-content-center
+          li.page-item.disabled
+            a.page-link[href="#" tabindex="-1"]
+              | Previous
+          li.page-item
+            a.page-link[href="#"]
+              | 1
+          li.page-item
+            a.page-link[href="#"]
+              | 2
+          li.page-item
+            a.page-link[href="#"]
+              | 3
+          li.page-item
+            a.page-link[href="#"]
+              | Next
+    .bd-example
+      nav[aria-label="Page navigation example"]
+        ul.pagination.justify-content-end
+          li.page-item.disabled
+            a.page-link[href="#" tabindex="-1"]
+              | Previous
+          li.page-item
+            a.page-link[href="#"]
+              | 1
+          li.page-item
+            a.page-link[href="#"]
+              | 2
+          li.page-item
+            a.page-link[href="#"]
+              | 3
+          li.page-item
+            a.page-link[href="#"]
+              | Next
+    h1#content.bd-title
+      | Popovers
+    h2#static-popover
+      | Static popover
+    .bd-example.bd-example-popover-static
+      .popover.popover-top
+        h3.popover-title
+          | Popover top
+        .popover-content
+          p
+            | Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.
+      .popover.popover-right
+        h3.popover-title
+          | Popover right
+        .popover-content
+          p
+            | Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.
+      .popover.popover-bottom
+        h3.popover-title
+          | Popover bottom
+        .popover-content
+          p
+            | Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.
+      .popover.popover-left
+        h3.popover-title
+          | Popover left
+        .popover-content
+          p
+            | Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.
+      .clearfix
+    h2#live-demo
+      | Live demo
+    .bd-example
+      button.btn.btn-lg.btn-danger[type="button" data-toggle="popover" title="" data-content="And here's some amazing content. It's very engaging. Right?" data-original-title="Popover title"]
+        | Click to toggle popover
+    h3#four-directions
+      | Four directions
+    .bd-example.popover-demo
+      .bd-example-popovers
+        button.btn.btn-secondary[type="button" data-container="body" data-toggle="popover" data-placement="top" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." data-original-title="" title=""]
+          |  Popover on top
+        button.btn.btn-secondary[type="button" data-container="body" data-toggle="popover" data-placement="right" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." data-original-title="" title=""]
+          |  Popover on right
+        button.btn.btn-secondary[type="button" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." data-original-title="" title=""]
+          |  Popover on bottom
+        button.btn.btn-secondary[type="button" data-container="body" data-toggle="popover" data-placement="left" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." data-original-title="" title=""]
+          |  Popover on left
+    h3#dismiss-on-next-click
+      | Dismiss on next click
+    .bd-example
+      a.btn.btn-lg.btn-danger[tabindex="0" role="button" data-toggle="popover" data-trigger="focus" title="" data-content="And here's some amazing content. It's very engaging. Right?" data-original-title="Dismissible popover"]
+        | Dismissible popover
+    h1#content.bd-title
+      | Progress
+    h2#customizing
+      | Customizing
+    h3#labels
+      | Labels
+    .bd-example
+      .progress
+        .progress-bar[role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"]
+          | 25%
+    h3#height
+      | Height
+    .bd-example
+      .progress
+        .progress-bar[role="progressbar" style="width: 25%; height: 1px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"]
+      .progress
+        .progress-bar[role="progressbar" style="width: 25%; height: 20px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"]
+    h3#backgrounds
+      | Backgrounds
+    .bd-example
+      .progress
+        .progress-bar.bg-success[role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"]
+      .progress
+        .progress-bar.bg-info[role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"]
+      .progress
+        .progress-bar.bg-warning[role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"]
+      .progress
+        .progress-bar.bg-danger[role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"]
+    h3#multiple-bars
+      | Multiple bars
+    .bd-example
+      .progress
+        .progress-bar[role="progressbar" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"]
+        .progress-bar.bg-success[role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"]
+        .progress-bar.bg-info[role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"]
+    h3#striped
+      | Striped
+    .bd-example
+      .progress
+        .progress-bar.progress-bar-striped[role="progressbar" style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"]
+      .progress
+        .progress-bar.progress-bar-striped.bg-success[role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"]
+      .progress
+        .progress-bar.progress-bar-striped.bg-info[role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"]
+      .progress
+        .progress-bar.progress-bar-striped.bg-warning[role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"]
+      .progress
+        .progress-bar.progress-bar-striped.bg-danger[role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"]
+    h3#animated-stripes
+      | Animated stripes
+    .bd-example
+      .progress
+        .progress-bar.progress-bar-striped[role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"]
+      button.btn.btn-secondary.bd-toggle-animated-progress[type="button" data-toggle="button" aria-pressed="false" autocomplete="off"]
+        |  Toggle animation
+    h1#content.bd-title
+      | Scrollspy
+    h2#example-in-navbar
+      | Example in navbar
+    .bd-example
+      nav#navbar-example2.navbar.navbar-light.bg-faded
+        a.navbar-brand[href="#"]
+          | Navbar
+        ul.nav.nav-pills
+          li.nav-item
+            a.nav-link.active[href="#fat"]
+              | @fat
+          li.nav-item
+            a.nav-link[href="#mdo"]
+              | @mdo
+          li.nav-item.dropdown
+            a.nav-link.dropdown-toggle[data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"]
+              | Dropdown
+            .dropdown-menu
+              a.dropdown-item[href="#one"]
+                | one
+              a.dropdown-item[href="#two"]
+                | two
+              .dropdown-divider[role="separator"]
+              a.dropdown-item[href="#three"]
+                | three
+      .scrollspy-example[data-spy="scroll" data-target="#navbar-example2" data-offset="0"]
+        h4#fat[style=""]
+          | @fat
+        p
+          | Ad leggings keytar, brunch id art party dolor labore. Pitchfork yr enim lo-fi before they sold out qui. Tumblr farm-to-table bicycle rights whatever. Anim keffiyeh carles cardigan. Velit seitan mcsweeney's photo booth 3 wolf moon irure. Cosby sweater lomo jean shorts, williamsburg hoodie minim qui you probably haven't heard of them et cardigan trust fund culpa biodiesel wes anderson aesthetic. Nihil tattooed accusamus, cred irony biodiesel keffiyeh artisan ullamco consequat.
+        h4#mdo[style=""]
+          | @mdo
+        p
+          | Veniam marfa mustache skateboard, adipisicing fugiat velit pitchfork beard. Freegan beard aliqua cupidatat mcsweeney's vero. Cupidatat four loko nisi, ea helvetica nulla carles. Tattooed cosby sweater food truck, mcsweeney's quis non freegan vinyl. Lo-fi wes anderson +1 sartorial. Carles non aesthetic exercitation quis gentrify. Brooklyn adipisicing craft beer vice keytar deserunt.
+        h4#one[style=""]
+          | one
+        p
+          | Occaecat commodo aliqua delectus. Fap craft beer deserunt skateboard ea. Lomo bicycle rights adipisicing banh mi, velit ea sunt next level locavore single-origin coffee in magna veniam. High life id vinyl, echo park consequat quis aliquip banh mi pitchfork. Vero VHS est adipisicing. Consectetur nisi DIY minim messenger bag. Cred ex in, sustainable delectus consectetur fanny pack iphone.
+        h4#two[style=""]
+          | two
+        p
+          | In incididunt echo park, officia deserunt mcsweeney's proident master cleanse thundercats sapiente veniam. Excepteur VHS elit, proident shoreditch +1 biodiesel laborum craft beer. Single-origin coffee wayfarers irure four loko, cupidatat terry richardson master cleanse. Assumenda you probably haven't heard of them art party fanny pack, tattooed nulla cardigan tempor ad. Proident wolf nesciunt sartorial keffiyeh eu banh mi sustainable. Elit wolf voluptate, lo-fi ea portland before they sold out four loko. Locavore enim nostrud mlkshk brooklyn nesciunt.
+        h4#three[style=""]
+          | three
+        p
+          | Ad leggings keytar, brunch id art party dolor labore. Pitchfork yr enim lo-fi before they sold out qui. Tumblr farm-to-table bicycle rights whatever. Anim keffiyeh carles cardigan. Velit seitan mcsweeney's photo booth 3 wolf moon irure. Cosby sweater lomo jean shorts, williamsburg hoodie minim qui you probably haven't heard of them et cardigan trust fund culpa biodiesel wes anderson aesthetic. Nihil tattooed accusamus, cred irony biodiesel keffiyeh artisan ullamco consequat.
+        p
+          | Keytar twee blog, culpa messenger bag marfa whatever delectus food truck. Sapiente synth id assumenda. Locavore sed helvetica cliche irony, thundercats you probably haven't heard of them consequat hoodie gluten-free lo-fi fap aliquip. Labore elit placeat before they sold out, terry richardson proident brunch nesciunt quis cosby sweater pariatur keffiyeh ut helvetica artisan. Cardigan craft beer seitan readymade velit. VHS chambray laboris tempor veniam. Anim mollit minim commodo ullamco thundercats.
+    h1#content.bd-title
+      | Tooltips
+    h2#example-enable-tooltips-everywhere
+      | Example: Enable tooltips everywhere
+    h2#examples
+      | Examples
+    .bd-example.tooltip-demo
+      p.muted
+        | Tight pants next level keffiyeh
+        a[href="#" data-toggle="tooltip" title="Default tooltip"]
+          | you probably
+        |  haven't heard of them. Photo booth beard raw denim letterpress vegan messenger bag stumptown. Farm-to-table seitan, mcsweeney's fixie sustainable quinoa 8-bit american apparel
+        a[href="#" data-toggle="tooltip" title="Another tooltip"]
+          | have a
+        |  terry richardson vinyl chambray. Beard stumptown, cardigans banh mi lomo thundercats. Tofu biodiesel williamsburg marfa, four loko mcsweeney's cleanse vegan chambray. A really ironic artisan
+        a[href="#" data-toggle="tooltip" title="Another one here too"]
+          | whatever keytar
+        | , scenester farm-to-table banksy Austin
+        a[href="#" data-toggle="tooltip" title="The last tip!"]
+          | twitter handle
+        |  freegan cred raw denim single-origin coffee viral.
+    h3#static-demo
+      | Static demo
+    .bd-example.bd-example-tooltip-static
+      .tooltip.tooltip-top[role="tooltip"]
+        .tooltip-inner
+          |  Tooltip on the top
+      .tooltip.tooltip-right[role="tooltip"]
+        .tooltip-inner
+          |  Tooltip on the right
+      .tooltip.tooltip-bottom[role="tooltip"]
+        .tooltip-inner
+          |  Tooltip on the bottom
+      .tooltip.tooltip-left[role="tooltip"]
+        .tooltip-inner
+          |  Tooltip on the left
+    h3#interactive-demo
+      | Interactive demo
+    .bd-example.tooltip-demo
+      .bd-example-tooltips
+        button.btn.btn-secondary[type="button" data-toggle="tooltip" data-placement="top" title="Tooltip on top"]
+          |  Tooltip on top
+        button.btn.btn-secondary[type="button" data-toggle="tooltip" data-placement="right" title="Tooltip on right"]
+          |  Tooltip on right
+        button.btn.btn-secondary[type="button" data-toggle="tooltip" data-placement="bottom" title="Tooltip on bottom"]
+          |  Tooltip on bottom
+        button.btn.btn-secondary[type="button" data-toggle="tooltip" data-placement="left" title="Tooltip on left"]
+          |  Tooltip on left
+        button.btn.btn-secondary[type="button" data-toggle="tooltip" data-html="true" title="<em>Tooltip</em> <u>with</u> <b>HTML</b>"]
+          |  Tooltip with HTML
+    h1.display-4
+      | Utilities
+    h1#content.bd-title
+      | Borders
+    h2#border
+      | Border
+    .bd-example-border-utils
+      .bd-example
+        span.border-0
+        span.border-top-0
+        span.border-right-0
+        span.border-bottom-0
+        span.border-left-0
+    h2#border-radius
+      | Border-radius
+    .bd-example.bd-example-images
+      img.rounded[alt="150px x 150px native image, 75px x 75px display size" style="width: 75px; height: 75px;" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-150x150-01.jpg"]
+      img.rounded-top[alt="150px x 150px native image, 75px x 75px display size" style="width: 75px; height: 75px;" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-150x150-02.jpg"]
+      img.rounded-right[alt="150px x 150px native image, 75px x 75px display size" style="width: 75px; height: 75px;" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-150x150-03.jpg"]
+      img.rounded-bottom[alt="150px x 150px native image, 75px x 75px display size" style="width: 75px; height: 75px;" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-150x150-04.jpg"]
+      img.rounded-left[alt="150px x 150px native image, 75px x 75px display size" style="width: 75px; height: 75px;" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-150x150-05.jpg"]
+      img.rounded-circle[alt="150px x 150px native image, 75px x 75px display size" style="width: 75px; height: 75px;" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-150x150-06.jpg"]
+      img.rounded-0[alt="150px x 150px native image, 75px x 75px display size" style="width: 75px; height: 75px;" src="https://github.com/alex-wright-net/bootstrap-demo/raw/master/bootstrap4-demo-images/bootstrapv4-demo-example-150x150-07.jpg"]
+    h1#content.bd-title
+      | Colors
+    .bd-example
+      p.text-muted
+        | Fusce dapibus, tellus ac cursus commodo, tortor mauris nibh.
+      p.text-primary
+        | Nullam id dolor id nibh ultricies vehicula ut id elit.
+      p.text-success
+        | Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+      p.text-info
+        | Maecenas sed diam eget risus varius blandit sit amet non magna.
+      p.text-warning
+        | Etiam porta sem malesuada magna mollis euismod.
+      p.text-danger
+        | Donec ullamcorper nulla non metus auctor fringilla.
+      p.text-white
+        | Etiam porta sem malesuada ultricies vehicula.
+    .bd-example
+      a.text-muted[href="#"]
+        | Muted link
+      a.text-primary[href="#"]
+        | Primary link
+      a.text-success[href="#"]
+        | Success link
+      a.text-info[href="#"]
+        | Info link
+      a.text-warning[href="#"]
+        | Warning link
+      a.text-danger[href="#"]
+        | Danger link
+    .bd-example
+      .bg-primary.text-white
+        | Nullam id dolor id nibh ultricies vehicula ut id elit.
+      .bg-success.text-white
+        | Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+      .bg-info.text-white
+        | Maecenas sed diam eget risus varius blandit sit amet non magna.
+      .bg-warning.text-white
+        | Etiam porta sem malesuada magna mollis euismod.
+      .bg-danger.text-white
+        | Donec ullamcorper nulla non metus auctor fringilla.
+      .bg-inverse.text-white
+        | Cras mattis consectetur purus sit amet fermentum.
+      .bg-faded
+        | Cras mattis consectetur purus sit amet fermentum.
