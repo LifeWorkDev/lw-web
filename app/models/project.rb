@@ -17,7 +17,7 @@ class Project < ApplicationRecord
       after do
         user = client.primary_contact
         user.invite! unless user.active? # Generate new invitation token
-        ClientMailer.invite(user: user, project: self).deliver_now
+        ClientMailer.invite(user: user, project: self).deliver_later
       end
     end
   end

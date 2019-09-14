@@ -14,7 +14,7 @@ RSpec.describe Org, type: :model do
       expect do
         Org.create!(attrs)
       end.to change { User.count }.by(1) &
-             not_change(ActionMailer::Base.deliveries, :count)
+             not_enqueue_job(ActionMailer::MailDeliveryJob)
     end
   end
 end

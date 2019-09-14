@@ -47,7 +47,7 @@ RSpec.describe 'Freelancer views', type: :system do
                       have_content(new_milestone.description)
       expect do
         click_on 'Continue >'
-      end.to change { ActionMailer::Base.deliveries.count }.by(1)
+      end.to enqueue_job(ActionMailer::MailDeliveryJob)
       expect(page).to have_content('Your client has been emailed an invitation to join the project.')
     end
   end

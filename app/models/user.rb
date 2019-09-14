@@ -19,6 +19,12 @@ class User < ApplicationRecord
     activate! unless active?
   end
 
+protected
+
+  def send_devise_notification(notification, *args)
+    devise_mailer.send(notification, self, *args).deliver_later
+  end
+
 private
 
   def skip_invitation
