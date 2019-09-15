@@ -119,4 +119,8 @@ const DatePicker = props => {
   )
 }
 
+DatePicker.propTypes = {
+  defaultDays: PropTypes.array.isRequired,
+}
+
 export default DatePicker
