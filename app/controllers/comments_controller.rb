@@ -1,5 +1,5 @@
 class CommentsController < AuthenticatedController
-  before_action :set_project, only: %i[index new create]
+  before_action :set_project, only: %i[index create]
 
   def index
     @milestones = @project.milestones.includes(comments: %i[commenter read_by])
@@ -13,6 +13,15 @@ class CommentsController < AuthenticatedController
       redirect_to [current_namespace, @project, :comments], notice: 'Comment was successfully created.'
     else
       redirect_to [current_namespace, @project, :comments], alert: "Failed to create comment, #{@comment.errors.full_message.join(', ')}"
+    end
+  end
+
+  def update
+    comment = current_user.comments.find(params[:id])
+    if comment.update(comment: params[:comment])
+      render json: { message: 'Comment successfully updated.' }
+    else
+      render json: { error: comment.errors.full_messages.join(', ') }, status: 400
     end
   end
 

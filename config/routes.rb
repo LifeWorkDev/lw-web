@@ -25,6 +25,8 @@ Rails.application.routes.draw do
     get 'stripe/connect', to: 'stripe#connect', as: :stripe_connect
   end
 
+  resources :comments, only: %i[update]
+
   as :user do
     get :login, to: 'devise/sessions#new', as: :new_user_session
     post :login, to: 'devise/sessions#create', as: :user_session

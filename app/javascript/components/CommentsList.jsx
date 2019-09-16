@@ -21,6 +21,7 @@ const CommentItem = props => {
   const isCurrentUser = comment.commenter.id === currentUser.id
   const [editing, setEditing] = useState(false)
   const [commentText, setCommentText] = useState(comment.comment)
+  const [isError, setIsError] = useState(false)
 
   const handleCommentChange = event => {
     setCommentText(event.target.value)
@@ -29,7 +30,28 @@ const CommentItem = props => {
   const save = () => {
     comment.comment = commentText
     setComment(comment)
-    setEditing(false)
+    let data = {
+      comment: commentText,
+    }
+    const csrf = document
+      .querySelector("meta[name='csrf-token']")
+      .getAttribute('content')
+    window
+      .fetch(`/comments/${comment.id}`, {
+        body: JSON.stringify(data),
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': csrf,
+        },
+        method: 'PUT',
+        mode: 'cors',
+      })
+      .then(response => {
+        setEditing(false)
+        if (response.ok) return response.json()
+        else setIsError(true)
+      })
   }
 
   return (
@@ -46,6 +68,11 @@ const CommentItem = props => {
       {!editing && (
         <div className='comment'>
           <p>{commentText}</p>
+          {isError && (
+            <span className='error text-red'>
+              Unable to Save Comment, Try again.
+            </span>
+          )}
           {isCurrentUser && (
             <span
               className='edit badge badge-secondary'

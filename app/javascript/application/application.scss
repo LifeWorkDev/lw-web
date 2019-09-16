@@ -28,6 +28,10 @@ $font-size-base: 1.125rem;
   box-shadow: $box-shadow;
 }
 
+.text-red {
+  color: red;
+}
+
 .badge {
   .close {
     margin-left: 0.25rem;
@@ -227,6 +231,10 @@ td.action-list a {
     cursor: pointer;
     padding: 8px 20px;
     font-size: inherit;
+  }
+
+  .error {
+    margin-right: 1rem;
   }
 
   .list-group-item.text-left {
