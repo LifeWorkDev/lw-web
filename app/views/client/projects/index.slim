@@ -13,6 +13,7 @@
         th Status
         th Start Date
         th Amount
+        th
     tbody
       - @projects.each do |project|
         tr
@@ -21,3 +22,6 @@
           td = project.status.capitalize
           td = project.milestones.first
           td = project.amount&.format
+          td.action-list
+            = link_to [current_namespace, project, :comments]
+              span.badge.badge-secondary Comments

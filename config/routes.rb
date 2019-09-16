@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     resource :org
     resources :milestone_projects do
       get :payments, on: :member
+      resources :comments, only: %i[index create]
     end
     resources :projects, only: :index
   end
@@ -13,6 +14,7 @@ Rails.application.routes.draw do
     resources :orgs, path: :clients
     resources :milestones
     resources :milestone_projects do
+      resources :comments, only: %i[index create]
       patch :activate, on: :member
       get :milestones, on: :member
       get :payments, on: :member
@@ -22,6 +24,8 @@ Rails.application.routes.draw do
     get 'stripe/callback', to: 'stripe#callback'
     get 'stripe/connect', to: 'stripe#connect', as: :stripe_connect
   end
+
+  resources :comments, only: %i[update]
 
   as :user do
     get :login, to: 'devise/sessions#new', as: :new_user_session

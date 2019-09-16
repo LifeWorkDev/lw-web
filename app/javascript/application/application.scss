@@ -28,6 +28,10 @@ $font-size-base: 1.125rem;
   box-shadow: $box-shadow;
 }
 
+.text-red {
+  color: red;
+}
+
 .badge {
   .close {
     margin-left: 0.25rem;
@@ -197,4 +201,57 @@ select:invalid {
 
 .table th {
   border-top: none;
+}
+
+td.action-list a {
+  margin-right: 5px;
+}
+
+.milestones-list .milestone-list-item:last-child {
+  hr {
+    display: none;
+  }
+}
+
+.comments-list {
+
+  .comment-item p {
+    white-space: pre-line;
+  }
+
+  .edit {
+    cursor: pointer;
+  }
+
+  .comment-inline-edit textarea {
+    width: 100%;
+  }
+
+  .update {
+    cursor: pointer;
+    padding: 8px 20px;
+    font-size: inherit;
+  }
+
+  .error {
+    margin-right: 1rem;
+  }
+
+  .list-group-item.text-left {
+    background: white;
+    color: black;
+  }
+
+  .list-group-item.text-right {
+    background: $primary;
+    color: white;
+
+    h5 {
+      color: white;
+    }
+  }
+}
+
+.comment-form {
+  padding-top: 1rem;
 }
