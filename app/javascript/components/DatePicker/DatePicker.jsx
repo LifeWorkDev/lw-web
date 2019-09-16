@@ -11,10 +11,8 @@ const DatePicker = props => {
   )
 
   const isMobile = () => {
-    const result = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-      navigator.userAgent,
-    )
-    return result
+    console.log(window.innerWidth)
+    return window.innerWidth > 770 ? false : true
   }
 
   function stringsToDates(dayStrings) {
@@ -29,30 +27,6 @@ const DatePicker = props => {
       })
     }
     return days
-  }
-
-  const displayFormatDate = date => {
-    let d = new Date(date),
-      month = '' + (d.getMonth() + 1),
-      day = '' + d.getDate(),
-      year = d.getFullYear()
-
-    if (month.length < 2) month = '0' + month
-    if (day.length < 2) day = '0' + day
-
-    return [month, day, year].join('/')
-  }
-
-  const shortFormatDate = date => {
-    let d = new Date(date),
-      month = '' + (d.getMonth() + 1),
-      day = '' + d.getDate(),
-      year = d.getFullYear()
-
-    if (month.length < 2) month = '0' + month
-    if (day.length < 2) day = '0' + day
-
-    return [year, month, day].join('-')
   }
 
   const removeData = index => {
@@ -93,11 +67,11 @@ const DatePicker = props => {
             className='badge badge-primary badge-pill date-pill mr-2 mb-2'
             key={key}
           >
-            <span>{displayFormatDate(day)}</span>
+            <span>{day.toLocaleDateString()}</span>
             <input
               type='hidden'
               name={'milestone_project[milestones_attributes][][date]'}
-              value={shortFormatDate(day)}
+              value={day.toISOString().slice(0, 10)}
             />
             <button
               type='button'
