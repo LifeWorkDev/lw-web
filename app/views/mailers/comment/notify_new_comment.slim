@@ -1,0 +1,37 @@
+scss:
+  tr.text-left {
+    background: white;
+    color: black;
+  }
+
+  tr.text-right {
+    background: #3b9de3 !important;
+    color: white;
+
+    h5 {
+      color: white;
+    }
+
+    .comment {
+      float: right;
+    }
+  }
+
+  tr.text-right:last-child, tr.text-left:last-child {
+    border: 2px dashed black;
+  }
+
+p #{@milestone.description} have new comment
+
+table.table.table-striped.mb-0
+  tbody
+    - @milestone.comments.each do |comment|
+      tr[class="#{comment.commenter == @milestone.project.freelancer ? 'text-right' : 'text-left'}"]
+        td
+          .comment
+            h5
+              span #{comment.commenter.name}
+              small    #{comment.formatted_created_at}
+            p #{comment.comment}
+            - if comment.read_at
+              small Read by #{comment.read_by.name} at #{comment.formatted_read_at}
