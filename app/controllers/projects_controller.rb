@@ -40,10 +40,6 @@ class ProjectsController < AuthenticatedController
 
 private
 
-  def current_entity
-    current_namespace == 'client' ? current_org : current_user
-  end
-
   def project_params
     params.require(@project.type.underscore.to_sym).permit(:amount, :name)
   end
