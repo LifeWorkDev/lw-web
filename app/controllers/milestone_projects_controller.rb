@@ -7,7 +7,7 @@ class MilestoneProjectsController < ProjectsController
 private
 
   def milestone_project_params
-    params.require(:milestone_project).permit(:name, :amount, milestones_attributes: %i[amount date description id])
+    params.require(:milestone_project).permit(:name, :amount, milestones_attributes: %i[amount date description id _destroy])
   end
 
   def set_project

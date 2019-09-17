@@ -6,22 +6,21 @@ import React, { useState } from 'react'
 import './Datepicker.scss'
 
 const DatePicker = props => {
+  const [milestones, setMilestones] = useState(props.milestones)
   const [selectedDays, setSelectedDays] = useState(
-    stringsToDates(props.defaultDays),
+    getMilestoneDays(props.milestones),
   )
 
   const isMobile = () => {
-    console.log(window.innerWidth)
     return window.innerWidth > 770 ? false : true
   }
 
-  function stringsToDates(dayStrings) {
-    // const stringsToDates = dayStrings => {
+  function getMilestoneDays(milestones) {
     let days = []
     let timezoneOffset = new Date().getTimezoneOffset()
-    if (dayStrings != null) {
-      dayStrings.map(day => {
-        let date = new Date(day)
+    if (milestones != null) {
+      milestones.map(milestone => {
+        let date = new Date(milestone.date)
         date.setHours(date.getHours() + timezoneOffset / 60)
         days.push(date)
       })
@@ -29,24 +28,55 @@ const DatePicker = props => {
     return days
   }
 
+  function removeMilestoneOfDate(date) {
+    const newMilestones = milestones.slice()
+    const milestoneIndex = newMilestones.findIndex(
+      milestone => milestone.date == date.toLocaleDateString(),
+    )
+    const milestoneToUpdate = newMilestones[milestoneIndex]
+    if (milestoneToUpdate.id !== undefined) {
+      milestoneToUpdate.deleted = true
+    } else {
+      newMilestones.splice(milestoneIndex, 1)
+    }
+    setMilestones(newMilestones)
+  }
+
+  function addMilestoneDate(date) {
+    const newMilestones = milestones.slice()
+    const milestoneIndex = newMilestones.findIndex(
+      milestone => milestone.date == date.toLocaleDateString(),
+    )
+    if (milestoneIndex > 0) {
+      const milestoneToUpdate = milestones[milestoneIndex]
+      milestoneToUpdate.deleted = false
+    } else {
+      newMilestones.push({ date: date.toLocaleDateString() })
+    }
+    setMilestones(newMilestones)
+  }
+
   const removeData = index => {
     const newSelectedDays = selectedDays.slice()
+    removeMilestoneOfDate(newSelectedDays[index])
     delete newSelectedDays[index]
     setSelectedDays(newSelectedDays)
   }
 
-  // const handleDayClick = (day, { selected }) => {
   const handleDayClick = (day, { selected }) => {
     const newSelectedDays = selectedDays.slice()
+
     if (selected) {
       const selectedIndex = newSelectedDays.findIndex(selectedDay =>
         DateUtils.isSameDay(selectedDay, day),
       )
+      removeMilestoneOfDate(day)
       newSelectedDays.splice(selectedIndex, 1)
     } else {
       let minDate = new Date()
       minDate.setDate(minDate.getDate() - 1)
       if (day > minDate) {
+        addMilestoneDate(day)
         newSelectedDays.push(day)
       }
     }
@@ -59,29 +89,57 @@ const DatePicker = props => {
     return 0
   })
 
+  let deletedMilestones = milestones.filter(function(milestone) {
+    return milestone.deleted !== undefined && milestone.deleted == true
+  })
+
   return (
     <div className='text-align-center'>
       <div>
-        {orderedDays.map((day, key) => (
-          <span
-            className='badge badge-primary badge-pill date-pill mr-2 mb-2'
-            key={key}
-          >
-            <span>{day.toLocaleDateString()}</span>
-            <input
-              type='hidden'
-              name={'milestone_project[milestones_attributes][][date]'}
-              value={day.toISOString().slice(0, 10)}
-            />
-            <button
-              type='button'
-              className='close'
-              onClick={() => removeData(key)}
+        {deletedMilestones.map((milestone, key) => {
+          return (
+            <div key={key + selectedDays.length}>
+              <input
+                type='hidden'
+                name={'milestone_project[milestones_attributes][][id]'}
+                value={milestone.id}
+              />
+              <input
+                type='hidden'
+                name={'milestone_project[milestones_attributes][][date]'}
+                value={milestone.date}
+              />
+              <input
+                type='hidden'
+                name={'milestone_project[milestones_attributes][][_destroy]'}
+                value={milestone.deleted}
+              />
+            </div>
+          )
+        })}
+
+        {orderedDays.map((day, key) => {
+          return (
+            <span
+              className='badge badge-primary badge-pill date-pill mr-2 mb-2'
+              key={key}
             >
-              <span>×</span>
-            </button>
-          </span>
-        ))}
+              <span>{day.toLocaleDateString()}</span>
+              <input
+                type='hidden'
+                name={'milestone_project[milestones_attributes][][date]'}
+                value={day.toISOString().slice(0, 10)}
+              />
+              <button
+                type='button'
+                className='close'
+                onClick={() => removeData(key)}
+              >
+                <span>×</span>
+              </button>
+            </span>
+          )
+        })}
       </div>
       <DayPicker
         selectedDays={selectedDays}
@@ -94,7 +152,7 @@ const DatePicker = props => {
 }
 
 DatePicker.propTypes = {
-  defaultDays: PropTypes.array.isRequired,
+  milestones: PropTypes.array.isRequired,
 }
 
 export default DatePicker
