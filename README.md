@@ -32,9 +32,7 @@ Controllers & views are namespaced under Client & Freelancer. The routes have sh
 
 1. `git clone git@github.com:swrobel/lw-web.git && cd lw-web`
 1. Install dependencies using [Homebrew](https://brew.sh/): `brew bundle`
-1. If on Linux:
-    * `brew link --force nss`
-    * `pg_ctl -D /home/linuxbrew/.linuxbrew/var/postgres start`
+1. If on Linux: `pg_ctl -D /home/linuxbrew/.linuxbrew/var/postgres start`
 1. `mkcert -install`
 1. `cd config/ssl && mkcert lifework.localhost lifework-packs.localhost mail.localhost localhost 127.0.0.1 ::1 && cd ../../`
 1. `gem install bundler -v '>= 2.0.2'`
