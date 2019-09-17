@@ -3,7 +3,7 @@ import DayPicker, { DateUtils } from 'react-day-picker'
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
 
-import './Datepicker.scss'
+import './DatePicker.scss'
 
 const DatePicker = props => {
   const [milestones, setMilestones] = useState(props.milestones)
