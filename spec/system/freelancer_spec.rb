@@ -26,7 +26,7 @@ RSpec.describe 'Freelancer views', type: :system do
       fill_in 'org[projects_attributes][0][name]', with: name
       click_on 'Continue >'
       expect(page).to have_content('Client was successfully created.')
-      find('.flatpickr-day.today').click
+      find('.DayPicker-Day--today').click
       click_on 'Continue >'
       expect(page).to have_content('Milestones were updated.')
       expect(page).to have_content(Milestone.last.formatted_date)

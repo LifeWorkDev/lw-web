@@ -92,27 +92,6 @@ $list-group-border-radius: none;
   }
 }
 
-.flatpickr-calendar {
-  border-radius: $border-radius !important;
-}
-
-// Remove , &.flatpickr-disabled until fixed: https://github.com/flatpickr/flatpickr/issues/1905
-span.flatpickr-day {
-  &.selected {
-    &,
-    &:focus,
-    &:hover {
-      background: $blue;
-      border-color: $blue;
-      color: white;
-    }
-  }
-
-  &.selected:hover {
-    opacity: 0.75;
-  }
-}
-
 .font-serif {
   font-family: $font-family-serif;
 }
