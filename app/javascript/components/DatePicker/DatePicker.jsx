@@ -74,8 +74,9 @@ const DatePicker = props => {
       newSelectedDays.splice(selectedIndex, 1)
     } else {
       let minDate = new Date()
-      minDate.setDate(minDate.getDate() - 1)
-      if (day > minDate) {
+      if (
+        day.toISOString().slice(0, 10) >= minDate.toISOString().slice(0, 10)
+      ) {
         addMilestoneDate(day)
         newSelectedDays.push(day)
       }
@@ -83,18 +84,18 @@ const DatePicker = props => {
     setSelectedDays(newSelectedDays)
   }
 
-  let orderedDays = selectedDays.sort(function(date1, date2) {
+  const orderedDays = selectedDays.sort(function(date1, date2) {
     if (date1 > date2) return 1
     if (date1 < date2) return -1
     return 0
   })
 
-  let deletedMilestones = milestones.filter(function(milestone) {
+  const deletedMilestones = milestones.filter(function(milestone) {
     return milestone.deleted !== undefined && milestone.deleted == true
   })
 
   return (
-    <div className='text-align-center'>
+    <div className='text-center'>
       <div>
         {deletedMilestones.map((milestone, key) => {
           return (
