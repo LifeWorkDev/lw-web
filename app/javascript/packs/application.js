@@ -1,6 +1,5 @@
 import 'application/application.scss'
 
-import 'controllers'
 import * as Sentry from '@sentry/browser'
 require('@rails/ujs').start()
 require('turbolinks').start()
