@@ -3,7 +3,7 @@ import DayPicker, { DateUtils } from 'react-day-picker'
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
 
-import './Datepicker.scss'
+import './DatePicker.scss'
 
 const DatePicker = props => {
   const [milestones, setMilestones] = useState(props.milestones)
@@ -11,9 +11,7 @@ const DatePicker = props => {
     getMilestoneDays(props.milestones),
   )
 
-  const isMobile = () => {
-    return window.innerWidth > 770 ? false : true
-  }
+  const isMobile = window.innerWidth < 768 // Minimum iPad portrait
 
   function getMilestoneDays(milestones) {
     let days = []
@@ -145,7 +143,7 @@ const DatePicker = props => {
       <DayPicker
         selectedDays={selectedDays}
         onDayClick={handleDayClick}
-        numberOfMonths={isMobile() ? 1 : 2}
+        numberOfMonths={isMobile ? 1 : 2}
         disabledDays={{ before: new Date() }}
       />
     </div>
