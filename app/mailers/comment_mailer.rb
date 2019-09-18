@@ -3,7 +3,7 @@ class CommentMailer < ApplicationMailer
     @user = user
     @milestone = milestone
     make_bootstrap_mail(to: user.email,
-                        reply_to: "#{user.id}+#{milestone.id}@reply.lifework.com",
-                        subject: t('.subject', milestone: milestone.description))
+                        reply_to: "#{user.id}+#{milestone.id}@reply.lifeworkonline.com",
+                        subject: t('.subject', milestone: milestone.description, project: milestone.project.name))
   end
 end
