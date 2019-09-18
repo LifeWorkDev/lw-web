@@ -1,0 +1,7 @@
+.container.bg-white
+  = image_pack_tag 'lifework-logo.png', class: 'img-fluid', height: 160, width: 600
+.container.py-4
+  = yield
+- unless @hide_email_footer
+  .container.bg-dark.text-muted.py-3
+    .text-center &copy; #{Time.zone.today.year} LifeWork Holdings, Inc.

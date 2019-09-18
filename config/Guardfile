@@ -35,9 +35,8 @@ guard :shell, first_match: true do
   end
 end
 
-guard :rubocop, all_on_start: true, cli: ['--auto-correct'] do
+guard :rubocop, all_on_start: true, cli: %w[--auto-correct --display-cop-names] do
   watch(/.+\.(rb|rake)$/)
-  watch('config/Envfile')
   watch('config/Gemfile')
   watch(%r{(?:.+/)?\.?rubocop(?:_todo)?\.yml$}) { '.' }
 end

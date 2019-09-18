@@ -36,3 +36,7 @@ en:
   time:
     formats:
       date_only: "%-m/%-d/%Y"
+      date_time: "%-m/%-d/%Y %H:%M"
+  client_mailer:
+    invite:
+      subject: "%{user} has invited you to %{project}"

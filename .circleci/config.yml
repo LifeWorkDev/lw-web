@@ -44,15 +44,18 @@ jobs:
 
       - restore_cache:
           name: Restore bundle cache
-          key: lifework-bundle-{{ checksum "Gemfile.lock" }}
+          keys:
+            - lifework-bundle-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+            - lifework-bundle-{{ arch }}-{{ .Branch }}-
+            - lifework-bundle-{{ arch }}-
 
       - run:
           name: Bundle Install
-          command: bin/bundle install --path vendor/bundle --jobs 5 --retry 3 --without production development
+          command: bin/bundle install --path vendor/bundle --jobs 5 --retry 3 --without production development && bin/bundle clean
 
       - save_cache:
           name: Store bundle cache
-          key: lifework-bundle-{{ checksum "Gemfile.lock" }}
+          key: lifework-bundle-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
           paths:
             - vendor/bundle
 
@@ -66,7 +69,10 @@ jobs:
 
       - restore_cache:
           name: Restore yarn cache
-          key: lifework-yarn-{{ checksum "yarn.lock" }}
+          keys:
+            - lifework-yarn-{{ .Branch }}-{{ checksum "yarn.lock" }}
+            - lifework-yarn-{{ .Branch }}-
+            - lifework-yarn-
 
       - run:
           name: Yarn Install
@@ -74,9 +80,8 @@ jobs:
 
       - save_cache:
           name: Store yarn cache
-          key: lifework-yarn-{{ checksum "yarn.lock" }}
+          key: lifework-yarn-{{ .Branch }}-{{ checksum "yarn.lock" }}
           paths:
-            - ~/.yarn-cache
             - ~/.cache/yarn
 
       - run:
@@ -85,11 +90,13 @@ jobs:
 
       - restore_cache:
           name: Restore webpacker cache
-          key: lifework-webpacker-{{ .Branch }}
+          keys:
+            - lifework-webpacker-{{ .Branch }}-
+            - lifework-webpacker-
 
       - restore_cache:
           name: Restore compiled packs
-          key: lifework-packs-{{ checksum "tmp/cache/webpacker/.last-compilation-digest-test" }}
+          key: lifework-packs-{{ checksum "tmp/cache/webpacker/last-compilation-digest-test" }}
 
       - run:
           name: Wait for DB
@@ -113,7 +120,7 @@ jobs:
 
       - save_cache:
           name: Store compiled packs
-          key: lifework-packs-{{ checksum "tmp/cache/webpacker/.last-compilation-digest-test" }}
+          key: lifework-packs-{{ checksum "tmp/cache/webpacker/last-compilation-digest-test" }}
           paths:
             - public/packs-test
 

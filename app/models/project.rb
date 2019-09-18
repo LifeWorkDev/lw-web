@@ -10,6 +10,18 @@ class Project < ApplicationRecord
 
   scope :milestone, -> { where(type: 'MilestoneProject') }
 
+  aasm do
+    event :activate do
+      transitions from: :pending, to: :active
+
+      after do
+        user = client.primary_contact
+        user.invite! unless user.active? # Generate new invitation token
+        ClientMailer.invite(user: user, project: self).deliver_later
+      end
+    end
+  end
+
   def milestones_changed?
     milestones.any? do |m|
       m.nilify_blanks # So that change from nil to '' isn't considered changed?

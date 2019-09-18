@@ -6,6 +6,7 @@ class User < ApplicationRecord
   has_many :projects, dependent: :destroy
   has_many :clients, -> { distinct }, through: :projects
   has_many :org_projects, through: :org, source: :projects
+  has_many :comments, foreign_key: :commenter_id, dependent: :destroy, inverse_of: :commenter
 
   devise :database_authenticatable, :lockable,
          :invitable, :registerable, :recoverable,
@@ -15,9 +16,19 @@ class User < ApplicationRecord
                  work_category: [:string, array: true, default: []],
                  work_type: :string
 
+  def after_database_authentication
+    activate! unless active?
+  end
+
+protected
+
+  def send_devise_notification(notification, *args)
+    devise_mailer.send(notification, self, *args).deliver_later
+  end
+
 private
 
-  def after_confirmation
-    user.activate! unless user.active?
+  def skip_invitation
+    true # Never send default invitation email when using invite!
   end
 end

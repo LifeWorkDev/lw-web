@@ -4,7 +4,8 @@ Rails.application.routes.draw do
   namespace :client, path: 'c' do
     resource :org
     resources :milestone_projects do
-      get 'payments', on: :member
+      get :payments, on: :member
+      resources :comments, only: %i[index create]
     end
     resources :projects, only: :index
   end
@@ -13,20 +14,25 @@ Rails.application.routes.draw do
     resources :orgs, path: :clients
     resources :milestones
     resources :milestone_projects do
-      get 'milestones', on: :member
-      get 'payments', on: :member
+      resources :comments, only: %i[index create]
+      patch :activate, on: :member
+      get :milestones, on: :member
+      get :payments, on: :member
+      get :preview, on: :member
     end
     resources :projects, only: :index
     get 'stripe/callback', to: 'stripe#callback'
     get 'stripe/connect', to: 'stripe#connect', as: :stripe_connect
   end
 
+  resources :comments, only: %i[update]
+
   as :user do
-    get 'login', to: 'devise/sessions#new', as: :new_user_session
-    post 'login', to: 'devise/sessions#create', as: :user_session
-    delete 'logout', to: 'devise/sessions#destroy', as: :destroy_user_session
-    get 'logout', to: 'devise/sessions#destroy'
-    get 'sign_up', to: 'devise/registrations#new', as: :new_user_registration
+    get :login, to: 'devise/sessions#new', as: :new_user_session
+    post :login, to: 'devise/sessions#create', as: :user_session
+    delete :logout, to: 'devise/sessions#destroy', as: :destroy_user_session
+    get :logout, to: 'devise/sessions#destroy'
+    get :sign_up, to: 'devise/registrations#new', as: :new_user_registration
   end
   devise_for :users, skip: [:sessions], controllers: { registrations: 'users/registrations' }
   namespace :users do
@@ -34,7 +40,7 @@ Rails.application.routes.draw do
     get 'stop_impersonating', to: 'impersonations#stop_impersonating'
   end
 
-  get 'styleguide', to: 'application#styleguide'
+  get 'styleguide', to: 'application#styleguide' if Rails.env.development?
 
   get 'legal/terms-of-use', to: 'application#tos', as: :tos
   get 'legal/privacy-policy', to: 'application#privacy', as: :privacy

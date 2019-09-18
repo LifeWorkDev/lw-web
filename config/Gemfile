@@ -5,7 +5,9 @@ ruby "~> #{`cat .ruby-version`.strip}"
 gem 'rails', '~> 6.0.0'
 
 gem 'aasm' # Acts as State Machine
+gem 'active_model_serializers', '~> 0.10.0' # JSON serializer for activerecord
 gem 'argon2' # More secure password hashing than default bcrypt
+gem 'bootstrap-email', github: 'swrobel/bootstrap-email'
 gem 'bootstrap_form'
 gem 'devise' # Authentication
 gem 'devise_invitable'
@@ -24,6 +26,7 @@ gem 'puma'
 gem 'react-rails'
 gem 'route_downcaser' # Make routes case-insensitive
 gem 'safely' # Move on from exceptions w/ silent reporting to tracking service
+gem 'sassc'
 gem 'slim-rails' # Template language, lightweight alternative to erb/haml
 gem 'stripe'
 gem 'strong_migrations' # complains about migration worst-practices
@@ -61,7 +64,7 @@ group :development do
   end
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'partially_useful' # Add html comments around partials
-  gem 'rack-toolbar', github: 'swrobel/rack-toolbar', branch: 'only-error-pages' # Insert arbitrary code into Rails error pages
+  gem 'rack-toolbar', github: 'swrobel/rack-toolbar', branch: 'rails-pages' # Insert arbitrary code into Rails pages
   install_if -> { RUBY_PLATFORM =~ /darwin/ } do
     gem 'terminal-notifier' # System notifications for Mac
     gem 'terminal-notifier-guard'
