@@ -69,7 +69,7 @@ const CommentItem = props => {
         <div className='comment'>
           <p>{commentText}</p>
           {isError && (
-            <span className='error text-red'>
+            <span className='error text-danger'>
               Unable to Save Comment, Try again.
             </span>
           )}

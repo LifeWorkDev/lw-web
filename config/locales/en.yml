@@ -40,3 +40,6 @@ en:
   client_mailer:
     invite:
       subject: "%{user} has invited you to %{project}"
+  comment_mailer:
+    notify_new_comment:
+      subject: "New comment on %{milestone} of %{project}"
