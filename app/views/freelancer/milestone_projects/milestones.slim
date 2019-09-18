@@ -10,3 +10,5 @@
     = hidden_field_tag :update_type, :dates
     = react_component('DatePicker/DatePicker', milestones: @project.milestones)
     .mt-4 = render 'shared/form_buttons', f: f, back: [:edit, current_namespace, @project.client], submit_val: :milestones
+
+= render partial: 'shared/form_back_confirm'
