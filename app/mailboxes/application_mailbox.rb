@@ -1,4 +1,5 @@
 class ApplicationMailbox < ActionMailbox::Base
-  # routing /something/i => :somewhere
-  routing CommentRepliesMailbox::MATCHER => :comment_replies
+  COMMENT_REPLIES_MATCHER = /comments-(.+)@reply.lifeworkonline.com/i.freeze
+
+  routing COMMENT_REPLIES_MATCHER => :comment_replies
 end

@@ -1,6 +1,4 @@
 class CommentRepliesMailbox < ApplicationMailbox
-  MATCHER = /comments-(.+)@reply.lifeworkonline.com/i.freeze
-
   def process
     return if user.nil? || milestone.nil?
 
@@ -27,7 +25,7 @@ class CommentRepliesMailbox < ApplicationMailbox
   end
 
   def milestone_id
-    recipient = mail.recipients.find { |r| MATCHER.match?(r) }
-    recipient[MATCHER, 1]
+    recipient = mail.recipients.find { |r| COMMENT_REPLIES_MATCHER.match?(r) }
+    recipient[COMMENT_REPLIES_MATCHER, 1]
   end
 end
