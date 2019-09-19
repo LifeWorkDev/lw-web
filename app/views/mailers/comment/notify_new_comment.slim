@@ -35,3 +35,6 @@ table.table.table-striped.mb-0
             p #{comment.comment}
             - if comment.read_at
               small Read by #{comment.read_by.name} at #{comment.formatted_read_at}
+
+hr
+p You can respond to this comment by replying to this email, or click #{link_to 'here', [(@user.org.present? ? :client : :freelancer), @milestone.project, :comments]} to comment via our website.
