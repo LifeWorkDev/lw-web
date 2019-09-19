@@ -36,11 +36,11 @@ Rails.application.routes.draw do
   end
   devise_for :users, skip: [:sessions], controllers: { registrations: 'users/registrations' }
   namespace :users do
-    get ':id/impersonate', to: 'impersonations#impersonate'
-    get 'stop_impersonating', to: 'impersonations#stop_impersonating'
+    get ':id/impersonate', to: 'impersonations#impersonate', as: :impersonate
+    get :stop_impersonating, to: 'impersonations#stop_impersonating'
   end
 
-  get 'styleguide', to: 'application#styleguide' if Rails.env.development?
+  get :styleguide, to: 'application#styleguide' if Rails.env.development?
 
   get 'legal/terms-of-use', to: 'application#tos', as: :tos
   get 'legal/privacy-policy', to: 'application#privacy', as: :privacy
