@@ -28,10 +28,6 @@ $font-size-base: 1.125rem;
   box-shadow: $box-shadow;
 }
 
-.text-red {
-  color: red;
-}
-
 .badge {
   .close {
     margin-left: 0.25rem;
@@ -55,27 +51,6 @@ $font-size-base: 1.125rem;
     .btn {
       width: 100%;
     }
-  }
-}
-
-.flatpickr-calendar {
-  border-radius: $border-radius !important;
-}
-
-// Remove , &.flatpickr-disabled until fixed: https://github.com/flatpickr/flatpickr/issues/1905
-span.flatpickr-day {
-  &.selected {
-    &,
-    &:focus,
-    &:hover {
-      background: $blue;
-      border-color: $blue;
-      color: white;
-    }
-  }
-
-  &.selected:hover {
-    opacity: 0.75;
   }
 }
 
