@@ -8,7 +8,7 @@ require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 require 'money-rails/test_helpers'
 require 'webdrivers/chromedriver'
-
+require 'action_mailbox/test_helper'
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end
@@ -83,6 +83,9 @@ RSpec.configure do |config|
       end
     end
   end
+
+  # Actionmailbox Support
+  config.include ActionMailbox::TestHelper, type: :mailbox
 end
 
 Shoulda::Matchers.configure do |config|
