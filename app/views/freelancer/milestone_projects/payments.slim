@@ -7,3 +7,5 @@
   = bootstrap_form_with(model: [current_namespace, @project], class: 'w-100 mt-2', control_col: 'col-sm-6 col-md-3', label_col: 'col-sm-6 text-sm-right', layout: :horizontal, local: true) do |f|
     = react_component('PaymentsForm', milestones: @project.milestones, total: @project.amount.to_f)
     = render 'shared/form_buttons', f: f, back: @back, submit_val: :payments
+
+= render partial: 'shared/form_back_confirm'
