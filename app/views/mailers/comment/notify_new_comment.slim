@@ -18,23 +18,18 @@ scss:
   }
 
   tr.text-right:last-child, tr.text-left:last-child {
-    border: 2px dashed black;
+    border: 2px dotted black;
   }
 
-p #{@milestone.description} have new comment
-
-table.table.table-striped.mb-0
+table.table.table-striped.mb-3
   tbody
     - @milestone.comments.each do |comment|
-      tr[class="#{comment.commenter == @milestone.project.freelancer ? 'text-right' : 'text-left'}"]
+      tr[class="#{comment.commenter == @user ? 'text-right' : 'text-left'}"]
         td
           .comment
             h5
-              span #{comment.commenter.name}
-              small    #{comment.formatted_created_at}
-            p #{comment.comment}
-            - if comment.read_at
-              small Read by #{comment.read_by.name} at #{comment.formatted_read_at}
+              span => comment.commenter.name
+              small = comment.formatted_created_at
+            = comment.comment
 
-hr
-p You can respond to this comment by replying to this email, or click #{link_to 'here', [(@user.org.present? ? :client : :freelancer), @milestone.project, :comments]} to comment via our website.
+p You can respond to this comment by replying to this email, or #{link_to 'click here', [(@user.org.present? ? :client : :freelancer), @milestone.project, :comments]} to comment via our website.
