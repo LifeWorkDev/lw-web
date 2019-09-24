@@ -11,6 +11,7 @@ Trestle.resource(:orgs) do
     column :status
     column :primary_contact
     column :created_at
+    actions
   end
 
   # Customize the form fields shown on the new/edit views.
