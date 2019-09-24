@@ -21,7 +21,6 @@ Trestle.resource(:orgs) do
     select :status, Org.aasm.states.map(&:name)
     select :work_category, []
     text_area :work_frequency
-    text_area :metadata
   end
 
   # By default, all parameters passed to the update and create actions will be
