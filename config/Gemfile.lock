@@ -1,7 +1,6 @@
 GIT
   remote: https://github.com/TrestleAdmin/trestle.git
-  revision: 5d00c927e8262c36479564c550ef32524d3a27c2
-  branch: bootstrap4
+  revision: d61193f2b742bd98844958cc0204196fc06a2ffd
   specs:
     trestle (0.9.0)
       activemodel (>= 4.2.0)

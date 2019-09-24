@@ -30,7 +30,7 @@ gem 'sassc-rails'
 gem 'slim-rails' # Template language, lightweight alternative to erb/haml
 gem 'stripe'
 gem 'strong_migrations' # complains about migration worst-practices
-gem 'trestle', github: 'TrestleAdmin/trestle', branch: 'bootstrap4'
+gem 'trestle', github: 'TrestleAdmin/trestle'
 gem 'turbolinks', '~> 5'
 gem 'webpacker', github: 'swrobel/webpacker'
 
