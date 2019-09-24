@@ -3,6 +3,11 @@ Trestle.resource(:projects) do
     item :projects, icon: 'fa fa-star'
   end
 
+  build_instance do |attrs, params|
+    scope = params[:org_id] ? Org.find(params[:org_id]).projects : Project
+    scope.new(attrs)
+  end
+
   # Customize the table columns shown on the index view.
   #
   table do
@@ -21,8 +26,8 @@ Trestle.resource(:projects) do
   form do |_project|
     text_field :name
     text_field :slug
-    select :client, Org.all.map { |org| [org.name, org.id] }
-    select :freelancer, User.all.map { |user| [user.name, user.id] }
+    collection_select :org_id, Org.all, :id, :name, label: 'Client'
+    collection_select :user_id, User.all, :id, :name, label: 'Freelancer'
     select :status, Project.aasm.states.map(&:name)
     number_field :amount_cents
     text_field :currency

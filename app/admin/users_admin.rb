@@ -3,6 +3,11 @@ Trestle.resource(:users) do
     item :users, icon: 'fa fa-star'
   end
 
+  build_instance do |attrs, params|
+    scope = params[:org_id] ? Org.find(params[:org_id]).users : User
+    scope.new(attrs)
+  end
+
   # Customize the table columns shown on the index view.
   #
   table do
@@ -29,7 +34,7 @@ Trestle.resource(:users) do
     phone_field :phone
     text_field :address
     text_field :time_zone
-    select :org_id, [[]] + Org.all.map { |org| [org.name, org.id] }
+    collection_select :org_id, Org.all, :id, :name, include_blank: true
   end
 
   controller do
