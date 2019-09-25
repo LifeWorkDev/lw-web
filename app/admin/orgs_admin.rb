@@ -19,7 +19,7 @@ Trestle.resource(:orgs) do
   form do |org|
     tab :org do
       text_field :name
-      text_field :slug
+      static_field :slug, org.slug
       select :status, Org.aasm.states.map(&:name)
       select :work_category, []
       text_area :work_frequency
