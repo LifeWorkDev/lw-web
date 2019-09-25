@@ -8,7 +8,9 @@ Trestle.resource(:orgs) do
   table do
     column :id
     column :display_name
-    column :status
+    column :status, sort: :status, align: :center do |org|
+      status_tag(org.status, { 'pending' => :warning, 'active' => :success, 'disabled' => :danger }[org.status] || :default)
+    end
     column :primary_contact
     column :created_at
     actions

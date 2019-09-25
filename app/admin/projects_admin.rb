@@ -11,7 +11,7 @@ Trestle.resource(:projects) do
             else
               Project
             end
-    scope.new(attrs)
+    scope.new(attrs.merge(type: MilestoneProject))
   end
 
   # Customize the table columns shown on the index view.
@@ -19,7 +19,9 @@ Trestle.resource(:projects) do
   table do
     column :id
     column :name
-    column :status
+    column :status, sort: :status, align: :center do |project|
+      status_tag(project.status, { 'pending' => :warning, 'active' => :success, 'disabled' => :danger }[project.status] || :default)
+    end
     column :type
     column :freelancer
     column :client
@@ -36,7 +38,7 @@ Trestle.resource(:projects) do
       collection_select :org_id, Org.all, :id, :name, label: 'Client'
       collection_select :user_id, User.all, :id, :name, label: 'Freelancer'
       select :status, Project.aasm.states.map(&:name)
-      number_field :amount_cents
+      text_field :amount, prepend: '$'
       text_field :currency
     end
 

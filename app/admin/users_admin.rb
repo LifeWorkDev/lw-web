@@ -14,8 +14,10 @@ Trestle.resource(:users) do
     column :id
     column :name
     column :email
-    column :status
-    column :roles
+    column :status, sort: :status, align: :center do |user|
+      status_tag(user.status, { 'pending' => :warning, 'active' => :success, 'disabled' => :danger }[user.status] || :default)
+    end
+    column :roles, format: :tags, class: 'hidden-xs', &:roles
     column :org
     column :created_at, align: :center
     actions do |toolbar, instance, _admin|
