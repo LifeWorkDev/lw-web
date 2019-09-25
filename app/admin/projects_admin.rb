@@ -29,14 +29,29 @@ Trestle.resource(:projects) do
 
   # Customize the form fields shown on the new/edit views.
   #
-  form do |_project|
-    text_field :name
-    text_field :slug
-    collection_select :org_id, Org.all, :id, :name, label: 'Client'
-    collection_select :user_id, User.all, :id, :name, label: 'Freelancer'
-    select :status, Project.aasm.states.map(&:name)
-    number_field :amount_cents
-    text_field :currency
+  form do |project|
+    tab :project do
+      text_field :name
+      text_field :slug
+      collection_select :org_id, Org.all, :id, :name, label: 'Client'
+      collection_select :user_id, User.all, :id, :name, label: 'Freelancer'
+      select :status, Project.aasm.states.map(&:name)
+      number_field :amount_cents
+      text_field :currency
+    end
+
+    tab :milestones, badge: project.milestones.size do
+      table project.milestones, admin: :milestones do
+        column :id
+        column :description
+        column :status
+        column :amount_cents
+        column :formatted_date
+        column :created_at
+        actions
+      end
+      concat admin_link_to('New Milestone', admin: :milestones, action: :new, params: { project_id: project.id }, class: 'btn btn-success')
+    end
   end
 
   # By default, all parameters passed to the update and create actions will be

@@ -3,9 +3,15 @@ Trestle.resource(:milestones) do
     item :milestones, icon: 'fa fa-star'
   end
 
+  build_instance do |attrs, params|
+    scope = params[:project_id] ? Project.find(params[:project_id]).milestones : Milestone
+    scope.new(attrs)
+  end
+
   # Customize the table columns shown on the index view.
   #
   table do
+    column :id
     column :description
     column :status
     column :amount_cents
