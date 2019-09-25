@@ -28,27 +28,12 @@ Trestle.resource(:orgs) do
     end
 
     tab :users, badge: org.users.size do
-      table org.users, admin: :users do
-        column :id
-        column :name
-        column :email
-        column :status
-        column :created_at
-        actions
-      end
+      table UsersAdmin.table, collection: org.users
       concat admin_link_to('New User', admin: :users, action: :new, params: { org_id: org.id }, class: 'btn btn-success')
     end
 
     tab :projects, badge: org.projects.size do
-      table org.projects, admin: :projects do
-        column :id
-        column :name
-        column :status
-        column :type
-        column :freelancer
-        column :created_at
-        actions
-      end
+      table ProjectsAdmin.table, collection: org.projects
       concat admin_link_to('New Project', admin: :projects, action: :new, params: { org_id: org.id }, class: 'btn btn-success')
     end
   end

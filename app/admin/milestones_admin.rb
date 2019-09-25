@@ -14,7 +14,7 @@ Trestle.resource(:milestones) do
     column :id
     column :description
     column :status
-    column :amount_cents
+    column :amount
     column :project
     column :formatted_date
     column :created_at
@@ -32,15 +32,7 @@ Trestle.resource(:milestones) do
     end
 
     tab :comments, badge: milestone.comments.size do
-      table milestone.comments, admin: :comments do
-        column :id
-        column :comment
-        column :commenter
-        column :read_by
-        column :formatted_read_at
-        column :formatted_created_at
-        actions
-      end
+      table CommentsAdmin.table, collection: milestone.comments
       concat admin_link_to('New Comment', admin: :comments, action: :new, params: { milestone_id: milestone.id }, class: 'btn btn-success')
     end
   end

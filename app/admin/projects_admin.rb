@@ -43,15 +43,7 @@ Trestle.resource(:projects) do
     end
 
     tab :milestones, badge: project.milestones.size do
-      table project.milestones, admin: :milestones do
-        column :id
-        column :description
-        column :status
-        column :amount_cents
-        column :formatted_date
-        column :created_at
-        actions
-      end
+      table MilestonesAdmin.table, collection: project.milestones
       concat admin_link_to('New Milestone', admin: :milestones, action: :new, params: { project_id: project.id }, class: 'btn btn-success')
     end
   end
