@@ -1,6 +1,6 @@
 Trestle.resource(:milestones) do
   menu do
-    item :milestones, icon: 'fa fa-star'
+    item :milestones, icon: 'fa fa-tasks', priority: 3
   end
 
   build_instance do |attrs, params|

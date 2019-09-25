@@ -1,6 +1,6 @@
 Trestle.resource(:users) do
   menu do
-    item :users, icon: 'fa fa-star'
+    item :users, icon: 'fa fa-user', priority: 0
   end
 
   build_instance do |attrs, params|

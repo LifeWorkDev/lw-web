@@ -1,6 +1,6 @@
 Trestle.resource(:comments) do
   menu do
-    item :comments, icon: 'fa fa-star'
+    item :comments, icon: 'fa fa-comments', priority: 4
   end
 
   build_instance do |attrs, params|

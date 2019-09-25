@@ -1,6 +1,6 @@
 Trestle.resource(:projects) do
   menu do
-    item :projects, icon: 'fa fa-star'
+    item :projects, icon: 'fa fa-briefcase', priority: 2
   end
 
   build_instance do |attrs, params|
