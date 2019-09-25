@@ -4,7 +4,13 @@ Trestle.resource(:projects) do
   end
 
   build_instance do |attrs, params|
-    scope = params[:org_id] ? Org.find(params[:org_id]).projects : Project
+    scope = if params[:org_id]
+              Org.find(params[:org_id]).projects
+            elsif params[:user_id]
+              User.find(params[:user_id]).projects
+            else
+              Project
+            end
     scope.new(attrs)
   end
 

@@ -26,15 +26,41 @@ Trestle.resource(:users) do
 
   # Customize the form fields shown on the new/edit views.
   #
-  form do |_user|
-    text_field :name
-    email_field :email
-    select :status, User.aasm.states.map(&:name)
-    select :roles, User::ROLES, {}, multiple: true
-    phone_field :phone
-    text_field :address
-    text_field :time_zone
-    collection_select :org_id, Org.all, :id, :name, include_blank: true
+  form do |user|
+    tab :user do
+      text_field :name
+      email_field :email
+      select :status, User.aasm.states.map(&:name)
+      select :roles, User::ROLES, {}, multiple: true
+      phone_field :phone
+      text_field :address
+      text_field :time_zone
+      collection_select :org_id, Org.all, :id, :name, include_blank: true
+    end
+
+    tab :projects, badge: user.projects.size do
+      table user.projects, admin: :projects do
+        column :id
+        column :name
+        column :status
+        column :type
+        column :freelancer
+        column :created_at
+        actions
+      end
+      concat admin_link_to('New Project', admin: :projects, action: :new, params: { user_id: user.id }, class: 'btn btn-success')
+    end
+
+    tab :comments, badge: user.comments.size do
+      table user.comments, admin: :comments do
+        column :id
+        column :comment
+        column :read_by
+        column :read_at
+        column :created_at
+        actions
+      end
+    end
   end
 
   controller do
