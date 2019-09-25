@@ -27,7 +27,7 @@ Trestle.resource(:milestones) do
       collection_select :project_id, Project.all, :id, :name
       text_field :description
       number_field :amount_cents
-      select :status, User.aasm.states.map(&:name)
+      select :status, Milestone.aasm.states.map(&:name)
       date_field :date
     end
 
@@ -37,10 +37,11 @@ Trestle.resource(:milestones) do
         column :comment
         column :commenter
         column :read_by
-        column :read_at
-        column :created_at
+        column :formatted_read_at
+        column :formatted_created_at
         actions
       end
+      concat admin_link_to('New Comment', admin: :comments, action: :new, params: { milestone_id: milestone.id }, class: 'btn btn-success')
     end
   end
 

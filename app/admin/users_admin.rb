@@ -55,11 +55,13 @@ Trestle.resource(:users) do
       table user.comments, admin: :comments do
         column :id
         column :comment
+        column :commentable
         column :read_by
-        column :read_at
-        column :created_at
+        column :formatted_read_at
+        column :formatted_created_at
         actions
       end
+      concat admin_link_to('New Comment', admin: :comments, action: :new, params: { commenter_id: user.id }, class: 'btn btn-success')
     end
   end
 
