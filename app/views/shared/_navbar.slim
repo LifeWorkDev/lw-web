@@ -3,10 +3,13 @@ nav.navbar.navbar-expand.navbar-light.bg-white.mb-3.flex-shrink-0
     a.navbar-brand href='/'
       = image_pack_tag 'lifework-logo.png'
     .collapse.navbar-collapse.font-sans-serif
-      ul.navbar-nav.w-100
+      ul.navbar-nav.justify-content-end.w-100
         - if user_signed_in?
-          li.nav-item.ml-auto
-            a.btn.btn-sm.nav-link href='/logout' Log out
+          - if current_user.admin?
+            li.nav-item
+              a.nav-link href='/admin' Admin
+          li.nav-item
+            a.nav-link href='/logout' Log out
         - else
           li.nav-item.ml-auto
             a.btn.btn-outline-secondary.btn-sm href='/login' Log in
