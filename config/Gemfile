@@ -26,10 +26,11 @@ gem 'puma'
 gem 'react-rails'
 gem 'route_downcaser' # Make routes case-insensitive
 gem 'safely' # Move on from exceptions w/ silent reporting to tracking service
-gem 'sassc'
+gem 'sassc-rails'
 gem 'slim-rails' # Template language, lightweight alternative to erb/haml
 gem 'stripe'
 gem 'strong_migrations' # complains about migration worst-practices
+gem 'trestle', github: 'TrestleAdmin/trestle'
 gem 'turbolinks', '~> 5'
 gem 'webpacker', github: 'swrobel/webpacker'
 

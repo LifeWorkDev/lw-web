@@ -1,4 +1,14 @@
 GIT
+  remote: https://github.com/TrestleAdmin/trestle.git
+  revision: d61193f2b742bd98844958cc0204196fc06a2ffd
+  specs:
+    trestle (0.9.0)
+      activemodel (>= 4.2.0)
+      kaminari (~> 1.1.0)
+      railties (>= 4.2.0)
+      sprockets-rails (>= 2.0.0)
+
+GIT
   remote: https://github.com/norman/friendly_id.git
   revision: 8c9036ff568738aa004ec9f593661f072fd6cc5b
   specs:
@@ -245,6 +255,18 @@ GEM
     iniparse (1.4.4)
     jaro_winkler (1.5.3)
     jsonapi-renderer (0.2.2)
+    kaminari (1.1.1)
+      activesupport (>= 4.1.0)
+      kaminari-actionview (= 1.1.1)
+      kaminari-activerecord (= 1.1.1)
+      kaminari-core (= 1.1.1)
+    kaminari-actionview (1.1.1)
+      actionview
+      kaminari-core (= 1.1.1)
+    kaminari-activerecord (1.1.1)
+      activerecord
+      kaminari-core (= 1.1.1)
+    kaminari-core (1.1.1)
     libnotify (0.9.4)
       ffi (>= 1.0.11)
     listen (3.1.5)
@@ -415,6 +437,12 @@ GEM
     safely (0.3.2)
     sassc (2.2.0)
       ffi (~> 1.9)
+    sassc-rails (2.1.2)
+      railties (>= 4.0.0)
+      sassc (>= 2.0)
+      sprockets (> 3.0)
+      sprockets-rails
+      tilt
     selenium-webdriver (3.142.4)
       childprocess (>= 0.5, < 3.0)
       rubyzip (~> 1.2, >= 1.2.2)
@@ -537,7 +565,7 @@ DEPENDENCIES
   rubocop-rails
   rubocop-rspec
   safely
-  sassc
+  sassc-rails
   selenium-webdriver
   sentry-raven
   shoulda-matchers
@@ -547,6 +575,7 @@ DEPENDENCIES
   strong_migrations
   terminal-notifier
   terminal-notifier-guard
+  trestle!
   turbolinks (~> 5)
   tzinfo-data
   web-console

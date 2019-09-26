@@ -1,10 +1,16 @@
-.btn {
+.btn, .nav-link {
   text-transform: uppercase;
   letter-spacing: $font-size-base * 0.2;
+}
 
-  &.btn-sm {
-    letter-spacing: $font-size-base * 0.08;
-  }
+.btn-sm, .nav-link {
+  letter-spacing: $font-size-base * 0.08;
+}
+
+.nav-link {
+  font-size: $btn-font-size-sm;
+  font-weight: $btn-font-weight;
+  line-height: $btn-line-height;
 }
 
 h3 {

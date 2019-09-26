@@ -36,8 +36,8 @@ Rails.application.routes.draw do
   end
   devise_for :users, skip: [:sessions], controllers: { registrations: 'users/registrations' }
   namespace :users do
-    get ':id/impersonate', to: 'impersonations#impersonate', as: :impersonate
-    get :stop_impersonating, to: 'impersonations#stop_impersonating'
+    post ':id/impersonate', to: 'impersonations#impersonate', as: :impersonate
+    post :stop_impersonating, to: 'impersonations#stop_impersonating'
   end
 
   get :styleguide, to: 'application#styleguide' if Rails.env.development?
