@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    stored_location_for(resource) || edit_user_path
+    stored_location_for(resource) || edit_freelancer_user_path
   end
 
   def after_accept_path_for(resource)

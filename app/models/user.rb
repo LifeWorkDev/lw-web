@@ -16,6 +16,8 @@ class User < ApplicationRecord
                  work_category: [:string, array: true, default: []],
                  work_type: :string
 
+  validates :name, :time_zone, presence: true
+
   def after_database_authentication
     activate! unless active?
   end

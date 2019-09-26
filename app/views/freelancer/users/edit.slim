@@ -1,0 +1,19 @@
+- content_for :title, 'Your Profile'
+
+h2.text-center.mt-2
+  | Welcome, #{current_user.name}!
+  br
+  | Tell us a little about you
+
+.container
+  = bootstrap_form_with(model: current_user) do |f|
+    = hidden_field_tag :org, params[:org] if params[:org].present?
+    = render 'shared/time_zone_select', f: f, user: current_user
+    = render 'shared/work_category_select', f: f, label: 'What kinds of freelance work do you do?'
+    .form-group.mb-0
+      label.required What type of freelancer are you?
+    .list-group.mb-4.font-sans-serif
+      = f.collection_radio_buttons_without_bootstrap :work_type, ['Part-Time', 'Full-Time', 'Team Leader'], :to_s, :to_s do |cb|
+        = cb.radio_button
+        = cb.label(class: 'list-group-item')
+    = render 'shared/form_buttons', f: f
