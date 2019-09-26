@@ -6,7 +6,7 @@ html.h-100 lang="en"
     = render 'shared/impersonation_bar'
     = render 'shared/navbar'
 
-    .container.flex-shrink-0
+    .container.flex-shrink-0.overflow-auto
       - if flash.notice.present?
         = render 'shared/alert', klass: 'alert-success', message: flash.notice
       - if flash.alert.present?

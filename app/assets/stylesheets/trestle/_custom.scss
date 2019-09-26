@@ -6,3 +6,12 @@
 //
 //    @import "trestle/custom/my_custom_css";
 //
+
+// Make sure app header is visible at responsive breakpoints
+.app-header {
+  margin-top: initial;
+
+  > * {
+    display: initial;
+  }
+}
