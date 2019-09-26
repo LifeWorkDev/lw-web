@@ -1,4 +1,5 @@
 import 'application/application.scss'
+import 'bootstrap.native/dist/bootstrap-native-v4'
 
 import * as Sentry from '@sentry/browser'
 require('@rails/ujs').start()

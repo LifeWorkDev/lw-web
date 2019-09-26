@@ -10,9 +10,14 @@
 }
 
 .nav-link {
+  font-family: $font-family-sans-serif;
   font-size: $btn-font-size-sm;
   font-weight: $btn-font-weight;
   line-height: $btn-line-height;
+}
+
+.navbar-toggler {
+  border: none;
 }
 
 h3 {

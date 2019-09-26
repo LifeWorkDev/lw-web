@@ -159,9 +159,17 @@ input[type='number'] {
 .navbar {
   box-shadow: 0 3px 13px rgba(0, 0, 0, 0.08);
 
-  .navbar-brand img {
-    max-width: 160px;
+  .navbar-brand {
+    padding-top: 0;
+
+    img {
+      max-width: 148px;
+    }
   }
+}
+
+#top-nav {
+  min-height: 56px;
 }
 
 // Style select placeholder. This is a hack because selects have a placeholder element that's disabled & selected by default. If the select is required, then the disabled placeholder is an invalid choice.

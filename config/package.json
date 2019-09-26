@@ -11,19 +11,22 @@
   "dependencies": {
     "@babel/plugin-proposal-optional-chaining": "^7.2.0",
     "@babel/preset-react": "^7.0.0",
-    "@rails/actioncable": "^6.0.0-alpha",
-    "@rails/activestorage": "^6.0.0-alpha",
-    "@rails/ujs": "^6.0.0-alpha",
+    "@rails/actioncable": "^6.0.0",
+    "@rails/activestorage": "^6.0.0",
+    "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "swrobel/webpacker",
     "@sentry/browser": "^5.6.2",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
+    "bootstrap.native": "^2.0.27",
+    "bootstrap.native-loader": "^2.0.0",
     "prop-types": "^15.7.2",
     "rails-erb-loader": "^5.5.2",
     "react": "^16.9.0",
     "react-day-picker": "^7.3.2",
     "react-dom": "^16.9.0",
     "react_ujs": "^2.6.0",
-    "turbolinks": "^5.2.0"
+    "turbolinks": "^5.2.0",
+    "uglify-js": "^3.6.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.2",
