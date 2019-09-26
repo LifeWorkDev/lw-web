@@ -1,4 +1,6 @@
-p[style='padding-top:15px;']
-  = link_to destroy_session_path(:user), method: :delete do
-    i.fa.fa-sign-out
-    = 'Logout'
+= link_to '/', class: 'ml-3' do
+  i.fa.fa-home.mr-1
+  | Return to site
+= link_to destroy_session_path(:user), class: 'ml-3', method: :delete do
+  i.fa.fa-sign-out.mr-1
+  | Logout
