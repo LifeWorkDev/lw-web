@@ -3,7 +3,7 @@ Trestle.configure do |config|
   #
   # Set the page title shown in the main header within the admin.
   #
-  config.site_title = 'Life Work'
+  config.site_title = 'LifeWork'
 
   # Specify a custom image to be used in place of the site title for mobile and
   # expanded/desktop navigation. These images should be placed within your
@@ -17,7 +17,7 @@ Trestle.configure do |config|
 
   # Speficy a favicon to be used within the admin.
   #
-  # config.favicon = "favicon.ico"
+  config.favicon = 'https://static1.squarespace.com/static/5afad0e63c3a53f810c9c096/t/5b02d4228a922df39df37065/favicon.ico'
 
   # Set the text shown in the page footer within the admin.
   # Defaults to 'Powered by Trestle'.
