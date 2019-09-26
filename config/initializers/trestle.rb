@@ -89,9 +89,11 @@ Trestle.configure do |config|
 
   # Specify a custom hook to be injected into the admin.
   #
-  # config.hook(:stylesheets) do
-  #   stylesheet_link_tag "custom"
-  # end
+  if defined?(WEBPACK_SCRIPT_TAG)
+    config.hook(:javascripts) do
+      WEBPACK_SCRIPT_TAG.html_safe # rubocop:disable Rails/OutputSafety
+    end
+  end
 
   # Toggle whether Turbolinks is enabled within the admin.
   # Defaults to true if Turbolinks is available.
