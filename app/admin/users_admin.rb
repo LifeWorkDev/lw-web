@@ -21,7 +21,7 @@ Trestle.resource(:users) do
     column :org
     column :created_at, align: :center
     actions do |toolbar, instance, _admin|
-      toolbar.link 'Sign in as', main_app.users_impersonate_path(id: instance.id)
+      toolbar.link 'Impersonate', main_app.users_impersonate_path(instance), method: :post, style: :secondary, icon: 'fa fa-mask'
       toolbar.delete
     end
   end
