@@ -20,6 +20,18 @@ class User < ApplicationRecord
     activate! unless active?
   end
 
+  def client?
+    org.present?
+  end
+
+  def freelancer?
+    !client?
+  end
+
+  def type
+    client? ? :client : :freelancer
+  end
+
 protected
 
   def send_devise_notification(notification, *args)

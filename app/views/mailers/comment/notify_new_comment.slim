@@ -32,4 +32,4 @@ table.table.table-striped.mb-3
               small = comment.formatted_created_at
             = comment.comment
 
-p You can respond to this comment by replying to this email, or #{link_to 'click here', [(@user.org.present? ? :client : :freelancer), @milestone.project, :comments]} to comment via our website.
+p You can respond to this comment by replying to this email, or #{link_to 'click here', [@user.type, @milestone.project, :comments]} to comment via our website.
