@@ -145,6 +145,7 @@ const DatePicker = props => {
         onDayClick={handleDayClick}
         numberOfMonths={isMobile ? 1 : 2}
         disabledDays={{ before: new Date() }}
+        firstDayOfWeek={1}
       />
     </div>
   )
