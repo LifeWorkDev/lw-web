@@ -2,8 +2,6 @@
 $enable-responsive-font-sizes: true;
 $font-size-base: 1.125rem;
 
-@import 'bootstrap-variables';
-
 // Vars referencing existing bootstrap vars must
 // go in this block and have the !global flag
 // https://stackoverflow.com/a/38225564/337446
@@ -11,7 +9,7 @@ $font-size-base: 1.125rem;
   @import '~bootstrap/scss/functions';
   @import '~bootstrap/scss/variables';
 
-  $body-bg: $theme-background !global;
+  $badge-border-radius: $border-radius !global;
   $btn-font-family: $font-family-sans-serif !global;
   $input-focus-border-color: $gray-600 !global;
   $input-font-family: $font-family-sans-serif !global;
@@ -20,6 +18,8 @@ $font-size-base: 1.125rem;
   $list-group-border-color: $gray-500 !global;
 }
 
+@import 'bootstrap-variables';
+$body-bg: $theme-background; // Don't apply to mailer body
 // Needs to be imported after the above scope block
 @import '~bootstrap/scss/bootstrap';
 @import 'bootstrap-overrides';
