@@ -29,7 +29,7 @@ RSpec.describe 'Freelancer views', type: :system do
       end.to change { Org.count }.by(1) &
              change { Project.count }.by(1)
       expect(page).to have_content('Client was successfully created.')
-      find('.DayPicker-Day--today').click
+      find('div', class: %w[DayPicker-Day--today !DayPicker-Day--outside]).click
       click_on 'Continue >'
       new_milestone = Milestone.last
       expect(page).to have_content('Milestones were updated.') &
