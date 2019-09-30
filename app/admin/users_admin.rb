@@ -32,6 +32,7 @@ Trestle.resource(:users) do
     tab :user do
       text_field :name
       email_field :email
+      password_field :password
       select :status, User.aasm.states.map(&:name)
       select :roles, User::ROLES, {}, multiple: true
       phone_field :phone
@@ -52,10 +53,11 @@ Trestle.resource(:users) do
   end
 
   controller do
-    before_action :remove_blank_role, only: %i[create update]
+    before_action :remove_blank_role_password, only: %i[create update]
 
-    def remove_blank_role
+    def remove_blank_role_password
       params[:user][:roles].delete('')
+      params[:user].delete_if { |key, value| key == 'password' && value.blank? }
     end
   end
 
