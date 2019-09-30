@@ -2,7 +2,7 @@ javascript:
   var backButton = document.getElementById('btn_back');
 
   function confirmBack() {
-    return confirm("If you have made changes & click back that you will lose any edits.")
+    return confirm("Going back will discard any changes you've made. Do you still want to go back?")
   }
 
   backButton.onclick = confirmBack; //Start action on click
