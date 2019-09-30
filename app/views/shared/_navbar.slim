@@ -13,6 +13,8 @@
             li.nav-item
               a.nav-link href='/admin' Admin
           li.nav-item
+            = link_to 'Profile', edit_user_path, class: 'nav-link'
+          li.nav-item
             = link_to 'Projects', [current_user.type, Project], class: 'nav-link'
           - if current_user.freelancer?
             li.nav-item

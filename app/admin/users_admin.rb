@@ -32,11 +32,12 @@ Trestle.resource(:users) do
     tab :user do
       text_field :name
       email_field :email
+      password_field :password
       select :status, User.aasm.states.map(&:name)
       select :roles, User::ROLES, {}, multiple: true
       phone_field :phone
       text_field :address
-      time_zone_select :time_zone, ActiveSupport::TimeZone.basic_us_zones, include_blank: 'Please select'
+      time_zone_select :time_zone, ActiveSupport::TimeZone.basic_us_zones, include_blank: 'Please select', required: true
       collection_select :org_id, Org.all, :id, :name, include_blank: true
     end
 
@@ -52,10 +53,11 @@ Trestle.resource(:users) do
   end
 
   controller do
-    before_action :remove_blank_role, only: %i[create update]
+    before_action :remove_blank_role_password, only: %i[create update]
 
-    def remove_blank_role
+    def remove_blank_role_password
       params[:user][:roles].delete('')
+      params[:user].delete_if { |key, value| key == 'password' && value.blank? }
     end
   end
 

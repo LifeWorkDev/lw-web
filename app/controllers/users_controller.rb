@@ -6,20 +6,19 @@ class UsersController < AuthenticatedController
     @user = current_user
     @user.update(attributes)
     if @user.valid?
-      @user.after_database_authentication
       # Don't sign user out after they change their password
       bypass_sign_in(@user) if attributes['password'] && @user.valid?
-    end
-    if params[:org].present? && (org = @user.clients.find(params[:org]))
-      redirect_to edit_freelancer_org_path(org)
+      redirect_to edit_user_path, notice: 'Your profile was successfully updated.'
     else
-      redirect_to new_freelancer_org_path
+      render :edit
     end
   end
 
 private
 
   def attributes
-    params.require(:user).permit(:name, :email, :phone, :address, :time_zone, :password, :work_type, work_category: [])
+    params.require(:user)
+          .permit(:name, :email, :phone, :address, :time_zone, :password)
+          .delete_if { |key, value| key == 'password' && value.blank? }
   end
 end
