@@ -1,7 +1,8 @@
-import 'application/application.scss'
-import 'bootstrap.native/dist/bootstrap-native-v4'
+/* eslint-disable import/first */
 
+import 'bootstrap.native/dist/bootstrap-native-v4'
 import * as Sentry from '@sentry/browser'
+
 require('@rails/ujs').start()
 require('turbolinks').start()
 
@@ -15,3 +16,8 @@ if (process.env.NODE_ENV === 'production') {
 require.context('../images', true)
 // Support component names relative to this directory:
 require('react_ujs').useContext(require.context('components', true))
+
+// Goes last to allow overriding css from packages imported via React components
+import 'application/application.scss'
+
+/* eslint-enable import/first */
