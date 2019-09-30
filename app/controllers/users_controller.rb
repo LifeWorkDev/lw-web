@@ -6,7 +6,6 @@ class UsersController < AuthenticatedController
     @user = current_user
     @user.update(attributes)
     if @user.valid?
-      @user.after_database_authentication
       # Don't sign user out after they change their password
       bypass_sign_in(@user) if attributes['password'] && @user.valid?
       redirect_to edit_user_path, notice: 'Your profile was successfully updated.'

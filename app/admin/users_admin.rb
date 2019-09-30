@@ -37,7 +37,7 @@ Trestle.resource(:users) do
       select :roles, User::ROLES, {}, multiple: true
       phone_field :phone
       text_field :address
-      time_zone_select :time_zone, ActiveSupport::TimeZone.basic_us_zones, include_blank: 'Please select'
+      time_zone_select :time_zone, ActiveSupport::TimeZone.basic_us_zones, include_blank: 'Please select', required: true
       collection_select :org_id, Org.all, :id, :name, include_blank: true
     end
 

@@ -4,11 +4,7 @@ class Freelancer::UsersController < AuthenticatedController
   def update
     @user = current_user
     @user.update(attributes)
-    if @user.valid?
-      @user.after_database_authentication
-      # Don't sign user out after they change their password
-      bypass_sign_in(@user) if attributes['password'] && @user.valid?
-    end
+    @user.after_database_authentication if @user.valid?
     if params[:org].present? && (org = @user.clients.find(params[:org]))
       redirect_to edit_freelancer_org_path(org)
     else
