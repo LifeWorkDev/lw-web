@@ -72,6 +72,7 @@ const DatePicker = props => {
       newSelectedDays.splice(selectedIndex, 1)
     } else {
       let minDate = new Date()
+      minDate.setHours(0, 0, 0, 0)
       if (
         day.toISOString().slice(0, 10) >= minDate.toISOString().slice(0, 10)
       ) {
@@ -145,6 +146,7 @@ const DatePicker = props => {
         onDayClick={handleDayClick}
         numberOfMonths={isMobile ? 1 : 2}
         disabledDays={{ before: new Date() }}
+        firstDayOfWeek={1}
       />
     </div>
   )

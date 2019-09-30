@@ -2,13 +2,13 @@
   .container
     a.navbar-brand href='/'
       = image_pack_tag 'lifework-logo.png'
-    button.navbar-toggler data-toggle='collapse' data-target='#navbar-collapse'
-      svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
-        path fill="none" d="M0 0h24v24H0V0z"
-        path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
-    #navbar-collapse.collapse.navbar-collapse
-      ul.navbar-nav.justify-content-end.w-100
-        - if user_signed_in?
+    - if user_signed_in?
+      button.navbar-toggler data-toggle='collapse' data-target='#navbar-collapse'
+        svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+          path fill="none" d="M0 0h24v24H0V0z"
+          path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
+      #navbar-collapse.collapse.navbar-collapse
+        ul.navbar-nav.justify-content-end.w-100
           - if current_user.admin?
             li.nav-item
               a.nav-link href='/admin' Admin
@@ -21,6 +21,7 @@
               = link_to 'Clients', [current_user.type, Org], class: 'nav-link'
           li.nav-item
             a.nav-link href='/logout' Log out
-        - else
-          li.nav-item.ml-auto
-            a.btn.btn-outline-secondary.btn-sm href='/login' Log in
+    - else
+      ul.navbar-nav.justify-content-end
+        li.nav-item.ml-auto
+          a.btn.btn-outline-secondary.btn-sm href='/login' Log in

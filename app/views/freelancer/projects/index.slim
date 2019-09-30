@@ -21,11 +21,11 @@
           td = project.status.capitalize
           td = project.amount&.format
           td.action-list
-            = link_to [:edit, current_namespace, project] do
-              span.badge.badge-secondary Edit
+            = link_to [:edit, current_namespace, project]
+              span.badge.badge-pill.badge-secondary Rename
             = link_to [:milestones, current_namespace, project]
-              span.badge.badge-secondary Milestones
+              span.badge.badge-pill.badge-secondary Milestones
             = link_to [current_namespace, project, :comments]
-              span.badge.badge-secondary Comments
+              span.badge.badge-pill.badge-secondary Comments
 
 =link_to '+ Project', new_freelancer_milestone_project_path, class: 'btn btn-primary float-right'

@@ -24,6 +24,6 @@
           td = project.amount&.format
           td.action-list
             = link_to [current_namespace, project, :comments]
-              span.badge.badge-secondary Comments
+              span.badge.badge-pill.badge-secondary Comments
             = link_to [:payments, current_namespace, project]
-              span.badge.badge-secondary Payments
+              span.badge.badge-pill.badge-secondary Payments
