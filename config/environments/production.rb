@@ -124,5 +124,5 @@ end
 
 # Sentry.io config
 defined?(Raven) && Raven.configure do |config|
-  config.dsn = 'https://06dd18ce85fa4ce480a50ee20ccdcc38:eaffbc91d92d4035a2afef3562218828@sentry.io/1536608'
+  config.dsn = 'https://4db740231d7141c1b903b8d46ae54d0e@sentry.io/1536608'
 end
