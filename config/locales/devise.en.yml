@@ -16,7 +16,7 @@ en:
       last_attempt: "You have one more attempt before your account is locked."
       not_found_in_database: "We don't have an account under that email. Perhaps you have one under a different email? If not, <a class='alert-link' href='/sign_up?user[email]=%{email}'>sign up here</a>."
       timeout: "Your session expired. Please sign in again to continue."
-      unauthenticated: "You need to sign in or sign up before continuing."
+      unauthenticated: "You need to log in or sign up before continuing."
       unconfirmed: "We need to confirm your email address. Please check your email for a message from LifeWork or <a class='alert-link' href='/users/confirmation/new?email=%{email}'>go here</a> to have us send you another."
     mailer:
       confirmation_instructions:

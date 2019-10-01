@@ -322,6 +322,49 @@ ALTER SEQUENCE public.orgs_id_seq OWNED BY public.orgs.id;
 
 
 --
+-- Name: pay_methods; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.pay_methods (
+    id bigint NOT NULL,
+    type character varying NOT NULL,
+    status character varying NOT NULL,
+    name public.citext,
+    issuer public.citext,
+    kind public.citext,
+    last_4 character varying,
+    exp_month integer,
+    exp_year integer,
+    org_id bigint NOT NULL,
+    created_by_id bigint NOT NULL,
+    plaid_id character varying,
+    plaid_token character varying,
+    stripe_id character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: pay_methods_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.pay_methods_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: pay_methods_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.pay_methods_id_seq OWNED BY public.pay_methods.id;
+
+
+--
 -- Name: projects; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -485,6 +528,13 @@ ALTER TABLE ONLY public.orgs ALTER COLUMN id SET DEFAULT nextval('public.orgs_id
 
 
 --
+-- Name: pay_methods id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.pay_methods ALTER COLUMN id SET DEFAULT nextval('public.pay_methods_id_seq'::regclass);
+
+
+--
 -- Name: projects id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -560,6 +610,14 @@ ALTER TABLE ONLY public.milestones
 
 ALTER TABLE ONLY public.orgs
     ADD CONSTRAINT orgs_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: pay_methods pay_methods_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.pay_methods
+    ADD CONSTRAINT pay_methods_pkey PRIMARY KEY (id);
 
 
 --
@@ -678,6 +736,13 @@ CREATE UNIQUE INDEX index_orgs_on_slug ON public.orgs USING btree (slug);
 
 
 --
+-- Name: index_pay_methods_on_org_id_and_status_and_type; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_pay_methods_on_org_id_and_status_and_type ON public.pay_methods USING btree (org_id, status, type);
+
+
+--
 -- Name: index_projects_on_metadata; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -770,6 +835,14 @@ ALTER TABLE ONLY public.projects
 
 
 --
+-- Name: pay_methods fk_rails_74d8d880df; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.pay_methods
+    ADD CONSTRAINT fk_rails_74d8d880df FOREIGN KEY (created_by_id) REFERENCES public.users(id);
+
+
+--
 -- Name: milestones fk_rails_9bd0a0c791; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -791,6 +864,14 @@ ALTER TABLE ONLY public.projects
 
 ALTER TABLE ONLY public.active_storage_attachments
     ADD CONSTRAINT fk_rails_c3b3935057 FOREIGN KEY (blob_id) REFERENCES public.active_storage_blobs(id);
+
+
+--
+-- Name: pay_methods fk_rails_e152578767; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.pay_methods
+    ADD CONSTRAINT fk_rails_e152578767 FOREIGN KEY (org_id) REFERENCES public.orgs(id);
 
 
 --
@@ -817,6 +898,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190907180340'),
 ('20190910230917'),
 ('20190917130356'),
-('20190917130357');
+('20190917130357'),
+('20191004010353');
 
 

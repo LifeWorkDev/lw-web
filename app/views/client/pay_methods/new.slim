@@ -1,0 +1,54 @@
+= javascript_include_tag 'https://cdn.plaid.com/link/v2/stable/link-initialize.js'
+
+- content_for :title, 'Link Bank Account'
+
+h2.text-center.mt-2 Link a Bank Account
+
+.container.text-center
+  p.lead.mt-4 Our partner, Plaid, makes it easy to link your bank account quickly & securely. There are no micro-deposits to hassle with, and you can always update your payment account in the future.
+  button.btn.btn-primary.mt-4#link-button
+    = mdi_svg 'vector-link'
+    |  Link Now
+
+javascript:
+  var linkHandler = Plaid.create({
+    clientName: 'LifeWork',
+    env: 'sandbox',
+    key: '072c1503058ebaaaf4d0fc44f7c159',
+    product: ['auth'],
+    onSuccess: function(public_token, metadata) {
+      const data = {
+        pay_method: {
+          type: 'PayMethods::BankAccount',
+          name: metadata.account.name,
+          kind: metadata.account.subtype,
+          issuer: metadata.institution.name,
+          last_4: metadata.account.mask,
+          plaid_account_id: metadata.account_id,
+          plaid_link_token: public_token,
+        }
+      }
+      const csrf = document
+        .querySelector("meta[name='csrf-token']")
+        .getAttribute('content')
+      window
+        .fetch(`/c/pay_methods`, {
+          body: JSON.stringify(data),
+          credentials: 'same-origin',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': csrf,
+          },
+          method: 'POST',
+          mode: 'cors',
+        })
+        .then(response =>
+          window.location = `/c/milestone_projects/#{params[:project]}/deposit`
+        )
+    },
+  });
+
+  // Trigger the standard Institution Select view
+  document.getElementById('link-button').onclick = function() {
+    linkHandler.open();
+  };

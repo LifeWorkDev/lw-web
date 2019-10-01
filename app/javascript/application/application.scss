@@ -38,6 +38,12 @@ $body-bg: $theme-background; // Don't apply to mailer body
   }
 }
 
+.btn {
+  svg {
+    vertical-align: bottom;
+  }
+}
+
 .date-pill {
   font-size: 100%;
 

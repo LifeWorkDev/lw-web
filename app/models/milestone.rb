@@ -13,6 +13,10 @@ class Milestone < ApplicationRecord
     state :rejected
   end
 
+  def amount_with_fee
+    amount * 1.02
+  end
+
   def as_json(*)
     {
       id: id,

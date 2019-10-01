@@ -28,6 +28,15 @@ const PaymentsForm = props => {
     )
   })
 
+  const formatCurrency = value =>
+    value
+      .toLocaleString('en-US', {
+        currency: 'USD',
+        style: 'currency',
+      })
+      .replace('$', '')
+      .replace('.00', '')
+
   if (total !== sum) {
     errorText = 'Must add up to 100%'
     submitButton.disabled = true
@@ -69,7 +78,7 @@ const PaymentsForm = props => {
       {milestoneRows}
       <PaymentsFormRow
         firstClass='font-weight-bold mb-3 mb-sm-0'
-        firstContent='Total:'
+        firstContent={props.isClient ? 'Subtotal:' : 'Total:'}
         secondContent={
           <div className='input-group input-group-sm'>
             <div className='input-group-prepend'>
@@ -78,7 +87,7 @@ const PaymentsForm = props => {
             <input
               disabled
               className='form-control font-weight-bold'
-              value={sum}
+              value={formatCurrency(sum)}
             />
           </div>
         }
@@ -98,10 +107,59 @@ const PaymentsForm = props => {
           <span className='font-sans-serif text-danger'>{errorText}</span>
         }
       />
+      {props.isClient && (
+        <>
+          <PaymentsFormRow
+            firstClass='font-weight-bold mb-3 mb-sm-0'
+            firstContent='LifeWork fee:'
+            secondContent={
+              <div className='input-group input-group-sm'>
+                <div className='input-group-prepend'>
+                  <span className='input-group-text'>$</span>
+                </div>
+                <input
+                  disabled
+                  className='form-control font-weight-bold'
+                  value={formatCurrency(sum * 0.02)}
+                />
+              </div>
+            }
+            thirdContent={
+              <div className='input-group input-group-sm'>
+                <input
+                  disabled
+                  className='form-control font-weight-bold text-right'
+                  value='2'
+                />
+                <div className='input-group-append'>
+                  <span className='input-group-text'>%</span>
+                </div>
+              </div>
+            }
+          />
+          <PaymentsFormRow
+            firstClass='font-weight-bold mb-3 mb-sm-0'
+            firstContent='Total:'
+            secondContent={
+              <div className='input-group input-group-sm'>
+                <div className='input-group-prepend'>
+                  <span className='input-group-text'>$</span>
+                </div>
+                <input
+                  disabled
+                  className='form-control font-weight-bold'
+                  value={formatCurrency(sum * 1.02)}
+                />
+              </div>
+            }
+          />
+        </>
+      )}
     </>
   )
 }
 PaymentsForm.propTypes = {
+  isClient: PropTypes.bool.isRequired,
   milestones: PropTypes.arrayOf(Milestone),
   total: PropTypes.number,
 }
@@ -124,6 +182,7 @@ const PaymentForm = React.memo(({ index, milestone, total, updateAmount }) => {
               value={milestone.amount && Number(milestone.amount)}
               className='form-control'
               inputMode='decimal'
+              max='1960'
               name={`milestone_project[milestones_attributes][${index}][amount]`}
               onChange={e =>
                 updateAmount({ amount: e.target.value, index: index })

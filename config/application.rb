@@ -39,14 +39,18 @@ module LifeWork
     config.active_record.schema_format = :sql
 
     config.generators do |g|
-      g.helper         false
-      g.stylesheets    false
-      g.javascripts    false
-      g.system_tests   false
-      g.test_framework :rspec,
-                       controller_specs: false,
-                       request_specs: false,
-                       routing_specs: false
+      g.helper          false
+      g.stylesheets     false
+      g.javascripts     false
+      g.resource_route  false
+      g.serializer      false
+      g.system_tests    false
+      g.template_engine false
+      g.test_framework  :rspec,
+                        controller_specs: false,
+                        request_specs: false,
+                        routing_specs: false,
+                        view_specs: false
     end
 
     config.lograge.enabled = true

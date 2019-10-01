@@ -16,10 +16,13 @@ class Project < ApplicationRecord
 
       after do
         user = client.primary_contact
-        user.invite! unless user.active? # Generate new invitation token
         ClientMailer.invite(user: user, project: self).deliver_later
       end
     end
+  end
+
+  def amount_with_fee
+    amount * 1.02
   end
 
   def milestones_changed?
