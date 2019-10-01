@@ -134,4 +134,4 @@ Trestle.configure do |config|
   end
 end
 require 'trestle-devise/controller_methods'
-Trestle::ApplicationController.send(:include, Trestle::Auth::ControllerMethods)
+Trestle::ApplicationController.include Trestle::Auth::ControllerMethods
