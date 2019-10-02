@@ -49,19 +49,19 @@ module LifeWork
                        routing_specs: false
     end
 
-    # config.lograge.enabled = true
-    # config.lograge.custom_payload do |controller|
-    #   payload = {}
-    #   user = controller.current_user.try(:id)
-    #   payload[:user] = user if user.present?
-    #   payload
-    # end
-    # config.lograge.custom_options = lambda do |event|
-    #   exceptions = %w[_method action applet authenticity_token base city code commit controller format geo id mode path state utf8]
-    #   params = event.payload[:params].except(*exceptions)
-    #   # gsub is to use less-verbose new hash syntax
-    #   params.present? ? { params: params.deep_symbolize_keys.to_s.gsub(/(:(\w+)\s?=>\s?)/, '\\2: ') } : nil
-    # end
+    config.lograge.enabled = true
+    config.lograge.custom_payload do |controller|
+      payload = {}
+      user = controller.current_user.try(:id)
+      payload[:user] = user if user.present?
+      payload
+    end
+    config.lograge.custom_options = lambda do |event|
+      exceptions = %w[_method action authenticity_token base code commit controller format id mode path utf8]
+      params = event.payload[:params].except(*exceptions)
+      # gsub is to use less-verbose new hash syntax
+      params.present? ? { params: params.deep_symbolize_keys.to_s.gsub(/(:(\w+)\s?=>\s?)/, '\\2: ') } : nil
+    end
   end
 end
 
