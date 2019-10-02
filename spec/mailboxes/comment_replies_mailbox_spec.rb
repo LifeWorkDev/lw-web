@@ -8,7 +8,7 @@ RSpec.describe CommentRepliesMailbox, type: :mailbox do
     subject(:inbound_email) do
       receive_inbound_email_from_mail(
         from: milestone.project.freelancer.email,
-        to: "comments-#{milestone.id}@reply.lifeworkonline.com",
+        to: "comments-#{milestone.id}@#{REPLIES_HOST}",
         subject: 'Sample Subject',
         body: "I'm a sample body",
       )
@@ -23,7 +23,7 @@ RSpec.describe CommentRepliesMailbox, type: :mailbox do
     subject(:inbound_email) do
       receive_inbound_email_from_mail(
         from: user.email,
-        to: "comments-#{milestone.id}@reply.lifeworkonline.com",
+        to: "comments-#{milestone.id}@#{REPLIES_HOST}",
         subject: 'Sample Subject',
         body: "I'm a sample body",
       )
@@ -38,7 +38,7 @@ RSpec.describe CommentRepliesMailbox, type: :mailbox do
     subject(:inbound_email) do
       receive_inbound_email_from_mail(
         from: 'testing@mailinator',
-        to: "comments-#{milestone.id}@reply.lifeworkonline.com",
+        to: "comments-#{milestone.id}@#{REPLIES_HOST}",
         subject: 'Sample Subject',
         body: "I'm a sample body",
       )
@@ -53,7 +53,7 @@ RSpec.describe CommentRepliesMailbox, type: :mailbox do
     subject(:inbound_email) do
       receive_inbound_email_from_mail(
         from: user.email,
-        to: 'comments-23432424234@reply.lifeworkonline.com',
+        to: "comments-23432424234@#{REPLIES_HOST}",
         subject: 'Sample Subject',
         body: "I'm a sample body",
       )
@@ -68,7 +68,7 @@ RSpec.describe CommentRepliesMailbox, type: :mailbox do
     subject(:inbound_email) do
       receive_inbound_email_from_mail(
         from: 'testing@mailinator.com',
-        to: 'comments-23432424234@reply.lifeworkonline.com',
+        to: "comments-23432424234@#{REPLIES_HOST}",
         subject: 'Sample Subject',
         body: "I'm a sample body",
       )

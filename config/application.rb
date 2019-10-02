@@ -66,9 +66,11 @@ module LifeWork
 end
 
 host = ENV['DOMAIN'].presence
+host ||= "#{ENV['SUBDOMAIN']}.lifeworkonline.com" if ENV['SUBDOMAIN']
 host ||= "#{ENV['HEROKU_APP_NAME']}.herokuapp.com" if ENV['HEROKU_APP_NAME']
 host ||= 'lifework.localhost'
 server_url = "https://#{host}"
+REPLIES_HOST ||= "#{ENV['SUBDOMAIN']}-reply.lifeworkonline.com".freeze
 
 Rails.application.routes.default_url_options = { host: server_url, protocol: 'https' }
 Rails.application.config.action_mailer.asset_host = server_url
