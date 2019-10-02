@@ -1,13 +1,12 @@
 class MilestoneProjectsController < ProjectsController
-  # GET /milestone_projects/new
-  def new
-    @project = current_entity.projects.build(type: MilestoneProject)
-  end
-
 private
 
   def milestone_project_params
     params.require(:milestone_project).permit(:name, :amount, milestones_attributes: %i[amount date description id _destroy])
+  end
+
+  def project_type
+    MilestoneProject
   end
 
   def set_project

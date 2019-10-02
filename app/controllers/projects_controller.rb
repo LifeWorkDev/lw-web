@@ -12,12 +12,17 @@ class ProjectsController < AuthenticatedController
   # GET /projects/1/edit
   def edit; end
 
+  # GET /milestone_projects/new
+  def new
+    @project = current_entity.projects.build(type: project_type)
+  end
+
   # POST /projects
   def create
     @project = current_entity.projects.build(project_params)
 
     if @project.save
-      redirect_to @project, notice: 'Project was successfully created.'
+      redirect_to [:milestones, current_namespace, @project], notice: 'Project was successfully created.'
     else
       render :new
     end
@@ -41,7 +46,7 @@ class ProjectsController < AuthenticatedController
 private
 
   def project_params
-    params.require(@project.type.underscore.to_sym).permit(:amount, :name)
+    params.require(project_type.to_s.underscore.to_sym).permit(:amount, :name, :org_id, :type)
   end
 
   def set_project

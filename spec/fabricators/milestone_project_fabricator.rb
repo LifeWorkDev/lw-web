@@ -1,6 +1,6 @@
 Fabricator(:milestone_project) do
   name { Faker::Commerce.product_name }
-  client(fabricator: :named_org)
+  client(fabricator: :named_org_with_users)
   freelancer(fabricator: :user)
 end
 
