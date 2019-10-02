@@ -18,6 +18,58 @@ GIT
       railties (>= 4.2)
 
 GIT
+  remote: https://github.com/rspec/rspec-core.git
+  revision: b2df62e42ad8cc8d1710f4f47f39880d4bf9dfd2
+  specs:
+    rspec-core (3.9.0.pre)
+      rspec-support (= 3.9.0.pre)
+
+GIT
+  remote: https://github.com/rspec/rspec-expectations.git
+  revision: fc0bcb59e4db5d620429b418e91978f3ea9f0f8b
+  specs:
+    rspec-expectations (3.9.0.pre)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (= 3.9.0.pre)
+
+GIT
+  remote: https://github.com/rspec/rspec-mocks.git
+  revision: ac5fcb36e0db570e6c7d4122953b9f71dd66917c
+  specs:
+    rspec-mocks (3.9.0.pre)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (= 3.9.0.pre)
+
+GIT
+  remote: https://github.com/rspec/rspec-rails.git
+  revision: 4a933fde99de79b13ae14afa1568f7188f1d967a
+  branch: 4-0-dev
+  specs:
+    rspec-rails (4.0.0.beta2)
+      actionpack (>= 4.2)
+      activesupport (>= 4.2)
+      railties (>= 4.2)
+      rspec-core (~> 3.8)
+      rspec-expectations (~> 3.8)
+      rspec-mocks (~> 3.8)
+      rspec-support (~> 3.8)
+
+GIT
+  remote: https://github.com/rspec/rspec-support.git
+  revision: c69a231d7369dd165ad7ce4742e1a2e21e3462b5
+  specs:
+    rspec-support (3.9.0.pre)
+
+GIT
+  remote: https://github.com/rspec/rspec.git
+  revision: afd67e30946543fb71889cf60d332c28291878b8
+  specs:
+    rspec (3.9.0.pre)
+      rspec-core (= 3.9.0.pre)
+      rspec-expectations (= 3.9.0.pre)
+      rspec-mocks (= 3.9.0.pre)
+
+GIT
   remote: https://github.com/swrobel/bootstrap-email.git
   revision: 02af2ea1fa031d5fc98000c17fedf25a1d5820fd
   specs:
@@ -387,29 +439,8 @@ GEM
       railties (>= 5.0)
     route_downcaser (1.2.2)
       activesupport (>= 3.2)
-    rspec (3.8.0)
-      rspec-core (~> 3.8.0)
-      rspec-expectations (~> 3.8.0)
-      rspec-mocks (~> 3.8.0)
-    rspec-core (3.8.2)
-      rspec-support (~> 3.8.0)
-    rspec-expectations (3.8.4)
-      diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.8.0)
     rspec-instafail (1.0.0)
       rspec
-    rspec-mocks (3.8.1)
-      diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.8.0)
-    rspec-rails (3.8.2)
-      actionpack (>= 3.0)
-      activesupport (>= 3.0)
-      railties (>= 3.0)
-      rspec-core (~> 3.8.0)
-      rspec-expectations (~> 3.8.0)
-      rspec-mocks (~> 3.8.0)
-      rspec-support (~> 3.8.0)
-    rspec-support (3.8.2)
     rubocop (0.75.0)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
@@ -553,8 +584,13 @@ DEPENDENCIES
   react-rails
   referral
   route_downcaser
+  rspec!
+  rspec-core!
+  rspec-expectations!
   rspec-instafail
-  rspec-rails
+  rspec-mocks!
+  rspec-rails!
+  rspec-support!
   rubocop
   rubocop-performance
   rubocop-rails
