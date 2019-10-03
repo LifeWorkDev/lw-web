@@ -17,6 +17,7 @@ gem 'friendly_id' # "friendly" urls like /projects/cool-project
 gem 'jsonb_accessor', github: 'volkanunsal/jsonb_accessor' # Store arbitrary model data in jsonb fields
 gem 'logidze' # version tracking
 gem 'lograge' # one-line logs
+gem 'material_design_icons'
 gem 'memery' # Memoization
 gem 'money-rails'
 gem 'nilify_blanks', github: 'swrobel/nilify_blanks'

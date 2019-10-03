@@ -23,7 +23,5 @@
           td = project.milestones.first
           td = project.amount&.format
           td.action-list
-            = link_to [current_namespace, project, :comments]
-              span.badge.badge-pill.badge-secondary Comments
-            = link_to [:payments, current_namespace, project]
-              span.badge.badge-pill.badge-secondary Payments
+            = render 'shared/action_button', path: [current_namespace, project, :comments], style: 'primary', icon: 'forum-outline', title: 'Comments'
+            = render 'shared/action_button', path: [:payments, current_namespace, project], style: 'success', icon: 'currency-usd', title: 'Payments'

@@ -21,11 +21,8 @@
           td = project.status.capitalize
           td = project.amount&.format
           td.action-list
-            = link_to [:edit, current_namespace, project]
-              span.badge.badge-pill.badge-secondary Rename
-            = link_to [:milestones, current_namespace, project]
-              span.badge.badge-pill.badge-secondary Milestones
-            = link_to [current_namespace, project, :comments]
-              span.badge.badge-pill.badge-secondary Comments
+            = render 'shared/action_button', path: [:edit, current_namespace, project], style: 'dark', icon: 'square-edit-outline', title: 'Rename'
+            = render 'shared/action_button', path: [current_namespace, project, :comments], style: 'primary', icon: 'forum-outline', title: 'Comments'
+            = render 'shared/action_button', path: [:payments, current_namespace, project], style: 'success', icon: 'currency-usd', title: 'Payments'
 
-=link_to '+ Project', new_freelancer_milestone_project_path, class: 'btn btn-primary float-right'
+= render 'shared/add_button', path: new_freelancer_milestone_project_path, text: 'Project'

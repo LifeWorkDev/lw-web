@@ -54,14 +54,6 @@ $body-bg: $theme-background; // Don't apply to mailer body
   }
 }
 
-.font-serif {
-  font-family: $font-family-serif;
-}
-
-.font-sans-serif {
-  font-family: $font-family-sans-serif;
-}
-
 .form-group {
   label {
     font-weight: 600;
@@ -148,6 +140,10 @@ input[type='number'] {
   color: inherit;
 }
 
+.login-button {
+  padding: $font-size-base * 0.47 $font-size-base;
+}
+
 .mw-50 {
   max-width: 50%;
 }
@@ -186,8 +182,17 @@ select:invalid {
   border-top: none;
 }
 
-td.action-list a {
-  margin-right: 5px;
+td.action-list {
+  text-align: right;
+  white-space: nowrap;
+
+  a {
+    margin-right: 0.75rem;
+  }
+
+  .btn {
+    line-height: 1;
+  }
 }
 
 .milestones-list .milestone-list-item:last-child {
