@@ -252,6 +252,7 @@ GEM
     dotenv (2.2.2)
     em-proxy (0.1.9)
       eventmachine
+    email_reply_parser (0.5.10)
     erubi (1.9.0)
     eventmachine (1.0.9.1)
     execjs (2.7.0)
@@ -553,6 +554,7 @@ DEPENDENCIES
   colorize
   devise
   devise_invitable
+  email_reply_parser
   fabrication
   faker
   fast_blank

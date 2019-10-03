@@ -4,18 +4,7 @@ class CommentRepliesMailbox < ApplicationMailbox
 
     return unless milestone.project.freelancer == user || milestone.project.client.users.include?(user)
 
-    milestone.comments.create(commenter: user, comment: comment)
-  end
-
-  def comment
-    if mail.multipart? && mail.html_part
-      document = Nokogiri::HTML(mail.html_part.body.decoded)
-      document.at_css('body').inner_html.encode('utf-8')
-    elsif mail.multipart? && mail.text_part
-      mail.text_part.body.decoded
-    else
-      mail.decoded
-    end
+    milestone.comments.create(commenter: user, comment: parsed_mail_body)
   end
 
   def user
