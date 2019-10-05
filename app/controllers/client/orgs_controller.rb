@@ -50,7 +50,7 @@ private
 
   # Use callbacks to share common setup or constraints between actions.
   def set_org
-    @org = current_user.org
+    @org = current_org
   end
 
   # Only allow a trusted parameter "white list" through.

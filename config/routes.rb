@@ -4,9 +4,11 @@ Rails.application.routes.draw do
   namespace :client, path: 'c' do
     resource :org
     resources :milestone_projects do
+      match :deposit, on: :member, via: %i[get post]
       get :payments, on: :member
       resources :comments, only: %i[index create]
     end
+    resources :pay_methods
     resources :projects, only: :index
   end
 

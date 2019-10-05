@@ -1,4 +1,19 @@
 class Client::MilestoneProjectsController < MilestoneProjectsController
+  def deposit
+    return unless request.post?
+
+    milestone = @project.milestones.first
+    amount = milestone.amount_with_fee
+    Stripe::Charge.create(
+      amount: amount.cents,
+      currency: amount.currency.to_s,
+      customer: @project.client.stripe_id,
+      source: @project.client.primary_pay_method.stripe_id,
+    )
+    FreelancerMailer.deposit_received(user: @project.freelancer, project: @project, amount: milestone.amount.format).deliver_later
+    redirect_to [current_namespace, Project], notice: "Your deposit was received. #{@project.freelancer.name} has been notified so they can start work on your project."
+  end
+
   # GET /milestone_projects/1/payments
   def payments
     @heading = "#{@project.freelancer.name} has initiated the invoicing process with you. To complete the process, please approve the payment schedule and milestones below."
@@ -9,8 +24,7 @@ class Client::MilestoneProjectsController < MilestoneProjectsController
     @project.assign_attributes(milestone_project_params)
     notice = "#{params[:button].capitalize} were updated." if @project.milestones_changed?
     if @project.save
-      path = params[:button] == 'payments' ? client_projects_path : [:payments, current_namespace, @project]
-      redirect_to path, notice: notice
+      redirect_to new_client_pay_method_path(project: @project), notice: notice
     else
       render params[:button].to_sym
     end

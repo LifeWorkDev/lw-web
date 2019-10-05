@@ -1,0 +1,26 @@
+- title = "#{current_org.display_name} Pay Methods"
+- content_for :title, title
+
+.text-center
+  h2 = title
+
+.row
+  table.table.table-striped.table-hover
+    thead
+      tr
+        th Type
+        th Status
+        th Name
+        th Issuer
+        th Kind
+        th Last 4
+
+    tbody
+      - @pay_methods.each do |pay_method|
+        tr
+          td = pay_method.display_type
+          td = pay_method.status
+          td = pay_method.name
+          td = pay_method.issuer
+          td = pay_method.kind
+          td = pay_method.last_4

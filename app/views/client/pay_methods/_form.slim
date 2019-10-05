@@ -1,0 +1,42 @@
+= form_for @pay_method do |f|
+  - if @pay_method.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@pay_method.errors.count, 'error')} prohibited this pay_method from being saved:"
+      ul
+        - @pay_method.errors.full_messages.each do |message|
+          li = message
+
+  .field
+    = f.label :type
+    = f.text_field :type
+  .field
+    = f.label :status
+    = f.text_field :status
+  .field
+    = f.label :name
+    = f.text_field :name
+  .field
+    = f.label :issuer
+    = f.text_field :issuer
+  .field
+    = f.label :kind
+    = f.text_field :kind
+  .field
+    = f.label :last_4
+    = f.number_field :last_4
+  .field
+    = f.label :exp_month
+    = f.number_field :exp_month
+  .field
+    = f.label :exp_year
+    = f.number_field :exp_year
+  .field
+    = f.label :org
+    = f.text_field :org
+  .field
+    = f.label :created_by_id
+    = f.number_field :created_by_id
+  .field
+    = f.label :stripe_id
+    = f.text_field :stripe_id
+  .actions = f.submit

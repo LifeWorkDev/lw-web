@@ -1,0 +1,43 @@
+- title = "Deposit for #{@project.name}"
+- content_for :title, title
+
+.text-center
+  h2 = title
+
+p.lead.mt-4 Congratulations, you've successfully linked your bank account!
+
+- first_milestone = @project.milestones.first
+ol.lead
+  li Today, we'll withdraw #{first_milestone.amount_with_fee&.format}, the payment for the first milestone (including our 2% fee).
+
+  li Three days before the due date, we'll email you to remind you about the upcoming payment, and give you the opportunity to communicate with #{@project.freelancer.name} to make sure everything is on track.
+
+  li #{first_milestone.date.strftime('%B %-d')}, we'll release #{first_milestone.amount&.format} to #{@project.freelancer.name}, and withdraw the payment for the next milestone.
+
+p.lead You can see the full schedule below:
+
+table.table.table-striped
+  thead
+    tr
+      th.text-center Withdrawn
+      th.text-right Amount
+      th Description
+      th.text-center Paid
+  tbody
+    - @project.milestones.each_with_index do |milestone, index|
+      tr
+        td.text-center = index == 0 ? 'Today' : @project.milestones[index - 1].formatted_date
+        td.text-right = milestone.amount_with_fee&.format
+        td = milestone.description
+        td.text-center = milestone.formatted_date
+  tfoot.font-weight-bold
+    tr
+      td.border-top.border-dark.text-center Total:
+      td.border-top.border-dark.text-bold.text-right = @project.amount_with_fee&.format
+      td.border-top.border-dark
+      td.border-top.border-dark
+
+= bootstrap_form_with(url: [:deposit, current_namespace, @project], layout: :horizontal, local: true) do |f|
+  = f.primary class: 'btn btn-success float-right', id: 'submit-form', render_as_button: true, value: :deposit
+    = mdi_svg 'bank-transfer-out'
+    |  Deposit #{first_milestone.amount_with_fee&.format(:no_cents)} now
