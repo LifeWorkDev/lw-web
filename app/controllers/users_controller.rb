@@ -1,6 +1,10 @@
 class UsersController < AuthenticatedController
   def edit; end
 
+  def home
+    redirect_to [current_user.type, Project]
+  end
+
   # PATCH /user
   def update
     @user = current_user
