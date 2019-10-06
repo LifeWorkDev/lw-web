@@ -7,8 +7,10 @@ class Freelancer::UsersController < AuthenticatedController
     @user.after_database_authentication if @user.valid?
     if params[:org].present? && (org = @user.clients.find(params[:org]))
       redirect_to edit_freelancer_org_path(org)
-    else
+    elsif @user.stripe_id.present?
       redirect_to new_freelancer_org_path
+    else
+      redirect_to freelancer_stripe_connect_path
     end
   end
 
