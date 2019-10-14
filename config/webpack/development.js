@@ -8,7 +8,6 @@ const objectHash = require('object-hash')
 const eslintCacheIdentifier = objectHash(require('../../.eslintrc.js'))
 environment.loaders.append('eslint', {
   enforce: 'pre',
-  exclude: /node_modules/,
   loader: 'eslint-loader',
   options: {
     cache: true,
@@ -18,6 +17,15 @@ environment.loaders.append('eslint', {
   },
   test: /\.jsx?$/,
 })
+
+const StylelintPlugin = require('stylelint-webpack-plugin')
+environment.plugins.append(
+  'stylelint',
+  new StylelintPlugin({
+    context: 'app/javascript',
+    fix: true,
+  }),
+)
 
 module.exports = merge(environment.toWebpackConfig(), {
   devServer: {

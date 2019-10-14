@@ -98,6 +98,14 @@ input[type='number'] {
   cursor: pointer;
 }
 
+.list-group input[type='radio'] {
+  display: none;
+}
+
+.list-group input[type='radio'] + .list-group-item {
+  cursor: pointer;
+}
+
 .list-group input[type='checkbox'] + .list-group-item:before {
   content: '\2713';
   color: transparent;
@@ -114,23 +122,15 @@ input[type='number'] {
   color: #fff;
 }
 
-.list-group input[type='checkbox']:checked + .list-group-item:before {
-  color: inherit;
-}
-
-.list-group input[type='radio'] {
-  display: none;
-}
-
-.list-group input[type='radio'] + .list-group-item {
-  cursor: pointer;
-}
-
 .list-group input[type='radio'] + .list-group-item:before {
   content: '\25C9';
   color: transparent;
   font-weight: bold;
   margin-right: 1em;
+}
+
+.list-group input[type='checkbox']:checked + .list-group-item:before {
+  color: inherit;
 }
 
 .list-group input[type='radio']:not(:checked) + .list-group-item {
@@ -179,7 +179,7 @@ select:invalid {
   color: $input-placeholder-color;
 
   // Fix for Firefox which will make all options placeholder color
-  option:not(disabled) {
+  option:not([disabled]) {
     color: $input-color;
   }
 }

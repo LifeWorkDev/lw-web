@@ -8,31 +8,24 @@ module.exports = {
   },
   extends: [
     'plugin:prettier/recommended',
+    'prettier/react',
     'eslint:recommended',
     'plugin:react/recommended',
     'plugin:import/errors',
-    'plugin:import/warnings'
+    'plugin:import/warnings',
   ],
   globals: {
     Atomics: 'readonly',
-    SharedArrayBuffer: 'readonly'
+    SharedArrayBuffer: 'readonly',
   },
   parser: 'babel-eslint',
   parserOptions: {
     ecmaVersion: 2018,
-    sourceType: 'module'
+    sourceType: 'module',
   },
   plugins: ['sort-imports-es6-autofix', 'sort-keys-fix'],
   rules: {
-    'prettier/prettier': [
-      'error',
-      {
-        jsxSingleQuote: true,
-        semi: false,
-        singleQuote: true,
-        trailingComma: 'all'
-      }
-    ],
+    'prettier/prettier': ['error', {}],
     camelcase: ['error', { properties: 'never' }],
     'import/first': 'error',
     'import/no-duplicates': 'error',
@@ -43,14 +36,6 @@ module.exports = {
     indent: ['error', 2],
     'linebreak-style': ['error', 'unix'],
     'comma-dangle': ['error', 'always-multiline'],
-    quotes: [
-      'error',
-      'single',
-      {
-        avoidEscape: true,
-        allowTemplateLiterals: false
-      }
-    ],
     'react/forbid-foreign-prop-types': 'error',
     'react/jsx-fragments': ['error', 'syntax'],
     'react/no-typos': 'error',
