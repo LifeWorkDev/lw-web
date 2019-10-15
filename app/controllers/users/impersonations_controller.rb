@@ -9,6 +9,6 @@ class Users::ImpersonationsController < AuthenticatedController
 
   def stop_impersonating
     stop_impersonating_user
-    redirect_back(fallback_location: root_path)
+    redirect_to '/admin'
   end
 end
