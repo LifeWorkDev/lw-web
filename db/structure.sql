@@ -258,7 +258,7 @@ ALTER SEQUENCE public.friendly_id_slugs_id_seq OWNED BY public.friendly_id_slugs
 CREATE TABLE public.milestones (
     id bigint NOT NULL,
     project_id bigint NOT NULL,
-    date timestamp without time zone NOT NULL,
+    date date NOT NULL,
     status character varying NOT NULL,
     amount_cents integer,
     description public.citext,
@@ -718,7 +718,7 @@ CREATE INDEX index_friendly_id_slugs_on_sluggable_type_and_sluggable_id ON publi
 -- Name: index_milestones_on_project_id_and_date; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_milestones_on_project_id_and_date ON public.milestones USING btree (project_id, date);
+CREATE UNIQUE INDEX index_milestones_on_project_id_and_date ON public.milestones USING btree (project_id, date);
 
 
 --
