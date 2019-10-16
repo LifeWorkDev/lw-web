@@ -27,7 +27,7 @@ class Milestone < ApplicationRecord
   end
 
   def formatted_date
-    date && I18n.l(date, format: :date_only)
+    date && I18n.l(date)
   end
 
   def percent
