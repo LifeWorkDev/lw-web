@@ -2,8 +2,9 @@
 
 .text-center
   h2 Connect with Stripe to receive payments
+  p.lead We'll send you to Stripe's site and automatically bring you back here to continue the process when you're finished.
 
   .mt-4
-    = link_to Stripe::OAuth.authorize_url({}, express: true), class: 'btn btn-primary'
+    = link_to Stripe::OAuth.authorize_url({ redirect_uri: freelancer_stripe_callback_url }, express: true), class: 'btn btn-primary'
       = mdi_svg 'vector-link'
       |  Connect Now
