@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React, { useState } from 'react'
 
 const Milestone = PropTypes.shape({
-  amount: PropTypes.number.isRequired,
+  amount: PropTypes.number,
   date: PropTypes.string.isRequired,
   description: PropTypes.string,
   id: PropTypes.number.isRequired,
@@ -17,7 +17,7 @@ const PaymentsForm = props => {
 
   const updateAmount = ({ amount, index }) => {
     const newMilestones = milestones.slice() // create a copy
-    newMilestones[index].amount = amount
+    newMilestones[index].amount = Number(amount)
     setMilestones(newMilestones)
   }
 
@@ -190,7 +190,7 @@ const PaymentForm = React.memo(
                 <span className='input-group-text'>$</span>
               </div>
               <input
-                value={milestone.amount && Number(milestone.amount)}
+                value={milestone.amount ? Number(milestone.amount) : ''}
                 className='form-control'
                 inputMode='decimal'
                 max={maxPayment}
@@ -216,13 +216,14 @@ const PaymentForm = React.memo(
                 onChange={e =>
                   updateAmount({
                     amount:
-                      e.target.value && (Number(e.target.value) / 100) * total,
+                      e.target.value &&
+                      ((Number(e.target.value) / 100) * total).toFixed(2),
                     index: index,
                   })
                 }
                 placeholder='of total'
                 type='number'
-                value={percent}
+                value={percent || ''}
               />
               <div className='input-group-append'>
                 <span className='input-group-text'>%</span>
