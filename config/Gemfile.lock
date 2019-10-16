@@ -252,6 +252,7 @@ GEM
     em-proxy (0.1.9)
       eventmachine
     email_reply_parser (0.5.10)
+    errbase (0.1.1)
     erubi (1.9.0)
     eventmachine (1.0.9.1)
     execjs (2.7.0)
@@ -472,7 +473,8 @@ GEM
     rubydns (0.8.5)
       eventmachine (~> 1.0.0)
     rubyzip (2.0.0)
-    safely (0.3.2)
+    safely_block (0.2.2)
+      errbase (>= 0.1.1)
     sassc (2.2.1)
       ffi (~> 1.9)
     sassc-rails (2.1.2)
@@ -609,7 +611,7 @@ DEPENDENCIES
   rubocop-performance
   rubocop-rails
   rubocop-rspec
-  safely
+  safely_block
   sassc-rails
   selenium-webdriver
   sentry-raven
