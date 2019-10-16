@@ -66,15 +66,17 @@ module LifeWork
       # gsub is to use less-verbose new hash syntax
       params.present? ? { params: params.deep_symbolize_keys.to_s.gsub(/(:(\w+)\s?=>\s?)/, '\\2: ') } : nil
     end
+
+    host = ENV['DOMAIN'].presence
+    host ||= "#{ENV['SUBDOMAIN']}.lifeworkonline.com" if ENV['SUBDOMAIN']
+    host ||= "#{ENV['HEROKU_APP_NAME']}.herokuapp.com" if ENV['HEROKU_APP_NAME']
+    host ||= 'lifework.localhost'
+    server_url = "https://#{host}"
+
+    config.action_mailer.asset_host = server_url
+    config.hosts << host unless Rails.env.test?
+    Rails.application.routes.default_url_options = { host: server_url, protocol: 'https' }
   end
 end
 
-host = ENV['DOMAIN'].presence
-host ||= "#{ENV['SUBDOMAIN']}.lifeworkonline.com" if ENV['SUBDOMAIN']
-host ||= "#{ENV['HEROKU_APP_NAME']}.herokuapp.com" if ENV['HEROKU_APP_NAME']
-host ||= 'lifework.localhost'
-server_url = "https://#{host}"
 REPLIES_HOST ||= "#{ENV['SUBDOMAIN']}-reply.lifeworkonline.com".freeze
-
-Rails.application.routes.default_url_options = { host: server_url, protocol: 'https' }
-Rails.application.config.action_mailer.asset_host = server_url

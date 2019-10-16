@@ -54,8 +54,6 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
-  config.hosts << 'lifework.localhost'
-
   config.force_ssl = true
 
   dev_server = Webpacker.config.dev_server
