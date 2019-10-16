@@ -24,7 +24,16 @@ const PaymentsForm = props => {
   const milestoneRows = milestones.map((milestone, index) => {
     sum += Number(milestone.amount || 0)
     return (
-      <PaymentForm key={index} {...{ index, milestone, total, updateAmount }} />
+      <PaymentForm
+        key={index}
+        {...{
+          index,
+          maxPayment: props.maxPayment,
+          milestone,
+          total,
+          updateAmount,
+        }}
+      />
     )
   })
 
@@ -160,89 +169,93 @@ const PaymentsForm = props => {
 }
 PaymentsForm.propTypes = {
   isClient: PropTypes.bool.isRequired,
+  maxPayment: PropTypes.number.isRequired,
   milestones: PropTypes.arrayOf(Milestone),
   total: PropTypes.number,
 }
 
-const PaymentForm = React.memo(({ index, milestone, total, updateAmount }) => {
-  const percent =
-    total && milestone.amount && Math.round((milestone.amount / total) * 100)
-  return (
-    <PaymentsFormRow
-      firstClass='bg-dark small text-white'
-      firstContent={milestone.date}
-      secondContent={
-        <>
-          <label className='sr-only'>Amount</label>
-          <div className='input-group input-group-sm'>
-            <div className='input-group-prepend'>
-              <span className='input-group-text'>$</span>
+const PaymentForm = React.memo(
+  ({ index, maxPayment, milestone, total, updateAmount }) => {
+    const percent =
+      total && milestone.amount && Math.round((milestone.amount / total) * 100)
+    return (
+      <PaymentsFormRow
+        firstClass='bg-dark small text-white'
+        firstContent={milestone.date}
+        secondContent={
+          <>
+            <label className='sr-only'>Amount</label>
+            <div className='input-group input-group-sm'>
+              <div className='input-group-prepend'>
+                <span className='input-group-text'>$</span>
+              </div>
+              <input
+                value={milestone.amount && Number(milestone.amount)}
+                className='form-control'
+                inputMode='decimal'
+                max={maxPayment}
+                name={`milestone_project[milestones_attributes][${index}][amount]`}
+                onChange={e =>
+                  updateAmount({ amount: e.target.value, index: index })
+                }
+                placeholder='0.00'
+                step='0.01'
+                type='number'
+                required
+              />
             </div>
+          </>
+        }
+        thirdContent={
+          <>
+            <label className='sr-only'>Percent</label>
+            <div className='input-group input-group-sm'>
+              <input
+                className='form-control text-right'
+                inputMode='decimal'
+                onChange={e =>
+                  updateAmount({
+                    amount:
+                      e.target.value && (Number(e.target.value) / 100) * total,
+                    index: index,
+                  })
+                }
+                placeholder='of total'
+                type='number'
+                value={percent}
+              />
+              <div className='input-group-append'>
+                <span className='input-group-text'>%</span>
+              </div>
+            </div>
+          </>
+        }
+        fourthContent={
+          <>
+            <label className='sr-only'>Description</label>
             <input
-              value={milestone.amount && Number(milestone.amount)}
-              className='form-control'
-              inputMode='decimal'
-              max='1960'
-              name={`milestone_project[milestones_attributes][${index}][amount]`}
-              onChange={e =>
-                updateAmount({ amount: e.target.value, index: index })
-              }
-              placeholder='0.00'
-              step='0.01'
-              type='number'
+              className='form-control form-control-sm w-100'
+              defaultValue={milestone.description}
+              name={`milestone_project[milestones_attributes][${index}][description]`}
+              placeholder='Describe this milestone'
+              type='text'
               required
             />
-          </div>
-        </>
-      }
-      thirdContent={
-        <>
-          <label className='sr-only'>Percent</label>
-          <div className='input-group input-group-sm'>
             <input
-              className='form-control text-right'
-              inputMode='decimal'
-              onChange={e =>
-                updateAmount({
-                  amount:
-                    e.target.value && (Number(e.target.value) / 100) * total,
-                  index: index,
-                })
-              }
-              placeholder='of total'
-              type='number'
-              value={percent}
+              type='hidden'
+              value={milestone.id}
+              name={`milestone_project[milestones_attributes][${index}][id]`}
             />
-            <div className='input-group-append'>
-              <span className='input-group-text'>%</span>
-            </div>
-          </div>
-        </>
-      }
-      fourthContent={
-        <>
-          <label className='sr-only'>Description</label>
-          <input
-            className='form-control form-control-sm w-100'
-            defaultValue={milestone.description}
-            name={`milestone_project[milestones_attributes][${index}][description]`}
-            placeholder='Describe this milestone'
-            type='text'
-            required
-          />
-          <input
-            type='hidden'
-            value={milestone.id}
-            name={`milestone_project[milestones_attributes][${index}][id]`}
-          />
-        </>
-      }
-    />
-  )
-})
+          </>
+        }
+      />
+    )
+  },
+)
 PaymentForm.displayName = 'PaymentForm'
 PaymentForm.propTypes = {
   index: PropTypes.number.isRequired,
+  maxPayment: PropTypes.number.isRequired,
   milestone: Milestone.isRequired,
   total: PropTypes.number,
   updateAmount: PropTypes.func.isRequired,

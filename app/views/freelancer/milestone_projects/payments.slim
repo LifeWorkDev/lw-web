@@ -3,11 +3,14 @@
 .text-center
   h2 = @heading
   p.lead Feel free to enter percentages, and we’ll calculate the amounts, or vice-versa.
-  p Please note that we can only accept individual milestones of up to $1,960 before fees at this time.
+  p
+    | Please note that we can only accept individual milestones of up to
+    strong =<> ACH_MAX_BEFORE_FEE.format(:no_cents)
+    | before fees at this time.
 
 .container.d-flex.flex-column.justify-content-center
   = bootstrap_form_with(model: [current_namespace, @project], class: 'w-100 mt-2', control_col: 'col-sm-6 col-md-3', label_col: 'col-sm-6 text-sm-right', layout: :horizontal, local: true) do |f|
-    = react_component('PaymentsForm', isClient: current_namespace == 'client', milestones: @project.milestones, total: @project.amount.to_f)
+    = react_component('PaymentsForm', isClient: current_namespace == 'client', maxPayment: ACH_MAX_BEFORE_FEE.to_i, milestones: @project.milestones, total: @project.amount.to_f)
     = render 'shared/form_buttons', f: f, back: @back, submit_val: :payments
 
 = render partial: 'shared/form_back_confirm'
