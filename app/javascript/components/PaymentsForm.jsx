@@ -116,7 +116,7 @@ const PaymentsForm = props => {
           <span className='font-sans-serif text-danger'>{errorText}</span>
         }
       />
-      {props.isClient && (
+      {props.isClient && props.lifeworkFee > 0 && (
         <>
           <PaymentsFormRow
             firstClass='font-weight-bold mb-3 mb-sm-0'
@@ -129,7 +129,7 @@ const PaymentsForm = props => {
                 <input
                   disabled
                   className='form-control font-weight-bold'
-                  value={formatCurrency(sum * 0.02)}
+                  value={formatCurrency(sum * props.lifeworkFee)}
                 />
               </div>
             }
@@ -157,7 +157,7 @@ const PaymentsForm = props => {
                 <input
                   disabled
                   className='form-control font-weight-bold'
-                  value={formatCurrency(sum * 1.02)}
+                  value={formatCurrency(sum * (1 + props.lifeworkFee))}
                 />
               </div>
             }
@@ -169,6 +169,7 @@ const PaymentsForm = props => {
 }
 PaymentsForm.propTypes = {
   isClient: PropTypes.bool.isRequired,
+  lifeworkFee: PropTypes.number.isRequired,
   maxPayment: PropTypes.number.isRequired,
   milestones: PropTypes.arrayOf(Milestone),
   total: PropTypes.number,

@@ -14,7 +14,7 @@ class Milestone < ApplicationRecord
   end
 
   def amount_with_fee
-    amount * 1.02
+    amount * (1 + LIFEWORK_FEE)
   end
 
   def as_json(*)
