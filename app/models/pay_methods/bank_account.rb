@@ -10,7 +10,7 @@ private
   def exchange_plaid_link_token
     return if stripe_id.present?
 
-    plaid = Plaid::Client.new(env: :sandbox,
+    plaid = Plaid::Client.new(env: PLAID_ENV,
                               client_id: Rails.application.credentials.plaid[:client_id],
                               secret: Rails.application.credentials.plaid[:secret_key],
                               public_key: Rails.application.credentials.plaid[:public_key])

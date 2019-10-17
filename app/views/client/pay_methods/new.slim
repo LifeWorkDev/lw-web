@@ -15,7 +15,7 @@ h2.text-center.mt-2 Link a Bank Account
 javascript:
   var linkHandler = Plaid.create({
     clientName: 'LifeWork',
-    env: 'sandbox',
+    env: '#{PLAID_ENV}',
     key: '072c1503058ebaaaf4d0fc44f7c159',
     product: ['auth'],
     onSuccess: function(public_token, metadata) {
