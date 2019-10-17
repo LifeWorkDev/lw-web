@@ -8,7 +8,10 @@ p.lead.mt-4 Congratulations, you've successfully linked your bank account!
 
 - first_milestone = @project.milestones.first
 ol.lead
-  li Today, we'll withdraw #{first_milestone.amount_with_fee&.format}, the payment for the first milestone (including our 2% fee).
+  li
+    | Today, we'll withdraw #{first_milestone.amount_with_fee&.format}, the payment for the first milestone
+    - if LIFEWORK_FEE > 0
+      |  (including our #{number_to_percentage(LIFEWORK_FEE * 100, precision: 0)} fee).
 
   li Three days before the due date, we'll email you to remind you about the upcoming payment, and give you the opportunity to communicate with #{@project.freelancer.name} to make sure everything is on track.
 
