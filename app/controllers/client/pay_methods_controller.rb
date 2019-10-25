@@ -12,7 +12,7 @@ class Client::PayMethodsController < AuthenticatedController
 
   # GET /pay_methods/new
   def new
-    @pay_method = current_org.pay_methods.build(type: PayMethods::BankAccount)
+    render "client/pay_methods/#{params[:type]}/new"
   end
 
   # GET /pay_methods/1/edit

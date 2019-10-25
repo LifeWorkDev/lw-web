@@ -8,8 +8,10 @@ Rails.application.routes.draw do
       get :payments, on: :member
       resources :comments, only: %i[index create]
     end
-    resources :pay_methods
+    resources :pay_methods, except: :new
     resources :projects, only: :index
+
+    get ':type/new', to: 'pay_methods#new', constraints: { type: %w[bank_accounts cards] }
   end
 
   namespace :freelancer, path: 'f' do
