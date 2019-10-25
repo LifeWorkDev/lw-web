@@ -18,6 +18,12 @@ javascript:
     env: '#{PLAID_ENV}',
     key: '072c1503058ebaaaf4d0fc44f7c159',
     product: ['auth'],
+    onExit: function(error, metadata) {
+      if (error) {
+        Sentry.setExtras({ error: error, metadata: metadata })
+        Sentry.captureException(new Error(error.message))
+      }
+    },
     onSuccess: function(public_token, metadata) {
       const data = {
         pay_method: {
