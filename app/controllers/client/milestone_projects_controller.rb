@@ -24,7 +24,7 @@ class Client::MilestoneProjectsController < MilestoneProjectsController
     @project.assign_attributes(milestone_project_params)
     notice = "#{params[:button].capitalize} were updated." if @project.milestones_changed?
     if @project.save
-      redirect_to new_client_pay_method_path(project: @project), notice: notice
+      redirect_to "/c/bank_accounts/new?project=#{@project.slug}", notice: notice
     else
       render params[:button].to_sym
     end

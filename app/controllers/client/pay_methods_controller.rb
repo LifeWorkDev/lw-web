@@ -4,7 +4,7 @@ class Client::PayMethodsController < AuthenticatedController
   # GET /pay_methods
   def index
     @pay_methods = current_org.pay_methods
-    redirect_to new_client_pay_method_path if @pay_methods.blank?
+    redirect_to '/c/bank_accounts/new' if @pay_methods.blank?
   end
 
   # GET /pay_methods/1
