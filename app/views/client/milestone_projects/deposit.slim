@@ -13,13 +13,14 @@ p.lead.mt-4 Congratulations, you've successfully linked your bank account!
 - first_milestone = @project.milestones.first
 ol.lead
   li
-    | Today, we'll withdraw #{first_milestone.amount_with_fee&.format}, the payment for the first milestone
+    ' Today, we'll withdraw #{first_milestone.amount_with_fee&.format}, the payment for the first milestone
     - if LIFEWORK_FEE > 0
-      |  (including our #{number_to_percentage(LIFEWORK_FEE * 100, precision: 0)} fee).
+      ' (including our #{number_to_percentage(LIFEWORK_FEE * 100, precision: 0)} fee).
+    | and hold it in our account. This covers the payment for the first milestone.
 
   li Three days before the due date, we'll email you to remind you about the upcoming payment, and give you the opportunity to communicate with #{@project.freelancer.name} to make sure everything is on track.
 
-  li #{first_milestone.date.strftime('%B %-d')}, we'll release #{first_milestone.amount&.format} to #{@project.freelancer.name}, and withdraw the payment for the next milestone.
+  li #{first_milestone.date.strftime('%B %-d')}, we'll release #{first_milestone.amount&.format} from our account to #{@project.freelancer.name}. We will also automatically withdraw the payment for the next milestone from your bank account and hold that in our account until the next milestone, if there is one.
 
 p.lead You can see the full schedule below:
 
