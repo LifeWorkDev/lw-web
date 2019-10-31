@@ -20,8 +20,8 @@ javascript:
     product: ['auth'],
     onExit: function(error, metadata) {
       if (error) {
-        Sentry.setExtras({ error: error, metadata: metadata })
-        Sentry.captureException(new Error(error.message))
+        window.bugsnagClient.metaData = { error: error, metadata: metadata }
+        window.bugsnagClient.notify(new Error(error.message))
       }
     },
     onSuccess: function(public_token, metadata) {

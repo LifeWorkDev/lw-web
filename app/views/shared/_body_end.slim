@@ -37,10 +37,9 @@
 
 - if user_signed_in?
   javascript:
-    Sentry.configureScope(function (scope) {
-      scope.setUser({
+    if (window.bugsnagClient)
+      window.bugsnagClient.user = {
         id: '#{current_user.id}',
-        email: '#{current_user.email}',
-        username: '#{current_user.name}',
-      })
-    })
+        name: '#{current_user.name}',
+        email: '#{current_user.email}'
+      }

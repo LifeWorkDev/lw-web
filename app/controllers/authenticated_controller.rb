@@ -1,6 +1,5 @@
 class AuthenticatedController < ApplicationController
   around_action :set_time_zone
-  before_action :set_raven_context if defined?(Raven)
   prepend_before_action :authenticate_user!
 
   def current_org
@@ -16,15 +15,6 @@ class AuthenticatedController < ApplicationController
   class Forbidden < StandardError; end
 
 private
-
-  def set_raven_context
-    Raven.user_context(
-      id: current_user.id,
-      email: current_user.email,
-      username: current_user.name,
-      ip_address: request.ip,
-    )
-  end
 
   def set_time_zone
     Time.use_zone(current_user&.time_zone) { yield }

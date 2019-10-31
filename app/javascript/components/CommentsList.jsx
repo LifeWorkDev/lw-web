@@ -22,6 +22,7 @@ const CommentItem = props => {
   const [editing, setEditing] = useState(false)
   const [commentText, setCommentText] = useState(comment.comment)
   const [isError, setIsError] = useState(false)
+  const ErrorBoundary = window.bugsnagClient.getPlugin('react')
 
   const handleCommentChange = event => {
     setCommentText(event.target.value)
@@ -55,52 +56,54 @@ const CommentItem = props => {
   }
 
   return (
-    <div
-      className={`comment-item list-group-item list-group-item-action ${
-        isCurrentUser ? 'text-right' : 'text-left'
-      }`}
-    >
-      <h5>
-        {comment.commenter.name}
-        <small> at {comment.formatted_created_at}</small>
-      </h5>
+    <ErrorBoundary>
+      <div
+        className={`comment-item list-group-item list-group-item-action ${
+          isCurrentUser ? 'text-right' : 'text-left'
+        }`}
+      >
+        <h5>
+          {comment.commenter.name}
+          <small> at {comment.formatted_created_at}</small>
+        </h5>
 
-      {!editing && (
-        <div className='comment'>
-          <p>{commentText}</p>
-          {isError && (
-            <span className='error text-danger'>
-              Unable to Save Comment, Try again.
+        {!editing && (
+          <div className='comment'>
+            <p>{commentText}</p>
+            {isError && (
+              <span className='error text-danger'>
+                Unable to Save Comment, Try again.
+              </span>
+            )}
+            {isCurrentUser && (
+              <span
+                className='edit badge badge-secondary'
+                onClick={() => {
+                  setEditing(true)
+                }}
+              >
+                Edit
+              </span>
+            )}
+          </div>
+        )}
+
+        {isCurrentUser && editing && (
+          <div className='comment-inline-edit'>
+            <textarea value={commentText} onChange={handleCommentChange} />
+            <span className='update badge badge-secondary' onClick={save}>
+              Save
             </span>
-          )}
-          {isCurrentUser && (
-            <span
-              className='edit badge badge-secondary'
-              onClick={() => {
-                setEditing(true)
-              }}
-            >
-              Edit
-            </span>
-          )}
-        </div>
-      )}
+          </div>
+        )}
 
-      {isCurrentUser && editing && (
-        <div className='comment-inline-edit'>
-          <textarea value={commentText} onChange={handleCommentChange} />
-          <span className='update badge badge-secondary' onClick={save}>
-            Save
-          </span>
-        </div>
-      )}
-
-      {comment.read_by !== null && (
-        <small>
-          Read by {comment.read_by.name} at {comment.formatted_read_at}
-        </small>
-      )}
-    </div>
+        {comment.read_by !== null && (
+          <small>
+            Read by {comment.read_by.name} at {comment.formatted_read_at}
+          </small>
+        )}
+      </div>
+    </ErrorBoundary>
   )
 }
 

@@ -215,6 +215,8 @@ GEM
       actionpack (>= 5.0)
       activemodel (>= 5.0)
     brakeman (4.6.1)
+    bugsnag (6.12.2)
+      concurrent-ruby (~> 1.0)
     builder (3.2.3)
     bullet (6.0.2)
       activesupport (>= 3.0.0)
@@ -486,8 +488,6 @@ GEM
     selenium-webdriver (3.142.6)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
-    sentry-raven (2.11.3)
-      faraday (>= 0.7.6, < 1.0)
     shellany (0.0.1)
     shoulda-matchers (4.1.2)
       activesupport (>= 4.2.0)
@@ -560,6 +560,7 @@ DEPENDENCIES
   bootstrap-email!
   bootstrap_form
   brakeman
+  bugsnag
   bullet
   byebug
   capybara
@@ -614,7 +615,6 @@ DEPENDENCIES
   safely_block
   sassc-rails
   selenium-webdriver
-  sentry-raven
   shoulda-matchers
   slim-rails
   slim_lint

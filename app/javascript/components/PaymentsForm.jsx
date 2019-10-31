@@ -12,6 +12,7 @@ const PaymentsForm = props => {
   const [milestones, setMilestones] = useState(props.milestones)
   const [total, setTotal] = useState(Number(props.total))
   const submitButton = document.getElementById('submit-form')
+  const ErrorBoundary = window.bugsnagClient.getPlugin('react')
   let errorText
   let sum = 0
 
@@ -55,7 +56,7 @@ const PaymentsForm = props => {
   }
 
   return (
-    <>
+    <ErrorBoundary>
       <div className='form-group flex-nowrap justify-content-center row'>
         <label
           className='col-form-label col-auto px-0 required'
@@ -164,7 +165,7 @@ const PaymentsForm = props => {
           />
         </>
       )}
-    </>
+    </ErrorBoundary>
   )
 }
 PaymentsForm.propTypes = {

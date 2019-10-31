@@ -10,7 +10,7 @@ const DatePicker = props => {
   const [selectedDays, setSelectedDays] = useState(
     getMilestoneDays(props.milestones),
   )
-
+  const ErrorBoundary = window.bugsnagClient.getPlugin('react')
   const isMobile = window.innerWidth < 768 // Minimum iPad portrait
 
   function getMilestoneDays(milestones) {
@@ -94,60 +94,62 @@ const DatePicker = props => {
   })
 
   return (
-    <div className='text-center'>
-      <div>
-        {deletedMilestones.map((milestone, key) => {
-          return (
-            <div key={key + selectedDays.length}>
-              <input
-                type='hidden'
-                name={'milestone_project[milestones_attributes][][id]'}
-                value={milestone.id}
-              />
-              <input
-                type='hidden'
-                name={'milestone_project[milestones_attributes][][date]'}
-                value={milestone.date}
-              />
-              <input
-                type='hidden'
-                name={'milestone_project[milestones_attributes][][_destroy]'}
-                value={milestone.deleted}
-              />
-            </div>
-          )
-        })}
+    <ErrorBoundary>
+      <div className='text-center'>
+        <div>
+          {deletedMilestones.map((milestone, key) => {
+            return (
+              <div key={key + selectedDays.length}>
+                <input
+                  type='hidden'
+                  name={'milestone_project[milestones_attributes][][id]'}
+                  value={milestone.id}
+                />
+                <input
+                  type='hidden'
+                  name={'milestone_project[milestones_attributes][][date]'}
+                  value={milestone.date}
+                />
+                <input
+                  type='hidden'
+                  name={'milestone_project[milestones_attributes][][_destroy]'}
+                  value={milestone.deleted}
+                />
+              </div>
+            )
+          })}
 
-        {orderedDays.map((day, key) => {
-          return (
-            <span
-              className='badge badge-primary badge-pill date-pill mr-2 mb-2'
-              key={key}
-            >
-              <span>{day.toLocaleDateString()}</span>
-              <input
-                type='hidden'
-                name={'milestone_project[milestones_attributes][][date]'}
-                value={day.toISOString().slice(0, 10)}
-              />
-              <button
-                type='button'
-                className='close'
-                onClick={() => removeData(key)}
+          {orderedDays.map((day, key) => {
+            return (
+              <span
+                className='badge badge-primary badge-pill date-pill mr-2 mb-2'
+                key={key}
               >
-                <span>×</span>
-              </button>
-            </span>
-          )
-        })}
+                <span>{day.toLocaleDateString()}</span>
+                <input
+                  type='hidden'
+                  name={'milestone_project[milestones_attributes][][date]'}
+                  value={day.toISOString().slice(0, 10)}
+                />
+                <button
+                  type='button'
+                  className='close'
+                  onClick={() => removeData(key)}
+                >
+                  <span>×</span>
+                </button>
+              </span>
+            )
+          })}
+        </div>
+        <DayPicker
+          selectedDays={selectedDays}
+          onDayClick={handleDayClick}
+          numberOfMonths={isMobile ? 1 : 2}
+          disabledDays={{ before: new Date() }}
+        />
       </div>
-      <DayPicker
-        selectedDays={selectedDays}
-        onDayClick={handleDayClick}
-        numberOfMonths={isMobile ? 1 : 2}
-        disabledDays={{ before: new Date() }}
-      />
-    </div>
+    </ErrorBoundary>
   )
 }
 

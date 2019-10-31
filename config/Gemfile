@@ -9,6 +9,7 @@ gem 'active_model_serializers', '~> 0.10.0' # JSON serializer for activerecord
 gem 'argon2' # More secure password hashing than default bcrypt
 gem 'bootstrap-email', github: 'swrobel/bootstrap-email'
 gem 'bootstrap_form'
+gem 'bugsnag' # Exception tracking
 gem 'devise' # Authentication
 gem 'devise_invitable'
 gem 'email_reply_parser'
@@ -95,7 +96,6 @@ end
 
 group :production, :staging do
   gem 'actionpack-cloudflare' # Correct request.ip for Cloudflare-proxied requests
-  gem 'sentry-raven' # Exception tracking
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

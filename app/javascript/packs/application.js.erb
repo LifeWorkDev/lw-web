@@ -1,17 +1,15 @@
 /* eslint-disable import/first */
 
 import 'bootstrap.native/dist/bootstrap-native-v4'
-import * as Sentry from '@sentry/browser'
+import bugsnag from '@bugsnag/js'
+import bugsnagReact from '@bugsnag/plugin-react'
+import React from 'react'
 
 require('@rails/ujs').start()
 require('turbolinks').start()
 
-window.Sentry = Sentry // Make it available globally
-if (process.env.NODE_ENV === 'production') {
-  Sentry.init({
-    dsn: 'https://5e07926b621741b5a89eaa621d2aa1a7@sentry.io/1545031',
-  })
-}
+window.bugsnagClient = bugsnag({ apiKey: 'c5a97432b84ea8031cc78cc2997cb2ba', releaseStage: '<%= Rails.env %>', notifyReleaseStages: <%= NOTIFY_RELEASE_STAGES %>, appVersion: '<%= ENV['HEROKU_RELEASE_VERSION'] || 'dev' %>', logger: null })
+window.bugsnagClient.use(bugsnagReact, React)
 
 require.context('../images', true)
 // Support component names relative to this directory:
