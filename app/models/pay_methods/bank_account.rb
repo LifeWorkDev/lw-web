@@ -25,9 +25,10 @@ private
     else
       customer = Stripe::Customer.create(
         source: stripe_token,
+        email: org.primary_contact&.email,
+        name: org.display_name,
         metadata: {
           'Org ID': org.id,
-          Name: org.display_name,
         },
       )
       self.stripe_id = customer.default_source
