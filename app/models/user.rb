@@ -32,6 +32,10 @@ class User < ApplicationRecord
     client? ? :client : :freelancer
   end
 
+  def to_s
+    name
+  end
+
 protected
 
   def send_devise_notification(notification, *args)

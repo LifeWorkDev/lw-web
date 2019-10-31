@@ -21,7 +21,7 @@ Trestle.resource(:users) do
     column :org
     column :created_at, align: :center
     actions do |toolbar, instance, _admin|
-      toolbar.link 'Impersonate', main_app.users_impersonate_path(instance), method: :post, style: :secondary, icon: 'fa fa-mask'
+      toolbar.link 'Impersonate', main_app.users_impersonate_path(instance), method: :post, style: :secondary, icon: 'fa fa-mask', title: 'Impersonate user'
       toolbar.delete
     end
   end
@@ -32,13 +32,13 @@ Trestle.resource(:users) do
     tab :user do
       text_field :name
       email_field :email
-      password_field :password
       select :status, User.aasm.states.map(&:name)
       select :roles, User::ROLES, {}, multiple: true
+      time_zone_select :time_zone, ActiveSupport::TimeZone.basic_us_zones, include_blank: true
+      collection_select_with_link :org_id, Org.all, :id, :name, include_blank: true
       phone_field :phone
       text_field :address
-      time_zone_select :time_zone, ActiveSupport::TimeZone.basic_us_zones, include_blank: 'Please select', required: true
-      collection_select :org_id, Org.all, :id, :name, include_blank: true
+      password_field :password
     end
 
     tab :projects, badge: user.projects.size do

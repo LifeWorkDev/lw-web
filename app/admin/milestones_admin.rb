@@ -24,7 +24,7 @@ Trestle.resource(:milestones) do
   # Customize the form fields shown on the new/edit views.
   form do |milestone|
     tab :milestone do
-      collection_select :project_id, Project.all, :id, :name
+      collection_select_with_link :project_id, Project.all, :id, :name
       text_field :description
       number_field :amount_cents
       select :status, Milestone.aasm.states.map(&:name)

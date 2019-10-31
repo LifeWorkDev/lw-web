@@ -34,5 +34,7 @@ class Milestone < ApplicationRecord
     (amount || 0.to_money) / (project.amount || 0.to_money)
   end
 
-  alias to_s formatted_date
+  def to_s
+    "#{description} (#{formatted_date})"
+  end
 end

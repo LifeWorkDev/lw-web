@@ -69,7 +69,7 @@ Trestle.configure do |config|
   #
   # Specify helper modules to expose to the admin.
   #
-  # config.helper :all
+  config.helper [Helpers::TrestleHelper]
 
   # Register callbacks to run before, after or around all Trestle actions.
   #
@@ -115,12 +115,7 @@ Trestle.configure do |config|
   # Register a form field type to be made available to the Trestle form builder.
   # Field types should conform to the following method definition:
   #
-  # class CustomFormField
-  #   def initialize(builder, template, name, options={}, &block); end
-  #   def render; end
-  # end
-  #
-  # config.form_field :custom, CustomFormField
+  config.form_field :collection_select_with_link, Fields::CollectionSelectWithLink
 
   # == Debugging Options
   #

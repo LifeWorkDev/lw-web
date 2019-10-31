@@ -29,13 +29,12 @@ Trestle.resource(:comments) do
 
   # Customize the form fields shown on the new/edit views.
   #
-  form do |_comment|
-    collection_select :commenter_id, User.all, :id, :name
-    text_field :comment
-    hidden_field :commentable_type, value: 'Milestone'
-    collection_select :commentable_id, Milestone.all, :id, :description
-    collection_select :read_by_id, User.all, :id, :name, include_blank: true
-    datetime_field :read_at
+  form do |comment|
+    collection_select_with_link :commenter_id, User.all, :id, :name
+    static_field 'Commented on', admin_auto_link_to(comment.commentable)
+    text_area :comment
+    static_field 'Read by', admin_auto_link_to(comment.read_by)
+    static_field :read_at, comment.formatted_read_at
   end
 
   # By default, all parameters passed to the update and create actions will be

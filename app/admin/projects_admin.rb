@@ -35,8 +35,8 @@ Trestle.resource(:projects) do
     tab :project do
       text_field :name
       static_field :slug, project.slug
-      collection_select :org_id, Org.all, :id, :name, label: 'Client'
-      collection_select :user_id, User.all, :id, :name, label: 'Freelancer'
+      collection_select_with_link :org_id, Org.all, :id, :name, label: 'Client'
+      collection_select_with_link :user_id, User.all, :id, :name, label: 'Freelancer'
       select :status, Project.aasm.states.map(&:name)
       text_field :amount, prepend: '$'
       text_field :currency
