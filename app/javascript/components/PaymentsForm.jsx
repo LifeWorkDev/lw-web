@@ -8,6 +8,15 @@ const Milestone = PropTypes.shape({
   id: PropTypes.number.isRequired,
 })
 
+const formatCurrency = value =>
+  value
+    .toLocaleString('en-US', {
+      currency: 'USD',
+      style: 'currency',
+    })
+    .replace('$', '')
+    .replace('.00', '')
+
 const PaymentsForm = props => {
   const [milestones, setMilestones] = useState(props.milestones)
   const [total, setTotal] = useState(Number(props.total))
@@ -38,16 +47,8 @@ const PaymentsForm = props => {
     )
   })
 
-  const formatCurrency = value =>
-    value
-      .toLocaleString('en-US', {
-        currency: 'USD',
-        style: 'currency',
-      })
-      .replace('$', '')
-      .replace('.00', '')
-
   if (total !== sum) {
+    console.error(total, sum)
     errorText = 'Must add up to 100%'
     submitButton.disabled = true
   } else {
@@ -192,7 +193,7 @@ const PaymentForm = React.memo(
                 <span className='input-group-text'>$</span>
               </div>
               <input
-                value={milestone.amount ? Number(milestone.amount) : ''}
+                value={milestone.amount ? formatCurrency(milestone.amount) : ''}
                 className='form-control'
                 inputMode='decimal'
                 max={maxPayment}

@@ -10,7 +10,7 @@ Fabricator(:admin, from: :user) do
 end
 
 Fabricator(:client, from: :user) do
-  org
+  org(fabricator: :named_org)
 end
 
 Fabricator(:freelancer, from: :user) do

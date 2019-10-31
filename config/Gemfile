@@ -91,6 +91,7 @@ group :test do
   gem 'rspec-instafail', require: false
   gem 'selenium-webdriver'
   gem 'shoulda-matchers'
+  gem 'stripe-ruby-mock', github: 'dbdrive/stripe-ruby-mock', branch: 'stripe-v5-compatability', require: 'stripe_mock'
   gem 'webdrivers'
 end
 

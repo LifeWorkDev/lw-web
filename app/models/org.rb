@@ -27,8 +27,8 @@ class Org < ApplicationRecord
     pay_methods.first
   end
 
-  def stripe_obj
-    @stripe_obj ||= Stripe::Customer.retrieve(stripe_id)
+  memoize def stripe_obj
+    Stripe::Customer.retrieve(stripe_id)
   end
 
 private

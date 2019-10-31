@@ -1,7 +1,7 @@
 class PayMethods::BankAccount < PayMethod
   attr_accessor :plaid_link_token, :plaid_account_id
 
-  validates :name, :issuer, :kind, :plaid_id, :plaid_token, presence: true
+  validates :plaid_id, :plaid_token, presence: true
 
   before_validation :exchange_plaid_link_token, on: :create
 

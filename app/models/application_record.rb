@@ -3,6 +3,7 @@ class ApplicationRecord < ActiveRecord::Base
 
   include JsonbAccessor
   include JsonbAccessor::QueryBuilder
+  include Memery
   include StringEnum
 
   def self.callbacks_of_type(type, kind: :all)
