@@ -1,4 +1,8 @@
-p #{@project.freelancer.name} would like to be paid for #{@project.name} through LifeWork. They have created a payment schedule based on the following milestones, which you will have the opportunity to modify, if necessary.
+p
+  strong => @project.freelancer.name
+  ' would like to be paid for
+  strong => @project.name
+  | through LifeWork. They have created a payment schedule based on the following milestones, which you will have the opportunity to modify, if necessary.
 
 - if @get_started_url.present?
   .mb-3.text-center = link_to 'Get started', @get_started_url, class: 'btn btn-primary'
