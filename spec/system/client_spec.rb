@@ -16,11 +16,11 @@ RSpec.describe 'Client views', type: :system do
     def shared_expectations
       visit polymorphic_path [:payments, :client, project]
       project.milestones.each do |milestone|
-        expect(page).to have_selector("input[value='#{milestone.amount.format(symbol: false)}']") &
+        expect(page).to have_selector("input[value='#{milestone.amount.input_format}']") &
                         have_content(milestone.formatted_date) &
                         have_selector("input[value='#{milestone.description}']")
       end
-      expect(page).to have_selector("input[value='#{project.amount.format(symbol: false)}']")
+      expect(page).to have_selector("input[value='#{project.amount.input_format}']")
       click_on 'Continue >'
     end
 

@@ -47,7 +47,7 @@ const PaymentsForm = props => {
     )
   })
 
-  if (total !== sum) {
+  if (Math.abs(total - sum) > 0.01) {
     console.error(total, sum)
     errorText = 'Must add up to 100%'
     submitButton.disabled = true
@@ -193,7 +193,7 @@ const PaymentForm = React.memo(
                 <span className='input-group-text'>$</span>
               </div>
               <input
-                value={milestone.amount ? formatCurrency(milestone.amount) : ''}
+                value={milestone.amount ? Number(milestone.amount) : ''}
                 className='form-control'
                 inputMode='decimal'
                 max={maxPayment}
