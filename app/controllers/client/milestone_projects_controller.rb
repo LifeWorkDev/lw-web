@@ -9,6 +9,9 @@ class Client::MilestoneProjectsController < MilestoneProjectsController
       currency: amount.currency.to_s,
       customer: @project.client.stripe_id,
       source: @project.client.primary_pay_method.stripe_id,
+      metadata: {
+        'Milestone ID': milestone.id,
+      },
     )
     FreelancerMailer.deposit_received(user: @project.freelancer, project: @project, amount: milestone.amount.format).deliver_later
     redirect_to [current_namespace, Project], notice: "Your deposit was received. #{@project.freelancer.name} has been notified so they can start work on your project."
