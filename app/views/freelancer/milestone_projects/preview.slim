@@ -1,14 +1,14 @@
 - content_for :title, 'Preview Client Email'
 
 .text-center
-  h2 Review before sending to your client.
+  h2 Review before we send to your client.
 
 .row.pb-4
   .card.bg-transparent.mx-auto.shadow
     .card-header.bg-white
       - recipient = @project.client.primary_contact
       strong To:
-      |  #{recipient.name} &lt;#{recipient&.email}&gt;
+      |  #{recipient&.name} &lt;#{recipient&.email}&gt;
       br
       strong From:
       |  #{Devise.mailer_sender}
