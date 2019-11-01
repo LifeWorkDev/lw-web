@@ -11,6 +11,10 @@ class PayMethod < ApplicationRecord
     model_name.human.titleize
   end
 
+  def expires
+    "#{exp_month}/#{exp_year}"
+  end
+
   memoize def stripe_obj
     Stripe::Source.retrieve(stripe_id)
   end

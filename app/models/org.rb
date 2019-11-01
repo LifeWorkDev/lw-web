@@ -6,6 +6,8 @@ class Org < ApplicationRecord
   attr_accessor :current_user
 
   has_many :pay_methods, dependent: :destroy
+  has_many :bank_accounts, dependent: :destroy, class_name: 'PayMethods::BankAccount'
+  has_many :cards, dependent: :destroy, class_name: 'PayMethods::Card'
   has_many :projects, dependent: :destroy, inverse_of: :client
   accepts_nested_attributes_for :projects
   has_many :users, dependent: :nullify

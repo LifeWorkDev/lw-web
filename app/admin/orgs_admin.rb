@@ -36,6 +36,18 @@ Trestle.resource(:orgs) do
       table ProjectsAdmin.table, collection: org.projects
       concat admin_link_to('New Project', admin: :projects, action: :new, params: { org_id: org.id }, class: 'btn btn-success')
     end
+
+    tab :pay_methods, badge: org.pay_methods.size do
+      table org.pay_methods, sortable: true do
+        column :display_type, header: :Type
+        column :name
+        column :issuer
+        column :kind
+        column :last_4, sort: false
+        column :expires, sort: false
+        column :created_at
+      end
+    end
   end
 
   # By default, all parameters passed to the update and create actions will be
