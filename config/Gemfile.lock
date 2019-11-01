@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/TrestleAdmin/trestle.git
-  revision: d61193f2b742bd98844958cc0204196fc06a2ffd
+  revision: e17ecb651f6719924df4ebdf25c7610dd5ef5e63
   specs:
     trestle (0.9.0)
       activemodel (>= 4.2.0)
@@ -20,64 +20,12 @@ GIT
 
 GIT
   remote: https://github.com/rails/webpacker.git
-  revision: 2cef2fd6c20876704062c40dd612c219166deed7
+  revision: 23d5fdd66b0184ac08fb0fce855c813b4a3ee36d
   specs:
     webpacker (4.0.7)
       activesupport (>= 4.2)
       rack-proxy (>= 0.6.1)
       railties (>= 4.2)
-
-GIT
-  remote: https://github.com/rspec/rspec-core.git
-  revision: 82928aac51e1e7a06f155f73a72d6a5a88e7b2a8
-  specs:
-    rspec-core (3.10.0.pre)
-      rspec-support (= 3.10.0.pre)
-
-GIT
-  remote: https://github.com/rspec/rspec-expectations.git
-  revision: 74871dfec85e656cddc80672f8b1eaf766651cf6
-  specs:
-    rspec-expectations (3.10.0.pre)
-      diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (= 3.10.0.pre)
-
-GIT
-  remote: https://github.com/rspec/rspec-mocks.git
-  revision: 903c342e14080c40a8aa62a604d13cf23963ecfa
-  specs:
-    rspec-mocks (3.10.0.pre)
-      diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (= 3.10.0.pre)
-
-GIT
-  remote: https://github.com/rspec/rspec-rails.git
-  revision: 9e48616e684dd37cdc858e88f3058e5788acc47c
-  branch: 4-0-dev
-  specs:
-    rspec-rails (4.0.0.beta2)
-      actionpack (>= 4.2)
-      activesupport (>= 4.2)
-      railties (>= 4.2)
-      rspec-core (~> 3.8)
-      rspec-expectations (~> 3.8)
-      rspec-mocks (~> 3.8)
-      rspec-support (~> 3.8)
-
-GIT
-  remote: https://github.com/rspec/rspec-support.git
-  revision: 3d227e50f7a3c1e88e3cb113a93537f7d524c1be
-  specs:
-    rspec-support (3.10.0.pre)
-
-GIT
-  remote: https://github.com/rspec/rspec.git
-  revision: e1c2c6bd78c849d7956431331f32ba5092951dab
-  specs:
-    rspec (3.10.0.pre)
-      rspec-core (= 3.10.0.pre)
-      rspec-expectations (= 3.10.0.pre)
-      rspec-mocks (= 3.10.0.pre)
 
 GIT
   remote: https://github.com/swrobel/bootstrap-email.git
@@ -224,7 +172,7 @@ GEM
     bootstrap_form (4.3.0)
       actionpack (>= 5.0)
       activemodel (>= 5.0)
-    brakeman (4.6.1)
+    brakeman (4.7.1)
     bugsnag (6.12.2)
       concurrent-ruby (~> 1.0)
     builder (3.2.3)
@@ -247,7 +195,7 @@ GEM
     colorize (0.8.1)
     concurrent-ruby (1.1.5)
     connection_pool (2.2.2)
-    crass (1.0.4)
+    crass (1.0.5)
     css_parser (1.7.0)
       addressable
     dante (0.2.0)
@@ -265,7 +213,7 @@ GEM
     em-proxy (0.1.9)
       eventmachine
     email_reply_parser (0.5.10)
-    errbase (0.1.1)
+    errbase (0.2.0)
     erubi (1.9.0)
     eventmachine (1.0.9.1)
     execjs (2.7.0)
@@ -291,7 +239,7 @@ GEM
       railties
     globalid (0.4.2)
       activesupport (>= 4.2.0)
-    guard (2.15.1)
+    guard (2.16.1)
       formatador (>= 0.2.4)
       listen (>= 2.7, < 4.0)
       lumberjack (>= 1.0.12, < 2.0)
@@ -311,7 +259,7 @@ GEM
     guard-shell (0.7.1)
       guard (>= 2.0.0)
       guard-compat (~> 1.0)
-    hashie (3.6.0)
+    hashie (4.0.0)
     htmlentities (4.3.4)
     http-parser-lite (0.6.0)
     i18n (1.7.0)
@@ -320,7 +268,7 @@ GEM
     inline_svg (1.5.2)
       activesupport (>= 3.0)
       nokogiri (>= 1.6)
-    jaro_winkler (1.5.3)
+    jaro_winkler (1.5.4)
     jsonapi-renderer (0.2.2)
     kaminari (1.1.1)
       activesupport (>= 4.1.0)
@@ -347,7 +295,7 @@ GEM
       activesupport (>= 4)
       railties (>= 4)
       request_store (~> 1.0)
-    loofah (2.3.0)
+    loofah (2.3.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     lumberjack (1.0.13)
@@ -359,17 +307,17 @@ GEM
       mimemagic (~> 0.3.2)
     material_design_icons (4.1.95)
       inline_svg (~> 1.0)
-    memery (1.1.0)
+    memery (1.2.0)
     method_source (0.9.2)
     mimemagic (0.3.3)
     mini_mime (1.0.2)
     mini_portile2 (2.4.0)
-    minitest (5.12.2)
+    minitest (5.13.0)
     monetize (1.9.2)
       money (~> 6.12)
     money (6.13.4)
       i18n (>= 0.6.4, <= 2)
-    money-rails (1.13.2)
+    money-rails (1.13.3)
       activesupport (>= 3.0)
       monetize (~> 1.9.0)
       money (~> 6.13.2)
@@ -378,7 +326,7 @@ GEM
     multipart-post (2.1.1)
     nenv (0.3.0)
     nio4r (2.5.2)
-    nokogiri (1.10.4)
+    nokogiri (1.10.5)
       mini_portile2 (~> 2.4.0)
     notiffany (0.1.3)
       nenv (~> 0.1)
@@ -466,9 +414,30 @@ GEM
       railties (>= 5.0)
     route_downcaser (1.2.2)
       activesupport (>= 3.2)
+    rspec (3.9.0)
+      rspec-core (~> 3.9.0)
+      rspec-expectations (~> 3.9.0)
+      rspec-mocks (~> 3.9.0)
+    rspec-core (3.9.0)
+      rspec-support (~> 3.9.0)
+    rspec-expectations (3.9.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.9.0)
     rspec-instafail (1.0.0)
       rspec
-    rubocop (0.75.1)
+    rspec-mocks (3.9.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.9.0)
+    rspec-rails (4.0.0.beta3)
+      actionpack (>= 4.2)
+      activesupport (>= 4.2)
+      railties (>= 4.2)
+      rspec-core (~> 3.8)
+      rspec-expectations (~> 3.8)
+      rspec-mocks (~> 3.8)
+      rspec-support (~> 3.8)
+    rspec-support (3.9.0)
+    rubocop (0.76.0)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
       parser (>= 2.6)
@@ -487,7 +456,7 @@ GEM
     rubydns (0.8.5)
       eventmachine (~> 1.0.0)
     rubyzip (2.0.0)
-    safely_block (0.2.2)
+    safely_block (0.3.0)
       errbase (>= 0.1.1)
     sassc (2.2.1)
       ffi (~> 1.9)
@@ -521,8 +490,8 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    stripe (5.7.0)
-    strong_migrations (0.4.1)
+    stripe (5.7.1)
+    strong_migrations (0.4.2)
       activerecord (>= 5)
     sysexits (1.2.0)
     systemu (2.6.5)
@@ -557,7 +526,7 @@ GEM
     websocket-extensions (0.1.4)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.2.0)
+    zeitwerk (2.2.1)
 
 PLATFORMS
   ruby
@@ -613,13 +582,8 @@ DEPENDENCIES
   react-rails
   referral
   route_downcaser
-  rspec!
-  rspec-core!
-  rspec-expectations!
   rspec-instafail
-  rspec-mocks!
-  rspec-rails!
-  rspec-support!
+  rspec-rails (~> 4.0.0.beta3)
   rubocop
   rubocop-performance
   rubocop-rails
