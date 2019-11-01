@@ -26,7 +26,7 @@ Trestle.resource(:milestones) do
     tab :milestone do
       collection_select_with_link :project_id, Project.all, :id, :name
       text_field :description
-      number_field :amount_cents
+      number_field :amount, prepend: '$'
       select :status, Milestone.aasm.states.map(&:name)
       date_field :date
     end
