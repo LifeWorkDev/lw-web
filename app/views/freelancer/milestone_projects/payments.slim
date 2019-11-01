@@ -5,7 +5,7 @@
   p.lead Feel free to enter percentages, and we’ll calculate the amounts, or vice-versa.
   p
     | Please note that we can only accept individual milestones of up to
-    strong =<> ACH_MAX_BEFORE_FEE.format(:no_cents)
+    strong =<> ACH_MAX_BEFORE_FEE.format(no_cents: true)
     - if LIFEWORK_FEE > 0
       ' before fees
     | at this time.
