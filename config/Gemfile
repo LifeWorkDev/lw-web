@@ -28,6 +28,7 @@ gem 'plaid' # Easy bank account linking
 gem 'pretender' # Impersonate users
 gem 'puma'
 gem 'react-rails'
+gem 'redcarpet' # Markdown parser
 gem 'route_downcaser' # Make routes case-insensitive
 gem 'safely_block' # Move on from exceptions w/ silent reporting to tracking service
 gem 'sassc-rails'

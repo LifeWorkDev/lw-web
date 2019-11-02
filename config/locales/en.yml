@@ -40,6 +40,8 @@ en:
   client_mailer:
     invite:
       subject: "%{freelancer} has invited you to a project"
+    milestone_completed:
+      subject: "%{freelancer} will be paid in 3 days"
   comment_mailer:
     notify_new_comment:
       subject: "New comment on project \"%{project}\""

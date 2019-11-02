@@ -1,0 +1,11 @@
+p
+  markdown:
+    We've released your payment of **#{@milestone.amount&.format}** for **#{@milestone.description}** to **#{@freelancer_name}**.
+
+- if @next_milestone
+  p
+    markdown:
+      At the end of the day Monday, November 4, we will automatically withdraw **#{@next_milestone.amount_with_fee&.format}** from your bank account and hold that until the next milestone, **#{@next_milestone.description}**, is completed on **#{@next_milestone.formatted_date}**.
+  p
+    strong
+      em If for some reason you do not want us to do so, please reply to this email immediately.

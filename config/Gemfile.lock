@@ -405,6 +405,7 @@ GEM
       execjs
       railties (>= 3.2)
       tilt
+    redcarpet (3.5.0)
     referral (0.0.4)
     regexp_parser (1.6.0)
     request_store (1.4.1)
@@ -580,6 +581,7 @@ DEPENDENCIES
   rails (~> 6.0.0)
   rails-controller-testing
   react-rails
+  redcarpet
   referral
   route_downcaser
   rspec-instafail

@@ -30,6 +30,10 @@ class Milestone < ApplicationRecord
     date && I18n.l(date)
   end
 
+  def next
+    project.milestones.active.where.not(id: id).first
+  end
+
   def percent
     (amount || 0.to_money) / (project.amount || 0.to_money)
   end
