@@ -39,7 +39,7 @@ en:
       date_time: "%-m/%-d/%Y %-l:%M%P"
   client_mailer:
     invite:
-      subject: "%{user} has invited you to a project"
+      subject: "%{freelancer} has invited you to a project"
   comment_mailer:
     notify_new_comment:
       subject: "New comment on project \"%{project}\""
