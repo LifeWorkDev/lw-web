@@ -7,15 +7,15 @@ class CommentRepliesMailbox < ApplicationMailbox
     milestone.comments.create(commenter: user, comment: parsed_mail_body)
   end
 
-  def user
-    @user ||= User.find_by(email: mail.from)
+  memoize def user
+    User.find_by(email: mail.from)
   end
 
-  def milestone
-    @milestone ||= Milestone.find_by(id: milestone_id)
+  memoize def milestone
+    Milestone.find_by(id: milestone_id)
   end
 
-  def milestone_id
+  memoize def milestone_id
     recipient = mail.recipients.find { |r| COMMENT_REPLIES_MATCHER.match?(r) }
     recipient[COMMENT_REPLIES_MATCHER, 1]
   end
