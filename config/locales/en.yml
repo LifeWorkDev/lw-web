@@ -41,7 +41,8 @@ en:
     invite:
       subject: "%{freelancer} has invited you to a project"
     milestone_completed:
-      subject: "%{freelancer} will be paid in 3 days"
+      # subject: "%{freelancer} will be paid in 3 days"
+      subject: "Next payment for %{freelancer} will be withdrawn from your account today"
   comment_mailer:
     notify_new_comment:
       subject: "New comment on project \"%{project}\""
