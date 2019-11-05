@@ -39,7 +39,12 @@ Rails.application.routes.draw do
     get :logout, to: 'devise/sessions#destroy'
     get :sign_up, to: 'devise/registrations#new', as: :new_user_registration
   end
-  devise_for :users, skip: [:sessions], controllers: { registrations: 'users/registrations' }
+  devise_for :users,
+             skip: [:sessions],
+             controllers: {
+               invitations: 'users/invitations',
+               registrations: 'users/registrations',
+             }
   namespace :users do
     post ':id/impersonate', to: 'impersonations#impersonate', as: :impersonate
     post :stop_impersonating, to: 'impersonations#stop_impersonating'

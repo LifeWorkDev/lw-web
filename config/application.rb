@@ -73,9 +73,11 @@ module LifeWork
     host ||= 'lifework.localhost'
     server_url = "https://#{host}"
 
-    config.action_mailer.asset_host = server_url
-    config.hosts << host unless Rails.env.test?
-    Rails.application.routes.default_url_options = { host: server_url, protocol: 'https' }
+    unless Rails.env.test?
+      config.action_mailer.asset_host = server_url
+      config.hosts << host
+      Rails.application.routes.default_url_options = { host: server_url, protocol: 'https' }
+    end
   end
 end
 
