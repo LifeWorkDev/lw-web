@@ -6,9 +6,9 @@ h2.text-center.mt-2
     = f.alert_message 'Errors'
     = f.fields_for :users do |u|
       = u.hidden_field :id
-      = u.text_field :name, label: 'Client Name', placeholder: t('devise_forms.user.name_placeholder'), required: true
-      = u.email_field :email, label: 'Client Email', placeholder: t('devise_forms.user.email_placeholder'), required: true
-    = f.text_field :name, label: 'Client Organization', placeholder: 'ABC Corporation', add_control_col_class: 'd-flex align-items-center'
+      = u.text_field :name, label: 'Contact Name', placeholder: t('devise_forms.user.name_placeholder'), required: true
+      = u.email_field :email, label: 'Contact Email', placeholder: t('devise_forms.user.email_placeholder'), required: true
+    = f.text_field :name, label: 'Contact Organization', placeholder: 'ABC Corporation', add_control_col_class: 'd-flex align-items-center'
     = f.fields_for :projects do |p|
       = p.hidden_field :id
       = p.text_field :name, label: 'Project Name', placeholder: 'XYZ Project', required: true
