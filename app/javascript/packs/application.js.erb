@@ -1,5 +1,3 @@
-/* eslint-disable import/first */
-
 import 'bootstrap.native/dist/bootstrap-native-v4'
 import bugsnag from '@bugsnag/js'
 import bugsnagReact from '@bugsnag/plugin-react'
@@ -18,4 +16,6 @@ require('react_ujs').useContext(require.context('components', true))
 // Goes last to allow overriding css from packages imported via React components
 import 'application/application.scss'
 
-/* eslint-enable import/first */
+document.addEventListener('turbolinks:load', function() {
+  BSN.initCallback()
+})
