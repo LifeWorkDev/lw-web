@@ -4,10 +4,8 @@
   h2 Choose your milestones.
   p If your contract includes a deposit, please include that date as a milestone.
 
-.container.d-flex.justify-content-center
+.d-flex.justify-content-center
   = bootstrap_form_with(model: [current_namespace, @project], local: true) do |f|
-    = f.hidden_field :id
-    = hidden_field_tag :update_type, :dates
     = react_component('DatePicker/DatePicker', milestones: @project.milestones)
     .mt-4 = render 'shared/form_buttons', f: f, back: [:edit, current_namespace, @project.client], submit_val: :milestones
 
