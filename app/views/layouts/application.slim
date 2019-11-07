@@ -8,9 +8,9 @@ html.h-100 lang="en"
 
     .container.flex-shrink-0.overflow-auto.pb-4
       - if flash.notice.present?
-        = render 'shared/alert', klass: 'alert-success', message: flash.notice
+        = render 'shared/alert', class: 'alert-success', message: flash.notice
       - if flash.alert.present?
-        = render 'shared/alert', klass: 'alert-danger', message: flash.alert
+        = render 'shared/alert', class: 'alert-danger', message: flash.alert
       = yield
 
     = render 'shared/body_end'
