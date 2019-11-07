@@ -4,15 +4,8 @@ class Client::MilestoneProjectsController < MilestoneProjectsController
 
     milestone = @project.milestones.first
     amount = milestone.amount_with_fee
-    Stripe::Charge.create(
-      amount: amount.cents,
-      currency: amount.currency.to_s,
-      customer: @project.client.stripe_id,
-      source: @project.client.primary_pay_method.stripe_id,
-      metadata: {
-        'Milestone ID': milestone.id,
-      },
-    )
+    metadata = { 'Milestone ID': milestone.id }
+    @project.client.primary_pay_method.charge!(amount: amount, metadata: metadata)
     FreelancerMailer.deposit_received(user: @project.freelancer, project: @project, amount: milestone.amount.format).deliver_later
     redirect_to [current_namespace, Project], notice: "Your deposit was received. #{@project.freelancer.name} has been notified so they can start work on your project."
   end
@@ -30,7 +23,7 @@ class Client::MilestoneProjectsController < MilestoneProjectsController
       if current_org.primary_pay_method
         redirect_to [:deposit, :client, @project], notice: notice
       else
-        redirect_to "/c/bank_accounts/new?project=#{@project.slug}", notice: notice
+        redirect_to "/c/pay_methods?project=#{@project.slug}", notice: notice
       end
     else
       render params[:button].to_sym

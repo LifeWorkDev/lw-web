@@ -15,10 +15,5 @@ end
 
 Fabricator(:card_pay_method, class_name: 'pay_methods/card', from: :pay_method) do
   type       PayMethods::Card
-  issuer     { ['Visa', 'Mastercard', 'Discover', 'American Express'].sample }
-  kind       { %w[credit debit prepaid unknown].sample }
-  exp_month  { Faker::Stripe.month }
-  exp_year   { Faker::Stripe.year }
-  last_4     { Faker::Business.credit_card_number.last(4) }
-  stripe_id  { StripeMock.generate_card_token }
+  stripe_id  { Stripe::PaymentMethod.create(type: 'card').id }
 end

@@ -19,3 +19,32 @@ import 'application/application.scss'
 document.addEventListener('turbolinks:load', function() {
   BSN.initCallback()
 })
+
+window.createPayMethod = function(data) {
+  const csrf = document
+    .querySelector("meta[name='csrf-token']")
+    .getAttribute('content')
+  window
+    .fetch(`/c/pay_methods`, {
+      body: JSON.stringify({
+        pay_method: data
+      }),
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': csrf,
+      },
+      method: 'POST',
+      mode: 'cors',
+    })
+    .then(response => {
+      if (response.ok) {
+        const params = new URLSearchParams(window.location.search)
+        window.location = `/c/milestone_projects/${params.get('project')}/deposit`
+      } else {
+        console.error(response)
+        window.bugsnagClient.metaData = { response: response }
+        window.bugsnagClient.notify(new Error('Payment Method creation error'))
+      }
+    })
+}

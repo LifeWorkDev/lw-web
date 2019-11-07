@@ -1,0 +1,80 @@
+- content_for :head_extra
+  = javascript_include_tag 'https://js.stripe.com/v3/', defer: true
+
+- title = 'Add a Credit Card'
+- content_for :title, title
+
+h2.text-center.mt-2 = title
+
+.mx-auto.mt-4 style='max-width: 500px;'
+  form#form
+    #card-element.form-control.h-auto
+    #card-errors.mt-2.alert.alert-danger.d-none
+    button.btn.btn-primary.mt-4.w-100.d-none id='card-button' type='submit'
+      = mdi_svg 'credit-card-plus-outline', id: 'cc-icon'
+      = mdi_svg 'loading', class: 'spinner d-none', id: 'spinner'
+      |  Save
+  = render 'stripe_message'
+
+javascript:
+  document.addEventListener('DOMContentLoaded', function() {
+    var stripe = Stripe('#{Rails.application.credentials.stripe[:public_key]}')
+    var elements = stripe.elements()
+    var css = getComputedStyle(document.querySelector('.form-control'))
+    var options = {
+      style: {
+        base: {
+          color: css.getPropertyValue('color'),
+          fontFamily: css.getPropertyValue('font-family'),
+          fontSize: css.getPropertyValue('font-size'),
+          '::placeholder': {
+            color: getComputedStyle(document.querySelector('.form-control'), '::placeholder').getPropertyValue('color'),
+          },
+        },
+      }
+    }
+    var card = elements.create('card', options)
+    var errorElement = document.getElementById('card-errors')
+    var button = document.getElementById('card-button')
+    var ccIcon = document.getElementById('cc-icon')
+    var spinner = document.getElementById('spinner')
+    card.mount('#card-element')
+    card.on('ready', function() { card.focus() })
+    card.on('change', function(event) {
+      if (event.error) {
+        button.classList.add('d-none')
+        errorElement.classList.remove('d-none')
+        errorElement.textContent = event.error.message
+      } else
+        errorElement.classList.add('d-none')
+      if (event.complete)
+        button.classList.remove('d-none')
+    })
+    document.getElementById('form').addEventListener('submit', function(event) {
+      event.preventDefault()
+      button.disabled = true
+      ccIcon.classList.add('d-none')
+      spinner.classList.remove('d-none')
+      stripe.confirmCardSetup('#{@intent.client_secret}', {
+        payment_method: {
+          card: card
+        }
+      }).then(function(result) {
+        if (result.error) {
+          errorElement.classList.remove('d-none')
+          errorElement.textContent = result.error.message
+          button.disabled = false
+          ccIcon.classList.remove('d-none')
+          spinner.classList.add('d-none')
+        } else if (result.setupIntent) {
+          window.createPayMethod({
+            type: 'PayMethods::Card',
+            stripe_id: result.setupIntent.payment_method,
+          })
+        } else {
+          window.bugsnagClient.metaData = { result: result }
+          window.bugsnagClient.notify(new Error('Unhandled confirmCardSetup result'))
+        }
+      })
+    })
+  })

@@ -3,6 +3,22 @@ class PayMethods::Card < PayMethod
 
   validates :exp_month, :exp_year, numericality: { integer_only: true }
 
+  def charge!(amount:, metadata: {})
+    Stripe::PaymentIntent.create(
+      amount: amount.cents,
+      currency: amount.currency.to_s,
+      customer: org.stripe_id,
+      payment_method: stripe_id,
+      off_session: true,
+      confirm: true,
+      metadata: metadata,
+    )
+  end
+
+  memoize def stripe_obj
+    Stripe::PaymentMethod.retrieve(stripe_id)
+  end
+
   def update_from_stripe!
     update_from_stripe_object!(stripe_obj)
   end
@@ -17,18 +33,24 @@ private
 
   def associate_with_stripe_customer!
     if org.stripe_id.present?
-      org.stripe_obj.sources.create(source: stripe_id)
+      Stripe::PaymentMethod.attach(stripe_id, customer: org.stripe_id)
     else
       customer = Stripe::Customer.create(
         name: org.display_name,
         email: org.primary_contact&.email,
-        source: stripe_id,
+        payment_method: stripe_id,
         metadata: {
           'Org ID': org.id,
         },
       )
       org.update_columns(stripe_id: customer.id) # rubocop:disable Rails/SkipsModelValidations
     end
+    card = stripe_obj.card
+    self.exp_month = card.exp_month
+    self.exp_year = card.exp_year
+    self.issuer = card.brand
+    self.kind = card.funding
+    self.last_4 = card.last4
   rescue Stripe::StripeError => e
     errors.add(:stripe_id, e.message)
   end

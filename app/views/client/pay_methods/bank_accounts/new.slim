@@ -1,32 +1,37 @@
-= javascript_include_tag 'https://cdn.plaid.com/link/v2/stable/link-initialize.js'
+= content_for :head_extra
+  = javascript_include_tag 'https://cdn.plaid.com/link/v2/stable/link-initialize.js', defer: true
 
-- content_for :title, 'Link Bank Account'
+- title = 'Link Bank Account'
+- content_for :title, title
 
-h2.text-center.mt-2 Link a Bank Account
+h2.text-center.mt-2 = title
 
-.container.text-center
-  p.lead.mt-4 Our partner, Plaid, makes it easy to link your bank account quickly & securely. There are no micro-deposits to hassle with, and you can always update your payment account in the future.
-  - unless Rails.env.production?
-    p.font-weight-bold Plaid will show fake credentials to enter at the bottom of the screen.
-  button.btn.btn-primary.mt-4#link-button
-    = mdi_svg 'vector-link'
-    |  Link Now
+.row
+  .container.text-center
+    p.lead.my-4 Our partner, Plaid, makes it easy to link your bank account quickly & securely. There are no micro-deposits to hassle with, and you can always update your payment account in the future.
+    - unless Rails.env.production?
+      .alert.alert-warning.mb-4.d-table.mx-auto Plaid will show fake credentials to enter at the bottom of the screen.
+    button.btn.btn-primary#link-button
+      = mdi_svg 'vector-link'
+      |  Link Now
+    .col-sm-6.mx-auto
+      = render 'stripe_message'
 
 javascript:
-  var linkHandler = Plaid.create({
-    clientName: 'LifeWork',
-    env: '#{PLAID_ENV}',
-    key: '072c1503058ebaaaf4d0fc44f7c159',
-    product: ['auth'],
-    onExit: function(error, metadata) {
-      if (error) {
-        window.bugsnagClient.metaData = { error: error, metadata: metadata }
-        window.bugsnagClient.notify(new Error(error.message))
-      }
-    },
-    onSuccess: function(public_token, metadata) {
-      const data = {
-        pay_method: {
+  document.addEventListener('DOMContentLoaded', function() {
+    var linkHandler = Plaid.create({
+      clientName: 'LifeWork',
+      env: '#{PLAID_ENV}',
+      key: '072c1503058ebaaaf4d0fc44f7c159',
+      product: ['auth'],
+      onExit: function(error, metadata) {
+        if (error) {
+          window.bugsnagClient.metaData = { error: error, metadata: metadata }
+          window.bugsnagClient.notify(new Error(error.message))
+        }
+      },
+      onSuccess: function(public_token, metadata) {
+        window.createPayMethod({
           type: 'PayMethods::BankAccount',
           name: metadata.account.name,
           kind: metadata.account.subtype,
@@ -34,29 +39,11 @@ javascript:
           last_4: metadata.account.mask,
           plaid_account_id: metadata.account_id,
           plaid_link_token: public_token,
-        }
-      }
-      const csrf = document
-        .querySelector("meta[name='csrf-token']")
-        .getAttribute('content')
-      window
-        .fetch(`/c/pay_methods`, {
-          body: JSON.stringify(data),
-          credentials: 'same-origin',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-Token': csrf,
-          },
-          method: 'POST',
-          mode: 'cors',
         })
-        .then(response =>
-          window.location = `/c/milestone_projects/#{params[:project]}/deposit`
-        )
-    },
-  });
+      },
+    })
 
-  // Trigger the standard Institution Select view
-  document.getElementById('link-button').onclick = function() {
-    linkHandler.open();
-  };
+    document.getElementById('link-button').onclick = function() {
+      linkHandler.open()
+    }
+  })

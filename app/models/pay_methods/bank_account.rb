@@ -5,6 +5,20 @@ class PayMethods::BankAccount < PayMethod
 
   before_validation :exchange_plaid_link_token, on: :create
 
+  def charge!(amount:, metadata: {})
+    Stripe::Charge.create(
+      amount: amount.cents,
+      currency: amount.currency.to_s,
+      customer: org.stripe_id,
+      source: stripe_id,
+      metadata: metadata,
+    )
+  end
+
+  memoize def stripe_obj
+    Stripe::Source.retrieve(stripe_id)
+  end
+
 private
 
   def exchange_plaid_link_token
@@ -21,12 +35,13 @@ private
     stripe_token = response['stripe_bank_account_token']
 
     if org.stripe_id.present?
-      org.stripe_obj.sources.create(source: stripe_token)
+      source = Stripe::Customer.create_source(org.stripe_id, source: stripe_token)
+      self.stripe_id = source.id
     else
       customer = Stripe::Customer.create(
-        source: stripe_token,
-        email: org.primary_contact&.email,
         name: org.display_name,
+        email: org.primary_contact&.email,
+        source: stripe_token,
         metadata: {
           'Org ID': org.id,
         },

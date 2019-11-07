@@ -3,8 +3,7 @@ class Client::PayMethodsController < AuthenticatedController
 
   # GET /pay_methods
   def index
-    @pay_methods = current_org.pay_methods
-    redirect_to '/c/bank_accounts/new' if @pay_methods.blank?
+    # @pay_methods = current_org.pay_methods
   end
 
   # GET /pay_methods/1
@@ -12,6 +11,7 @@ class Client::PayMethodsController < AuthenticatedController
 
   # GET /pay_methods/new
   def new
+    @intent = Stripe::SetupIntent.create if params[:type] == 'cards'
     render "client/pay_methods/#{params[:type]}/new"
   end
 
@@ -53,6 +53,6 @@ private
 
   # Only allow a trusted parameter "white list" through.
   def pay_method_params
-    params.require(:pay_method).permit(:type, :name, :issuer, :kind, :last_4, :exp_month, :exp_year, :plaid_account_id, :plaid_link_token)
+    params.require(:pay_method).permit(:type, :name, :issuer, :kind, :last_4, :exp_month, :exp_year, :plaid_account_id, :plaid_link_token, :stripe_id)
   end
 end

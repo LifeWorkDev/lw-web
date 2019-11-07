@@ -7,15 +7,11 @@ class PayMethod < ApplicationRecord
   validates :last_4, numericality: { integer_only: true }
   validates :issuer, :kind, :stripe_id, presence: true
 
-  def display_type
+  memoize def display_type
     model_name.human.titleize
   end
 
-  def expires
-    "#{exp_month}/#{exp_year}"
-  end
-
-  memoize def stripe_obj
-    Stripe::Source.retrieve(stripe_id)
+  memoize def expires
+    "#{exp_month}/#{exp_year}" if exp_month.present? && exp_year.present?
   end
 end

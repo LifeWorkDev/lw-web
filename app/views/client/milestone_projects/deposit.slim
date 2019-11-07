@@ -4,23 +4,24 @@
 .text-center
   h2 = title
 
-p.lead.mt-4 Congratulations, you've successfully linked your bank account!
-.alert.alert-warning.mt-4
-  ' If you only allow external withdrawals to specific banking institutions, please whitelist our partner, Stripe using
-  a.alert-link href='https://support.stripe.com/questions/ach-company-ids-to-whitelist-for-stripe' target='stripe_help' these instructions
-  | .
+p.lead.mt-4 Congratulations, you've successfully linked your payment method!
+- if current_org.primary_pay_method
+  .alert.alert-warning.mt-4
+    ' If you only allow external withdrawals to specific banking institutions, please whitelist our partner, Stripe using
+    a.alert-link href='https://support.stripe.com/questions/ach-company-ids-to-whitelist-for-stripe' target='stripe_help' these instructions
+    | .
 
 - first_milestone = @project.milestones.first
 ol.lead
   li
-    ' Today, we'll withdraw #{first_milestone.amount_with_fee&.format}, the payment for the first milestone
+    ' Today we'll withdraw #{first_milestone.amount_with_fee&.format}, the payment for the first milestone
     - if LIFEWORK_FEE > 0
       ' (including our #{number_to_percentage(LIFEWORK_FEE * 100, precision: 0)} fee).
-    | and hold it in our account. This covers the payment for the first milestone.
+    | and hold it in our account.
 
   li Three days before the due date, we'll email you to remind you about the upcoming payment, and give you the opportunity to communicate with #{@project.freelancer.name} to make sure everything is on track.
 
-  li #{first_milestone.date.strftime('%B %-d')}, we'll release #{first_milestone.amount&.format} from our account to #{@project.freelancer.name}. We will also automatically withdraw the payment for the next milestone from your bank account and hold that in our account until the next milestone, if there is one.
+  li On #{first_milestone.date.strftime('%B %-d')} we'll release #{first_milestone.amount&.format} from our account to #{@project.freelancer.name}. If there's another milestone after that, we'll automatically withdraw that amount from your payment method and hold it in our account until it's completed.
 
 p.lead You can see the full schedule below:
 

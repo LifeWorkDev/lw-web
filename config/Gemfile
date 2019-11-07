@@ -38,7 +38,7 @@ gem 'stripe'
 gem 'strong_migrations' # complains about migration worst-practices
 gem 'trestle', github: 'TrestleAdmin/trestle'
 gem 'turbolinks', '~> 5'
-gem 'webpacker', github: 'rails/webpacker'
+gem 'webpacker', github: 'LuanGB/webpacker', branch: 'webpacker-clean_with_hashes_on_manifest'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
