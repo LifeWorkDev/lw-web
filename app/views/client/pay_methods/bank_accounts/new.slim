@@ -10,7 +10,7 @@ h2.text-center.mt-2 = title
   .container.text-center
     p.lead.my-4 Our partner, Plaid, makes it easy to link your bank account quickly & securely. There are no micro-deposits to hassle with, and you can always update your payment account in the future.
     - unless Rails.env.production?
-      .alert.alert-warning.mb-4.d-table.mx-auto Plaid will show fake credentials to enter at the bottom of the screen.
+      .alert.alert-warning.d-table.mx-auto Use these <a href='https://plaid.com/docs/#testing-auth' target='plaid_credentials' class='alert-link'>plaid credentials</a> to test the system.
     button.btn.btn-primary#link-button
       = mdi_svg 'vector-link'
       |  Link Now

@@ -7,6 +7,8 @@
 h2.text-center.mt-2 = title
 
 .mx-auto.mt-4 style='max-width: 500px;'
+  - unless Rails.env.production?
+    .alert.alert-warning.text-center Use these <a href='https://stripe.com/docs/testing#cards' target='stripe_credentials' class='alert-link'>fake cards</a> to test the system.
   form#form
     #card-element.form-control.h-auto
     #card-errors.mt-2.alert.alert-danger.d-none
