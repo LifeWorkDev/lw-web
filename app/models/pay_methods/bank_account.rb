@@ -1,11 +1,13 @@
 class PayMethods::BankAccount < PayMethod
-  attr_accessor :plaid_link_token, :plaid_account_id
+  attr_accessor :plaid_link_token
 
   validates :plaid_id, :plaid_token, presence: true
 
   before_validation :exchange_plaid_link_token, on: :create
 
   def charge!(amount:, metadata: {})
+    raise "Insufficent balance for Bank Account #{id}. Attempted to charge #{amount.format} to account with balance #{balance.format}" if Rails.env.production? && balance < amount
+
     Stripe::Charge.create(
       amount: amount.cents,
       currency: amount.currency.to_s,
@@ -13,6 +15,14 @@ class PayMethods::BankAccount < PayMethod
       source: stripe_id,
       metadata: metadata,
     )
+  end
+
+  memoize def balance
+    (plaid_obj.balances['available'] || plaid_obj.balances['current']).to_money(plaid_obj.balances['iso_currency_code'])
+  end
+
+  memoize def plaid_obj
+    PLAID_CLIENT.accounts.balance.get(plaid_token, account_ids: [plaid_id])['accounts'].first
   end
 
   memoize def stripe_obj
@@ -24,15 +34,11 @@ private
   def exchange_plaid_link_token
     return if stripe_id.present?
 
-    plaid = Plaid::Client.new(env: PLAID_ENV,
-                              client_id: Rails.application.credentials.plaid[:client_id],
-                              secret: Rails.application.credentials.plaid[:secret_key],
-                              public_key: Rails.application.credentials.plaid[:public_key])
-    response = plaid.item.public_token.exchange(plaid_link_token)
-    self.plaid_id = response['item_id']
+    response = PLAID_CLIENT.item.public_token.exchange(plaid_link_token)
     self.plaid_token = response['access_token']
-    response = plaid.processor.stripe.bank_account_token.create(plaid_token, plaid_account_id)
+    response = PLAID_CLIENT.processor.stripe.bank_account_token.create(plaid_token, plaid_id)
     stripe_token = response['stripe_bank_account_token']
+    PLAID_CLIENT.item.webhook.update(plaid_token, PLAID_WEBHOOK_ENDPOINT)
 
     if org.stripe_id.present?
       source = Stripe::Customer.create_source(org.stripe_id, source: stripe_token)

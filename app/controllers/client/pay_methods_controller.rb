@@ -53,6 +53,6 @@ private
 
   # Only allow a trusted parameter "white list" through.
   def pay_method_params
-    params.require(:pay_method).permit(:type, :name, :issuer, :kind, :last_4, :exp_month, :exp_year, :plaid_account_id, :plaid_link_token, :stripe_id)
+    params.require(:pay_method).permit(:type, :name, :issuer, :kind, :last_4, :exp_month, :exp_year, :plaid_id, :plaid_link_token, :stripe_id)
   end
 end
