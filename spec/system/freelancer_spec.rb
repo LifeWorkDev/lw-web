@@ -22,7 +22,8 @@ RSpec.describe 'Freelancer views', type: :system do
     end
 
     def shared_expectations
-      find('div', class: %w[DayPicker-Day--today !DayPicker-Day--outside]).click
+      # Choose a random selectable date
+      all('div', class: %w[DayPicker-Day !DayPicker-Day--disabled]).sample.click
       click_on 'Continue >'
       expect(page).to have_content('Milestones were updated.') &
                       have_content(new_milestone.formatted_date)

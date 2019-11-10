@@ -1,7 +1,13 @@
 import 'react-day-picker/lib/style.css'
-import DayPicker, { DateUtils } from 'react-day-picker'
+import DayPicker from 'react-day-picker'
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
+import {
+  addBusinessDays,
+  eachDayOfInterval,
+  isSameDay,
+  subBusinessDays,
+} from 'date-fns'
 
 import './DatePicker.scss'
 
@@ -11,7 +17,15 @@ const DatePicker = props => {
     getMilestoneDays(props.milestones),
   )
   const ErrorBoundary = window.bugsnagClient.getPlugin('react')
-  const isMobile = window.innerWidth < 768 // Minimum iPad portrait
+  const isMobile = window.innerWidth < 768 // iPad portrait & below
+  const minDate = addBusinessDays(new Date().setHours(0, 0, 0, 0), 5)
+
+  const disabledDays = selectedDays.flatMap(selectedDay =>
+    eachDayOfInterval({
+      end: addBusinessDays(selectedDay, 5),
+      start: subBusinessDays(selectedDay, 5),
+    }).flatMap(date => (isSameDay(date, selectedDay) ? [] : [date.getTime()])),
+  )
 
   function getMilestoneDays(milestones) {
     let days = []
@@ -54,6 +68,11 @@ const DatePicker = props => {
     setMilestones(newMilestones)
   }
 
+  function isDisabled(date) {
+    date = date.setHours(0, 0, 0, 0)
+    return date < minDate || disabledDays.includes(date)
+  }
+
   const removeData = index => {
     const newSelectedDays = selectedDays.slice()
     removeMilestoneOfDate(newSelectedDays[index])
@@ -66,16 +85,12 @@ const DatePicker = props => {
 
     if (selected) {
       const selectedIndex = newSelectedDays.findIndex(selectedDay =>
-        DateUtils.isSameDay(selectedDay, day),
+        isSameDay(selectedDay, day),
       )
       removeMilestoneOfDate(day)
       newSelectedDays.splice(selectedIndex, 1)
     } else {
-      let minDate = new Date()
-      minDate.setHours(0, 0, 0, 0)
-      if (
-        day.toISOString().slice(0, 10) >= minDate.toISOString().slice(0, 10)
-      ) {
+      if (day >= minDate) {
         addMilestoneDate(day)
         newSelectedDays.push(day)
       }
@@ -146,7 +161,7 @@ const DatePicker = props => {
           selectedDays={selectedDays}
           onDayClick={handleDayClick}
           numberOfMonths={isMobile ? 1 : 2}
-          disabledDays={{ before: new Date() }}
+          disabledDays={isDisabled}
         />
       </div>
     </ErrorBoundary>
