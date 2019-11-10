@@ -1,7 +1,7 @@
 import 'react-day-picker/lib/style.css'
 import DayPicker from 'react-day-picker'
 import PropTypes from 'prop-types'
-import React, { useState } from 'react'
+import React, { useLayoutEffect, useState } from 'react'
 import {
   addBusinessDays,
   eachDayOfInterval,
@@ -19,6 +19,11 @@ const DatePicker = props => {
   const ErrorBoundary = window.bugsnagClient.getPlugin('react')
   const isMobile = window.innerWidth < 768 // iPad portrait & below
   const minDate = addBusinessDays(new Date().setHours(0, 0, 0, 0), 5)
+  const submitButton = document.getElementById('submit-form')
+
+  useLayoutEffect(() => {
+    submitButton.disabled = selectedDays.length == 0
+  }, [selectedDays])
 
   const disabledDays = selectedDays.flatMap(selectedDay =>
     eachDayOfInterval({
