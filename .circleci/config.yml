@@ -131,7 +131,10 @@ jobs:
 
       - run:
           name: Ruby tests
-          command: bin/rspec spec/
+          command: bin/rspec spec/ --format progress --format RspecJunitFormatter -o ~/test-results/rspec/rspec.xml
+
+      - store_test_results:
+          path: ~/test-results/rspec/
 
       - store_artifacts:
           path: tmp/screenshots

@@ -85,6 +85,7 @@ group :test do
   gem 'colorize' # Easily colorize text output in the console
   gem 'rails-controller-testing' # Allows using assigns() to get controller instance variables in tests
   gem 'rspec-instafail', require: false
+  gem 'rspec_junit_formatter' # For CircleCI enhanced test output
   gem 'selenium-webdriver'
   gem 'shoulda-matchers'
   gem 'stripe-ruby-mock', github: 'dbdrive/stripe-ruby-mock', branch: 'stripe-v5-compatability', require: 'stripe_mock'
