@@ -50,6 +50,10 @@ Rails.application.routes.draw do
     post :stop_impersonating, to: 'impersonations#stop_impersonating'
   end
 
+  authenticate :user, ->(u) { u.admin? } do
+    mount Que::Web, at: 'admin/que'
+  end
+
   get :styleguide, to: 'application#styleguide' if Rails.env.development?
 
   get 'legal/terms-of-use', to: 'application#tos', as: :tos

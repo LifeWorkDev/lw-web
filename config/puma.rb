@@ -15,4 +15,8 @@ if Rails.env.development?
   end
 else
   preload_app!
+
+  before_fork do
+    @que_pid ||= spawn('bin/que')
+  end
 end

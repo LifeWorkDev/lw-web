@@ -38,6 +38,9 @@ module LifeWork
 
     config.active_record.schema_format = :sql
 
+    config.active_job.queue_adapter = :que
+    config.action_mailer.deliver_later_queue_name = 'default'
+
     config.generators do |g|
       g.helper          false
       g.stylesheets     false

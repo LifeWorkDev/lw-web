@@ -29,6 +29,12 @@ GIT
       stripe (> 5, < 6)
 
 GIT
+  remote: https://github.com/que-rb/que.git
+  revision: 12d962e4bd7656dfc508d48674f770fa5d20c326
+  specs:
+    que (1.0.0.beta3)
+
+GIT
   remote: https://github.com/swrobel/bootstrap-email.git
   revision: 02af2ea1fa031d5fc98000c17fedf25a1d5820fd
   specs:
@@ -216,6 +222,7 @@ GEM
     email_reply_parser (0.5.10)
     errbase (0.2.0)
     erubi (1.9.0)
+    erubis (2.7.0)
     eventmachine (1.0.9.1)
     execjs (2.7.0)
     fabrication (2.20.2)
@@ -325,6 +332,7 @@ GEM
       railties (>= 3.0)
     multi_json (1.14.1)
     multipart-post (2.1.1)
+    mustermann (1.0.3)
     nenv (0.3.0)
     nio4r (2.5.2)
     nokogiri (1.10.5)
@@ -360,7 +368,13 @@ GEM
     public_suffix (4.0.1)
     puma (4.2.1)
       nio4r (~> 2.0)
+    que-web (0.8.0)
+      erubis
+      que (~> 1.0.0.beta3)
+      sinatra
     rack (2.0.7)
+    rack-protection (2.0.7)
+      rack
     rack-proxy (0.6.5)
       rack
     rack-test (1.1.0)
@@ -476,6 +490,11 @@ GEM
     shellany (0.0.1)
     shoulda-matchers (4.1.2)
       activesupport (>= 4.2.0)
+    sinatra (2.0.7)
+      mustermann (~> 1.0)
+      rack (~> 2.0)
+      rack-protection (= 2.0.7)
+      tilt (~> 2.0)
     slim (4.0.1)
       temple (>= 0.7.6, < 0.9)
       tilt (>= 2.0.6, < 2.1)
@@ -580,6 +599,8 @@ DEPENDENCIES
   plaid
   pretender
   puma
+  que!
+  que-web
   rack-toolbar!
   rails (~> 6.0.0)
   rails-controller-testing
