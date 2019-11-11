@@ -5,3 +5,8 @@
 .DayPicker-Day {
   width: 39px;
 }
+
+.DayPicker-Day--disabled.DayPicker-Day--today {
+  // Emulate border without adding 2px to its height
+  box-shadow: 0 0 0 1px #dce0e0;
+}
