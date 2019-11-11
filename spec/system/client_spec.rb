@@ -4,9 +4,9 @@ RSpec.describe 'Client views', type: :system do
   context "when unauth'd" do
     context 'when invited' do
       let(:project) { Fabricate(:milestone_project) }
-      let(:user) { User.invite!(email: Faker::Internet.email, name: Faker::Name.name, org: project.client) }
+      let(:user) { User.invite!(email: Faker::Internet.safe_email, name: Faker::Name.name, org: project.client) }
       let(:new_name) { Faker::Name.name }
-      let(:new_email) { Faker::Internet.email }
+      let(:new_email) { Faker::Internet.safe_email }
       let(:time_zone) { ActiveSupport::TimeZone.basic_us_zones.sample.name }
 
       before { user.invite! }

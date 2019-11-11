@@ -50,7 +50,7 @@ RSpec.describe 'Freelancer views', type: :system do
       it 'completes an entire client/project creation' do
         visit '/f/clients/new'
         fill_in 'org[users_attributes][0][name]', with: Faker::Name.name
-        fill_in 'org[users_attributes][0][email]', with: Faker::Internet.email
+        fill_in 'org[users_attributes][0][email]', with: Faker::Internet.safe_email
         fill_in 'org[projects_attributes][0][name]', with: name
         expect do
           click_on 'Continue >'
