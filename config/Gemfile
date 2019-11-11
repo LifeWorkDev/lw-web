@@ -38,9 +38,9 @@ gem 'slim-rails' # Template language, lightweight alternative to erb/haml
 gem 'sprockets', '< 4.0', require: false
 gem 'stripe'
 gem 'strong_migrations' # complains about migration worst-practices
-gem 'trestle', github: 'TrestleAdmin/trestle'
+gem 'trestle'
 gem 'turbolinks', '~> 5'
-gem 'webpacker', github: 'LuanGB/webpacker', branch: 'webpacker-clean_with_hashes_on_manifest'
+gem 'webpacker', github: 'rails/webpacker'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

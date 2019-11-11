@@ -1,24 +1,4 @@
 GIT
-  remote: https://github.com/LuanGB/webpacker.git
-  revision: 0c7a9f750ddf3a4fd9a6ad9f91331c80b15c20fd
-  branch: webpacker-clean_with_hashes_on_manifest
-  specs:
-    webpacker (4.0.7)
-      activesupport (>= 4.2)
-      rack-proxy (>= 0.6.1)
-      railties (>= 4.2)
-
-GIT
-  remote: https://github.com/TrestleAdmin/trestle.git
-  revision: e17ecb651f6719924df4ebdf25c7610dd5ef5e63
-  specs:
-    trestle (0.9.0)
-      activemodel (>= 4.2.0)
-      kaminari (~> 1.1.0)
-      railties (>= 4.2.0)
-      sprockets-rails (>= 2.0.0)
-
-GIT
   remote: https://github.com/dbdrive/stripe-ruby-mock.git
   revision: 72021c85b1a9fb5468368e8bd90074c9cab47801
   branch: stripe-v5-compatability
@@ -33,6 +13,15 @@ GIT
   revision: 12d962e4bd7656dfc508d48674f770fa5d20c326
   specs:
     que (1.0.0.beta3)
+
+GIT
+  remote: https://github.com/rails/webpacker.git
+  revision: 5da39a18e0bd1fa7041575aaba1d710f31ccfb17
+  specs:
+    webpacker (4.0.7)
+      activesupport (>= 4.2)
+      rack-proxy (>= 0.6.1)
+      railties (>= 4.2)
 
 GIT
   remote: https://github.com/swrobel/bootstrap-email.git
@@ -366,7 +355,7 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
     public_suffix (4.0.1)
-    puma (4.2.1)
+    puma (4.3.0)
       nio4r (~> 2.0)
     que-web (0.8.0)
       erubis
@@ -513,7 +502,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    stripe (5.7.1)
+    stripe (5.10.0)
     strong_migrations (0.4.2)
       activerecord (>= 5)
     sysexits (1.2.0)
@@ -524,6 +513,11 @@ GEM
     thor (0.20.3)
     thread_safe (0.3.6)
     tilt (2.0.10)
+    trestle (0.9.0)
+      activemodel (>= 4.2.0)
+      kaminari (~> 1.1.0)
+      railties (>= 4.2.0)
+      sprockets-rails (>= 2.0.0)
     turbolinks (5.2.1)
       turbolinks-source (~> 5.2)
     turbolinks-source (5.2.0)
@@ -627,7 +621,7 @@ DEPENDENCIES
   strong_migrations
   terminal-notifier
   terminal-notifier-guard
-  trestle!
+  trestle
   turbolinks (~> 5)
   tzinfo-data
   web-console
