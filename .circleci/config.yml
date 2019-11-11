@@ -8,7 +8,7 @@ jobs:
           PGHOST: 127.0.0.1
           PGUSER: lifework
           RAILS_ENV: test
-          NODE_ENV: test
+          NODE_ENV: development
       - image: circleci/postgres:11-alpine-ram
         environment:
           POSTGRES_USER: lifework
@@ -45,9 +45,9 @@ jobs:
       - restore_cache:
           name: Restore bundle cache
           keys:
-            - lifework-bundle-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
-            - lifework-bundle-{{ arch }}-{{ .Branch }}-
-            - lifework-bundle-{{ arch }}-
+            - v1-lifework-bundle-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+            - v1-lifework-bundle-{{ arch }}-{{ .Branch }}-
+            - v1-lifework-bundle-{{ arch }}-
 
       - run:
           name: Bundle Install
@@ -55,7 +55,7 @@ jobs:
 
       - save_cache:
           name: Store bundle cache
-          key: lifework-bundle-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+          key: v1-lifework-bundle-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
           paths:
             - vendor/bundle
 
@@ -70,9 +70,9 @@ jobs:
       - restore_cache:
           name: Restore yarn cache
           keys:
-            - lifework-yarn-{{ .Branch }}-{{ checksum "yarn.lock" }}
-            - lifework-yarn-{{ .Branch }}-
-            - lifework-yarn-
+            - v1-lifework-yarn-{{ .Branch }}-{{ checksum "yarn.lock" }}
+            - v1-lifework-yarn-{{ .Branch }}-
+            - v1-lifework-yarn-
 
       - run:
           # Make sure it fetches the latest from github instead of using a cached older version
@@ -85,7 +85,7 @@ jobs:
 
       - save_cache:
           name: Store yarn cache
-          key: lifework-yarn-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          key: v1-lifework-yarn-{{ .Branch }}-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
 
@@ -96,12 +96,12 @@ jobs:
       - restore_cache:
           name: Restore webpacker cache
           keys:
-            - lifework-webpacker-{{ .Branch }}-
-            - lifework-webpacker-
+            - v1-lifework-webpacker-{{ .Branch }}-
+            - v1-lifework-webpacker-
 
       - restore_cache:
           name: Restore compiled packs
-          key: lifework-packs-{{ checksum "tmp/cache/webpacker/last-compilation-digest-test" }}
+          key: v1-lifework-packs-{{ checksum "tmp/cache/webpacker/last-compilation-digest-test" }}
 
       - run:
           name: Wait for DB
@@ -119,13 +119,13 @@ jobs:
 
       - save_cache:
           name: Store webpacker cache
-          key: lifework-webpacker-{{ .Branch }}-{{ epoch }}
+          key: v1-lifework-webpacker-{{ .Branch }}-{{ epoch }}
           paths:
             - tmp/cache/webpacker
 
       - save_cache:
           name: Store compiled packs
-          key: lifework-packs-{{ checksum "tmp/cache/webpacker/last-compilation-digest-test" }}
+          key: v1-lifework-packs-{{ checksum "tmp/cache/webpacker/last-compilation-digest-test" }}
           paths:
             - public/packs-test
 
