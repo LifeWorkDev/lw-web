@@ -85,7 +85,8 @@ const DatePicker = props => {
     setSelectedDays(newSelectedDays)
   }
 
-  const handleDayClick = (day, { selected }) => {
+  const handleDayClick = (day, { disabled, selected }) => {
+    if (disabled) return false
     const newSelectedDays = selectedDays.slice()
 
     if (selected) {
