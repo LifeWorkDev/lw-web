@@ -23,7 +23,7 @@ RSpec.describe 'Freelancer views', type: :system do
 
     def shared_expectations
       # Choose a random selectable date
-      date = all('div', class: %w[DayPicker-Day !DayPicker-Day--disabled]).sample
+      date = all('div', class: %w[DayPicker-Day !DayPicker-Day--disabled !DayPicker-Day--outside]).sample
       Rails.logger.info "Clicking #{date['aria-label']}"
       date.click
       click_on 'Continue >'
