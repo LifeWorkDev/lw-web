@@ -8,7 +8,7 @@ p.lead.mt-4 Congratulations, you've successfully linked your payment method!
 - if current_org.primary_pay_method
   .alert.alert-warning.mt-4
     ' If you only allow external withdrawals to specific banking institutions, please whitelist our partner, Stripe using
-    a.alert-link href='https://support.stripe.com/questions/ach-company-ids-to-whitelist-for-stripe' target='stripe_help' these instructions
+    a.alert-link href='https://support.stripe.com/questions/ach-company-ids-to-whitelist-for-stripe' target='_blank' rel='noopener' these instructions
     | .
 
 - first_milestone = @project.milestones.first
