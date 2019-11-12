@@ -9,6 +9,14 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery prepend: true, with: :reset_session
 
+  def home
+    if user_signed_in?
+      redirect_to [current_user.type, Project]
+    else
+      redirect_to '/sign_up'
+    end
+  end
+
   def privacy; end
 
   def styleguide; end

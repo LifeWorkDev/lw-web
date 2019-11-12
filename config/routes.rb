@@ -64,5 +64,5 @@ Rails.application.routes.draw do
   %w[signup users].each { |path| get path, to: redirect('/sign_up') }
   get 'users/password', to: redirect('/passwords/new')
 
-  root to: 'users#home'
+  root to: 'application#home'
 end

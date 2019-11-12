@@ -351,8 +351,4 @@ class FailureWithMetadata < Devise::FailureApp
     options[:min_len] ||= User.password_length.min
     options
   end
-
-  def route(_scope)
-    :new_user_registration_url
-  end
 end

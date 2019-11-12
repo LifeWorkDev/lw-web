@@ -4,7 +4,7 @@ RSpec.describe 'Freelancer views', type: :system do
   context "when unauth'd" do
     it 'renders signup form' do
       visit '/'
-      expect(page).to have_content 'sign up'
+      expect(page).to have_current_path('/sign_up')
     end
   end
 
