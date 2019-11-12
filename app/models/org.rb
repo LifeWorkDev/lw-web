@@ -36,12 +36,22 @@ class Org < ApplicationRecord
 private
 
   def existing_user(user_attrs)
-    # Try to find existing user
+    # Follow normal accepts_nested_attributes_for when user[:id] provided
+    return false if user_attrs[:id].present?
+
+    # Try to find existing user by email if no id was provided
     user = User.find_by(email: user_attrs[:email])
+    # Update user w/ other attributes
+    user&.update!(user_attrs)
+
     # If user isn't found, invite user
     user ||= User.invite!(user_attrs, current_user)
-    users << user # Add user to Org
-    true # Prevent nested_attributes from creating user on its own
+
+    # Add user to Org
+    users << user
+
+    # Tell accepts_nested_attributes_for not to create user
+    true
   end
 
   def should_generate_new_friendly_id?
