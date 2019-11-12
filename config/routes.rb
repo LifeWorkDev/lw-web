@@ -56,7 +56,7 @@ Rails.application.routes.draw do
 
   get :styleguide, to: 'application#styleguide' if Rails.env.development?
 
-  get 'legal/terms-of-use', to: 'application#tos', as: :tos
+  get 'legal/terms-of-use', to: 'application#terms', as: :terms
   get 'legal/privacy-policy', to: 'application#privacy', as: :privacy
   get '(.well-known)/apple-app-site-association', to: proc { [404, {}, ['']] }
 
