@@ -17,29 +17,38 @@
       ga('require', 'urlChangeTracker');
     }
 
-- if (intercom_id = Rails.application.credentials.intercom)
-  - if user_signed_in?
-    javascript:
-      window.intercomSettings = {
-        app_id: '#{intercom_id}',
-        name: '#{current_user.name}',
-        email: '#{current_user.email}',
-        created_at: '#{current_user.created_at.to_i}',
-      }
-  - else
-    javascript:
-      window.intercomSettings = {
-        app_id: '{intercom_id}'
-      }
-
-  javascript:
-    (function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',w.intercomSettings);}else{var d=document;var i=function(){i.c(arguments);};i.q=[];i.c=function(args){i.q.push(args);};w.Intercom=i;var l=function(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/e0o4isl3';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);};if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})()
-
+- intercom = Rails.application.credentials.intercom
 - if user_signed_in?
+  ruby:
+    user_id = current_user.id
+    email = current_user.email
+    name = current_user.name
+    intercom_hash = OpenSSL::HMAC.hexdigest('sha256', intercom[:secret], user_id.to_s) if intercom
   javascript:
-    if (window.bugsnagClient)
+    window.intercomSettings = {
+      name: '#{name}',
+      email: '#{email}',
+      user_id: #{user_id},
+      user_hash: '#{intercom_hash}',
+      created_at: #{current_user.created_at.to_i},
+    }
+    if (window.bugsnagClient) {
       window.bugsnagClient.user = {
-        id: '#{current_user.id}',
-        name: '#{current_user.name}',
-        email: '#{current_user.email}'
+        id: #{user_id},
+        name: '#{name}',
+        email: '#{email}'
       }
+    }
+  - if (org = current_user.org)
+    javascript:
+      window.intercomSettings.company = {
+        id: #{org.id},
+        created_at: #{org.created_at.to_i},
+        name: '#{org.name}',
+      }
+
+- if intercom
+  javascript:
+    window.intercomSettings || (window.intercomSettings = {})
+    window.intercomSettings.app_id = '#{intercom[:id]}';
+    (function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',w.intercomSettings);}else{var d=document;var i=function(){i.c(arguments);};i.q=[];i.c=function(args){i.q.push(args);};w.Intercom=i;var l=function(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/e0o4isl3';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);};if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})()
