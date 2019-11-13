@@ -17,11 +17,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def privacy; end
-
   def styleguide; end
-
-  def terms; end
 
   def after_sign_out_path_for(_resource_or_scope)
     new_user_session_url
