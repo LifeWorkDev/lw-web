@@ -75,11 +75,6 @@ jobs:
             - v1-lifework-yarn-
 
       - run:
-          # Make sure it fetches the latest from github instead of using a cached older version
-          name: Clear Yarn webpacker cache
-          command: yarn cache clean @rails/webpacker
-
-      - run:
           name: Yarn Install
           command: yarn install --verbose
 

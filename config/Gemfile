@@ -40,7 +40,7 @@ gem 'stripe'
 gem 'strong_migrations' # complains about migration worst-practices
 gem 'trestle'
 gem 'turbolinks', '~> 5'
-gem 'webpacker', github: 'rails/webpacker'
+gem 'webpacker'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
