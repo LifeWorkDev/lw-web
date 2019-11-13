@@ -96,6 +96,7 @@ end
 
 group :production, :staging do
   gem 'actionpack-cloudflare' # Correct request.ip for Cloudflare-proxied requests
+  gem 'rack-brotli' # Compress responses w/ brotli (better than gzip)
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

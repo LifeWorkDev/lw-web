@@ -97,6 +97,8 @@ Rails.application.configure do
   # Disable asset compilation on-demand
   # config.assets.compile = false # Need to keep enabled until #169212464 completed
 
+  config.middleware.use Rack::Brotli::Deflater
+
   # Inserts middleware to perform automatic connection switching.
   # The `database_selector` hash is used to pass options to the DatabaseSelector
   # middleware. The `delay` is used to determine how long to wait after a write

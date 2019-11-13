@@ -160,6 +160,7 @@ GEM
       actionpack (>= 5.0)
       activemodel (>= 5.0)
     brakeman (4.7.1)
+    brotli (0.2.3)
     bugsnag (6.12.2)
       concurrent-ruby (~> 1.0)
     builder (3.2.3)
@@ -225,6 +226,7 @@ GEM
       activerecord (>= 4.0.0)
     gindex (0.1.2)
       railties
+    git-version-bump (0.16.0)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     guard (2.16.1)
@@ -353,6 +355,10 @@ GEM
       que (~> 1.0.0.beta3)
       sinatra
     rack (2.0.7)
+    rack-brotli (1.0.0)
+      brotli (>= 0.1.7)
+      git-version-bump (>= 0.15)
+      rack (>= 1.4)
     rack-protection (2.0.7)
       rack
     rack-proxy (0.6.5)
@@ -590,6 +596,7 @@ DEPENDENCIES
   puma
   que!
   que-web
+  rack-brotli
   rack-toolbar!
   rails (~> 6.0.0)
   rails-controller-testing
