@@ -1,1 +1,1 @@
-import 'application/application-mailer.scss.erb'
+import 'styles/application-mailer.scss.erb'

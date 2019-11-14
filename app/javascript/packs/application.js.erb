@@ -14,7 +14,7 @@ require.context('../images', true)
 require('react_ujs').useContext(require.context('components', true))
 
 // Goes last to allow overriding css from packages imported via React components
-import 'application/application.scss'
+import 'styles/application.scss'
 
 document.addEventListener('turbolinks:load', function() {
   BSN.initCallback()
