@@ -44,7 +44,7 @@
     "eslint-webpack-plugin": "^0.0.1",
     "object-hash": "^2.0.0",
     "prettier": "^1.18.2",
-    "stylelint": "^11.0.0",
+    "stylelint": "^12.0.0",
     "stylelint-config-prettier": "^6.0.0",
     "stylelint-config-recommended-scss": "^4.0.0",
     "stylelint-order": "^3.0.1",
