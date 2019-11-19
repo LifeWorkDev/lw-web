@@ -1,4 +1,6 @@
 class AuthenticatedController < ApplicationController
+  include SetLogidzeResponsible
+
   around_action :set_time_zone
   prepend_before_action :authenticate_user!
 

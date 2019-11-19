@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::Base
   include ::CallbackChain
-  include SetLogidzeResponsible
 
   impersonates :user
 

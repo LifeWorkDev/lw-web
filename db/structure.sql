@@ -38,6 +38,20 @@ COMMENT ON EXTENSION fuzzystrmatch IS 'determine similarities and distance betwe
 
 
 --
+-- Name: hstore; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS hstore WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION hstore; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION hstore IS 'data type for storing sets of (key, value) pairs';
+
+
+--
 -- Name: pg_stat_statements; Type: EXTENSION; Schema: -; Owner: -
 --
 
@@ -120,6 +134,241 @@ WITH (fillfactor='90');
 --
 
 COMMENT ON TABLE public.que_jobs IS '4';
+
+
+--
+-- Name: logidze_compact_history(jsonb); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.logidze_compact_history(log_data jsonb) RETURNS jsonb
+    LANGUAGE plpgsql
+    AS $$
+          DECLARE
+            merged jsonb;
+          BEGIN
+            merged := jsonb_build_object(
+              'ts',
+              log_data#>'{h,1,ts}',
+              'v',
+              log_data#>'{h,1,v}',
+              'c',
+              (log_data#>'{h,0,c}') || (log_data#>'{h,1,c}')
+            );
+
+            IF (log_data#>'{h,1}' ? 'm') THEN
+              merged := jsonb_set(merged, ARRAY['m'], log_data#>'{h,1,m}');
+            END IF;
+
+            return jsonb_set(
+              log_data,
+              '{h}',
+              jsonb_set(
+                log_data->'h',
+                '{1}',
+                merged
+              ) - 0
+            );
+          END;
+        $$;
+
+
+--
+-- Name: logidze_exclude_keys(jsonb, text[]); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.logidze_exclude_keys(obj jsonb, VARIADIC keys text[]) RETURNS jsonb
+    LANGUAGE plpgsql
+    AS $$
+          DECLARE
+            res jsonb;
+            key text;
+          BEGIN
+            res := obj;
+            FOREACH key IN ARRAY keys
+            LOOP
+              res := res - key;
+            END LOOP;
+            RETURN res;
+          END;
+        $$;
+
+
+--
+-- Name: logidze_logger(); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.logidze_logger() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+          DECLARE
+            changes jsonb;
+            version jsonb;
+            snapshot jsonb;
+            new_v integer;
+            size integer;
+            history_limit integer;
+            debounce_time integer;
+            current_version integer;
+            merged jsonb;
+            iterator integer;
+            item record;
+            columns_blacklist text[];
+            ts timestamp with time zone;
+            ts_column text;
+          BEGIN
+            ts_column := NULLIF(TG_ARGV[1], 'null');
+            columns_blacklist := COALESCE(NULLIF(TG_ARGV[2], 'null'), '{}');
+
+            IF TG_OP = 'INSERT' THEN
+              snapshot = logidze_snapshot(to_jsonb(NEW.*), ts_column, columns_blacklist);
+
+              IF snapshot#>>'{h, -1, c}' != '{}' THEN
+                NEW.log_data := snapshot;
+              END IF;
+
+            ELSIF TG_OP = 'UPDATE' THEN
+
+              IF OLD.log_data is NULL OR OLD.log_data = '{}'::jsonb THEN
+                snapshot = logidze_snapshot(to_jsonb(NEW.*), ts_column, columns_blacklist);
+                IF snapshot#>>'{h, -1, c}' != '{}' THEN
+                  NEW.log_data := snapshot;
+                END IF;
+                RETURN NEW;
+              END IF;
+
+              history_limit := NULLIF(TG_ARGV[0], 'null');
+              debounce_time := NULLIF(TG_ARGV[3], 'null');
+
+              current_version := (NEW.log_data->>'v')::int;
+
+              IF ts_column IS NULL THEN
+                ts := statement_timestamp();
+              ELSE
+                ts := (to_jsonb(NEW.*)->>ts_column)::timestamp with time zone;
+                IF ts IS NULL OR ts = (to_jsonb(OLD.*)->>ts_column)::timestamp with time zone THEN
+                  ts := statement_timestamp();
+                END IF;
+              END IF;
+
+              IF NEW = OLD THEN
+                RETURN NEW;
+              END IF;
+
+              IF current_version < (NEW.log_data#>>'{h,-1,v}')::int THEN
+                iterator := 0;
+                FOR item in SELECT * FROM jsonb_array_elements(NEW.log_data->'h')
+                LOOP
+                  IF (item.value->>'v')::int > current_version THEN
+                    NEW.log_data := jsonb_set(
+                      NEW.log_data,
+                      '{h}',
+                      (NEW.log_data->'h') - iterator
+                    );
+                  END IF;
+                  iterator := iterator + 1;
+                END LOOP;
+              END IF;
+
+              changes := hstore_to_jsonb_loose(
+                hstore(NEW.*) - hstore(OLD.*)
+              );
+
+              new_v := (NEW.log_data#>>'{h,-1,v}')::int + 1;
+
+              size := jsonb_array_length(NEW.log_data->'h');
+              version := logidze_version(new_v, changes, ts, columns_blacklist);
+
+              IF version->>'c' = '{}' THEN
+                RETURN NEW;
+              END IF;
+
+              IF (
+                debounce_time IS NOT NULL AND
+                (version->>'ts')::bigint - (NEW.log_data#>'{h,-1,ts}')::text::bigint <= debounce_time
+              ) THEN
+                -- merge new version with the previous one
+                new_v := (NEW.log_data#>>'{h,-1,v}')::int;
+                version := logidze_version(new_v, (NEW.log_data#>'{h,-1,c}')::jsonb || changes, ts, columns_blacklist);
+                -- remove the previous version from log
+                NEW.log_data := jsonb_set(
+                  NEW.log_data,
+                  '{h}',
+                  (NEW.log_data->'h') - (size - 1)
+                );
+              END IF;
+
+              NEW.log_data := jsonb_set(
+                NEW.log_data,
+                ARRAY['h', size::text],
+                version,
+                true
+              );
+
+              NEW.log_data := jsonb_set(
+                NEW.log_data,
+                '{v}',
+                to_jsonb(new_v)
+              );
+
+              IF history_limit IS NOT NULL AND history_limit = size THEN
+                NEW.log_data := logidze_compact_history(NEW.log_data);
+              END IF;
+            END IF;
+
+            return NEW;
+          END;
+          $$;
+
+
+--
+-- Name: logidze_snapshot(jsonb, text, text[]); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.logidze_snapshot(item jsonb, ts_column text, blacklist text[] DEFAULT '{}'::text[]) RETURNS jsonb
+    LANGUAGE plpgsql
+    AS $$
+          DECLARE
+            ts timestamp with time zone;
+          BEGIN
+            IF ts_column IS NULL THEN
+              ts := statement_timestamp();
+            ELSE
+              ts := coalesce((item->>ts_column)::timestamp with time zone, statement_timestamp());
+            END IF;
+            return json_build_object(
+              'v', 1,
+              'h', jsonb_build_array(
+                     logidze_version(1, item, ts, blacklist)
+                   )
+              );
+          END;
+        $$;
+
+
+--
+-- Name: logidze_version(bigint, jsonb, timestamp with time zone, text[]); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.logidze_version(v bigint, data jsonb, ts timestamp with time zone, blacklist text[] DEFAULT '{}'::text[]) RETURNS jsonb
+    LANGUAGE plpgsql
+    AS $$
+          DECLARE
+            buf jsonb;
+          BEGIN
+            buf := jsonb_build_object(
+                     'ts',
+                     (extract(epoch from ts) * 1000)::bigint,
+                     'v',
+                      v,
+                      'c',
+                      logidze_exclude_keys(data, VARIADIC array_append(blacklist, 'log_data'))
+                     );
+            IF coalesce(current_setting('logidze.meta', true), '') <> '' THEN
+              buf := jsonb_set(buf, ARRAY['m'], current_setting('logidze.meta')::jsonb);
+            END IF;
+            RETURN buf;
+          END;
+        $$;
 
 
 --
@@ -412,7 +661,8 @@ CREATE TABLE public.comments (
     read_at timestamp without time zone,
     read_by_id bigint,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    log_data jsonb
 );
 
 
@@ -480,7 +730,8 @@ CREATE TABLE public.milestones (
     amount_cents integer,
     description public.citext,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    log_data jsonb
 );
 
 
@@ -515,7 +766,8 @@ CREATE TABLE public.orgs (
     metadata jsonb,
     stripe_id character varying,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    log_data jsonb
 );
 
 
@@ -597,7 +849,8 @@ CREATE TABLE public.projects (
     slug character varying NOT NULL,
     metadata jsonb,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    log_data jsonb
 );
 
 
@@ -740,7 +993,8 @@ CREATE TABLE public.users (
     stripe_access_token character varying,
     stripe_refresh_token character varying,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    log_data jsonb
 );
 
 
@@ -1164,6 +1418,41 @@ CREATE INDEX que_poll_idx ON public.que_jobs USING btree (queue, priority, run_a
 
 
 --
+-- Name: comments logidze_on_comments; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER logidze_on_comments BEFORE INSERT OR UPDATE ON public.comments FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE PROCEDURE public.logidze_logger('null', 'updated_at', '{id,created_at,updated_at}');
+
+
+--
+-- Name: milestones logidze_on_milestones; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER logidze_on_milestones BEFORE INSERT OR UPDATE ON public.milestones FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE PROCEDURE public.logidze_logger('null', 'updated_at', '{id,created_at,updated_at}');
+
+
+--
+-- Name: orgs logidze_on_orgs; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER logidze_on_orgs BEFORE INSERT OR UPDATE ON public.orgs FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE PROCEDURE public.logidze_logger('null', 'updated_at', '{id,created_at,updated_at}');
+
+
+--
+-- Name: projects logidze_on_projects; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER logidze_on_projects BEFORE INSERT OR UPDATE ON public.projects FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE PROCEDURE public.logidze_logger('null', 'updated_at', '{id,created_at,updated_at}');
+
+
+--
+-- Name: users logidze_on_users; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER logidze_on_users BEFORE INSERT OR UPDATE ON public.users FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE PROCEDURE public.logidze_logger('null', 'updated_at', '{id,created_at,updated_at,sign_in_count,reset_password_token,reset_password_sent_at,remember_created_at,current_sign_in_at,last_sign_in_at,current_sign_in_ip,last_sign_in_ip,failed_attempts,unlock_token,locked_at,invitation_token,invitation_created_at,invitation_sent_at,invitation_accepted_at,invitation_limit,invited_by_type,invited_by_id,invitations_count,encrypted_password,unconfirmed_email,confirmation_token,confirmation_sent_at,confirmed_at}');
+
+
+--
 -- Name: que_jobs que_job_notify; Type: TRIGGER; Schema: public; Owner: -
 --
 
@@ -1258,6 +1547,13 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190917130356'),
 ('20190917130357'),
 ('20191004010353'),
-('20191110234304');
+('20191110234304'),
+('20191119233548'),
+('20191119233549'),
+('20191119233827'),
+('20191119234229'),
+('20191119234318'),
+('20191119234341'),
+('20191119234406');
 
 

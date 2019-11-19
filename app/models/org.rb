@@ -1,4 +1,5 @@
 class Org < ApplicationRecord
+  has_logidze
   include Status
   extend FriendlyId
   friendly_id :display_name

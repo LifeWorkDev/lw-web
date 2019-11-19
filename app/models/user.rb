@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  has_logidze
   include Status
   include Users::Roles
 

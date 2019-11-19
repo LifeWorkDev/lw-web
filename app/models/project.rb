@@ -1,4 +1,5 @@
 class Project < ApplicationRecord
+  has_logidze
   include Status
   extend FriendlyId
   friendly_id :name, use: :scoped, scope: :user_id

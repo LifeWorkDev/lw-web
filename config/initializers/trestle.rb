@@ -130,3 +130,4 @@ Trestle.configure do |config|
 end
 require 'trestle-devise/controller_methods'
 Trestle::ApplicationController.include Trestle::Auth::ControllerMethods
+Trestle::ApplicationController.include SetLogidzeResponsible

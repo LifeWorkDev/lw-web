@@ -1,4 +1,5 @@
 class Milestone < ApplicationRecord
+  has_logidze
   include AASM
 
   belongs_to :project, class_name: 'MilestoneProject'
