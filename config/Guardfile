@@ -23,7 +23,7 @@ guard :shell, first_match: true do
   # Run bundler
   watch('config/Gemfile') do
     ::Bundler.with_clean_env do
-      `bin/bundle --without production`
+      `bin/bundle --without production | awk '!/^(Using|Fetching)/'`
     end
   end
 
