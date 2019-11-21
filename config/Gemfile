@@ -19,7 +19,6 @@ gem 'goldiloader' # Automatic eager-loading to avoid N+1s
 gem 'jsonb_accessor', github: 'volkanunsal/jsonb_accessor' # Store arbitrary model data in jsonb fields
 gem 'logidze' # version tracking
 gem 'lograge' # one-line logs
-gem 'material_design_icons'
 gem 'memery' # Memoization
 gem 'money-rails'
 gem 'nilify_blanks', github: 'swrobel/nilify_blanks'

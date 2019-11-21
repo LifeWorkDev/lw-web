@@ -10,6 +10,7 @@ window.bugsnagClient = bugsnag({ apiKey: 'c5a97432b84ea8031cc78cc2997cb2ba', rel
 window.bugsnagClient.use(bugsnagReact, React)
 
 require.context('../images', true)
+require.context('@mdi/svg/svg', true)
 // Support component names relative to this directory:
 require('react_ujs').useContext(require.context('components', true))
 
