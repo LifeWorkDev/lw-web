@@ -164,9 +164,6 @@ GEM
     bugsnag (6.12.2)
       concurrent-ruby (~> 1.0)
     builder (3.2.3)
-    bullet (6.0.2)
-      activesupport (>= 3.0.0)
-      uniform_notifier (~> 1.11)
     byebug (11.0.1)
     capybara (3.29.0)
       addressable
@@ -229,6 +226,9 @@ GEM
     git-version-bump (0.16.0)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
+    goldiloader (3.1.1)
+      activerecord (>= 4.2, < 6.1)
+      activesupport (>= 4.2, < 6.1)
     guard (2.16.1)
       formatador (>= 0.2.4)
       listen (>= 2.7, < 4.0)
@@ -521,7 +521,6 @@ GEM
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
     unicode-display_width (1.6.0)
-    uniform_notifier (1.13.0)
     uuid (2.3.9)
       macaddr (~> 1.0)
     warden (1.2.8)
@@ -560,7 +559,6 @@ DEPENDENCIES
   bootstrap_form
   brakeman
   bugsnag
-  bullet
   byebug
   capybara
   colorize
@@ -572,6 +570,7 @@ DEPENDENCIES
   fast_blank
   friendly_id
   gindex
+  goldiloader
   guard
   guard-rspec
   guard-rubocop
