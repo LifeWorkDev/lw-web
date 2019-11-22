@@ -164,6 +164,7 @@ GEM
     bugsnag (6.12.2)
       concurrent-ruby (~> 1.0)
     builder (3.2.3)
+    business (1.17.1)
     byebug (11.0.1)
     capybara (3.29.0)
       addressable
@@ -554,6 +555,7 @@ DEPENDENCIES
   bootstrap_form
   brakeman
   bugsnag
+  business
   byebug
   capybara
   colorize

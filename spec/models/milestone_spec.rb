@@ -17,4 +17,18 @@ RSpec.describe Milestone, type: :model do
       expect(milestone.next.date).to eq(project.milestones.pluck(:date).second)
     end
   end
+
+  describe '#reminder_date' do
+    subject(:milestone) { Fabricate(:milestone, date: 1.week.from_now.beginning_of_week(:monday)) }
+
+    it 'handles weekends correctly' do
+      expect((milestone.date - milestone.reminder_date).to_i).to be >= 5
+    end
+  end
+
+  describe '#reminder_time' do
+    it 'sets hour to 9am' do
+      expect(milestone.reminder_time(User.all.sample).hour).to eq 9
+    end
+  end
 end

@@ -29,6 +29,10 @@ class User < ApplicationRecord
     !client?
   end
 
+  def reminder_time(time)
+    time.in_time_zone(time_zone || 'Pacific Time (US & Canada)')
+  end
+
   def type
     client? ? :client : :freelancer
   end

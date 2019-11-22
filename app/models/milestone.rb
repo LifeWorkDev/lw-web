@@ -3,6 +3,8 @@ class Milestone < ApplicationRecord
   include AASM
 
   belongs_to :project, class_name: 'MilestoneProject'
+  has_one :client, through: :project
+  has_one :freelancer, through: :project
   has_many :comments, -> { order(:created_at) }, as: :commentable, inverse_of: :commentable, dependent: :destroy
 
   delegate :currency, to: :project
@@ -37,6 +39,24 @@ class Milestone < ApplicationRecord
 
   def percent
     (amount || 0.to_money) / (project.amount || 0.to_money)
+  end
+
+  # 3 business days before Milestone date
+  memoize def reminder_date
+    Business::Calendar.load_cached('achus').subtract_business_days(date, 3)
+  end
+
+  # 9am local time
+  def reminder_time(user)
+    user.reminder_time(reminder_date).change(hour: 9)
+  end
+
+  memoize def client_reminder_time
+    reminder_time(client.primary_contact)
+  end
+
+  memoize def freelancer_reminder_time
+    reminder_time(freelancer)
   end
 
   def to_s

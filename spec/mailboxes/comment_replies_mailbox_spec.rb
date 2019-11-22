@@ -9,7 +9,7 @@ RSpec.describe CommentRepliesMailbox, type: :mailbox do
   context 'with known user, known milestone' do
     subject(:inbound_email) do
       receive_inbound_email_from_mail(
-        from: milestone.project.freelancer.email,
+        from: milestone.freelancer.email,
         to: "comments-#{milestone.id}@#{REPLIES_HOST}",
         subject: subject_line,
         body: body,

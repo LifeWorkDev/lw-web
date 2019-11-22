@@ -10,6 +10,7 @@ gem 'argon2' # More secure password hashing than default bcrypt
 gem 'bootstrap-email', github: 'swrobel/bootstrap-email'
 gem 'bootstrap_form'
 gem 'bugsnag' # Exception tracking
+gem 'business' # Business day calculations
 gem 'devise' # Authentication
 gem 'devise_invitable'
 gem 'email_reply_parser'

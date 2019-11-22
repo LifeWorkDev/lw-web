@@ -2,7 +2,7 @@ class CommentRepliesMailbox < ApplicationMailbox
   def process
     return if user.nil? || milestone.nil?
 
-    return unless milestone.project.freelancer == user || milestone.project.client.users.include?(user)
+    return unless milestone.freelancer == user || milestone.client.users.include?(user)
 
     milestone.comments.create(commenter: user, comment: parsed_mail_body)
   end
