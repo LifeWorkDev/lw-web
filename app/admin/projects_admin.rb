@@ -34,12 +34,14 @@ Trestle.resource(:projects) do
   form do |project|
     tab :project do
       text_field :name
-      static_field :slug, project.slug
+      auto_field :slug
       collection_select_with_link :org_id, Org.all, :id, :name, label: 'Client'
       collection_select_with_link :user_id, User.all, :id, :name, label: 'Freelancer'
       select :status, Project.aasm.states.map(&:name)
       number_field :amount, prepend: '$'
-      text_field :currency
+      select :currency, Money::Currency.map(&:iso_code)
+      auto_field :created_at
+      auto_field :updated_at
     end
 
     tab :milestones, badge: project.milestones.size do

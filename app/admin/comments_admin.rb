@@ -31,10 +31,12 @@ Trestle.resource(:comments) do
   #
   form do |comment|
     collection_select_with_link :commenter_id, User.all, :id, :name
-    static_field 'Commented on', admin_auto_link_to(comment.commentable)
+    auto_field 'Commented on', comment.commentable
     text_area :comment
-    static_field 'Read by', admin_auto_link_to(comment.read_by)
-    static_field :read_at, comment.formatted_read_at
+    auto_field :created_at
+    auto_field :updated_at
+    auto_field :read_by
+    auto_field :read_at
   end
 
   # By default, all parameters passed to the update and create actions will be

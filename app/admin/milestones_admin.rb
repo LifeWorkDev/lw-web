@@ -29,6 +29,8 @@ Trestle.resource(:milestones) do
       number_field :amount, prepend: '$'
       select :status, Milestone.aasm.states.map(&:name)
       date_field :date
+      auto_field :created_at
+      auto_field :updated_at
     end
 
     tab :comments, badge: milestone.comments.size do

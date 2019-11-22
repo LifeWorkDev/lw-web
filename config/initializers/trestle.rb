@@ -115,6 +115,7 @@ Trestle.configure do |config|
   # Register a form field type to be made available to the Trestle form builder.
   # Field types should conform to the following method definition:
   #
+  config.form_field :auto_field, Fields::AutoField
   config.form_field :collection_select_with_link, Fields::CollectionSelectWithLink
 
   # == Debugging Options

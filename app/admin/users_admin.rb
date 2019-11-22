@@ -38,7 +38,12 @@ Trestle.resource(:users) do
       collection_select_with_link :org_id, Org.all, :id, :name, include_blank: true
       phone_field :phone
       text_field :address
-      password_field :password
+      if user.invited_by_id.present?
+        auto_field :invited_by
+        auto_field :invitation_accepted_at
+      end
+      auto_field :created_at
+      auto_field :updated_at
     end
 
     tab :projects, badge: user.projects.size do
