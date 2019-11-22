@@ -30,7 +30,7 @@ class Milestone < ApplicationRecord
   end
 
   def formatted_date
-    date && I18n.l(date)
+    date && l(date)
   end
 
   def next

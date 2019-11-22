@@ -7,10 +7,10 @@ class Comment < ApplicationRecord
   validates :comment, presence: true
 
   def formatted_created_at
-    I18n.l(created_at)
+    l(created_at)
   end
 
   def formatted_read_at
-    read_at && I18n.l(read_at)
+    read_at && l(read_at)
   end
 end

@@ -10,7 +10,7 @@ module DeviseBootstrapHelper
       message_tags = content_tag :ul, messages.join("\n").html_safe, class: 'mt-1 mb-0'
       sentence = <<-HTML
       <strong>
-        #{I18n.t(
+        #{t(
           'errors.messages.not_saved',
           count: messages.size,
           resource: resource.class.model_name.human.downcase,

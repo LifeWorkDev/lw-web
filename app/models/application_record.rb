@@ -6,6 +6,8 @@ class ApplicationRecord < ActiveRecord::Base
   include Memery
   include StringEnum
 
+  delegate :l, :t, to: I18n, private: true
+
   def self.callbacks_of_type(type, kind: :all)
     send("_#{type}_callbacks").select do |cb|
       [:all, cb.kind].include? kind
