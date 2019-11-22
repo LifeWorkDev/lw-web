@@ -36,7 +36,7 @@ en:
   time:
     formats:
       date_only: "%-m/%-d/%Y"
-      date_time: "%-m/%-d/%Y %-l:%M%P"
+      default: "%-m/%-d/%Y %-l:%M%P"
   client_mailer:
     invite:
       subject: "%{freelancer} has invited you to a project"
