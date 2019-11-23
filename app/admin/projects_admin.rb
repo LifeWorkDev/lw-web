@@ -23,10 +23,13 @@ Trestle.resource(:projects) do
       status_tag(project.status, { 'pending' => :warning, 'active' => :success, 'disabled' => :danger }[project.status] || :default)
     end
     column :type
-    column :freelancer
-    column :client
-    column :created_at
-    actions
+    column :freelancer, sort: :user_id
+    column :client, sort: :org_id
+    column :amount, align: :right, sort: :amount_cents do |obj|
+      obj.amount&.format
+    end
+    column :created_at, align: :center
+    column :updated_at, align: :center
   end
 
   # Customize the form fields shown on the new/edit views.

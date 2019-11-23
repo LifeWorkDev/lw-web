@@ -7,13 +7,13 @@ Trestle.resource(:orgs) do
 
   table do
     column :id
-    column :display_name
+    column :name
     column :status, sort: :status, align: :center do |org|
       status_tag(org.status, { 'pending' => :warning, 'active' => :success, 'disabled' => :danger }[org.status] || :default)
     end
-    column :primary_contact
-    column :created_at
-    actions
+    column :primary_contact, sort: false
+    column :created_at, align: :center
+    column :updated_at, align: :center
   end
 
   # Customize the form fields shown on the new/edit views.

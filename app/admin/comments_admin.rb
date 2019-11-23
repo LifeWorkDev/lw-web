@@ -18,13 +18,11 @@ Trestle.resource(:comments) do
   #
   table do
     column :id
-    column :comment
-    column :commentable
-    column :commenter
-    column :read_by
-    column :formatted_read_at
-    column :formatted_created_at
-    actions
+    column :commenter, sort: :commenter_id
+    column :commentable, header: 'Commented on', sort: :commentable_id
+    column :comment, sort: false
+    column :created_at, align: :center
+    column :updated_at, align: :center
   end
 
   # Customize the form fields shown on the new/edit views.

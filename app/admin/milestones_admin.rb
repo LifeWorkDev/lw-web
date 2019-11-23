@@ -12,13 +12,17 @@ Trestle.resource(:milestones) do
   #
   table do
     column :id
-    column :description
-    column :status
-    column :amount
     column :project
-    column :formatted_date
-    column :created_at
-    actions
+    column :date
+    column :status, sort: :status, align: :center do |org|
+      status_tag(org.status, { 'active' => :warning, 'paid' => :success, 'rejected' => :danger }[org.status] || :default)
+    end
+    column :amount, align: :right, sort: :amount_cents do |obj|
+      obj.amount&.format
+    end
+    column :description
+    column :created_at, align: :center
+    column :updated_at, align: :center
   end
 
   # Customize the form fields shown on the new/edit views.
