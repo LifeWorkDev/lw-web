@@ -12,7 +12,7 @@ gem 'bootstrap_form'
 gem 'bugsnag' # Exception tracking
 gem 'business' # Business day calculations
 gem 'devise' # Authentication
-gem 'devise_invitable'
+gem 'devise_invitable', github: 'swrobel/devise_invitable', branch: 'after-database-authentication'
 gem 'email_reply_parser'
 gem 'fast_blank' # Much faster version of #blank?
 gem 'friendly_id' # "friendly" urls like /projects/cool-project

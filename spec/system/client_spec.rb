@@ -11,7 +11,7 @@ RSpec.describe 'Client views', type: :system do
 
       before { user.invite! }
 
-      it 'updates name, email & time zone when accepting an invitation' do
+      it 'updates name, email, tme zone, status when accepting an invitation' do
         url = accept_user_invitation_path(invitation_token: user.raw_invitation_token)
 
         visit url
@@ -23,7 +23,8 @@ RSpec.describe 'Client views', type: :system do
           click_on 'Sign up'
         end.to change { user.reload.name }.to(new_name) &
                change { user.email }.to(new_email) &
-               change { user.time_zone }.to(time_zone)
+               change { user.time_zone }.to(time_zone) &
+               change { user.status }.from('pending').to('active')
       end
     end
   end
