@@ -47,6 +47,8 @@ RSpec.describe 'Freelancer views', type: :system do
     end
 
     context 'without existing projects' do
+      let(:new_user) { User.last }
+
       it 'completes an entire client/project creation' do
         visit '/f/clients/new'
         fill_in 'org[users_attributes][0][name]', with: Faker::Name.name
@@ -55,7 +57,9 @@ RSpec.describe 'Freelancer views', type: :system do
         expect do
           click_on 'Continue >'
         end.to change { Org.count }.by(1) &
-               change { Project.count }.by(1)
+               change { Project.count }.by(1) &
+               change { User.count }.by(1)
+        expect(new_user.invited_by).to eq(user)
         expect(page).to have_content('Client was successfully created.')
         shared_expectations
       end

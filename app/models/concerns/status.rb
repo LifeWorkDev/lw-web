@@ -4,6 +4,8 @@ module Status
   included do
     include AASM
 
+    validates :status, presence: true
+
     aasm column: :status, whiny_transitions: false, whiny_persistence: true do
       state :pending, initial: true
       state :active

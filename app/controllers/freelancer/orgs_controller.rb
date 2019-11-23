@@ -21,8 +21,13 @@ class Freelancer::OrgsController < AuthenticatedController
 
   # POST /orgs
   def create
-    @org = Org.new(org_params)
-    @org.current_user = current_user
+    @org = Org.new(org_params.to_h.deep_merge(
+                     current_user: current_user,
+                     projects_attributes: { '0': {
+                       type: MilestoneProject,
+                       user_id: current_user.id,
+                     } },
+                   ))
 
     if @org.save
       redirect_to [:milestones, current_namespace, @org.projects.last], notice: 'Client was successfully created.'
@@ -55,6 +60,6 @@ private
 
   # Only allow a trusted parameter "white list" through.
   def org_params
-    params.require(:org).permit(:name, projects_attributes: %i[id name], users_attributes: %i[id name email]).to_h.deep_merge(projects_attributes: { '0': { type: MilestoneProject, user_id: current_user.id } })
+    params.require(:org).permit(:name, projects_attributes: %i[id name], users_attributes: %i[id name email])
   end
 end

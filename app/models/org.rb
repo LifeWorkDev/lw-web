@@ -43,10 +43,10 @@ private
     # Try to find existing user by email if no id was provided
     user = User.find_by(email: user_attrs[:email])
     # Update user w/ other attributes
-    user&.update!(user_attrs)
+    user&.assign_attributes(user_attrs)
 
     # If user isn't found, invite user
-    user ||= User.invite!(user_attrs, current_user)
+    user ||= User.new(user_attrs.merge(invited_by: current_user, password: Devise.friendly_token[0, 20]))
 
     # Add user to Org
     users << user
