@@ -22,7 +22,7 @@ class User < ApplicationRecord
   end
 
   def client?
-    org.present?
+    org_id.present?
   end
 
   def freelancer?
