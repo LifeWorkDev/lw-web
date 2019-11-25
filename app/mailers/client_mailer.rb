@@ -9,6 +9,15 @@ class ClientMailer < ApplicationMailer
     end
   end
 
+  def milestone_approaching(user:, milestone:)
+    Time.use_zone(user.time_zone) do
+      @freelancer_name = milestone.freelancer.name
+      @milestone = milestone
+      @user = user
+      make_bootstrap_mail(to: user.email, reply_to: milestone.comment_reply_address, subject: t('.subject', project: milestone.project))
+    end
+  end
+
   def milestone_completed(user:, milestone:)
     Time.use_zone(user.time_zone) do
       @freelancer_name = milestone.freelancer.name

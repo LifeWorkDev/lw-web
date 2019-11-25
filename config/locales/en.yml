@@ -33,6 +33,7 @@ en:
   date:
     formats:
       default: "%-m/%-d/%Y"
+      text_without_year: "%B %-d"
   time:
     formats:
       date_only: "%-m/%-d/%Y"
@@ -40,6 +41,8 @@ en:
   client_mailer:
     invite:
       subject: "%{freelancer} has invited you to a project"
+    milestone_approaching:
+      subject: "A payment milestone for \"%{project}\" is approaching"
     milestone_completed:
       # subject: "%{freelancer} will be paid in 3 days"
       subject: "Next payment for %{freelancer} will be withdrawn from your account today"
@@ -49,3 +52,5 @@ en:
   freelancer_mailer:
     deposit_received:
       subject: "Deposit received for %{project}"
+    milestone_approaching:
+      subject: "A milestone for \"%{project}\" is due in 3 days"

@@ -33,6 +33,10 @@ class Project < ApplicationRecord
     end
   end
 
+  def to_s
+    name
+  end
+
 private
 
   def should_generate_new_friendly_id?

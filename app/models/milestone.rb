@@ -33,6 +33,10 @@ class Milestone < ApplicationRecord
     date && l(date)
   end
 
+  memoize def comment_reply_address
+    "comments-#{id}@#{REPLIES_HOST}"
+  end
+
   def next
     project.milestones.active.where.not(id: id).first
   end
@@ -57,6 +61,10 @@ class Milestone < ApplicationRecord
 
   memoize def freelancer_reminder_time
     reminder_time(freelancer)
+  end
+
+  memoize def client_approaching_text
+    "At the end of the day on #{l(date, format: :text_without_year)} we'll release #{amount&.format} from our account to #{freelancer.name}"
   end
 
   def to_s

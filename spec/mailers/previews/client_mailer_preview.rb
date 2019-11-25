@@ -3,6 +3,10 @@ class ClientMailerPreview < ActionMailer::Preview
     ClientMailer.invite(user: User.first, project: Project.first)
   end
 
+  def milestone_approaching
+    ClientMailer.milestone_approaching(user: User.first, milestone: Milestone.first)
+  end
+
   def milestone_completed
     ClientMailer.milestone_completed(user: User.first, milestone: Milestone.first)
   end
