@@ -14,10 +14,10 @@ Trestle.resource(:comments) do
     scope.new(attrs)
   end
 
-  # Customize the table columns shown on the index view.
-  #
+  collection { Comment.order(id: :asc) }
+
   table do
-    column :id
+    column :id, sort: { default: true, default_order: :asc }
     column :commenter, sort: :commenter_id
     column :commentable, header: 'Commented on', sort: :commentable_id
     column :comment, sort: false

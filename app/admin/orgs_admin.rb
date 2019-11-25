@@ -3,10 +3,10 @@ Trestle.resource(:orgs) do
     item :orgs, icon: 'fa fa-building', priority: 1
   end
 
-  # Customize the table columns shown on the index view.
+  collection { Org.order(id: :asc) }
 
   table do
-    column :id
+    column :id, sort: { default: true, default_order: :asc }
     column :name
     column :status, sort: :status, align: :center do |org|
       status_tag(org.status, { 'pending' => :warning, 'active' => :success, 'disabled' => :danger }[org.status] || :default)

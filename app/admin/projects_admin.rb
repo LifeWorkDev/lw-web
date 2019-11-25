@@ -14,10 +14,10 @@ Trestle.resource(:projects) do
     scope.new(attrs.merge(type: MilestoneProject))
   end
 
-  # Customize the table columns shown on the index view.
-  #
+  collection { Project.order(id: :asc) }
+
   table do
-    column :id
+    column :id, sort: { default: true, default_order: :asc }
     column :name
     column :status, sort: :status, align: :center do |project|
       status_tag(project.status, { 'pending' => :warning, 'active' => :success, 'disabled' => :danger }[project.status] || :default)

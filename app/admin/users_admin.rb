@@ -8,10 +8,10 @@ Trestle.resource(:users) do
     scope.new(attrs)
   end
 
-  # Customize the table columns shown on the index view.
-  #
+  collection { User.order(id: :asc) }
+
   table do
-    column :id
+    column :id, sort: { default: true, default_order: :asc }
     column :name
     column :email
     column :status, sort: :status, align: :center do |user|

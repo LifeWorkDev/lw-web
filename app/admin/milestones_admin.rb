@@ -8,10 +8,10 @@ Trestle.resource(:milestones) do
     scope.new(attrs)
   end
 
-  # Customize the table columns shown on the index view.
-  #
+  collection { Milestone.order(id: :asc) }
+
   table do
-    column :id
+    column :id, sort: { default: true, default_order: :asc }
     column :project
     column :date
     column :status, sort: :status, align: :center do |org|
