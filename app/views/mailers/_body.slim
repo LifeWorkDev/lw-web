@@ -1,5 +1,6 @@
 .container.py-3
-  = image_pack_tag 'lifework-logo.png', height: 26, width: 150
+  = link_to root_url, target: :_blank, rel: :noopener
+    = image_pack_tag 'lifework-logo.png', height: 26, width: 150
 .container.py-3
   = yield
 - unless @hide_email_footer
