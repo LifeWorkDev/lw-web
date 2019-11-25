@@ -42,7 +42,7 @@ en:
     invite:
       subject: "%{freelancer} has invited you to a project"
     milestone_approaching:
-      subject: "A payment milestone for \"%{project}\" is approaching"
+      subject: "A milestone payment for \"%{project}\" is approaching"
     milestone_completed:
       # subject: "%{freelancer} will be paid in 3 days"
       subject: "Next payment for %{freelancer} will be withdrawn from your account today"
