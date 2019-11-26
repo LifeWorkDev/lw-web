@@ -3,6 +3,10 @@
   letter-spacing: $font-size-base * 0.04;
 }
 
+.bg-dark .text-muted {
+  color: $gray-500 !important;
+}
+
 .btn,
 .nav-link {
   text-transform: uppercase;
