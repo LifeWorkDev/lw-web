@@ -26,13 +26,6 @@ guard :shell, first_match: true do
       `bin/bundle --without production | awk '!/^(Using|Fetching)/'`
     end
   end
-
-  # Trigger webpack-dev-server refresh when views change
-  watch(%r{(config/locales/.+)|#{dsl.rails(view_extensions: %w[erb haml slim]).views}}) do |m|
-    p "#{m[0]} has changed. Reloading."
-    # Trick Webpack into reloading browser
-    `touch app/javascript/packs/application.js.erb`
-  end
 end
 
 guard :rubocop, all_on_start: true, cli: %w[--auto-correct --display-cop-names] do

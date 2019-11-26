@@ -23,6 +23,13 @@ environment.plugins.append(
   }),
 )
 
+const chokidar = require('chokidar')
+environment.config.devServer.before = (app, server) => {
+  chokidar
+    .watch(['config/locales/*.yml', 'app/views/**/*.slim'])
+    .on('change', () => server.sockWrite(server.sockets, 'content-changed'))
+}
+
 module.exports = merge(environment.toWebpackConfig(), {
   devServer: {
     stats: 'minimal',
