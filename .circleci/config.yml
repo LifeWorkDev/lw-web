@@ -126,7 +126,7 @@ jobs:
 
       - run:
           name: Ruby tests
-          command: bin/rspec spec/ --format progress --format RspecJunitFormatter -o ~/test-results/rspec/rspec.xml
+          command: CODECOV_FLAG=ruby bin/rspec spec/ --format progress --format RspecJunitFormatter -o ~/test-results/rspec/rspec.xml
 
       - store_test_results:
           path: ~/test-results/rspec/

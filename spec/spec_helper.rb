@@ -1,3 +1,14 @@
+if ENV['CODECOV_TOKEN']
+  require 'simplecov'
+  SimpleCov.start :rails do
+    command_name 'rspec'
+    add_group 'Mailboxes', 'app/mailboxes'
+    add_group 'Serializers', 'app/serializers'
+  end
+  require 'codecov'
+  SimpleCov.formatter = SimpleCov::Formatter::Codecov
+end
+
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
