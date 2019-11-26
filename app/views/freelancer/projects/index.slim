@@ -25,7 +25,5 @@
             = render 'shared/action_button', path: [current_namespace, project, :comments], style: 'primary', icon: 'forum-outline', title: 'Comments'
             = render 'shared/action_button', path: [:payments, current_namespace, project], style: 'success', icon: 'currency-usd', title: 'Payments'
 
-- if current_user.clients.any?
-  = render 'shared/add_button', path: new_freelancer_milestone_project_path, text: 'Project'
-- else
-  = render 'shared/add_button', path: new_freelancer_org_path, text: 'Project'
+- path = current_user.clients.any? ? new_freelancer_milestone_project_path : new_freelancer_org_path
+= render 'shared/add_button', path: path, text: 'Project'

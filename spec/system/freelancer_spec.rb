@@ -50,7 +50,9 @@ RSpec.describe 'Freelancer views', type: :system do
       let(:new_user) { User.last }
 
       it 'completes an entire client/project creation' do
-        visit '/f/clients/new'
+        visit '/f/projects'
+        click_on '+ Project'
+        expect(page).to have_current_path '/f/clients/new'
         fill_in 'org[users_attributes][0][name]', with: Faker::Name.name
         fill_in 'org[users_attributes][0][email]', with: Faker::Internet.safe_email
         fill_in 'org[projects_attributes][0][name]', with: name
@@ -66,10 +68,12 @@ RSpec.describe 'Freelancer views', type: :system do
     end
 
     context 'with existing project' do
-      let(:user) { Fabricate(:freelancer) }
+      let(:user) { Fabricate(:freelancer) } # Fabricates a project as well
 
       it 'completes project creation for an existing client' do
-        visit '/f/milestone_projects/new'
+        visit '/f/projects'
+        click_on '+ Project'
+        expect(page).to have_current_path '/f/milestone_projects/new'
         page.all('#milestone_project_org_id option')[1].select_option # Placeholder is first
         fill_in 'milestone_project[name]', with: name
         click_on 'Continue >'
