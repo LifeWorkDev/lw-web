@@ -4,6 +4,12 @@ Fabricator(:milestone_project) do
   freelancer(fabricator: :user)
 end
 
+Fabricator(:active_milestone_project, from: :milestone_project) do
+  status :active
+  client(fabricator: :named_org_with_active_users)
+  freelancer(fabricator: :active_user)
+end
+
 Fabricator(:milestone_project_with_milestones, from: :milestone_project) do
   after_build do |project, transients|
     milestones_count = transients[:count] || rand(3..7)

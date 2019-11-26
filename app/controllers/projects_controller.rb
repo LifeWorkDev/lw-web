@@ -31,7 +31,8 @@ class ProjectsController < AuthenticatedController
   # PATCH/PUT /projects/1
   def update
     if @project.update(project_params)
-      redirect_to [current_namespace, Project], notice: 'Project was successfully updated.'
+      notice = 'Project was successfully updated.' if @project.changed?
+      redirect_to [current_namespace, Project], notice: notice
     else
       render :edit
     end

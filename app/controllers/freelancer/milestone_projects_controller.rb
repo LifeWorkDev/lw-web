@@ -28,7 +28,7 @@ class Freelancer::MilestoneProjectsController < MilestoneProjectsController
       view = params[:button] == 'payments' ? :preview : :payments
       path = [view, current_namespace, @project]
     else
-      notice = 'Project was successfully updated.'
+      notice = 'Project was successfully updated.' if @project.changed?
       path = [:milestones, current_namespace, @project]
     end
     if @project.save

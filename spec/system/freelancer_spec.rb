@@ -63,12 +63,13 @@ RSpec.describe 'Freelancer views', type: :system do
                change { User.count }.by(1)
         expect(new_user.invited_by).to eq(user)
         expect(page).to have_content('Client was successfully created.')
+        expect(page).to have_link '< Back', href: %r{/f/clients/.+/edit$}
         shared_expectations
       end
     end
 
     context 'with existing project' do
-      let(:user) { Fabricate(:freelancer) } # Fabricates a project as well
+      let(:user) { Fabricate(:freelancer_with_active_project) }
 
       it 'completes project creation for an existing client' do
         visit '/f/projects'
@@ -78,7 +79,17 @@ RSpec.describe 'Freelancer views', type: :system do
         fill_in 'milestone_project[name]', with: name
         click_on 'Continue >'
         expect(page).to have_content('Project was successfully created.')
+        expect(page).to have_link '< Back', href: %r{/f/milestone_projects/.+/edit$}
         shared_expectations
+      end
+
+      it 'can edit existing project' do
+        visit '/f/projects'
+        click_on 'Rename'
+        expect(page).to have_content 'Project Name'
+        click_on 'Continue >'
+        expect(page).not_to have_content 'updated'
+        expect(page).to have_link '< Back', href: %r{/f/milestone_projects/.+/edit$}
       end
     end
   end
