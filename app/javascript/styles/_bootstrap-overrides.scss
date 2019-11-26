@@ -51,3 +51,10 @@ h3 {
 svg {
   fill: currentColor;
 }
+
+.table {
+  th,
+  td {
+    vertical-align: middle;
+  }
+}
