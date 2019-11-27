@@ -9,9 +9,9 @@ import {
   subBusinessDays,
 } from 'date-fns'
 
-import './DatePicker.scss'
+import './MilestonePicker.scss'
 
-const DatePicker = props => {
+const MilestonePicker = props => {
   const [milestones, setMilestones] = useState(props.milestones)
   const [selectedDays, setSelectedDays] = useState(
     getMilestoneDays(props.milestones),
@@ -174,8 +174,8 @@ const DatePicker = props => {
   )
 }
 
-DatePicker.propTypes = {
+MilestonePicker.propTypes = {
   milestones: PropTypes.array.isRequired,
 }
 
-export default DatePicker
+export default MilestonePicker
