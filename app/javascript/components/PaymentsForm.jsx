@@ -184,7 +184,18 @@ const PaymentForm = React.memo(
     return (
       <PaymentsFormRow
         firstClass='bg-dark small text-white'
-        firstContent={milestone.date}
+        firstContent={
+          <>
+            <img
+              className='align-text-bottom'
+              src='https://cdn.jsdelivr.net/npm/@mdi/svg@4.6.95/svg/flag-checkered.svg'
+              width={20}
+              height={20}
+              style={{ filter: 'invert(1)' }}
+            />
+            <div className='mx-auto'>{milestone.date}</div>
+          </>
+        }
         secondContent={
           <>
             <label className='sr-only'>Amount</label>
