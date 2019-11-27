@@ -44,6 +44,10 @@ $body-bg: $theme-background; // Don't apply to mailer body
   }
 }
 
+.badge-white {
+  @include badge-variant(white);
+}
+
 .btn-white {
   @include button-variant(white, white);
 }
