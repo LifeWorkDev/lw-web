@@ -16,6 +16,10 @@ class Milestone < ApplicationRecord
     state :rejected
   end
 
+  memoize def status_class
+    active? ? :primary : :success
+  end
+
   def amount_with_fee
     amount * (1 + LIFEWORK_FEE)
   end

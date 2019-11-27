@@ -1,1 +1,1 @@
-.badge class="badge-#{record.pending? ? :warning : :success}" = record.status
+.badge class="badge-#{record.status_class} #{local_assigns[:class]}" = record.status

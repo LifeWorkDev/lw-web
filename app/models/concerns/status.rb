@@ -23,5 +23,9 @@ module Status
         transitions from: :disabled, to: :active
       end
     end
+
+    memoize def status_class
+      pending? ? :warning : :success
+    end
   end
 end
