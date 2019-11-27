@@ -23,9 +23,15 @@ const CommentItem = props => {
   const [commentText, setCommentText] = useState(comment.comment)
   const [isError, setIsError] = useState(false)
   const ErrorBoundary = window.bugsnagClient.getPlugin('react')
+  const commentForm = document.getElementById('comment-form')
 
   const handleCommentChange = event => {
     setCommentText(event.target.value)
+  }
+
+  const editingOff = () => {
+    commentForm.classList.remove('d-none')
+    setEditing(false)
   }
 
   const save = () => {
@@ -49,7 +55,7 @@ const CommentItem = props => {
         mode: 'cors',
       })
       .then(response => {
-        setEditing(false)
+        editingOff()
         if (response.ok) return response.json()
         else setIsError(true)
       })
@@ -64,43 +70,62 @@ const CommentItem = props => {
       >
         <h5>
           {comment.commenter.name}
-          <small> at {comment.formatted_created_at}</small>
+          <small> {comment.formatted_created_at}</small>
         </h5>
 
         {!editing && (
           <div className='comment'>
-            <p>{commentText}</p>
+            <p className='mb-1'>{commentText}</p>
             {isError && (
               <span className='error text-danger'>
                 Unable to Save Comment, Try again.
               </span>
             )}
-            {isCurrentUser && (
-              <span
-                className='edit badge badge-secondary'
-                onClick={() => {
-                  setEditing(true)
-                }}
-              >
-                Edit
-              </span>
-            )}
+            {isCurrentUser &&
+              (comment.read_by ? (
+                <div className='small'>
+                  Read by {comment.read_by.name} {comment.formatted_read_at}
+                </div>
+              ) : (
+                <button
+                  className='btn btn-sm btn-white'
+                  onClick={() => {
+                    commentForm.classList.add('d-none')
+                    setEditing(true)
+                  }}
+                >
+                  <img
+                    className='align-text-bottom'
+                    src='https://cdn.jsdelivr.net/npm/@mdi/svg@4.6.95/svg/pencil.svg'
+                    width={12}
+                    height={12}
+                  />
+                  {' Edit'}
+                </button>
+              ))}
           </div>
         )}
 
         {isCurrentUser && editing && (
           <div className='comment-inline-edit'>
-            <textarea value={commentText} onChange={handleCommentChange} />
-            <span className='update badge badge-secondary' onClick={save}>
+            <textarea
+              className='form-control'
+              value={commentText}
+              onChange={handleCommentChange}
+            />
+            <button
+              className='btn btn-sm btn-outline-white mt-1 mr-2'
+              onClick={() => {
+                setCommentText(props.comment.comment)
+                editingOff()
+              }}
+            >
+              Cancel
+            </button>
+            <button className='btn btn-sm btn-white mt-1' onClick={save}>
               Save
-            </span>
+            </button>
           </div>
-        )}
-
-        {comment.read_by !== null && (
-          <small>
-            Read by {comment.read_by.name} at {comment.formatted_read_at}
-          </small>
         )}
       </div>
     </ErrorBoundary>

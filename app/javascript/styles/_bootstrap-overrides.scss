@@ -4,7 +4,7 @@
 }
 
 .bg-dark .text-muted {
-  color: $gray-500 !important;
+  color: darken(white, $mute-percent) !important;
 }
 
 .btn,
@@ -32,7 +32,7 @@
 
 .nav-link {
   font-family: $font-family-sans-serif;
-  font-size: $btn-font-size-sm;
+  font-size: $nav-link-font-size;
   font-weight: $btn-font-weight;
   line-height: $btn-line-height;
 }

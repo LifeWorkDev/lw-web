@@ -44,6 +44,14 @@ $body-bg: $theme-background; // Don't apply to mailer body
   }
 }
 
+.btn-white {
+  @include button-variant(white, white);
+}
+
+.btn-outline-white {
+  @include button-outline-variant(white);
+}
+
 .date-pill {
   font-size: 100%;
 
@@ -69,6 +77,38 @@ $body-bg: $theme-background; // Don't apply to mailer body
     content: ' (optional)';
     font-size: 85%;
     font-style: italic;
+  }
+}
+
+.section-heading {
+  display: flex;
+  width: 100%;
+
+  .text,
+  .left,
+  .right {
+    display: inline-block;
+  }
+
+  .text {
+    flex-shrink: 1;
+    font-size: $font-size-base * 1.1;
+    max-width: 40%;
+  }
+
+  .left {
+    background: linear-gradient(to left, $body-color, transparent);
+  }
+
+  .right {
+    background: linear-gradient(to right, $body-color, transparent);
+  }
+
+  .left,
+  .right {
+    margin: auto 0.25rem;
+    flex-grow: 1;
+    height: 1px;
   }
 }
 
@@ -159,6 +199,7 @@ input[type='number'] {
 }
 
 .login-button {
+  font-size: $nav-link-font-size;
   padding: $font-size-base * 0.47 $font-size-base;
 }
 
@@ -213,29 +254,13 @@ td.action-list {
   }
 }
 
-.milestones-list .milestone-list-item:last-child {
-  hr {
-    display: none;
-  }
-}
-
 .comments-list {
   .comment-item p {
     white-space: pre-line;
   }
 
-  .edit {
-    cursor: pointer;
-  }
-
   .comment-inline-edit textarea {
     width: 100%;
-  }
-
-  .update {
-    cursor: pointer;
-    padding: 8px 20px;
-    font-size: inherit;
   }
 
   .error {
@@ -255,10 +280,6 @@ td.action-list {
       color: white;
     }
   }
-}
-
-.comment-form {
-  padding-top: 1rem;
 }
 
 .StripeElement--focus {

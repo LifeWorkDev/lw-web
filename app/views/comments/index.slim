@@ -1,4 +1,4 @@
-- title = 'Milestone Comments'
+- title = "#{@project} timeline"
 - content_for :title, title
 
 .text-center
@@ -8,18 +8,18 @@
   .milestones-list
     - @milestones.each do |milestone|
       .text-center.milestone-list-item
-        h5 = milestone.description
-        label = milestone.formatted_date
+        = render 'shared/section_heading'
+          = milestone.description
+        .small.text-muted.font-sans-serif.mb-3 = milestone.formatted_date
         = react_component('CommentsList', comments: ActiveModelSerializers::SerializableResource.new(milestone.comments).serializable_hash,
                         currentUser: UserSerializer.new(current_user).serializable_hash)
-        hr
-  .comment-form
-    - last_milestone = @milestones.last
-    = bootstrap_form_with(model: [current_namespace, @project, last_milestone.comments.new], layout: :horizontal, local: true) do |f|
-      = f.alert_message 'Errors'
-      = f.hidden_field :commentable_id
-      = f.hidden_field :commentable_type
-      = f.text_area :comment, hide_label: true, placeholder: 'Add a reply', required: true, control_col: 'col-sm-12'
-      .form-group
-        = f.primary 'Submit', class: 'btn btn-primary float-right', id: 'submit-form', render_as_button: true
-        .clearfix
+        - if milestone == @milestones.find(&:active?)
+          #comment-form.mt-3
+            = bootstrap_form_with(model: [current_namespace, @project, milestone.comments.new], layout: :horizontal, local: true) do |f|
+              = f.alert_message 'Errors'
+              = f.hidden_field :commentable_id
+              = f.hidden_field :commentable_type
+              = f.text_area :comment, hide_label: true, placeholder: 'Add a comment', required: true, control_col: 'col-sm-12'
+              .form-group
+                = f.primary 'Submit', class: 'btn btn-primary float-right', id: 'submit-form', render_as_button: true
+                .clearfix
