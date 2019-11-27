@@ -27,7 +27,9 @@ const chokidar = require('chokidar')
 environment.config.devServer.before = (app, server) => {
   chokidar
     .watch(['config/locales/*.yml', 'app/views/**/*.slim'])
-    .on('change', () => server.sockWrite(server.sockets, 'content-changed'))
+    .on('change', () => setTimeout(() => {
+      server.sockWrite(server.sockets, 'content-changed')
+    }, 50))
 }
 
 module.exports = merge(environment.toWebpackConfig(), {
