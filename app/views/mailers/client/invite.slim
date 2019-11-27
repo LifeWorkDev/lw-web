@@ -7,20 +7,21 @@ p
 - if @get_started_url.present?
   .mb-3.text-center = link_to 'Get started', @get_started_url, class: 'btn btn-primary'
 
-table.table.table-striped.mb-0
-  thead
-    tr
-      th.text-center Date
-      th.text-right Amount
-      th Description
-  tbody
-    - @project.milestones.each do |milestone|
+- content_for :no_gutters
+  table.table.table-striped.mb-0
+    thead
       tr
-        td.text-center = milestone.formatted_date
-        td.text-right = milestone.amount&.format
-        td = milestone.description
-  tfoot.font-weight-bold
-    tr
-      td.border-top.border-dark.text-center Total:
-      td.border-top.border-dark.text-bold.text-right = @project.amount&.format
-      td.border-top.border-dark
+        th.text-center Date
+        th.text-right Amount
+        th Description
+    tbody
+      - @project.milestones.each do |milestone|
+        tr
+          td.text-center = milestone.formatted_date
+          td.text-right = milestone.amount&.format
+          td = milestone.description
+    tfoot.font-weight-bold
+      tr
+        td.border-top.border-dark.text-center Total:
+        td.border-top.border-dark.text-bold.text-right = @project.amount&.format
+        td.border-top.border-dark

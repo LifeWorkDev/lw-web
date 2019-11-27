@@ -21,15 +21,17 @@ scss:
     border: 2px dotted black;
   }
 
-table.table.table-striped.mb-3
-  tbody
-    - @milestone.comments.each do |comment|
-      tr[class="#{comment.commenter == @user ? 'text-right' : 'text-left'}"]
-        td
-          .comment
-            h5
-              span => comment.commenter.name
-              small = comment.formatted_created_at
-            = comment.comment
+- content_for :no_gutters
+  table.table.table-striped.mb-3
+    tbody
+      - @milestone.comments.each do |comment|
+        tr[class="#{comment.commenter == @user ? 'text-right' : 'text-left'}"]
+          td
+            .comment
+              h5
+                span => comment.commenter.name
+                small = comment.formatted_created_at
+              = comment.comment
 
-p You can respond to this comment by replying to this email, or #{link_to 'click here', [@user.type, @milestone.project, :comments]} to comment via our website.
+  .container
+    p You can respond to this comment by replying to this email, or #{link_to 'click here', [@user.type, @milestone.project, :comments]} to comment via our website.

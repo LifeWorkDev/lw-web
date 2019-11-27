@@ -3,6 +3,8 @@
     = image_pack_tag 'lifework-logo.png', height: 26, width: 150
 .container.py-3
   = yield
+.container.p-0
+  = yield :no_gutters
 - unless @hide_email_footer
   .container.bg-dark.py-3
     .text-center.text-muted &copy; #{Time.zone.today.year} LifeWork Holdings, Inc.
