@@ -29,7 +29,7 @@ environment.config.devServer.before = (app, server) => {
     .watch(['config/locales/*.yml', 'app/views/**/*.slim'])
     .on('change', () => setTimeout(() => {
       server.sockWrite(server.sockets, 'content-changed')
-    }, 50))
+    }, 100))
 }
 
 module.exports = merge(environment.toWebpackConfig(), {
