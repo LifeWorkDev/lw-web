@@ -6,24 +6,13 @@
 
 .row
   table.table.table-hover.table-striped
-    thead
-      tr
-        th Name
-        th Client
-        th Status
-        th Value
-        th
     tbody
       - @projects.each do |project|
         tr
-          td = project.name
+          td = link_to project.name, project.pending? ? [:edit, current_namespace, project] : [current_namespace, project, :comments]
           td = project.client.display_name
-          td = project.status.capitalize
           td = project.amount&.format
-          td.action-list
-            = render 'shared/action_button', path: [:edit, current_namespace, project], style: 'dark', icon: 'square-edit-outline', title: 'Rename'
-            = render 'shared/action_button', path: [current_namespace, project, :comments], style: 'primary', icon: 'forum-outline', title: 'Comments'
-            = render 'shared/action_button', path: [:payments, current_namespace, project], style: 'success', icon: 'currency-usd', title: 'Payments'
+          td = render 'shared/status_badge', record: project
 
 - path = current_user.clients.any? ? new_freelancer_milestone_project_path : new_freelancer_org_path
 = render 'shared/add_button', path: path, text: 'Project'
