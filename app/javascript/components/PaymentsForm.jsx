@@ -279,16 +279,16 @@ const PaymentsFormRow = React.memo(
       >
         <div className='form-row justify-content-center'>{firstContent}</div>
       </div>
-      <div className='col-8 col-sm-10 form-inline pr-0'>
+      <div className='col-8 col-sm-10 pr-0'>
         <div className='container p-0'>
           <div className='form-row'>
-            <div className='form-group col-6 col-sm-2 form-inline'>
+            <div className='form-group col-6 col-sm-2 mb-sm-0'>
               {secondContent}
             </div>
-            <div className='form-group col-6 col-sm-2 form-inline'>
+            <div className='form-group col-6 col-sm-2 mb-sm-0'>
               {thirdContent}
             </div>
-            <div className='col-12 col-sm-8 form-inline'>{fourthContent}</div>
+            <div className='col-12 col-sm-8'>{fourthContent}</div>
           </div>
         </div>
       </div>
