@@ -4,12 +4,11 @@
 .text-center
   h2 = title
 
-.row
-  table.table.table-hover.table-striped
-    tbody
-      - @projects.each do |project|
-        tr
-          td = link_to project.name, project.pending? ? [:edit, current_namespace, project] : [current_namespace, project, :comments]
-          td = project.freelancer.name
-          td = project.amount&.format
-          td = render 'shared/status_badge', record: project
+table.table.table-hover.table-striped
+  tbody
+    - @projects.each do |project|
+      tr
+        td = link_to project.name, project.pending? ? [:edit, current_namespace, project] : [current_namespace, project, :comments]
+        td = project.freelancer.name
+        td = project.amount&.format
+        td = render 'shared/status_badge', record: project
