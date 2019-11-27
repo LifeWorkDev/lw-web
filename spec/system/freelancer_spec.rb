@@ -70,6 +70,7 @@ RSpec.describe 'Freelancer views', type: :system do
 
     context 'with existing project' do
       let(:user) { Fabricate(:freelancer_with_active_project) }
+      let(:project) { user.projects.first }
 
       it 'completes project creation for an existing client' do
         visit '/f/projects'
@@ -83,13 +84,20 @@ RSpec.describe 'Freelancer views', type: :system do
         shared_expectations
       end
 
-      it 'can edit existing project' do
+      it 'can edit pending project' do
+        project.update!(status: :pending)
         visit '/f/projects'
-        click_on 'Rename'
-        expect(page).to have_content 'Project Name'
+        click_on project.name
+        expect(page).to have_current_path "/f/milestone_projects/#{project.slug}/edit"
         click_on 'Continue >'
         expect(page).not_to have_content 'updated'
         expect(page).to have_link '< Back', href: %r{/f/milestone_projects/.+/edit$}
+      end
+
+      it 'can view comments for an active project' do
+        visit '/f/projects'
+        click_on project.name
+        expect(page).to have_current_path "/f/milestone_projects/#{project.slug}/comments"
       end
     end
   end
