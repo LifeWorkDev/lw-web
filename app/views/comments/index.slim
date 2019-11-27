@@ -4,22 +4,20 @@
 .text-center
   h2 = title
 
-- if @milestones.present?
-  .milestones-list
-    - @milestones.each do |milestone|
-      .text-center.milestone-list-item
-        = render 'shared/section_heading'
-          = milestone.description
-        .small.text-muted.font-sans-serif.mb-3 = milestone.formatted_date
-        = react_component('CommentsList', comments: ActiveModelSerializers::SerializableResource.new(milestone.comments).serializable_hash,
-                        currentUser: UserSerializer.new(current_user).serializable_hash)
-        - if milestone == @milestones.find(&:active?)
-          #comment-form.mt-3
-            = bootstrap_form_with(model: [current_namespace, @project, milestone.comments.new], layout: :horizontal, local: true) do |f|
-              = f.alert_message 'Errors'
-              = f.hidden_field :commentable_id
-              = f.hidden_field :commentable_type
-              = f.text_area :comment, hide_label: true, placeholder: 'Add a comment', required: true, control_col: 'col-sm-12'
-              .form-group
-                = f.primary 'Submit', class: 'btn btn-primary float-right', id: 'submit-form', render_as_button: true
-                .clearfix
+- @milestones&.each do |milestone|
+  .row.text-center.mt-5
+    .column.w-100
+      = render 'shared/section_heading'
+        = milestone.description
+      .small.text-muted.font-sans-serif.mt-2.mb-3 = milestone.formatted_date
+      = react_component('CommentsList', comments: ActiveModelSerializers::SerializableResource.new(milestone.comments).serializable_hash, currentUser: UserSerializer.new(current_user).serializable_hash)
+      - if milestone == @milestones.find(&:active?)
+        #comment-form.mt-3.mx-3.mx-sm-0
+          = bootstrap_form_with(model: [current_namespace, @project, milestone.comments.new], layout: :horizontal, local: true) do |f|
+            = f.alert_message 'Errors'
+            = f.hidden_field :commentable_id
+            = f.hidden_field :commentable_type
+            = f.text_area :comment, hide_label: true, placeholder: 'Add a comment', required: true, control_col: 'col-sm-12'
+            .form-group
+              = f.primary 'Submit', class: 'btn btn-primary float-right', id: 'submit-form', render_as_button: true
+              .clearfix

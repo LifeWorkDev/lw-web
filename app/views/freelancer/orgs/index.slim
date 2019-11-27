@@ -4,12 +4,13 @@
 .text-center
   h2 = title
 
-table.table.table-hover.table-striped
-  tbody
-    - @clients.each do |client|
-      tr
-        td = client.display_name
-        td = client.primary_contact.name
-        td = render 'shared/status_badge', record: client
+= render 'shared/overflow_scroll'
+  table.table.table-hover.table-striped
+    tbody
+      - @clients.each do |client|
+        tr
+          td = client.display_name
+          td = client.primary_contact.name
+          td = render 'shared/status_badge', record: client
 
 = render 'shared/add_button', path: new_freelancer_org_path, text: 'Client'
