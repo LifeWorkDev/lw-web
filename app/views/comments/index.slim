@@ -4,6 +4,9 @@
 .text-center
   h2 = title
 
+- if @project.active?
+  p.lead.mt-4 Your project is currently in progress, so if you need to make any changes to dates or amounts, please <a href='javascript:Intercom("show")'>contact us</a>.
+
 - @milestones&.each do |milestone|
   .row.text-center.mt-5
     .column.w-100
