@@ -17,7 +17,7 @@ Trestle.configure do |config|
 
   # Speficy a favicon to be used within the admin.
   #
-  config.favicon = 'https://static1.squarespace.com/static/5afad0e63c3a53f810c9c096/t/5b02d4228a922df39df37065/favicon.ico'
+  # config.favicon =
 
   # Set the text shown in the page footer within the admin.
   # Defaults to 'Powered by Trestle'.
@@ -125,8 +125,12 @@ Trestle.configure do |config|
   # config.debug_form_errors = true
   # Optional, but it is always nice to give folks the option of
   # logging out:
-  config.hook('view.header') do
+  config.hook 'view.header' do
     render 'admin/header'
+  end
+
+  config.hook :head do
+    favicon_pack_tag 'favicon.ico', rel: 'shortcut icon'
   end
 end
 require 'trestle-devise/controller_methods'

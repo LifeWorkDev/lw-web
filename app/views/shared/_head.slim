@@ -17,12 +17,14 @@ meta property='og:description' content="#{yield(:description).presence || defaul
   meta property='og:url' content="#{yield(:canonical_url).presence}"
   link rel='canonical' href="#{yield(:canonical_url).presence}"
 
-/ meta property='fb:app_id' content=''
-
 meta content='text/html; charset=UTF-8' http-equiv='Content-Type'
 meta charset='utf-8'
 meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0 shrink-to-fit=no'
-= favicon_link_tag 'https://static1.squarespace.com/static/5afad0e63c3a53f810c9c096/t/5b02d4228a922df39df37065/favicon.ico', rel: 'shortcut icon', type: 'image/x-icon'
+meta name='msapplication-square150x150logo' content=asset_pack_path('media/images/ms-icon-150x150.png')
+meta name='msapplication-TileColor' content='#FFFFFF'
+= favicon_pack_tag 'favicon.ico', rel: 'shortcut icon'
+= favicon_pack_tag 'favicon-192x192.png', rel: :icon, sizes: '192x192'
+= favicon_pack_tag 'apple-touch-icon.png', rel: 'apple-touch-icon'
 
 = yield(:head_extra)
 
