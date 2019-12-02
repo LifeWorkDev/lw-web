@@ -41,6 +41,10 @@ class User < ApplicationRecord
     name
   end
 
+  memoize def in_north_america?
+    ActiveSupport::TimeZone.basic_us_zone_names.include? time_zone
+  end
+
 protected
 
   def send_devise_notification(notification, *args)
