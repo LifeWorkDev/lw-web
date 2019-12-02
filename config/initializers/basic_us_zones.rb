@@ -9,6 +9,10 @@ module ActiveSupport
           name && ActiveSupport::TimeZone[name]
         end.compact.sort!
       end
+
+      memoize def basic_us_zone_names
+        basic_us_zones.map(&:name)
+      end
     end
   end
 end

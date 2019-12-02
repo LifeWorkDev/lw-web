@@ -85,3 +85,4 @@ module LifeWork
 end
 
 REPLIES_HOST ||= "#{ENV['SUBDOMAIN']}-reply.lifeworkonline.com".freeze
+WORK_CATEGORIES = ['Accounting & Consulting', 'Admin Support', 'Customer Service', 'Data Science & Analytics', 'Design & Creative', 'Engineering & Architecture', 'IT & Networking', 'Legal', 'Sales & Marketing', 'Translation', 'Web, Mobile & Software Dev', 'Writing'].freeze

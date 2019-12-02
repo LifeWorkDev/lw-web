@@ -23,10 +23,13 @@ Trestle.resource(:orgs) do
       text_field :name
       auto_field :slug
       select :status, Org.aasm.states.map(&:name)
-      select :work_category, []
-      text_area :work_frequency
       auto_field :created_at
       auto_field :updated_at
+    end
+
+    tab :questionnaire do
+      select :work_category, WORK_CATEGORIES, {}, disabled: true, multiple: true
+      auto_field :work_frequency
     end
 
     tab :users, badge: org.users.size do

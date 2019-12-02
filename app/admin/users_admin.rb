@@ -46,6 +46,11 @@ Trestle.resource(:users) do
       auto_field :updated_at
     end
 
+    tab :questionnaire do
+      select :work_category, WORK_CATEGORIES, {}, disabled: true, multiple: true
+      auto_field :work_type
+    end
+
     tab :projects, badge: user.projects.size do
       table ProjectsAdmin.table, collection: user.projects
       concat admin_link_to('New Project', admin: :projects, action: :new, params: { user_id: user.id }, class: 'btn btn-success')
