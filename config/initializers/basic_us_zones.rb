@@ -13,6 +13,10 @@ module ActiveSupport
       memoize def basic_us_zone_names
         basic_us_zones.map(&:name)
       end
+
+      memoize def non_us_zones
+        all - basic_us_zones
+      end
     end
   end
 end

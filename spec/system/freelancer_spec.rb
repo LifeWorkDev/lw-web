@@ -6,6 +6,15 @@ RSpec.describe 'Freelancer views', type: :system do
       visit '/'
       expect(page).to have_current_path('/sign_up')
     end
+
+    it 'redirects after sign up to user edit' do
+      visit '/sign_up'
+      fill_in 'user[name]', with: Faker::Name.name
+      fill_in 'user[email]', with: Faker::Internet.safe_email
+      fill_in 'user[password]', with: Devise.friendly_token[0, 20]
+      click_on 'Sign up'
+      expect(page).to have_current_path('/f/user/edit')
+    end
   end
 
   context "when auth'd" do
