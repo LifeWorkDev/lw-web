@@ -59,11 +59,9 @@ Trestle.configure do |config|
 
   # Add an explicit menu block to be added to the admin navigation.
   #
-  # config.menu do
-  #   group "Custom Group" do
-  #     item "Custom Link", "/admin/custom", icon: "fa fa-car", badge: { text: "NEW!", class: "label-success" }, priority: :first
-  #   end
-  # end
+  config.menu do
+    item 'Background Jobs', '/admin/que', icon: 'fa fa-cogs', priority: :last
+  end
 
   # == Extension Options
   #
