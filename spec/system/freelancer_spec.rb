@@ -4,7 +4,7 @@ RSpec.describe 'Freelancer views', type: :system do
   context "when unauth'd" do
     it 'renders signup form' do
       visit '/'
-      expect(page).to have_current_path('/sign_up')
+      expect(page).to have_current_path '/sign_up'
     end
 
     it 'redirects after sign up to user edit' do
@@ -13,7 +13,7 @@ RSpec.describe 'Freelancer views', type: :system do
       fill_in 'user[email]', with: Faker::Internet.safe_email
       fill_in 'user[password]', with: Devise.friendly_token[0, 20]
       click_on 'Sign up'
-      expect(page).to have_current_path('/f/user/edit')
+      expect(page).to have_current_path '/f/user/edit'
     end
   end
 
@@ -28,7 +28,7 @@ RSpec.describe 'Freelancer views', type: :system do
 
     it 'redirects from / to the freelancer project dashboard' do
       visit '/'
-      expect(page).to have_current_path('/f/projects')
+      expect(page).to have_current_path '/f/projects'
     end
 
     def shared_expectations
@@ -56,7 +56,7 @@ RSpec.describe 'Freelancer views', type: :system do
         click_on 'Continue >'
       end.to enqueue_job(ActionMailer::MailDeliveryJob)
       expect(page).to have_content('Your client has been emailed an invitation to join the project.')
-      expect(page).to have_current_path('/f/projects')
+      expect(page).to have_current_path '/f/projects'
     end
 
     context 'without existing projects' do

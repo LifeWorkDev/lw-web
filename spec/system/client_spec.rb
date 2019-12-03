@@ -29,14 +29,14 @@ RSpec.describe 'Client views', type: :system do
                change { user.email }.to(new_email) &
                change { user.time_zone }.to(time_zone) &
                change { user.status }.from('pending').to('active')
-        expect(page).to have_current_path(edit_client_org_path)
+        expect(page).to have_current_path edit_client_org_path
         WORK_CATEGORIES.sample(rand(1..WORK_CATEGORIES.size)).each do |category|
           check category, allow_label_click: true
         end
         expect do
           click_on 'Continue >'
         end.to change { project.client.reload.work_category }
-        expect(page).to have_current_path(payments_client_milestone_project_path(project))
+        expect(page).to have_current_path polymorphic_path([:payments, :client, project])
         fill_in "milestone_project[milestones_attributes][#{milestone_index}][amount]", with: new_milestone_amount
         fill_in "milestone_project[milestones_attributes][#{milestone_index}][description]", with: Faker::Lorem.sentences.join(' ')
         fill_in 'milestone_project[amount]', with: new_project_amount
@@ -59,7 +59,7 @@ RSpec.describe 'Client views', type: :system do
 
     it 'redirects from / to the client project dashboard' do
       visit '/'
-      expect(page).to have_current_path(client_projects_path)
+      expect(page).to have_current_path client_projects_path
     end
 
     def shared_expectations
@@ -76,7 +76,7 @@ RSpec.describe 'Client views', type: :system do
     context 'without existing pay method' do
       it 'prompts to create a new bank account' do
         shared_expectations
-        expect(page).to have_current_path("/c/pay_methods?project=#{project.slug}")
+        expect(page).to have_current_path "/c/pay_methods?project=#{project.slug}"
       end
     end
 
@@ -85,7 +85,7 @@ RSpec.describe 'Client views', type: :system do
 
       it 'proceeds directly to deposit' do
         shared_expectations
-        expect(page).to have_current_path(polymorphic_path([:deposit, :client, project]))
+        expect(page).to have_current_path polymorphic_path([:deposit, :client, project])
       end
     end
   end

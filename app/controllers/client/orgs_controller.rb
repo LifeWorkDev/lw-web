@@ -25,7 +25,7 @@ class Client::OrgsController < AuthenticatedController
     @org.current_user = current_user
 
     if @org.save
-      redirect_to payments_client_milestone_project_path(@org.projects.last), notice: 'Account was successfully created.'
+      redirect_to [:payments, current_namespace, @org.projects.last], notice: 'Account was successfully created.'
     else
       render :new
     end
@@ -34,7 +34,7 @@ class Client::OrgsController < AuthenticatedController
   # PATCH/PUT /orgs/1
   def update
     if @org.update(org_params)
-      redirect_to payments_client_milestone_project_path(@org.projects.last), notice: 'Account was successfully updated.'
+      redirect_to [:payments, current_namespace, @org.projects.last], notice: 'Account was successfully updated.'
     else
       render :edit
     end
