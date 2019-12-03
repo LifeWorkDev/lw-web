@@ -3,10 +3,6 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   subject(:user) { Fabricate(:user) }
 
-  it 'fabricates' do
-    expect(user.name).to be_present
-  end
-
   describe '.invite' do
     it 'does not send invitation email' do
       expect do

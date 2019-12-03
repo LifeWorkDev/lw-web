@@ -17,6 +17,8 @@ gem 'email_reply_parser'
 gem 'fast_blank' # Much faster version of #blank?
 gem 'friendly_id' # "friendly" urls like /projects/cool-project
 gem 'goldiloader' # Automatic eager-loading to avoid N+1s
+gem 'intercom'
+gem 'intercom-rails'
 gem 'jsonb_accessor', github: 'volkanunsal/jsonb_accessor' # Store arbitrary model data in jsonb fields
 gem 'logidze' # version tracking
 gem 'lograge' # one-line logs

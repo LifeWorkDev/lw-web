@@ -35,17 +35,18 @@ Rails.application.routes.draw do
   resources :comments, only: %i[update]
 
   as :user do
-    get :login, to: 'devise/sessions#new', as: :new_user_session
-    post :login, to: 'devise/sessions#create', as: :user_session
-    delete :logout, to: 'devise/sessions#destroy', as: :destroy_user_session
-    get :logout, to: 'devise/sessions#destroy'
-    get :sign_up, to: 'devise/registrations#new', as: :new_user_registration
+    get :login, to: 'users/sessions#new', as: :new_user_session
+    post :login, to: 'users/sessions#create', as: :user_session
+    delete :logout, to: 'users/sessions#destroy', as: :destroy_user_session
+    get :logout, to: 'users/sessions#destroy'
+    get :sign_up, to: 'users/registrations#new', as: :new_user_registration
   end
   devise_for :users,
              skip: [:sessions],
              controllers: {
                invitations: 'users/invitations',
                registrations: 'users/registrations',
+               sessions: 'users/sessions',
              }
   namespace :users do
     post ':id/impersonate', to: 'impersonations#impersonate', as: :impersonate

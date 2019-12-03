@@ -1,6 +1,7 @@
 class Org < ApplicationRecord
   has_logidze
   include Status
+  include WorkCategoryToIntercomTags
   extend FriendlyId
   friendly_id :display_name
 
@@ -53,6 +54,10 @@ private
 
     # Tell accepts_nested_attributes_for not to create user
     true
+  end
+
+  memoize def intercom_metadata
+    { companies: [{ company_id: id }] }
   end
 
   def should_generate_new_friendly_id?

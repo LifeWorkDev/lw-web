@@ -2,6 +2,7 @@ class User < ApplicationRecord
   has_logidze
   include Status
   include Users::Roles
+  include WorkCategoryToIntercomTags
 
   belongs_to :org, optional: true
   has_many :projects, dependent: :destroy
@@ -51,9 +52,13 @@ protected
     devise_mailer.send(notification, self, *args).deliver_later
   end
 
-private
-
   def skip_invitation
     true # Never send default invitation email when using invite!
+  end
+
+private
+
+  memoize def intercom_metadata
+    { users: [{ user_id: id }] }
   end
 end
