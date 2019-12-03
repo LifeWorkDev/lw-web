@@ -26,8 +26,8 @@ class ApplicationController < ActionController::Base
     stored_location_for(resource) || [resource.type, Project]
   end
 
-  def after_accept_path_for(resource)
-    [:payments, :client, resource.org_projects.first]
+  def after_accept_path_for(_resource)
+    edit_client_org_path
   end
 
   def current_namespace

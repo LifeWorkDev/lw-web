@@ -3,15 +3,19 @@ require 'rails_helper'
 RSpec.describe 'Client views', type: :system do
   context "when unauth'd" do
     context 'when invited' do
-      let(:project) { Fabricate(:milestone_project) }
+      let(:project) { Fabricate(:milestone_project_with_milestones) }
       let(:user) { User.invite!(email: Faker::Internet.safe_email, name: Faker::Name.name, org: project.client) }
+      let(:new_project_amount) { project.amount - milestone.amount + new_milestone_amount }
+      let(:new_milestone_amount) { Money.new(((100_00..1_000_00).to_a - [milestone.amount]).sample) }
       let(:new_name) { Faker::Name.name }
       let(:new_email) { Faker::Internet.safe_email }
       let(:time_zone) { ActiveSupport::TimeZone.basic_us_zones.sample.name }
+      let(:milestone_index) { rand(0..project.milestones.size - 1) }
+      let(:milestone) { project.reload.milestones[milestone_index] }
 
       before { user.invite! }
 
-      it 'updates name, email, tme zone, status when accepting an invitation' do
+      it 'updates name, email, time zone, status when accepting an invitation' do
         url = accept_user_invitation_path(invitation_token: user.raw_invitation_token)
 
         visit url
@@ -25,6 +29,23 @@ RSpec.describe 'Client views', type: :system do
                change { user.email }.to(new_email) &
                change { user.time_zone }.to(time_zone) &
                change { user.status }.from('pending').to('active')
+        expect(page).to have_current_path(edit_client_org_path)
+        WORK_CATEGORIES.sample(rand(1..WORK_CATEGORIES.size)).each do |category|
+          check category, allow_label_click: true
+        end
+        expect do
+          click_on 'Continue >'
+        end.to change { project.client.reload.work_category }
+        expect(page).to have_current_path(payments_client_milestone_project_path(project))
+        fill_in "milestone_project[milestones_attributes][#{milestone_index}][amount]", with: new_milestone_amount
+        fill_in "milestone_project[milestones_attributes][#{milestone_index}][description]", with: Faker::Lorem.sentences.join(' ')
+        fill_in 'milestone_project[amount]', with: new_project_amount
+        expect do
+          click_on 'Continue >'
+        end.to change { project.reload.amount } &
+               change { milestone.reload.amount } &
+               change { milestone.description }
+        expect(page).to have_current_path client_pay_methods_path(project: project)
       end
     end
   end
@@ -38,7 +59,7 @@ RSpec.describe 'Client views', type: :system do
 
     it 'redirects from / to the client project dashboard' do
       visit '/'
-      expect(page).to have_current_path('/c/projects')
+      expect(page).to have_current_path(client_projects_path)
     end
 
     def shared_expectations
