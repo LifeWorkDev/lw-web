@@ -21,6 +21,7 @@ RSpec.describe 'Freelancer views', type: :system do
     let(:user) { Fabricate(:user) }
     let(:amount) { Money.new(rand(100_00..1_000_00)) }
     let(:name) { Faker::Commerce.product_name }
+    let(:new_project) { Project.last }
     let(:new_milestone) { Milestone.last }
 
     before { sign_in user }
@@ -41,8 +42,11 @@ RSpec.describe 'Freelancer views', type: :system do
       fill_in 'milestone_project[amount]', with: amount
       fill_in 'milestone_project[milestones_attributes][0][amount]', with: amount
       fill_in 'milestone_project[milestones_attributes][0][description]', with: Faker::Lorem.sentences.join(' ')
-      click_on 'Continue >'
-      new_milestone.reload
+      expect do
+        click_on 'Continue >'
+      end.to change { new_project.reload.amount } &
+             change { new_milestone.reload.amount } &
+             change { new_milestone.description }
       expect(page).to have_content('Payments were updated.') &
                       have_content(name) &
                       have_content(amount.format, count: 2) &
