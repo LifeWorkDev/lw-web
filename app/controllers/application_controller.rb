@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
 
   def home
     if user_signed_in?
-      redirect_to [current_user.type, Project]
+      redirect_to user_default_path
     else
       redirect_to '/sign_up'
     end
@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    stored_location_for(resource) || [resource.type, Project]
+    stored_location_for(resource) || user_default_path
   end
 
   def after_accept_path_for(_resource)
@@ -46,6 +46,16 @@ protected
   end
 
 private
+
+  def user_default_path
+    if current_user.time_zone.present?
+      [current_user.type, Project]
+    elsif current_user.freelancer?
+      edit_freelancer_user_path
+    else
+      edit_user_path
+    end
+  end
 
   def storable_location?
     request.get? && is_navigational_format? && !devise_controller? && !request.xhr?
