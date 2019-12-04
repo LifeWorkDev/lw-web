@@ -28,8 +28,8 @@ scss:
         tr[class="#{comment.commenter == @user ? 'text-right' : 'text-left'}"]
           td
             .comment
-              h5
-                span => comment.commenter.name
+              div
+                strong => comment.commenter.name
                 small = comment.formatted_created_at
               = comment.comment
 

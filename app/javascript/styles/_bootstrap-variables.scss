@@ -3,7 +3,6 @@ $light: #b7b7b7;
 $dark: #5d5d5d;
 
 $font-family-serif: adobe-garamond-pro, Garamond, Palatino, Georgia, serif;
-$font-family-base: $font-family-serif;
 
 $theme-background: hsl(201, 0%, 98%);
 $body-color: $dark;
@@ -15,9 +14,7 @@ $border-radius-sm: $border-radius;
 $btn-border-radius: 100px; // fully rounded
 $btn-border-radius-lg: $btn-border-radius;
 $btn-border-radius-sm: $btn-border-radius;
-$btn-font-size: $font-size-base * 0.9;
-$btn-font-size-lg: $btn-font-size * 1.25;
-$btn-font-size-sm: $btn-font-size * 0.7;
+$btn-font-size: $font-size-base;
 $btn-font-weight: 300;
 $btn-padding-y: $font-size-base * 0.6;
 $btn-padding-x: $font-size-base * 2;
@@ -33,6 +30,7 @@ $badge-padding-y: 0.4em;
 $badge-pill-padding-x: 0.7em;
 
 $headings-color: #383a3d;
+$headings-font-family: $font-family-serif;
 $headings-font-weight: 600;
 $h3-font-size: $font-size-base * 1.25;
 $h5-font-size: $font-size-base * 1.1;
@@ -42,7 +40,7 @@ $input-focus-bg: white;
 $input-focus-box-shadow: none;
 $input-padding-y: 0.5rem;
 
-$nav-link-font-size: $btn-font-size * 0.875;
+$nav-link-font-size: $btn-font-size * 0.95;
 
 $mute-percent: 20%;
 $text-muted: lighten($dark, $mute-percent);

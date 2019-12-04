@@ -1,6 +1,6 @@
 // https://getbootstrap.com/docs/4.3/content/typography/#responsive-font-sizes
 $enable-responsive-font-sizes: true;
-$font-size-base: 1.125rem;
+$font-size-base: 1rem;
 
 // Vars referencing existing bootstrap vars must
 // go in this block and have the !global flag
@@ -10,9 +10,7 @@ $font-size-base: 1.125rem;
   @import '~bootstrap/scss/variables';
 
   $badge-border-radius: $border-radius !global;
-  $btn-font-family: $font-family-sans-serif !global;
   $input-focus-border-color: $gray-600 !global;
-  $input-font-family: $font-family-sans-serif !global;
   $input-border-color: $gray-500 !global;
   $input-placeholder-color: $gray-500 !global;
   $list-group-border-color: $gray-500 !global;
@@ -32,8 +30,8 @@ $body-bg: $theme-background; // Don't apply to mailer body
   .close {
     margin-left: 0.25rem;
     color: inherit;
-    font-size: 100%;
-    line-height: 0.9;
+    font-size: 120%;
+    line-height: 0.7;
     text-shadow: 0 1px 0 rgba(#000, 0.5);
   }
 }
@@ -57,7 +55,8 @@ $body-bg: $theme-background; // Don't apply to mailer body
 }
 
 .date-pill {
-  font-size: 100%;
+  font-size: 95%;
+  padding-right: 0.6em;
 
   .selected-date {
     font-weight: $font-weight-normal;
@@ -113,10 +112,6 @@ $body-bg: $theme-background; // Don't apply to mailer body
     flex-grow: 1;
     height: 1px;
   }
-}
-
-.input-group {
-  font-family: $font-family-sans-serif;
 }
 
 input[type='number'] {
