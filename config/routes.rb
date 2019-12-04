@@ -57,7 +57,7 @@ Rails.application.routes.draw do
     mount Que::Web, at: 'admin/que'
   end
 
-  get :styleguide, to: 'application#styleguide' if Rails.env.development?
+  get :styleguide, to: 'application#styleguide' unless Rails.env.production?
 
   get '(.well-known)/apple-app-site-association', to: proc { [404, {}, ['']] }
 
