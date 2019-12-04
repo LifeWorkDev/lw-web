@@ -145,6 +145,16 @@ input[type='number'] {
   user-select: none;
 }
 
+label.list-group-item {
+  margin: 0;
+  // Restored from https://github.com/twbs/bootstrap/pull/28940
+  margin-bottom: -$list-group-border-width;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
 .list-group input[type='checkbox'] {
   display: none;
 }

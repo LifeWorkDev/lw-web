@@ -1503,59 +1503,51 @@ script
     | Example
   .bd-example
     h1
-      | Example heading
-      span.badge.badge-default
+      ' Example heading
+      span.badge.badge-primary
         | New
     h2
-      | Example heading
-      span.badge.badge-default
+      ' Example heading
+      span.badge.badge-primary
         | New
     h3
-      | Example heading
-      span.badge.badge-default
+      ' Example heading
+      span.badge.badge-primary
         | New
     h4
-      | Example heading
-      span.badge.badge-default
+      ' Example heading
+      span.badge.badge-primary
         | New
     h5
-      | Example heading
-      span.badge.badge-default
+      ' Example heading
+      span.badge.badge-primary
         | New
     h6
-      | Example heading
-      span.badge.badge-default
+      ' Example heading
+      span.badge.badge-primary
         | New
   h2#contextual-variations
     | Contextual variations
   .bd-example
-    span.badge.badge-default
-      | Default
-    span.badge.badge-primary
-      | Primary
-    span.badge.badge-success
-      | Success
-    span.badge.badge-info
-      | Info
-    span.badge.badge-warning
-      | Warning
-    span.badge.badge-danger
-      | Danger
+    span.badge.badge-primary> Primary
+    span.badge.badge-secondary> Secondary
+    span.badge.badge-success> Success
+    span.badge.badge-warning> Warning
+    span.badge.badge-danger> Danger
+    span.badge.badge-info> Info
+    span.badge.badge-light> Light
+    span.badge.badge-dark> Dark
   h2#pill-badges
     | Pill badges
   .bd-example
-    span.badge.badge-pill.badge-default
-      | Default
-    span.badge.badge-pill.badge-primary
-      | Primary
-    span.badge.badge-pill.badge-success
-      | Success
-    span.badge.badge-pill.badge-info
-      | Info
-    span.badge.badge-pill.badge-warning
-      | Warning
-    span.badge.badge-pill.badge-danger
-      | Danger
+    span.badge.badge-pill.badge-primary> Primary
+    span.badge.badge-pill.badge-secondary> Secondary
+    span.badge.badge-pill.badge-success> Success
+    span.badge.badge-pill.badge-warning> Warning
+    span.badge.badge-pill.badge-danger> Danger
+    span.badge.badge-pill.badge-info> Info
+    span.badge.badge-pill.badge-light> Light
+    span.badge.badge-pill.badge-dark> Dark
   h1#content.bd-title
     | Breadcrumb
   .bd-example
@@ -3819,44 +3811,36 @@ script
     h2#contextual-classes
       | Contextual classes
     .bd-example
-      ul.list-group
-        li.list-group-item
-          | Dapibus ac facilisis in
-        li.list-group-item.list-group-item-success
-          | Dapibus ac facilisis in
-        li.list-group-item.list-group-item-info
-          | Cras sit amet nibh libero
-        li.list-group-item.list-group-item-warning
-          | Porta ac consectetur ac
-        li.list-group-item.list-group-item-danger
-          | Vestibulum at eros
-    .bd-example
       .list-group
         a.list-group-item.list-group-item-action[href="#"]
-          | Dapibus ac facilisis in
+          | Unstyled
         a.list-group-item.list-group-item-action.list-group-item-success[href="#"]
-          | Dapibus ac facilisis in
+          | Success
         a.list-group-item.list-group-item-action.list-group-item-info[href="#"]
-          | Cras sit amet nibh libero
+          | Info
         a.list-group-item.list-group-item-action.list-group-item-warning[href="#"]
-          | Porta ac consectetur ac
+          | Warning
         a.list-group-item.list-group-item-action.list-group-item-danger[href="#"]
-          | Vestibulum at eros
+          | Danger
+        a.list-group-item.list-group-item-action.list-group-item-light[href="#"]
+          | Light
+        a.list-group-item.list-group-item-action.list-group-item-dark[href="#"]
+          | Dark
     h2#with-badges
       | With badges
     .bd-example
       ul.list-group
         li.list-group-item.justify-content-between
-          |  Cras justo odio
-          span.badge.badge-default.badge-pill
+          '  Cras justo odio
+          span.badge.badge-primary.badge-pill
             | 14
         li.list-group-item.justify-content-between
-          |  Dapibus ac facilisis in
-          span.badge.badge-default.badge-pill
+          '  Dapibus ac facilisis in
+          span.badge.badge-primary.badge-pill
             | 2
         li.list-group-item.justify-content-between
-          |  Morbi leo risus
-          span.badge.badge-default.badge-pill
+          '  Morbi leo risus
+          span.badge.badge-primary.badge-pill
             | 1
     h2#custom-content
       | Custom content
@@ -3864,37 +3848,37 @@ script
       .list-group
         a.list-group-item.list-group-item-action.flex-column.align-items-start.active[href="#"]
 
-        .d-flex.w-100.justify-content-between
-          h5.mb-1
-            | List group item heading
+          .d-flex.w-100.justify-content-between
+            h5.mb-1
+              | List group item heading
+            small
+              | 3 days ago
+          p.mb-1
+            | Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.
           small
-            | 3 days ago
-        p.mb-1
-          | Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.
-        small
-          | Donec id elit non mi porta.
+            | Donec id elit non mi porta.
         a.list-group-item.list-group-item-action.flex-column.align-items-start[href="#"]
 
-        .d-flex.w-100.justify-content-between
-          h5.mb-1
-            | List group item heading
+          .d-flex.w-100.justify-content-between
+            h5.mb-1
+              | List group item heading
+            small.text-muted
+              | 3 days ago
+          p.mb-1
+            | Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.
           small.text-muted
-            | 3 days ago
-        p.mb-1
-          | Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.
-        small.text-muted
-          | Donec id elit non mi porta.
+            | Donec id elit non mi porta.
         a.list-group-item.list-group-item-action.flex-column.align-items-start[href="#"]
 
-        .d-flex.w-100.justify-content-between
-          h5.mb-1
-            | List group item heading
+          .d-flex.w-100.justify-content-between
+            h5.mb-1
+              | List group item heading
+            small.text-muted
+              | 3 days ago
+          p.mb-1
+            | Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.
           small.text-muted
-            | 3 days ago
-        p.mb-1
-          | Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.
-        small.text-muted
-          | Donec id elit non mi porta.
+            | Donec id elit non mi porta.
     h1#content.bd-title
       | Modal
     h2#examples
