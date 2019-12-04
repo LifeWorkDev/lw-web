@@ -30,6 +30,10 @@ class User < ApplicationRecord
     !client?
   end
 
+  def active_freelancer?
+    freelancer? && projects.not_pending.any?
+  end
+
   def reminder_time(time)
     time.in_time_zone(time_zone || 'Pacific Time (US & Canada)')
   end
