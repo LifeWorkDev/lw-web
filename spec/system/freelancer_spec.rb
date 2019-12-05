@@ -108,7 +108,7 @@ RSpec.describe 'Freelancer views', type: :system do
           expect(page).to have_current_path "/f/milestone_projects/#{project.slug}/edit"
           click_on 'Continue >'
           expect(page).not_to have_content 'updated'
-          expect(page).to have_link '< Back', href: %r{/f/.+/edit$}
+          expect(page).to have_current_path '/f/projects'
         end
       end
 

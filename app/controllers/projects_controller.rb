@@ -22,7 +22,7 @@ class ProjectsController < AuthenticatedController
     @project = current_entity.projects.build(project_params)
 
     if @project.save
-      redirect_to [:milestones, current_namespace, @project], notice: 'Project was successfully created.'
+      redirect_to next_step(@project), notice: 'Project was successfully created.'
     else
       render :new
     end

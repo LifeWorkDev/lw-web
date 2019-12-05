@@ -47,13 +47,11 @@ protected
 
 private
 
-  def user_default_path
-    if current_user.time_zone.present?
-      [current_user.type, Project]
-    elsif current_user.freelancer?
-      edit_freelancer_user_path
+  def next_step(project)
+    if project.may_invite_client?
+      [:milestones, current_namespace, project]
     else
-      edit_user_path
+      [current_namespace, Project]
     end
   end
 
@@ -64,6 +62,16 @@ private
   def store_user_location!
     # :user is the scope we are authenticating
     store_location_for(:user, request.fullpath)
+  end
+
+  def user_default_path
+    if current_user.time_zone.present?
+      [current_user.type, Project]
+    elsif current_user.freelancer?
+      edit_freelancer_user_path
+    else
+      edit_user_path
+    end
   end
 
   class Unauthorized < StandardError; end

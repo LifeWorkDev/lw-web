@@ -29,7 +29,7 @@ class Freelancer::MilestoneProjectsController < MilestoneProjectsController
       path = [view, current_namespace, @project]
     else
       notice = 'Project was successfully updated.' if @project.changed?
-      path = [:milestones, current_namespace, @project]
+      path = next_step(@project)
     end
     if @project.save
       redirect_to path, notice: notice
