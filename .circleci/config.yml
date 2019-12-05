@@ -9,7 +9,7 @@ jobs:
           PGUSER: lifework
           RAILS_ENV: test
           NODE_ENV: development
-      - image: circleci/postgres:11-alpine-ram
+      - image: circleci/postgres:12-alpine-ram
         environment:
           POSTGRES_USER: lifework
           POSTGRES_PASSWORD: ''
