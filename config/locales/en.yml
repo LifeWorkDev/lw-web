@@ -34,6 +34,23 @@ en:
     formats:
       default: "%-m/%-d/%Y"
       text_without_year: "%B %-d"
+  project:
+    status:
+      writing_proposal:
+        success:
+          status: "proposal_sent"
+          text: "I sent the proposal"
+      proposal_sent:
+        success:
+          status: "proposal_agreed"
+          text: "Client accepted proposal"
+        fail:
+          status: "proposal_rejected"
+          text: "Client rejected proposal"
+      proposal_agreed:
+        success:
+          status: "contract_sent"
+          text: "I sent the contract"
   time:
     formats:
       date_only: "%-m/%-d/%Y"
@@ -44,7 +61,6 @@ en:
     milestone_approaching:
       subject: "A milestone payment for \"%{project}\" is approaching"
     milestone_completed:
-      # subject: "%{freelancer} will be paid in 3 days"
       subject: "Next payment for %{freelancer} will be withdrawn from your account today"
   comment_mailer:
     notify_new_comment:

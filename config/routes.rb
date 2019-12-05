@@ -27,7 +27,9 @@ Rails.application.routes.draw do
       get :payments, on: :member
       get :preview, on: :member
     end
-    resources :projects, only: :index
+    resources :projects, only: :index do
+      match :status, on: :member, via: %i[get patch]
+    end
     get 'stripe/callback', to: 'stripe#callback'
     get 'stripe/connect', to: 'stripe#connect', as: :stripe_connect
   end

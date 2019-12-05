@@ -105,10 +105,10 @@ RSpec.describe 'Freelancer views', type: :system do
         it 'can edit pending project' do
           visit '/f/projects'
           click_on project.name
-          expect(page).to have_current_path "/f/milestone_projects/#{project.slug}/edit"
+          expect(page).to have_current_path edit_freelancer_milestone_project_path(project)
           click_on 'Continue >'
           expect(page).not_to have_content 'updated'
-          expect(page).to have_current_path '/f/projects'
+          expect(page).to have_current_path status_freelancer_project_path(project)
         end
       end
 

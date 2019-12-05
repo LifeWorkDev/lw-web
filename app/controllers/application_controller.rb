@@ -51,7 +51,7 @@ private
     if project.may_invite_client?
       [:milestones, current_namespace, project]
     else
-      [current_namespace, Project]
+      [:status, current_namespace, project.becomes(Project)]
     end
   end
 
