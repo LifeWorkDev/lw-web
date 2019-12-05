@@ -15,3 +15,12 @@
       ga('require', 'socialWidgetTracker');
       ga('require', 'urlChangeTracker');
     }
+
+- if user_signed_in?
+  javascript:
+    if (window.bugsnagClient)
+      window.bugsnagClient.user = {
+        id: #{true_user.id},
+        name: '#{true_user.name}',
+        email: '#{true_user.email}',
+      }
