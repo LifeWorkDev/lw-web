@@ -1,8 +1,8 @@
 class Freelancer::MilestoneProjectsController < MilestoneProjectsController
   # PATCH/PUT /f/milestone_projects/1/activate
   def activate
-    @project.activate! if @project.pending?
-    redirect_to [current_namespace, Project], notice: 'Your client has been emailed an invitation to join the project.'
+    notice = 'Your client has been emailed an invitation to join the project.' if @project.invite_client!
+    redirect_to [current_namespace, Project], notice: notice
   end
 
   # GET /f/milestone_projects/1/milestones

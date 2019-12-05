@@ -79,6 +79,7 @@ $body-bg: $theme-background; // Don't apply to mailer body
   label:not(.required):not(.form-check-label):after {
     content: ' (optional)';
     font-size: 85%;
+    font-weight: normal;
     font-style: italic;
   }
 }

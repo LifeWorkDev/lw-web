@@ -69,6 +69,7 @@ RSpec.describe 'Freelancer views', type: :system do
         fill_in 'org[users_attributes][0][name]', with: Faker::Name.name
         fill_in 'org[users_attributes][0][email]', with: Faker::Internet.safe_email
         fill_in 'org[projects_attributes][0][name]', with: name
+        first('#org_projects_attributes_0_status option[value=contract_sent]').select_option # Placeholder is first
         expect do
           click_on 'Continue >'
         end.to change { Org.count }.by(1) &
@@ -82,14 +83,15 @@ RSpec.describe 'Freelancer views', type: :system do
     end
 
     context 'with existing project' do
-      let(:user) { Fabricate(:freelancer_with_active_project) }
+      let(:user) { Fabricate(:active_freelancer) }
       let(:project) { user.projects.first }
 
       it 'completes project creation for an existing client' do
         visit '/f/projects'
         click_on '+ Project'
         expect(page).to have_current_path '/f/milestone_projects/new'
-        page.all('#milestone_project_org_id option')[1].select_option # Placeholder is first
+        all('#milestone_project_org_id option')[1].select_option # Placeholder is first
+        first('#milestone_project_status option[value=contract_sent]').select_option # Placeholder is first
         fill_in 'milestone_project[name]', with: name
         click_on 'Continue >'
         expect(page).to have_content('Project was successfully created.')
@@ -97,14 +99,17 @@ RSpec.describe 'Freelancer views', type: :system do
         shared_expectations
       end
 
-      it 'can edit pending project' do
-        project.update!(status: :pending)
-        visit '/f/projects'
-        click_on project.name
-        expect(page).to have_current_path "/f/milestone_projects/#{project.slug}/edit"
-        click_on 'Continue >'
-        expect(page).not_to have_content 'updated'
-        expect(page).to have_link '< Back', href: %r{/f/milestone_projects/.+/edit$}
+      context 'when pending' do
+        let(:user) { Fabricate(:freelancer) }
+
+        it 'can edit pending project' do
+          visit '/f/projects'
+          click_on project.name
+          expect(page).to have_current_path "/f/milestone_projects/#{project.slug}/edit"
+          click_on 'Continue >'
+          expect(page).not_to have_content 'updated'
+          expect(page).to have_link '< Back', href: %r{/f/.+/edit$}
+        end
       end
 
       it 'can view comments for an active project' do

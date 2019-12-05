@@ -1,6 +1,6 @@
 class Project < ApplicationRecord
   has_logidze
-  include Status
+  include Projects::Status
   extend FriendlyId
   friendly_id :name, use: :scoped, scope: :user_id
 
@@ -10,17 +10,8 @@ class Project < ApplicationRecord
   monetize :amount_cents, with_model_currency: :currency, allow_nil: true, numericality: { greater_than_or_equal_to: 0 }
 
   scope :milestone, -> { where(type: 'MilestoneProject') }
-
-  aasm do
-    event :activate do
-      transitions from: :pending, to: :active
-
-      after do
-        user = client.primary_contact
-        ClientMailer.invite(user: user, project: self).deliver_later
-      end
-    end
-  end
+  scope :pending, -> { where(status: PENDING_STATES) }
+  scope :not_pending, -> { where.not(status: PENDING_STATES) }
 
   def amount_with_fee
     amount * (1 + LIFEWORK_FEE)

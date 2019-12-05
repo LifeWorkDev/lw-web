@@ -22,6 +22,10 @@ class User < ApplicationRecord
     activate! unless active?
   end
 
+  def active_freelancer?
+    freelancer? && projects.not_pending.any?
+  end
+
   def client?
     org_id.present?
   end
@@ -30,8 +34,11 @@ class User < ApplicationRecord
     !client?
   end
 
-  def active_freelancer?
-    freelancer? && projects.not_pending.any?
+  def max_pending_project_status
+    all_statuses = Project.aasm.states.map { |s| s.name.to_s }
+    statuses = projects.pending.pluck(:status)
+    max_status = statuses.map { |s| all_statuses.find_index(s) }.max
+    max_status && all_statuses[max_status]
   end
 
   def reminder_time(time)

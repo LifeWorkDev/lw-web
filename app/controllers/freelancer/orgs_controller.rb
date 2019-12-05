@@ -60,6 +60,6 @@ private
 
   # Only allow a trusted parameter "white list" through.
   def org_params
-    params.require(:org).permit(:name, projects_attributes: %i[id name], users_attributes: %i[id name email])
+    params.require(:org).permit(:name, projects_attributes: %i[id name status], users_attributes: %i[id name email])
   end
 end

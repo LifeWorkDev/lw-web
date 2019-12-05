@@ -47,7 +47,7 @@ class ProjectsController < AuthenticatedController
 private
 
   def project_params
-    params.require(project_type.to_s.underscore.to_sym).permit(:amount, :name, :org_id, :type)
+    params.require(project_type.to_s.underscore.to_sym).permit(:amount, :name, :org_id, :type, :status)
   end
 
   def set_project

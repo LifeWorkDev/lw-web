@@ -80,63 +80,6 @@ COMMENT ON EXTENSION pgcrypto IS 'cryptographic functions';
 
 
 --
--- Name: que_validate_tags(jsonb); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION public.que_validate_tags(tags_array jsonb) RETURNS boolean
-    LANGUAGE sql
-    AS $$
-  SELECT bool_and(
-    jsonb_typeof(value) = 'string'
-    AND
-    char_length(value::text) <= 100
-  )
-  FROM jsonb_array_elements(tags_array)
-$$;
-
-
-SET default_tablespace = '';
-
-SET default_with_oids = false;
-
---
--- Name: que_jobs; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.que_jobs (
-    priority smallint DEFAULT 100 NOT NULL,
-    run_at timestamp with time zone DEFAULT now() NOT NULL,
-    id bigint NOT NULL,
-    job_class text NOT NULL,
-    error_count integer DEFAULT 0 NOT NULL,
-    last_error_message text,
-    queue text DEFAULT 'default'::text NOT NULL,
-    last_error_backtrace text,
-    finished_at timestamp with time zone,
-    expired_at timestamp with time zone,
-    args jsonb DEFAULT '[]'::jsonb NOT NULL,
-    data jsonb DEFAULT '{}'::jsonb NOT NULL,
-    CONSTRAINT error_length CHECK (((char_length(last_error_message) <= 500) AND (char_length(last_error_backtrace) <= 10000))),
-    CONSTRAINT job_class_length CHECK ((char_length(
-CASE job_class
-    WHEN 'ActiveJob::QueueAdapters::QueAdapter::JobWrapper'::text THEN ((args -> 0) ->> 'job_class'::text)
-    ELSE job_class
-END) <= 200)),
-    CONSTRAINT queue_length CHECK ((char_length(queue) <= 100)),
-    CONSTRAINT valid_args CHECK ((jsonb_typeof(args) = 'array'::text)),
-    CONSTRAINT valid_data CHECK (((jsonb_typeof(data) = 'object'::text) AND ((NOT (data ? 'tags'::text)) OR ((jsonb_typeof((data -> 'tags'::text)) = 'array'::text) AND (jsonb_array_length((data -> 'tags'::text)) <= 5) AND public.que_validate_tags((data -> 'tags'::text))))))
-)
-WITH (fillfactor='90');
-
-
---
--- Name: TABLE que_jobs; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON TABLE public.que_jobs IS '4';
-
-
---
 -- Name: logidze_compact_history(jsonb); Type: FUNCTION; Schema: public; Owner: -
 --
 
@@ -369,6 +312,63 @@ CREATE FUNCTION public.logidze_version(v bigint, data jsonb, ts timestamp with t
             RETURN buf;
           END;
         $$;
+
+
+--
+-- Name: que_validate_tags(jsonb); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.que_validate_tags(tags_array jsonb) RETURNS boolean
+    LANGUAGE sql
+    AS $$
+  SELECT bool_and(
+    jsonb_typeof(value) = 'string'
+    AND
+    char_length(value::text) <= 100
+  )
+  FROM jsonb_array_elements(tags_array)
+$$;
+
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: que_jobs; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.que_jobs (
+    priority smallint DEFAULT 100 NOT NULL,
+    run_at timestamp with time zone DEFAULT now() NOT NULL,
+    id bigint NOT NULL,
+    job_class text NOT NULL,
+    error_count integer DEFAULT 0 NOT NULL,
+    last_error_message text,
+    queue text DEFAULT 'default'::text NOT NULL,
+    last_error_backtrace text,
+    finished_at timestamp with time zone,
+    expired_at timestamp with time zone,
+    args jsonb DEFAULT '[]'::jsonb NOT NULL,
+    data jsonb DEFAULT '{}'::jsonb NOT NULL,
+    CONSTRAINT error_length CHECK (((char_length(last_error_message) <= 500) AND (char_length(last_error_backtrace) <= 10000))),
+    CONSTRAINT job_class_length CHECK ((char_length(
+CASE job_class
+    WHEN 'ActiveJob::QueueAdapters::QueAdapter::JobWrapper'::text THEN ((args -> 0) ->> 'job_class'::text)
+    ELSE job_class
+END) <= 200)),
+    CONSTRAINT queue_length CHECK ((char_length(queue) <= 100)),
+    CONSTRAINT valid_args CHECK ((jsonb_typeof(args) = 'array'::text)),
+    CONSTRAINT valid_data CHECK (((jsonb_typeof(data) = 'object'::text) AND ((NOT (data ? 'tags'::text)) OR ((jsonb_typeof((data -> 'tags'::text)) = 'array'::text) AND (jsonb_array_length((data -> 'tags'::text)) <= 5) AND public.que_validate_tags((data -> 'tags'::text))))))
+)
+WITH (fillfactor='90');
+
+
+--
+-- Name: TABLE que_jobs; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON TABLE public.que_jobs IS '4';
 
 
 --
@@ -1421,56 +1421,56 @@ CREATE INDEX que_poll_idx ON public.que_jobs USING btree (queue, priority, run_a
 -- Name: comments logidze_on_comments; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER logidze_on_comments BEFORE INSERT OR UPDATE ON public.comments FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE PROCEDURE public.logidze_logger('null', 'updated_at', '{id,created_at,updated_at}');
+CREATE TRIGGER logidze_on_comments BEFORE INSERT OR UPDATE ON public.comments FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION public.logidze_logger('null', 'updated_at', '{id,created_at,updated_at}');
 
 
 --
 -- Name: milestones logidze_on_milestones; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER logidze_on_milestones BEFORE INSERT OR UPDATE ON public.milestones FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE PROCEDURE public.logidze_logger('null', 'updated_at', '{id,created_at,updated_at}');
+CREATE TRIGGER logidze_on_milestones BEFORE INSERT OR UPDATE ON public.milestones FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION public.logidze_logger('null', 'updated_at', '{id,created_at,updated_at}');
 
 
 --
 -- Name: orgs logidze_on_orgs; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER logidze_on_orgs BEFORE INSERT OR UPDATE ON public.orgs FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE PROCEDURE public.logidze_logger('null', 'updated_at', '{id,created_at,updated_at}');
+CREATE TRIGGER logidze_on_orgs BEFORE INSERT OR UPDATE ON public.orgs FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION public.logidze_logger('null', 'updated_at', '{id,created_at,updated_at}');
 
 
 --
 -- Name: projects logidze_on_projects; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER logidze_on_projects BEFORE INSERT OR UPDATE ON public.projects FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE PROCEDURE public.logidze_logger('null', 'updated_at', '{id,created_at,updated_at}');
+CREATE TRIGGER logidze_on_projects BEFORE INSERT OR UPDATE ON public.projects FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION public.logidze_logger('null', 'updated_at', '{id,created_at,updated_at}');
 
 
 --
 -- Name: users logidze_on_users; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER logidze_on_users BEFORE INSERT OR UPDATE ON public.users FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE PROCEDURE public.logidze_logger('null', 'updated_at', '{id,created_at,updated_at,sign_in_count,reset_password_token,reset_password_sent_at,remember_created_at,current_sign_in_at,last_sign_in_at,current_sign_in_ip,last_sign_in_ip,failed_attempts,unlock_token,locked_at,invitation_token,invitation_created_at,invitation_sent_at,invitation_accepted_at,invitation_limit,invited_by_type,invited_by_id,invitations_count,encrypted_password,unconfirmed_email,confirmation_token,confirmation_sent_at,confirmed_at}');
+CREATE TRIGGER logidze_on_users BEFORE INSERT OR UPDATE ON public.users FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION public.logidze_logger('null', 'updated_at', '{id,created_at,updated_at,sign_in_count,reset_password_token,reset_password_sent_at,remember_created_at,current_sign_in_at,last_sign_in_at,current_sign_in_ip,last_sign_in_ip,failed_attempts,unlock_token,locked_at,invitation_token,invitation_created_at,invitation_sent_at,invitation_accepted_at,invitation_limit,invited_by_type,invited_by_id,invitations_count,encrypted_password,unconfirmed_email,confirmation_token,confirmation_sent_at,confirmed_at}');
 
 
 --
 -- Name: que_jobs que_job_notify; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER que_job_notify AFTER INSERT ON public.que_jobs FOR EACH ROW EXECUTE PROCEDURE public.que_job_notify();
+CREATE TRIGGER que_job_notify AFTER INSERT ON public.que_jobs FOR EACH ROW EXECUTE FUNCTION public.que_job_notify();
 
 
 --
 -- Name: que_jobs que_save_finished_on_delete; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER que_save_finished_on_delete BEFORE DELETE ON public.que_jobs FOR EACH ROW EXECUTE PROCEDURE public.que_save_finished();
+CREATE TRIGGER que_save_finished_on_delete BEFORE DELETE ON public.que_jobs FOR EACH ROW EXECUTE FUNCTION public.que_save_finished();
 
 
 --
 -- Name: que_jobs que_state_notify; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER que_state_notify AFTER INSERT OR DELETE OR UPDATE ON public.que_jobs FOR EACH ROW EXECUTE PROCEDURE public.que_state_notify();
+CREATE TRIGGER que_state_notify AFTER INSERT OR DELETE OR UPDATE ON public.que_jobs FOR EACH ROW EXECUTE FUNCTION public.que_state_notify();
 
 
 --
@@ -1554,6 +1554,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20191119234229'),
 ('20191119234318'),
 ('20191119234341'),
-('20191119234406');
+('20191119234406'),
+('20191204233902');
 
 

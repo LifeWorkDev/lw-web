@@ -21,6 +21,6 @@ Fabricator(:freelancer, from: :active_user) do
   projects(count: 1, fabricator: :milestone_project)
 end
 
-Fabricator(:freelancer_with_active_project, from: :active_user) do
+Fabricator(:active_freelancer, from: :active_user) do
   projects(count: 1, fabricator: :active_milestone_project)
 end

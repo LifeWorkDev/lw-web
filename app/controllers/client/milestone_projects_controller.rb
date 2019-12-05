@@ -7,6 +7,7 @@ class Client::MilestoneProjectsController < MilestoneProjectsController
     metadata = { 'Milestone ID': milestone.id }
     @project.client.primary_pay_method.charge!(amount: amount, metadata: metadata)
     FreelancerMailer.deposit_received(user: @project.freelancer, project: @project, amount: milestone.amount.format).deliver_later
+    @project.activate!
     redirect_to [current_namespace, Project], notice: "Your deposit was received. #{@project.freelancer.name} has been notified so they can start work on your project."
   end
 
