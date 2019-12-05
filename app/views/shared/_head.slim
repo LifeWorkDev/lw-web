@@ -35,6 +35,9 @@ meta name='msapplication-TileColor' content='#FFFFFF'
 
 = stylesheet_link_tag 'https://use.typekit.net/brp1ynq.css'
 
+javascript:
+  window.RELEASE_STAGE = '#{Rails.env}'
+
 = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
 
 = javascript_include_tag 'https://cdn.jsdelivr.net/npm/@iconfu/svg-inject@1.2.3/dist/svg-inject.min.js'

@@ -6,7 +6,7 @@ import React from 'react'
 require('@rails/ujs').start()
 require('turbolinks').start()
 
-window.bugsnagClient = bugsnag({ apiKey: 'c5a97432b84ea8031cc78cc2997cb2ba', releaseStage: '<%= Rails.env %>', notifyReleaseStages: <%= NOTIFY_RELEASE_STAGES %>, appVersion: '<%= ENV['HEROKU_RELEASE_VERSION'] || 'dev' %>', logger: null })
+window.bugsnagClient = bugsnag({ apiKey: 'c5a97432b84ea8031cc78cc2997cb2ba', releaseStage: window.RELEASE_STAGE, notifyReleaseStages: <%= NOTIFY_RELEASE_STAGES %>, appVersion: '<%= ENV['HEROKU_RELEASE_VERSION'] || 'dev' %>', logger: null })
 window.bugsnagClient.use(bugsnagReact, React)
 
 require.context('../images', true)
