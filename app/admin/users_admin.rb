@@ -32,7 +32,7 @@ Trestle.resource(:users) do
     tab :user do
       text_field :name
       email_field :email
-      select :status, User.aasm.states.map(&:name)
+      select :status, User.aasm.states_for_select
       select :roles, User::ROLES, {}, multiple: true
       time_zone_select :time_zone, ActiveSupport::TimeZone.basic_us_zones, include_blank: true
       collection_select_with_link :org_id, Org.all, :id, :name, include_blank: true

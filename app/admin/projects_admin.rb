@@ -40,7 +40,7 @@ Trestle.resource(:projects) do
       auto_field :slug
       collection_select_with_link :org_id, Org.all, :id, :name, label: 'Client'
       collection_select_with_link :user_id, User.all, :id, :name, label: 'Freelancer'
-      select :status, Project.aasm.states.map(&:name)
+      select :status, Project.aasm.states_for_select
       number_field :amount, prepend: '$'
       select :currency, Money::Currency.map(&:iso_code)
       auto_field :created_at

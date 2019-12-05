@@ -22,7 +22,7 @@ Trestle.resource(:orgs) do
     tab :org do
       text_field :name
       auto_field :slug
-      select :status, Org.aasm.states.map(&:name)
+      select :status, Org.aasm.states_for_select
       auto_field :created_at
       auto_field :updated_at
     end
