@@ -20,9 +20,9 @@ Trestle.resource(:users) do
     column :roles, sort: :roles, format: :tags, class: 'hidden-xs', &:roles
     column :org, sort: :org_id
     column :created_at, align: :center
-    column :updated_at, align: :center
+    column :current_sign_in_at, align: :center, header: 'Signed in at'
     actions do |toolbar, instance, _admin|
-      toolbar.link 'Impersonate', main_app.users_impersonate_path(instance), method: :post, style: :secondary, icon: 'fa fa-mask', title: 'Impersonate user'
+      toolbar.link 'Impersonate', main_app.users_impersonate_path(instance), method: :post, style: :secondary, icon: 'fa fa-mask', title: 'Impersonate user' unless instance == current_user
     end
   end
 
@@ -42,8 +42,10 @@ Trestle.resource(:users) do
         auto_field :invited_by
         auto_field :invitation_accepted_at
       end
+      auto_field :current_sign_in_at
       auto_field :created_at
       auto_field :updated_at
+      concat link_to '<i class="fa fa-mask"></i> Impersonate'.html_safe, main_app.users_impersonate_path(instance), method: :post, class: 'btn btn-secondary', title: 'Impersonate user' unless instance == current_user
     end
 
     tab :questionnaire do
