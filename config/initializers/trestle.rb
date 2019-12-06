@@ -60,7 +60,7 @@ Trestle.configure do |config|
   # Add an explicit menu block to be added to the admin navigation.
   #
   config.menu do
-    item 'Background Jobs', '/admin/que', icon: 'fa fa-cogs', priority: :last
+    item 'Background Jobs', '/admin/que', data: { turbolinks: false }, icon: 'fa fa-cogs', priority: :last
   end
 
   # == Extension Options

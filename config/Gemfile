@@ -41,7 +41,7 @@ gem 'slim-rails' # Template language, lightweight alternative to erb/haml
 gem 'sprockets', '< 4.0', require: false
 gem 'stripe'
 gem 'strong_migrations' # complains about migration worst-practices
-gem 'trestle'
+gem 'trestle', github: 'swrobel/trestle', branch: 'navigation-item-html-opts'
 gem 'turbolinks', '~> 5'
 gem 'webpacker'
 
