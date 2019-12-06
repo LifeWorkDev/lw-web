@@ -55,12 +55,12 @@ Trestle.resource(:users) do
 
     tab :projects, badge: user.projects.size do
       table ProjectsAdmin.table, collection: user.projects
-      concat admin_link_to('New Project', admin: :projects, action: :new, params: { user_id: user.id }, class: 'btn btn-success')
+      concat admin_link_to('New Project', admin: :projects, action: :new, params: { user_id: user.id }, class: 'btn btn-success mt-3')
     end
 
     tab :comments, badge: user.comments.size do
       table CommentsAdmin.table, collection: user.comments
-      concat admin_link_to('New Comment', admin: :comments, action: :new, params: { commenter_id: user.id }, class: 'btn btn-success')
+      concat admin_link_to('New Comment', admin: :comments, action: :new, params: { commenter_id: user.id }, class: 'btn btn-success mt-3')
     end
   end
 

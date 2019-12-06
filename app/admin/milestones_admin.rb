@@ -39,7 +39,7 @@ Trestle.resource(:milestones) do
 
     tab :comments, badge: milestone.comments.size do
       table CommentsAdmin.table, collection: milestone.comments
-      concat admin_link_to('New Comment', admin: :comments, action: :new, params: { milestone_id: milestone.id }, class: 'btn btn-success')
+      concat admin_link_to('New Comment', admin: :comments, action: :new, params: { milestone_id: milestone.id }, class: 'btn btn-success mt-3')
     end
   end
 

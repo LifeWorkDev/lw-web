@@ -49,7 +49,7 @@ Trestle.resource(:projects) do
 
     tab :milestones, badge: project.milestones.size do
       table MilestonesAdmin.table, collection: project.milestones
-      concat admin_link_to('New Milestone', admin: :milestones, action: :new, params: { project_id: project.id }, class: 'btn btn-success')
+      concat admin_link_to('New Milestone', admin: :milestones, action: :new, params: { project_id: project.id }, class: 'btn btn-success mt-3')
     end
   end
 
