@@ -84,5 +84,9 @@ module LifeWork
   end
 end
 
+# Faster migrations: https://github.com/ankane/strong_migrations#faster-migrations
+ActiveRecord::Base.dump_schema_after_migration = Rails.env.development? &&
+                                                 `git status db/migrate/ --porcelain`.present?
+
 REPLIES_HOST ||= "#{ENV['SUBDOMAIN']}-reply.lifeworkonline.com".freeze
 WORK_CATEGORIES = ['Accounting & Consulting', 'Admin Support', 'Customer Service', 'Data Science & Analytics', 'Design & Creative', 'Engineering & Architecture', 'IT & Networking', 'Legal', 'Sales & Marketing', 'Translation', 'Web, Mobile & Software Dev', 'Writing'].freeze
