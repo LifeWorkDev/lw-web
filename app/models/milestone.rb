@@ -1,6 +1,6 @@
 class Milestone < ApplicationRecord
   has_logidze
-  include AASM
+  include AasmStatus
 
   belongs_to :project, class_name: 'MilestoneProject'
   has_one :client, through: :project
@@ -10,7 +10,7 @@ class Milestone < ApplicationRecord
   delegate :currency, to: :project
   monetize :amount_cents, with_model_currency: :currency, allow_nil: true, numericality: { greater_than_or_equal_to: 0 }
 
-  aasm column: :status, whiny_transitions: false, whiny_persistence: true do
+  aasm do
     state :active, initial: true
     state :paid
     state :rejected

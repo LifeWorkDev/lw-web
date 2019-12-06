@@ -20,7 +20,7 @@ Trestle.resource(:projects) do
     column :id, sort: { default: true, default_order: :asc }
     column :name
     column :status, sort: :status, align: :center do |project|
-      status_tag(project.status, { 'pending' => :warning, 'active' => :success, 'disabled' => :danger }[project.status] || :default)
+      status_tag(project.status.humanize, project.status_class)
     end
     column :type
     column :freelancer, sort: :user_id

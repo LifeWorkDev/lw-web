@@ -14,11 +14,11 @@ Trestle.resource(:milestones) do
     column :id, sort: { default: true, default_order: :asc }
     column :project
     column :date
-    column :status, sort: :status, align: :center do |org|
-      status_tag(org.status, { 'active' => :warning, 'paid' => :success, 'rejected' => :danger }[org.status] || :default)
+    column :status, sort: :status, align: :center do |milestone|
+      status_tag(milestone.status.humanize, milestone.status_class)
     end
-    column :amount, align: :right, sort: :amount_cents do |obj|
-      obj.amount&.format
+    column :amount, align: :right, sort: :amount_cents do |milestone|
+      milestone.amount&.format
     end
     column :description
     column :created_at, align: :center

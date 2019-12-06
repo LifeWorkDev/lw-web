@@ -9,7 +9,7 @@ Trestle.resource(:orgs) do
     column :id, sort: { default: true, default_order: :asc }
     column :name
     column :status, sort: :status, align: :center do |org|
-      status_tag(org.status, { 'pending' => :warning, 'active' => :success, 'disabled' => :danger }[org.status] || :default)
+      status_tag(org.status.humanize, org.status_class)
     end
     column :primary_contact, sort: false
     column :created_at, align: :center
