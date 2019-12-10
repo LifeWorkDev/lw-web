@@ -100,6 +100,7 @@ end
 
 group :production, :staging do
   gem 'actionpack-cloudflare' # Correct request.ip for Cloudflare-proxied requests
+  gem 'norobots' # Serve up Disallow everything when BLOCK_ROBOTS env var set
   gem 'rack-brotli' # Compress responses w/ brotli (better than gzip)
 end
 
