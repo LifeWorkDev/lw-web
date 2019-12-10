@@ -1,8 +1,10 @@
-- title = "#{@project} timeline"
-- content_for :title, title
+- content_for :title, "#{@project} timeline"
 
 .text-center
-  h2 = title
+  h2
+    => @project
+    span.font-weight-normal timeline
+  h5 = "Contract amount: #{@project.amount.format}"
 
 - if @project.active?
   p.lead.mt-4 Your project is currently in progress, so if you need to make any changes to dates or amounts, please <a href='javascript:Intercom("show")'>contact us</a>.
@@ -13,7 +15,7 @@
       = render 'shared/section_heading'
         = milestone.description
       .small.text-muted.font-sans-serif.mt-2.mb-3
-        => milestone.formatted_date
+        => "#{milestone.amount.format} on #{milestone.formatted_date}"
         = render 'shared/status_badge', class: 'align-text-bottom', record: milestone
       = react_component('CommentsList', comments: ActiveModelSerializers::SerializableResource.new(milestone.comments).serializable_hash, currentUser: UserSerializer.new(current_user).serializable_hash)
       - if milestone == @milestones.find(&:active?)
