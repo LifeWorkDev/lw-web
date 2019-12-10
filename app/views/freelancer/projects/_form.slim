@@ -1,7 +1,7 @@
 h2.text-center.mt-2
   | Tell us about your project.
 
-= bootstrap_form_with(model: [current_namespace, @project], layout: :horizontal, local: true) do |f|
+= bootstrap_form_with(model: [current_namespace, @project], control_col: 'col-md-9 col-xl-10', label_col: 'col-md-3 col-xl-2', layout: :horizontal, local: true) do |f|
   = f.alert_message 'Errors'
   - if @project.new_record? # Don't show on Edit page
     = f.hidden_field :type
