@@ -1,4 +1,14 @@
 GIT
+  remote: https://github.com/TrestleAdmin/trestle.git
+  revision: 9b6312be9c3ce896e2e1b7f68b8044890dfeaf80
+  specs:
+    trestle (0.9.1)
+      activemodel (>= 4.2.0)
+      kaminari (~> 1.1.0)
+      railties (>= 4.2.0)
+      sprockets-rails (>= 2.0.0)
+
+GIT
   remote: https://github.com/dbdrive/stripe-ruby-mock.git
   revision: 72021c85b1a9fb5468368e8bd90074c9cab47801
   branch: stripe-v5-compatability
@@ -15,6 +25,14 @@ GIT
     que (1.0.0.beta3)
 
 GIT
+  remote: https://github.com/scambra/devise_invitable.git
+  revision: 124886902f9f03cf9a0e1c727bea2b6e2d72bfe6
+  specs:
+    devise_invitable (2.0.1)
+      actionmailer (>= 5.0)
+      devise (>= 4.6)
+
+GIT
   remote: https://github.com/swrobel/bootstrap-email.git
   revision: 02af2ea1fa031d5fc98000c17fedf25a1d5820fd
   specs:
@@ -23,25 +41,6 @@ GIT
       nokogiri (~> 1.6)
       premailer-rails (~> 1.9)
       rails (>= 3)
-
-GIT
-  remote: https://github.com/swrobel/devise_invitable.git
-  revision: 552b490e5e38f4db7e07f7715c5f1c62a8f9c5bb
-  branch: after-database-authentication
-  specs:
-    devise_invitable (2.0.1)
-      actionmailer (>= 5.0)
-      devise (>= 4.6)
-
-GIT
-  remote: https://github.com/swrobel/guard-slimlint.git
-  revision: f9c1e6a85e2b06f3210334ace90754bdad995aee
-  specs:
-    guard-slimlint (1.3.1)
-      colorize (~> 0.8.1)
-      guard (~> 2.14, >= 2.14.2)
-      guard-compat (~> 1.2, >= 1.2.1)
-      slim_lint (~> 0.15)
 
 GIT
   remote: https://github.com/swrobel/invoker.git
@@ -74,17 +73,6 @@ GIT
   branch: rails-pages
   specs:
     rack-toolbar (0.1.4)
-
-GIT
-  remote: https://github.com/swrobel/trestle.git
-  revision: 20dc97b373d231d5921d1c123dc02f0eb40ab90f
-  branch: navigation-item-html-opts
-  specs:
-    trestle (0.9.1)
-      activemodel (>= 4.2.0)
-      kaminari (~> 1.1.0)
-      railties (>= 4.2.0)
-      sprockets-rails (>= 2.0.0)
 
 GIT
   remote: https://github.com/volkanunsal/jsonb_accessor.git
@@ -272,6 +260,11 @@ GEM
     guard-shell (0.7.1)
       guard (>= 2.0.0)
       guard-compat (~> 1.0)
+    guard-slimlint (1.3.2)
+      colorize (~> 0.8.1)
+      guard (~> 2.14, >= 2.14.2)
+      guard-compat (~> 1.2, >= 1.2.1)
+      slim_lint (~> 0.15)
     hashie (4.0.0)
     htmlentities (4.3.4)
     http-parser-lite (0.6.0)
@@ -600,7 +593,7 @@ DEPENDENCIES
   guard-rspec
   guard-rubocop
   guard-shell
-  guard-slimlint!
+  guard-slimlint
   intercom
   intercom-rails
   invoker!

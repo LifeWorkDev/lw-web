@@ -12,7 +12,7 @@ gem 'bootstrap_form'
 gem 'bugsnag' # Exception tracking
 gem 'business' # Business day calculations
 gem 'devise' # Authentication
-gem 'devise_invitable', github: 'swrobel/devise_invitable', branch: 'after-database-authentication'
+gem 'devise_invitable', github: 'scambra/devise_invitable'
 gem 'email_reply_parser'
 gem 'fast_blank' # Much faster version of #blank?
 gem 'friendly_id' # "friendly" urls like /projects/cool-project
@@ -41,7 +41,7 @@ gem 'slim-rails' # Template language, lightweight alternative to erb/haml
 gem 'sprockets', '< 4.0', require: false
 gem 'stripe'
 gem 'strong_migrations' # complains about migration worst-practices
-gem 'trestle', github: 'swrobel/trestle', branch: 'navigation-item-html-opts'
+gem 'trestle', github: 'TrestleAdmin/trestle'
 gem 'turbolinks', '~> 5'
 gem 'webpacker'
 
@@ -68,7 +68,7 @@ group :development do
   gem 'guard-rspec', require: false
   gem 'guard-rubocop', require: false
   gem 'guard-shell', require: false
-  gem 'guard-slimlint', github: 'swrobel/guard-slimlint', require: false
+  gem 'guard-slimlint', require: false
   gem 'invoker', github: 'swrobel/invoker'
   install_if -> { RUBY_PLATFORM =~ /linux/ } do
     gem 'libnotify' # System notifications for Linux
