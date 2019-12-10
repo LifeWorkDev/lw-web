@@ -1,5 +1,5 @@
 - if user_signed_in? && current_user != true_user
-  nav.navbar.bg-warning.py-0
+  nav.navbar.bg-warning.flex-shrink-0.py-0
     .mx-auto
       = mdi_svg 'domino-mask', size: 32
       = link_to "#{current_user.name} [return to you]", users_stop_impersonating_path, method: :post, class: 'navbar-text text-dark'

@@ -1,6 +1,6 @@
 / Remove distracting navbar during first project setup wizard
 - full_nav = user_signed_in? && (current_user.client? || current_user.active_freelancer?)
-#top-nav.nav.navbar.navbar-expand-sm.navbar-light.bg-white.mb-3.flex-shrink-0
+nav#top-nav.navbar.navbar-expand-sm.navbar-light.bg-white.mb-3.flex-shrink-0
   .container
     a.navbar-brand href=('/' if full_nav)
       = image_pack_tag 'lifework-logo.png'
