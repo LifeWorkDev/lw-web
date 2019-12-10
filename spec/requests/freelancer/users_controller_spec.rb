@@ -17,7 +17,7 @@ RSpec.describe Freelancer::UsersController, type: :request do
     context 'when user is within North America' do
       let(:params) { { 'user[time_zone]': ActiveSupport::TimeZone.basic_us_zone_names.sample } }
 
-      it { expect(req).to redirect_to(freelancer_stripe_connect_path) }
+      it { expect(req).to redirect_to(new_freelancer_org_path) }
     end
   end
 end

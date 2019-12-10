@@ -19,8 +19,9 @@ end
 
 Fabricator(:freelancer, from: :active_user) do
   projects(count: 1, fabricator: :milestone_project)
+  stripe_id 1
 end
 
-Fabricator(:active_freelancer, from: :active_user) do
+Fabricator(:active_freelancer, from: :freelancer) do
   projects(count: 1, fabricator: :active_milestone_project)
 end

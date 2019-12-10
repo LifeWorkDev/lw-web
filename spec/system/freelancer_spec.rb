@@ -31,7 +31,7 @@ RSpec.describe 'Freelancer views', type: :system do
       expect(page).to have_current_path '/f/projects'
     end
 
-    def shared_expectations
+    def milestone_project_expectations
       # Choose a random selectable date
       date = all('div', class: %w[DayPicker-Day !DayPicker-Day--disabled !DayPicker-Day--outside]).sample
       Rails.logger.info "Clicking #{date['aria-label']}"
@@ -60,9 +60,9 @@ RSpec.describe 'Freelancer views', type: :system do
     end
 
     context 'without existing projects' do
-      let(:new_user) { User.last }
+      let(:invited_user) { User.last }
 
-      it 'completes an entire client/project creation' do
+      def new_client_expectations
         visit '/f/projects'
         click_on '+ Project'
         expect(page).to have_current_path '/f/clients/new'
@@ -75,10 +75,25 @@ RSpec.describe 'Freelancer views', type: :system do
         end.to change { Org.count }.by(1) &
                change { Project.count }.by(1) &
                change { User.count }.by(1)
-        expect(new_user.invited_by).to eq(user)
+        expect(invited_user.invited_by).to eq(user)
         expect(page).to have_content('Client was successfully created.')
-        expect(page).to have_link '< Back', href: %r{/f/clients/.+/edit$}
-        shared_expectations
+      end
+
+      context 'with stripe account' do
+        let(:user) { Fabricate(:user, stripe_id: 1) }
+
+        it 'completes an entire client/project creation' do
+          new_client_expectations
+          expect(page).to have_link '< Back', href: %r{/f/clients/.+/edit$}
+          milestone_project_expectations
+        end
+      end
+
+      context 'without stripe account' do
+        it 'requires stripe connect' do
+          new_client_expectations
+          expect(page).to have_current_path freelancer_stripe_connect_path
+        end
       end
     end
 
@@ -96,7 +111,7 @@ RSpec.describe 'Freelancer views', type: :system do
         click_on 'Continue >'
         expect(page).to have_content('Project was successfully created.')
         expect(page).to have_link '< Back', href: %r{/f/milestone_projects/.+/edit$}
-        shared_expectations
+        milestone_project_expectations
       end
 
       context 'when pending' do
