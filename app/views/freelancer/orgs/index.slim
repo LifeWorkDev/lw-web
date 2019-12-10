@@ -11,6 +11,7 @@
         tr
           td = client.display_name
           td = client.primary_contact.name
+          td = client.primary_contact.email
           td = render 'shared/status_badge', record: client
 
 = render 'shared/add_button', path: new_freelancer_org_path, text: 'Client'
