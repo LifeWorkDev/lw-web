@@ -7,7 +7,7 @@ directories %w[app config db lib spec]
 
 guard :shell, first_match: true do
   # Restart puma
-  watch(%r{config/((.ruby-version|Gemfile.lock)|(application|environment|puma)\.rb|(credentials.+\.enc)|(environments/development.rb|initializers/.+\.rb))}) do |m|
+  watch(%r{config/((.ruby-version|Gemfile.lock)|(application|environment|puma)\.rb|(credentials.+\.enc)|(environments/development.rb|initializers/.+\.rb))|app/admin/fields/.+\.rb}) do |m|
     n "#{m[0]} changed", 'Restarting server/worker...'
     # Copied from https://github.com/rails/rails/blob/master/railties/lib/rails/tasks/restart.rake
     FileUtils.mkdir_p 'tmp'
