@@ -6,7 +6,7 @@ class Fields::CollectionSelectWithLink < Trestle::Form::Fields::CollectionSelect
   attr_reader :choices, :html_options
 
   def initialize(builder, template, name, collection, value_method, text_method, options = {}, html_options = {})
-    super(builder, template, name, collection, value_method, text_method, options, html_options)
+    super
 
     @choices = options_for_select(collection.map { |item| [item.send(text_method), item.send(value_method), { 'data-link' => admin_link_to('View', item, class: 'float-right mr-3', target: :_blank) }] }, builder.object&.send(name))
 
