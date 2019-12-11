@@ -61,6 +61,7 @@ Trestle.configure do |config|
   #
   config.menu do
     item 'Background Jobs', '/admin/que', data: { turbolinks: false }, icon: 'fa fa-cogs', priority: :last
+    item 'Email Templates', '/rails/mailers', icon: 'fa fa-envelope-open-text', priority: :last unless Rails.env.production?
   end
 
   # == Extension Options
