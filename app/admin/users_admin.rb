@@ -32,6 +32,7 @@ Trestle.resource(:users) do
     tab :user do
       text_field :name
       email_field :email
+      password_field :password if instance.new_record?
       select :status, User.aasm.states_for_select
       select :roles, User::ROLES, {}, multiple: true
       time_zone_select :time_zone, ActiveSupport::TimeZone.basic_us_zones, include_blank: true
@@ -45,7 +46,7 @@ Trestle.resource(:users) do
       auto_field :current_sign_in_at
       auto_field :created_at
       auto_field :updated_at
-      concat link_to '<i class="fa fa-mask"></i> Impersonate'.html_safe, main_app.users_impersonate_path(instance), method: :post, class: 'btn btn-secondary', title: 'Impersonate user' unless instance == current_user
+      concat link_to '<i class="fa fa-mask"></i> Impersonate'.html_safe, main_app.users_impersonate_path(instance), method: :post, class: 'btn btn-secondary', title: 'Impersonate user' unless instance == current_user || instance.new_record?
     end
 
     tab :questionnaire do
@@ -53,14 +54,13 @@ Trestle.resource(:users) do
       auto_field :work_type
     end
 
-    tab :projects, badge: user.projects.size do
-      table ProjectsAdmin.table, collection: user.projects
+    tab :projects, badge: user.projects_collection.size do
+      table ProjectsAdmin.table, collection: user.projects_collection
       concat admin_link_to('New Project', admin: :projects, action: :new, params: { user_id: user.id }, class: 'btn btn-success mt-3')
     end
 
     tab :comments, badge: user.comments.size do
       table CommentsAdmin.table, collection: user.comments
-      concat admin_link_to('New Comment', admin: :comments, action: :new, params: { commenter_id: user.id }, class: 'btn btn-success mt-3')
     end
   end
 

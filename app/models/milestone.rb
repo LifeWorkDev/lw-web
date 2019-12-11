@@ -72,6 +72,6 @@ class Milestone < ApplicationRecord
   end
 
   def to_s
-    "#{description} (#{formatted_date})"
+    "#{description} (#{amount_cents && "#{amount&.format} on "}#{formatted_date})"
   end
 end

@@ -28,13 +28,22 @@ Trestle.resource(:comments) do
   # Customize the form fields shown on the new/edit views.
   #
   form do |comment|
-    collection_select_with_link :commenter_id, User.all, :id, :name
-    auto_field 'Commented on', comment.commentable
+    if comment.new_record?
+      collection_select_with_link :commenter_id, comment.commentable.client.users << comment.commentable.freelancer, :id, :name
+    else
+      auto_field :commenter
+    end
+    auto_field :commentable, label: 'Commenting on'
     text_area :comment
-    auto_field :created_at
-    auto_field :updated_at
-    auto_field :read_by
-    auto_field :read_at
+    if comment.new_record?
+      hidden_field :commentable_id
+      hidden_field :commentable_type
+    else
+      auto_field :created_at
+      auto_field :updated_at
+      auto_field :read_by
+      auto_field :read_at
+    end
   end
 
   # By default, all parameters passed to the update and create actions will be

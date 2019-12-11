@@ -41,6 +41,10 @@ class User < ApplicationRecord
     max_status && all_statuses[max_status]
   end
 
+  def projects_collection
+    client? ? org_projects : projects
+  end
+
   def reminder_time(time)
     time.in_time_zone(time_zone || 'Pacific Time (US & Canada)')
   end
