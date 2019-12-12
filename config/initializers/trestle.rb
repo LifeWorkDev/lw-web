@@ -135,3 +135,4 @@ end
 require 'trestle-devise/controller_methods'
 Trestle::ApplicationController.include Trestle::Auth::ControllerMethods
 Trestle::ApplicationController.include SetLogidzeResponsible
+Trestle::ApplicationController.skip_after_action :intercom_rails_auto_include
