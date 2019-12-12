@@ -522,6 +522,7 @@ GEM
     stripe (5.11.0)
     strong_migrations (0.5.0)
       activerecord (>= 5)
+    symbol-fstring (0.1.0)
     systemu (2.6.5)
     temple (0.8.2)
     terminal-notifier (2.0.0)
@@ -640,6 +641,7 @@ DEPENDENCIES
   stripe
   stripe-ruby-mock!
   strong_migrations
+  symbol-fstring
   terminal-notifier
   terminal-notifier-guard
   trestle!

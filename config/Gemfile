@@ -18,7 +18,7 @@ gem 'fast_blank' # Much faster version of #blank?
 gem 'friendly_id' # "friendly" urls like /projects/cool-project
 gem 'goldiloader' # Automatic eager-loading to avoid N+1s
 gem 'intercom'
-gem 'intercom-rails'
+gem 'intercom-rails' # TODO: Remove as this gem has perf issues
 gem 'jsonb_accessor', github: 'volkanunsal/jsonb_accessor' # Store arbitrary model data in jsonb fields
 gem 'logidze' # version tracking
 gem 'lograge' # one-line logs
@@ -41,6 +41,7 @@ gem 'slim-rails' # Template language, lightweight alternative to erb/haml
 gem 'sprockets', '< 4.0', require: false
 gem 'stripe'
 gem 'strong_migrations' # complains about migration worst-practices
+gem 'symbol-fstring', require: 'fstring/all' # Improve performance of Symbol#to_s
 gem 'trestle', github: 'TrestleAdmin/trestle'
 gem 'turbolinks', '~> 5'
 gem 'webpacker'
