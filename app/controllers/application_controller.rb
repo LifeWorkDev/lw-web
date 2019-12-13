@@ -70,7 +70,11 @@ private
 
   def user_default_path
     if current_user.time_zone.present?
-      [current_user.type, Project]
+      if current_user.client? && current_user.org.work_frequency.blank?
+        edit_client_org_path
+      else
+        [current_user.type, Project]
+      end
     elsif current_user.freelancer?
       edit_freelancer_user_path
     else

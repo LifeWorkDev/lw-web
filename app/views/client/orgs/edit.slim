@@ -10,7 +10,7 @@ h2.text-center.mt-2
     .form-group.mb-0
       label.required How often do you utilize freelancers?
     .list-group.mb-4.font-sans-serif
-      = f.collection_radio_buttons_without_bootstrap :work_frequency, ['Regularly', 'Sometimes', 'Rarely', 'Just this once'], :to_s, :to_s do |cb|
-        = cb.radio_button
+      = f.collection_radio_buttons_without_bootstrap :work_frequency, Org::WORK_FREQUENCY, :to_s, :to_s do |cb|
+        = cb.radio_button(required: true)
         = cb.label(class: 'list-group-item')
     = render 'shared/form_buttons', f: f

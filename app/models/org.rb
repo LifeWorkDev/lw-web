@@ -19,6 +19,8 @@ class Org < ApplicationRecord
                  work_category: [:string, array: true, default: []],
                  work_frequency: :string
 
+  WORK_FREQUENCY = ['Regularly', 'Sometimes', 'Rarely', 'Just this once'].freeze
+
   def display_name
     self[:name].presence || primary_contact&.name
   end

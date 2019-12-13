@@ -33,6 +33,7 @@ RSpec.describe 'Client views', type: :system do
         WORK_CATEGORIES.sample(rand(1..WORK_CATEGORIES.size)).each do |category|
           check category, allow_label_click: true
         end
+        choose Org::WORK_FREQUENCY.sample, allow_label_click: true
         expect do
           click_on 'Continue >'
         end.to change { project.client.reload.work_category }
@@ -57,9 +58,19 @@ RSpec.describe 'Client views', type: :system do
 
     before { sign_in user }
 
-    it 'redirects from / to the client project dashboard' do
-      visit '/'
-      expect(page).to have_current_path client_projects_path
+    context 'when onboarding' do
+      it 'redirects from / to the org edit page' do
+        visit '/'
+        expect(page).to have_current_path edit_client_org_path
+      end
+    end
+
+    context 'when active' do
+      it 'redirects from / to the client project dashboard' do
+        org.update(work_frequency: Org::WORK_FREQUENCY.sample)
+        visit '/'
+        expect(page).to have_current_path client_projects_path
+      end
     end
 
     def shared_expectations
