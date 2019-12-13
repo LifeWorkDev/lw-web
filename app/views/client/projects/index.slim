@@ -7,9 +7,9 @@
 = render 'shared/overflow_scroll'
   table.table.table-hover.table-striped
     tbody
-      - @projects.each do |project|
+      - @projects.not_pending.each do |project|
         tr
-          td = link_to project.name, project.pending? ? [:edit, current_namespace, project] : [current_namespace, project, :comments]
+          td = link_to project.name, project.client_invited? ? [:payments, current_namespace, project] : [current_namespace, project, :comments]
           td = project.freelancer.name
           td = project.amount&.format
-          td = render 'shared/status_badge', record: project
+          td = render 'shared/status_badge', record: project unless project.client_invited?

@@ -53,7 +53,7 @@ RSpec.describe 'Client views', type: :system do
   context "when auth'd" do
     let(:user) { Fabricate(:client) }
     let(:org) { user.org }
-    let(:project) { Fabricate(:milestone_project_with_milestones, client: org) }
+    let(:project) { Fabricate(:milestone_project_with_milestones, client: org, status: :client_invited) }
 
     before { sign_in user }
 
