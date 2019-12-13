@@ -1,5 +1,5 @@
 / Remove distracting navbar during first project setup wizard
-- full_nav = user_signed_in? && (current_user.client? || current_user.active_freelancer?)
+- full_nav = user_signed_in? && current_user.finished_onboarding?
 nav#top-nav.navbar.navbar-expand-sm.navbar-light.bg-white.mb-3.flex-shrink-0
   .container
     a.navbar-brand href=('/' if full_nav)

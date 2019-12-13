@@ -22,8 +22,8 @@ class User < ApplicationRecord
     activate! unless active?
   end
 
-  def active_freelancer?
-    freelancer? && projects.not_pending.any?
+  def finished_onboarding?
+    client? ? org.active? : projects.not_pending.any?
   end
 
   def client?
