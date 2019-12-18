@@ -8,3 +8,14 @@ h2.text-center.mt-2
     = f.collection_select :org_id, current_user.clients, :id, :display_name, { disabled: '', label: 'Client', prompt: 'Please select', required: true, selected: '' }, control_class: 'custom-select', required: true
   = render 'freelancer/projects/fields', f: f
   = render 'shared/form_buttons', f: f, back: :back
+
+javascript:
+  var clientSelect = document.getElementById('milestone_project_org_id')
+  var newClient = document.createElement('option')
+  newClient.innerHTML = 'Start a project with a New Client'
+  newClient.value = 'new'
+  clientSelect.appendChild(newClient)
+  clientSelect.onchange = function() {
+    if (clientSelect.value === 'new')
+      window.location = '#{new_freelancer_org_path}'
+  }
