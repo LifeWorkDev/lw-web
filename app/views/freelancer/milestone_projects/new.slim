@@ -1,3 +1,14 @@
 - content_for :title, 'New Project'
 
 = render 'freelancer/projects/form'
+
+javascript:
+  var clientSelect = document.getElementById('milestone_project_org_id')
+  var newClient = document.createElement('option')
+  newClient.innerHTML = 'Start a project with a New Client'
+  newClient.value = 'new'
+  clientSelect.appendChild(newClient)
+  clientSelect.onchange = function() {
+    if (clientSelect.value === 'new')
+      window.location = '#{new_freelancer_org_path}'
+  }
