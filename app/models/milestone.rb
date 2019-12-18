@@ -11,13 +11,18 @@ class Milestone < ApplicationRecord
   monetize :amount_cents, with_model_currency: :currency, allow_nil: true, numericality: { greater_than_or_equal_to: 0 }
 
   aasm do
-    state :active, initial: true
+    state :pending, initial: true
+    state :deposited
     state :paid
     state :rejected
   end
 
   memoize def status_class
-    active? ? :primary : :success
+    if pending? then :info
+    elsif deposited? then :primary
+    elsif paid? then :success
+    elsif rejected? then :danger
+    end
   end
 
   def amount_with_fee
@@ -42,7 +47,7 @@ class Milestone < ApplicationRecord
   end
 
   def next
-    project.milestones.active.where.not(id: id).first
+    project.milestones.pending.where.not(id: id).first
   end
 
   def percent

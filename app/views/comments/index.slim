@@ -18,7 +18,7 @@
         => "#{milestone.amount.format} on #{milestone.formatted_date}"
         = render 'shared/status_badge', class: 'align-text-bottom', record: milestone
       = react_component('CommentsList', comments: ActiveModelSerializers::SerializableResource.new(milestone.comments).serializable_hash, currentUser: UserSerializer.new(current_user).serializable_hash)
-      - if milestone == @milestones.find(&:active?)
+      - if milestone == @milestones.find(&:deposited?)
         #comment-form.mt-3.mx-3.mx-sm-0
           = bootstrap_form_with(model: [current_namespace, @project, milestone.comments.new], layout: :horizontal, local: true) do |f|
             = f.alert_message 'Errors'
