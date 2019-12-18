@@ -7,7 +7,7 @@ h2.text-center.mt-2
     = u.hidden_field :id
     = u.text_field :name, label: 'Contact Name', placeholder: t('devise_forms.user.name_placeholder'), required: true
     = u.email_field :email, label: 'Contact Email', placeholder: t('devise_forms.user.email_placeholder'), required: true
-  = f.text_field :name, label: 'Contact Organization', placeholder: 'ABC Corporation', add_control_col_class: 'd-flex align-items-center'
+  = f.text_field :name, label: 'Client Organization', placeholder: 'ABC Corporation', add_control_col_class: 'd-flex align-items-center'
   = f.fields_for :projects do |p|
     = p.hidden_field :id
     = render 'freelancer/projects/fields', f: p
