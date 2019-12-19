@@ -16,6 +16,9 @@ AllCops:
 Layout/AccessModifierIndentation:
   EnforcedStyle: outdent
 
+Layout/LineLength:
+  Enabled: false
+
 Lint/AmbiguousBlockAssociation:
   Exclude:
     - spec/**/*
@@ -58,9 +61,6 @@ Metrics/ClassLength:
   Enabled: false
 
 Metrics/CyclomaticComplexity:
-  Enabled: false
-
-Metrics/LineLength:
   Enabled: false
 
 Metrics/MethodLength:
