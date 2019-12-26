@@ -1,6 +1,6 @@
-/ p
-/   markdown:
-/     We've released your payment of **#{@milestone.amount&.format}** for **#{@milestone.description}** to **#{@freelancer_name}**.
+p
+  markdown:
+    We've released your payment of **#{@milestone.amount&.format}** for **#{@milestone.description}** to **#{@freelancer_name}**.
 
 - if @next_milestone
   p
