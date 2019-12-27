@@ -93,7 +93,7 @@ class Milestone < ApplicationRecord
 private
 
   def charge!
-    metadata = { 'Milestone ID': milestone.id }
+    metadata = { 'Milestone ID': id }
     client.primary_pay_method.charge!(amount: amount_with_fee, metadata: metadata)
   end
 end
