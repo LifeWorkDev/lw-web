@@ -15,6 +15,16 @@ class Milestone < ApplicationRecord
     state :deposited
     state :paid
     state :rejected
+
+    event :deposit do
+      transitions from: :pending, to: :deposited
+
+      after do
+        charge!
+        project.activate!
+        client.activate!
+      end
+    end
   end
 
   memoize def status_class
@@ -78,5 +88,12 @@ class Milestone < ApplicationRecord
 
   def to_s
     "#{description} (#{amount_cents && "#{amount&.format} on "}#{formatted_date})"
+  end
+
+private
+
+  def charge!
+    metadata = { 'Milestone ID': milestone.id }
+    client.primary_pay_method.charge!(amount: amount_with_fee, metadata: metadata)
   end
 end
