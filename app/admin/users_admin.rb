@@ -39,6 +39,7 @@ Trestle.resource(:users) do
       collection_select_with_link :org_id, Org.all, :id, :name, include_blank: true
       phone_field :phone
       text_field :address
+      auto_field :stripe_id
       if user.invited_by_id.present?
         auto_field :invited_by
         auto_field :invitation_accepted_at
