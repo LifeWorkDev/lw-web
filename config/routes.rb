@@ -30,8 +30,11 @@ Rails.application.routes.draw do
     resources :projects, only: :index do
       match :status, on: :member, via: %i[get patch]
     end
-    get 'stripe/callback', to: 'stripe#callback'
-    get 'stripe/connect', to: 'stripe#connect', as: :stripe_connect
+    scope controller: :stripe, as: :stripe, path: :stripe do
+      get :callback
+      get :connect
+      get :dashboard
+    end
   end
 
   resources :comments, only: %i[update]

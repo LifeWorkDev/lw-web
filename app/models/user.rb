@@ -49,6 +49,14 @@ class User < ApplicationRecord
     time.in_time_zone(time_zone || 'Pacific Time (US & Canada)')
   end
 
+  memoize def stripe_obj
+    Stripe::Account.retrieve(stripe_id)
+  end
+
+  def stripe_dashboard
+    Stripe::Account.create_login_link(stripe_id).url
+  end
+
   def type
     client? ? :client : :freelancer
   end

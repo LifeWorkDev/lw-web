@@ -13,4 +13,8 @@ class Freelancer::StripeController < AuthenticatedController
       redirect_to freelancer_stripe_connect_path, alert: 'Could not link to Stripe. Please try again.'
     end
   end
+
+  def dashboard
+    redirect_to current_user.stripe_dashboard
+  end
 end
