@@ -10,5 +10,5 @@ javascript:
   clientSelect.appendChild(newClient)
   clientSelect.onchange = function() {
     if (clientSelect.value === 'new')
-      window.location = '#{new_freelancer_org_path}'
+      window.location.replace('#{new_freelancer_org_path}')
   }

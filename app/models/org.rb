@@ -30,7 +30,7 @@ class Org < ApplicationRecord
   end
 
   def primary_pay_method
-    pay_methods.first
+    pay_methods.last
   end
 
   memoize def stripe_obj

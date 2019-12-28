@@ -7,6 +7,14 @@ class PayMethod < ApplicationRecord
   validates :last_4, numericality: { integer_only: true }
   validates :issuer, :kind, :stripe_id, presence: true
 
+  def bank_account?
+    false
+  end
+
+  def card?
+    false
+  end
+
   memoize def display_type
     model_name.human.titleize
   end

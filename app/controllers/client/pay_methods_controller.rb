@@ -1,6 +1,10 @@
 class Client::PayMethodsController < AuthenticatedController
   before_action :set_pay_method, only: %i[show edit update destroy]
 
+  def created
+    redirect_to client_projects_path, notice: 'Payment method was successfully changed.'
+  end
+
   # GET /pay_methods
   def index
     # @pay_methods = current_org.pay_methods
@@ -23,7 +27,12 @@ class Client::PayMethodsController < AuthenticatedController
     @pay_method = current_org.pay_methods.build(pay_method_params.merge(created_by: current_user))
 
     if @pay_method.save
-      render json: { message: 'Pay method successfully updated.' }
+      location = if params[:project].present?
+                   deposit_client_milestone_project_path(params[:project])
+                 else
+                   created_client_pay_methods_path
+                 end
+      render json: { location: location }
     else
       render json: { error: @pay_method.errors.full_messages.join(', ') }, status: 400
     end
@@ -32,7 +41,7 @@ class Client::PayMethodsController < AuthenticatedController
   # PATCH/PUT /pay_methods/1
   def update
     if @pay_method.update(pay_method_params)
-      redirect_to [current_namespace, @pay_method], notice: 'Pay method was successfully updated.'
+      redirect_to [current_namespace, @pay_method], notice: 'Payment method was successfully updated.'
     else
       render :edit
     end

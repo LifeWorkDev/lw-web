@@ -13,3 +13,5 @@
           td = project.freelancer.name
           td = project.amount&.format
           td = render 'shared/status_badge', record: project unless project.client_invited?
+
+= link_to 'Change payment method', client_pay_methods_path, class: 'btn btn-primary float-right'

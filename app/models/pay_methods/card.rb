@@ -3,6 +3,10 @@ class PayMethods::Card < PayMethod
 
   validates :exp_month, :exp_year, numericality: { integer_only: true }
 
+  def card?
+    true
+  end
+
   def charge!(amount:, metadata: {})
     Stripe::PaymentIntent.create(
       amount: amount.cents,

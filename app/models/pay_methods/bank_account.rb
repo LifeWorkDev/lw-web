@@ -5,6 +5,10 @@ class PayMethods::BankAccount < PayMethod
 
   before_validation :exchange_plaid_link_token, on: :create
 
+  def bank_account?
+    true
+  end
+
   def charge!(amount:, metadata: {})
     raise "Insufficent balance for Bank Account #{id}. Attempted to charge #{amount.format} to account with balance #{balance.format}" if Rails.env.production? && balance < amount
 

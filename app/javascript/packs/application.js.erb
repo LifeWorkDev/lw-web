@@ -24,8 +24,9 @@ window.createPayMethod = function(data) {
   const csrf = document
     .querySelector("meta[name='csrf-token']")
     .getAttribute('content')
+  const params = new URLSearchParams(window.location.search)
   window
-    .fetch(`/c/pay_methods`, {
+    .fetch(`/c/pay_methods?${params.toString()}`, {
       body: JSON.stringify({
         pay_method: data
       }),
@@ -38,13 +39,10 @@ window.createPayMethod = function(data) {
       mode: 'cors',
     })
     .then(response => {
-      if (response.ok) {
-        const params = new URLSearchParams(window.location.search)
-        window.location = `/c/milestone_projects/${params.get('project')}/deposit`
-      } else {
+      if (!response.ok) {
         console.error(response)
         window.bugsnagClient.metaData = { response: response }
         window.bugsnagClient.notify(new Error('Payment Method creation error'))
-      }
-    })
+      } else return response.json()
+    }).then(data => window.location.replace(data.location))
 }
