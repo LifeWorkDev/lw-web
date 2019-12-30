@@ -30,7 +30,7 @@ const CommentItem = props => {
   }
 
   const editingOff = () => {
-    commentForm.classList.remove('d-none')
+    commentForm?.classList.remove('d-none')
     setEditing(false)
   }
 
@@ -90,7 +90,7 @@ const CommentItem = props => {
                 <button
                   className='btn btn-sm btn-white'
                   onClick={() => {
-                    commentForm.classList.add('d-none')
+                    commentForm?.classList.add('d-none')
                     setEditing(true)
                   }}
                 >
