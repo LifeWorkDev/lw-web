@@ -10,6 +10,7 @@ environment.plugins.append(
     context: 'app/javascript',
     extensions: ['.js', '.jsx'],
     fix: true,
+    lintDirtyModulesOnly: true,
   }),
 )
 
