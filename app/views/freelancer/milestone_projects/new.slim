@@ -4,11 +4,16 @@
 
 javascript:
   var clientSelect = document.getElementById('milestone_project_org_id')
-  var newClient = document.createElement('option')
-  newClient.innerHTML = 'Start a project with a New Client'
-  newClient.value = 'new'
-  clientSelect.appendChild(newClient)
-  clientSelect.onchange = function() {
-    if (clientSelect.value === 'new')
-      window.location.replace('#{new_freelancer_org_path}')
+  if (clientSelect) {
+    clientSelect.onchange = function() {
+      if (clientSelect.value === 'new')
+        window.location.replace('#{new_freelancer_org_path}')
+    }
+
+    if (!clientSelect.querySelector('option[value=new]')) {
+      var newClient = document.createElement('option')
+      newClient.innerHTML = 'Start a project with a New Client'
+      newClient.value = 'new'
+      clientSelect.appendChild(newClient)
+    }
   }
