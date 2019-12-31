@@ -6,7 +6,7 @@
   width: 40px;
 }
 
-.DayPicker-Day--disabled.DayPicker-Day--today {
+.DayPicker-Day--disabled.DayPicker-Day--today:not(.DayPicker-Day--outside) {
   // Emulate border without adding 2px to its height
   box-shadow: 0 0 0 1px #dce0e0;
 }
