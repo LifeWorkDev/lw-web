@@ -4,11 +4,11 @@ h2.text-center.mt-2
 = bootstrap_form_with(model: [current_namespace, @org], control_col: 'col-md-7 col-lg-8 col-xl-9', label_col: 'col-md-5 col-lg-4 col-xl-3', layout: :horizontal, local: true) do |f|
   = f.alert_message 'Errors'
   = f.fields_for :users do |u|
-    = u.hidden_field :id
+    = u.hidden_field :id if u.object.id.present?
     = u.text_field :name, label: 'Contact Name', placeholder: t('devise_forms.user.name_placeholder'), required: true
     = u.email_field :email, label: 'Contact Email', placeholder: t('devise_forms.user.email_placeholder'), required: true
   = f.text_field :name, label: 'Client Organization', placeholder: 'ABC Corporation', add_control_col_class: 'd-flex align-items-center'
   = f.fields_for :projects do |p|
-    = p.hidden_field :id
+    = p.hidden_field :id if p.object.id.present?
     = render 'freelancer/projects/fields', f: p
   = render 'shared/form_buttons', f: f, back: :back

@@ -1,7 +1,6 @@
 Fabricator(:user) do
   name { Faker::Name.name }
   email { Faker::Internet.safe_email }
-  password { Devise.friendly_token[0, 20] }
   time_zone { ActiveSupport::TimeZone.all.sample.name }
 end
 

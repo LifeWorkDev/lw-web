@@ -10,6 +10,8 @@ class User < ApplicationRecord
   has_many :org_projects, through: :org, source: :projects
   has_many :comments, foreign_key: :commenter_id, dependent: :destroy, inverse_of: :commenter
 
+  before_validation :set_defaults, on: :create
+
   devise :database_authenticatable, :lockable,
          :invitable, :registerable, :recoverable,
          :rememberable, :trackable, :validatable
@@ -83,5 +85,9 @@ private
 
   memoize def intercom_metadata
     { users: [{ user_id: id }] }
+  end
+
+  def set_defaults
+    self.password ||= Devise.friendly_token[0, 20]
   end
 end
