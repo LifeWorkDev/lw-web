@@ -13,7 +13,7 @@
             - if project.proposal_rejected?
               = project.name
             - else
-              = link_to project.name, project.pending? ? [:edit, current_namespace, project] : [current_namespace, project, :comments]
+              = link_to project.name, project_path(project)
           td = project.client.display_name
           td = project.amount&.format
           td = render 'shared/status_badge', record: project

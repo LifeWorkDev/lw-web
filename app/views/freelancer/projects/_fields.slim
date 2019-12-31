@@ -1,4 +1,4 @@
 - project = f.object
 = f.text_field :name, label: 'Project Name', placeholder: 'XYZ Project', required: true
-- if project.new_record?
+- if project.pending?
   = f.collection_select :status, Project::PENDING_STATES - [:proposal_rejected], :to_s, ->(status) { status.to_s.humanize }, { disabled: '', label: 'Project Status', prompt: 'Please select', required: true, selected: project.persisted? ? project.status : '' }, control_class: 'custom-select', required: true
