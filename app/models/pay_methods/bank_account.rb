@@ -57,7 +57,11 @@ private
         },
       )
       self.stripe_id = customer.default_source
-      org.update_columns(stripe_id: customer.id) # rubocop:disable Rails/SkipsModelValidations
+      if org.persisted?
+        org.update_columns(stripe_id: customer.id) # rubocop:disable Rails/SkipsModelValidations
+      else
+        org.stripe_id = customer.id
+      end
     end
   end
 end

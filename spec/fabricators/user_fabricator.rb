@@ -18,9 +18,9 @@ end
 
 Fabricator(:freelancer, from: :active_user) do
   projects(count: 1, fabricator: :milestone_project)
-  stripe_id 1
 end
 
-Fabricator(:active_freelancer, from: :freelancer) do
+Fabricator(:active_freelancer, from: :active_user) do
   projects(count: 1, fabricator: :active_milestone_project)
+  stripe_id { Stripe::Account.create(type: :custom).id }
 end

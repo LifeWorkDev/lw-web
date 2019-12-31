@@ -93,6 +93,7 @@ RSpec.configure do |config|
   config.after(:all) { StripeMock.stop }
 end
 
+RSpec::Mocks.configuration.allow_message_expectations_on_nil = false
 RSpec::Matchers.define_negated_matcher :not_change, :change
 RSpec::Matchers.define_negated_matcher :not_enqueue_job, :enqueue_job
 

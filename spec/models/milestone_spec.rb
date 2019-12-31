@@ -3,10 +3,6 @@ require 'rails_helper'
 RSpec.describe Milestone, type: :model do
   subject(:milestone) { Fabricate(:milestone) }
 
-  it 'fabricates' do
-    expect(milestone.date).to be_present
-  end
-
   describe '#next' do
     subject(:milestone) { project.milestones.first }
 
@@ -29,6 +25,32 @@ RSpec.describe Milestone, type: :model do
   describe '#reminder_time' do
     it 'sets hour to 9am' do
       expect(milestone.reminder_time(User.all.sample).hour).to eq 9
+    end
+  end
+
+  describe 'state machine' do
+    subject(:milestone) { project.milestones.sample }
+
+    let(:client) { project.client }
+    let(:freelancer) { Fabricate(:active_freelancer) }
+    let(:pay_method) { client.primary_pay_method }
+    let(:project) { freelancer.projects.first }
+
+    describe '#deposit!' do
+      it "charges client's primary pay method, activates client, activates project" do
+        milestone.deposit!
+        expect(project.reload.active?).to be true
+        expect(client.reload.active?).to be true
+      end
+    end
+
+    describe '#pay!' do
+      it 'creates Stripe transfers' do
+        milestone.update(status: :deposited)
+        allow(Stripe::Transfer).to receive(:create).and_call_original
+        milestone.pay!
+        expect(Stripe::Transfer).to have_received(:create).once
+      end
     end
   end
 end

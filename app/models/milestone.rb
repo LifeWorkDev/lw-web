@@ -1,6 +1,6 @@
 class Milestone < ApplicationRecord
   has_logidze
-  include AasmStatus
+  include Milestones::Status
 
   belongs_to :project, class_name: 'MilestoneProject'
   has_one :client, through: :project
@@ -10,33 +10,16 @@ class Milestone < ApplicationRecord
   delegate :currency, to: :project
   monetize :amount_cents, with_model_currency: :currency, allow_nil: true, numericality: { greater_than_or_equal_to: 0 }
 
-  aasm do
-    state :pending, initial: true
-    state :deposited
-    state :paid
-    state :rejected
-
-    event :deposit do
-      transitions from: :pending, to: :deposited
-
-      after do
-        charge!
-        project.activate!
-        client.activate!
-      end
-    end
-  end
-
-  memoize def status_class
-    if pending? then :info
-    elsif deposited? then :primary
-    elsif paid? then :success
-    elsif rejected? then :danger
-    end
-  end
-
   def amount_with_fee
     amount * (1 + LIFEWORK_FEE)
+  end
+
+  def client_amount
+    amount_with_fee
+  end
+
+  def freelancer_amount
+    amount
   end
 
   def as_json(*)
@@ -93,7 +76,23 @@ class Milestone < ApplicationRecord
 private
 
   def charge!
-    metadata = { 'Milestone ID': id }
-    client.primary_pay_method.charge!(amount: amount_with_fee, metadata: metadata)
+    client.primary_pay_method.charge!(amount: client_amount, metadata: stripe_metadata)
+  end
+
+  def transfer!
+    Stripe::Transfer.create(
+      {
+        amount: freelancer_amount.cents,
+        currency: currency.to_s,
+        description: to_s,
+        destination: freelancer.stripe_id,
+        metadata: stripe_metadata,
+      },
+      idempotency_key: "milestone-#{id}",
+    )
+  end
+
+  def stripe_metadata
+    { 'Milestone ID': id }
   end
 end

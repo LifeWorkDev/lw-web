@@ -24,3 +24,7 @@ end
 Fabricator(:named_org_with_active_users, from: :org_with_active_users) do
   name { Faker::Company.name }
 end
+
+Fabricator(:org_with_pay_method, from: :named_org_with_active_users) do
+  pay_methods(count: 1, fabricator: %i[bank_account_pay_method card_pay_method].sample)
+end

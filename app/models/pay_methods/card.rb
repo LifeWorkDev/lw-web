@@ -47,7 +47,11 @@ private
           'Org ID': org.id,
         },
       )
-      org.update_columns(stripe_id: customer.id) # rubocop:disable Rails/SkipsModelValidations
+      if org.persisted?
+        org.update_columns(stripe_id: customer.id) # rubocop:disable Rails/SkipsModelValidations
+      else
+        org.stripe_id = customer.id
+      end
     end
     card = stripe_obj.card
     self.exp_month = card.exp_month
