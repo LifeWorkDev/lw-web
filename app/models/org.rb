@@ -35,6 +35,10 @@ class Org < ApplicationRecord
     Stripe::Customer.retrieve(stripe_id)
   end
 
+  def to_s
+    display_name
+  end
+
 private
 
   memoize def intercom_metadata

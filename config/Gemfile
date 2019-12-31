@@ -24,6 +24,7 @@ gem 'logidze' # version tracking
 gem 'lograge' # one-line logs
 gem 'memery' # Memoization
 gem 'money-rails'
+gem 'more_possessive' # Call .possessive on a string
 gem 'nilify_blanks', github: 'swrobel/nilify_blanks'
 gem 'oj' # Faster json parsing/generation library
 gem 'pg', '>= 0.18', '< 2.0'

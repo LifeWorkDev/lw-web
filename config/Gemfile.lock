@@ -327,6 +327,7 @@ GEM
       monetize (~> 1.9.0)
       money (~> 6.13.2)
       railties (>= 3.0)
+    more_possessive (1.0.2)
     multi_json (1.14.1)
     multipart-post (2.1.1)
     mustermann (1.1.0)
@@ -606,6 +607,7 @@ DEPENDENCIES
   lograge
   memery
   money-rails
+  more_possessive
   nilify_blanks!
   norobots
   oj

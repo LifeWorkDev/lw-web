@@ -1,6 +1,6 @@
 class FreelancerMailerPreview < ActionMailer::Preview
   def deposit_received
-    FreelancerMailer.deposit_received(user: User.first, project: Project.first, amount: Milestone.first.amount)
+    FreelancerMailer.deposit_received(user: User.first, milestone: Milestone.first)
   end
 
   def milestone_approaching

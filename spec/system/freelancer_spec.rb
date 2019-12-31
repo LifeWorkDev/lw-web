@@ -52,15 +52,15 @@ RSpec.describe 'Freelancer views', type: :system do
                       have_content(amount.format, count: 2) &
                       have_content(new_milestone.formatted_date) &
                       have_content(new_milestone.description)
-      expect do
-        click_on 'Continue >'
-      end.to enqueue_job(ActionMailer::MailDeliveryJob)
+      allow(ClientMailer).to receive(:invite).with(user: client_user, project: new_project).and_call_original
+      click_on 'Continue >'
+      expect(ClientMailer).to have_received(:invite).once
       expect(page).to have_content('Your client has been emailed an invitation to join the project.')
       expect(page).to have_current_path '/f/projects'
     end
 
     context 'without existing projects' do
-      let(:invited_user) { User.last }
+      let(:client_user) { User.last }
 
       def new_client_expectations
         visit '/f/projects'
@@ -75,7 +75,7 @@ RSpec.describe 'Freelancer views', type: :system do
         end.to change { Org.count }.by(1) &
                change { Project.count }.by(1) &
                change { User.count }.by(1)
-        expect(invited_user.invited_by).to eq(user)
+        expect(client_user.invited_by).to eq(user)
         expect(page).to have_content('Client was successfully created.')
       end
 
@@ -100,6 +100,7 @@ RSpec.describe 'Freelancer views', type: :system do
     context 'with existing project' do
       let(:user) { Fabricate(:active_freelancer) }
       let(:project) { user.projects.first }
+      let(:client_user) { project.client.primary_contact }
 
       it 'completes project creation for an existing client' do
         visit '/f/projects'

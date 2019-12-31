@@ -37,8 +37,10 @@ RSpec.describe Milestone, type: :model do
     let(:project) { freelancer.projects.first }
 
     describe '#deposit!' do
-      it "charges client's primary pay method, activates client, activates project" do
+      it "charges client's primary pay method, activates client, activates project, emails freelancer" do
+        allow(FreelancerMailer).to receive(:deposit_received).with(user: freelancer, milestone: milestone).and_call_original
         milestone.deposit!
+        expect(FreelancerMailer).to have_received(:deposit_received).once
         expect(project.reload.active?).to be true
         expect(client.reload.active?).to be true
       end
