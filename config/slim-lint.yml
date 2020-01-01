@@ -6,3 +6,5 @@ exclude:
 linters:
   LineLength:
     enabled: false
+  TrailingWhitespace:
+    enabled: false
