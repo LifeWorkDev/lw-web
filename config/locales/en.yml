@@ -69,7 +69,7 @@ en:
     notify_new_comment:
       subject: "New comment on project \"%{project}\""
   freelancer_mailer:
-    deposit_received:
+    milestone_deposited:
       subject: "Milestone deposit received for \"%{project}\""
     milestone_approaching:
       subject: "A milestone for \"%{project}\" is due in 3 days"
