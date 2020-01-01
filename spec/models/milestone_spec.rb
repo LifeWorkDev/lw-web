@@ -50,7 +50,11 @@ RSpec.describe Milestone, type: :model do
       it 'creates Stripe transfers' do
         milestone.update(status: :deposited)
         allow(Stripe::Transfer).to receive(:create).and_call_original
-        milestone.pay!
+        expect do
+          milestone.pay!
+        end.to have_enqueued_mail(ClientMailer, :milestone_paid).once &
+               have_enqueued_mail(FreelancerMailer, :milestone_paid).once
+
         expect(Stripe::Transfer).to have_received(:create).once
       end
     end

@@ -26,6 +26,8 @@ module Milestones::Status
 
         after do
           transfer!
+          ClientMailer.with(recipient: client.primary_contact, milestone: self).milestone_paid.deliver_later
+          FreelancerMailer.with(recipient: freelancer, milestone: self).milestone_paid.deliver_later
         end
       end
     end
