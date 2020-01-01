@@ -25,7 +25,7 @@ scss:
   table.table.table-striped.mb-3
     tbody
       - @milestone.comments.each do |comment|
-        tr[class="#{comment.commenter == @user ? 'text-right' : 'text-left'}"]
+        tr[class="#{comment.commenter == @recipient ? 'text-right' : 'text-left'}"]
           td
             .comment
               div
@@ -34,4 +34,4 @@ scss:
               = comment.comment
 
   .container
-    p You can respond to this comment by replying to this email, or #{link_to 'click here', [@user.type, @milestone.project, :comments]} to comment via our website.
+    p You can respond to this comment by replying to this email, or #{link_to 'click here', [@recipient.type, @milestone.project, :comments]} to comment via our website.

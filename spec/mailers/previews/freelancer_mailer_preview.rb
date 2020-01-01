@@ -1,9 +1,17 @@
 class FreelancerMailerPreview < ActionMailer::Preview
-  def milestone_approaching
-    FreelancerMailer.milestone_approaching(user: User.first, milestone: Milestone.first)
+  delegate :milestone_approaching, to: :milestone_mailer
+
+  delegate :milestone_deposited, to: :milestone_mailer
+
+  delegate :milestone_paid, to: :milestone_mailer
+
+private
+
+  def milestone_mailer
+    FreelancerMailer.with(milestone_params)
   end
 
-  def milestone_deposited
-    FreelancerMailer.milestone_deposited(user: User.first, milestone: Milestone.first)
+  def milestone_params
+    { recipient: User.first, milestone: Milestone.first }
   end
 end

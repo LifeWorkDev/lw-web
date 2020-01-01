@@ -1,3 +1,5 @@
 h2.text-center Great news!
 
-p We've received #{@milestone.client.display_name.possessive} deposit of #{@milestone.amount.format} for "#{@milestone.description}," so you can begin work on it with the certainty that you'll be paid upon completion.
+p 
+  markdown:
+    We've received #{@milestone.client.display_name.possessive} deposit of #{@milestone.amount.format} for "#{@milestone.description}," so you can begin work on it with the certainty that you'll be paid upon completion.

@@ -52,9 +52,9 @@ RSpec.describe 'Freelancer views', type: :system do
                       have_content(amount.format, count: 2) &
                       have_content(new_milestone.formatted_date) &
                       have_content(new_milestone.description)
-      allow(ClientMailer).to receive(:invite).with(user: client_user, project: new_project).and_call_original
-      click_on 'Continue >'
-      expect(ClientMailer).to have_received(:invite).once
+      expect do
+        click_on 'Continue >'
+      end.to have_enqueued_mail(ClientMailer, :invite).once
       expect(page).to have_content('Your client has been emailed an invitation to join the project.')
       expect(page).to have_current_path '/f/projects'
     end

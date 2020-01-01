@@ -63,13 +63,15 @@ en:
       subject: "%{freelancer} has invited you to a project"
     milestone_approaching:
       subject: "A milestone payment for \"%{project}\" is approaching"
-    milestone_completed:
-      subject: "Next payment for %{freelancer} will be withdrawn from your account today"
+    milestone_paid:
+      subject: "A payment for \"%{project}\" was made to %{freelancer}"
   comment_mailer:
     notify_new_comment:
       subject: "New comment on project \"%{project}\""
   freelancer_mailer:
-    milestone_deposited:
-      subject: "Milestone deposit received for \"%{project}\""
     milestone_approaching:
       subject: "A milestone for \"%{project}\" is due in 3 days"
+    milestone_deposited:
+      subject: "Milestone deposit received for \"%{project}\""
+    milestone_paid:
+      subject: "Milestone payment received for \"%{project}\""

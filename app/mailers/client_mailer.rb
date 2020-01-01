@@ -1,29 +1,19 @@
 class ClientMailer < ApplicationMailer
-  def invite(user:, project:)
-    user.invite! unless user.active? # Generate new invitation token
+  def invite
+    @recipient.invite! unless @recipient.active? # Generate new invitation token
 
-    Time.use_zone(user.time_zone) do
-      @project = project
-      @get_started_url = user.raw_invitation_token.present? ? accept_user_invitation_url(invitation_token: user.raw_invitation_token) : [:payments, :client, project]
-      make_bootstrap_mail(to: user.email, subject: t('.subject', freelancer: project.freelancer.name))
-    end
+    @get_started_url = @recipient.raw_invitation_token.present? ? accept_user_invitation_url(invitation_token: @recipient.raw_invitation_token) : [:payments, :client, @project]
+    make_bootstrap_mail(subject: t('.subject', freelancer: @project.freelancer.name))
   end
 
-  def milestone_approaching(user:, milestone:)
-    Time.use_zone(user.time_zone) do
-      @freelancer_name = milestone.freelancer.name
-      @milestone = milestone
-      @user = user
-      make_bootstrap_mail(to: user.email, reply_to: milestone.comment_reply_address, subject: t('.subject', project: milestone.project))
-    end
+  def milestone_approaching
+    @freelancer_name = @milestone.freelancer.name
+    make_bootstrap_mail(reply_to: @milestone.comment_reply_address, subject: t('.subject', project: @milestone.project))
   end
 
-  def milestone_completed(user:, milestone:)
-    Time.use_zone(user.time_zone) do
-      @freelancer_name = milestone.freelancer.name
-      @milestone = milestone
-      @next_milestone = milestone.next
-      make_bootstrap_mail(to: user.email, subject: t('.subject', freelancer: @freelancer_name))
-    end
+  def milestone_paid
+    @freelancer_name = @milestone.freelancer.name
+    @next_milestone = @milestone.next
+    make_bootstrap_mail(subject: t('.subject', freelancer: @freelancer_name, project: @milestone.project))
   end
 end
