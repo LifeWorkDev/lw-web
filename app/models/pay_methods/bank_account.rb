@@ -33,6 +33,10 @@ class PayMethods::BankAccount < PayMethod
     Stripe::Source.retrieve(stripe_id)
   end
 
+  def to_s
+    "#{issuer.titleize} #{kind.downcase} ending in #{last_digits}"
+  end
+
 private
 
   def exchange_plaid_link_token

@@ -23,6 +23,10 @@ class PayMethods::Card < PayMethod
     Stripe::PaymentMethod.retrieve(stripe_id)
   end
 
+  def to_s
+    "#{issuer.titleize} #{kind.downcase} card ending in #{last_4}"
+  end
+
   def update_from_stripe!
     update_from_stripe_object!(stripe_obj)
   end
