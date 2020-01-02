@@ -63,6 +63,8 @@ en:
       subject: "%{freelancer} has invited you to a project"
     milestone_approaching:
       subject: "A milestone payment for \"%{project}\" is approaching"
+    milestone_deposited:
+      subject: "A deposit for %{freelancer} project \"%{project}\" was made"
     milestone_paid:
       subject: "A payment for \"%{project}\" was made to %{freelancer}"
   comment_mailer:

@@ -4,7 +4,7 @@ class ClientMailerPreview < ActionMailer::Preview
   end
 
   delegate :milestone_approaching, to: :milestone_mailer
-
+  delegate :milestone_deposited, to: :milestone_mailer
   delegate :milestone_paid, to: :milestone_mailer
 
 private
@@ -14,6 +14,6 @@ private
   end
 
   def milestone_params
-    { recipient: User.first, milestone: Milestone.first }
+    { recipient: User.client.first, milestone: Milestone.first }
   end
 end

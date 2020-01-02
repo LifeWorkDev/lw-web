@@ -18,6 +18,7 @@ module Milestones::Status
           project.activate!
           client.activate!
           FreelancerMailer.with(recipient: freelancer, milestone: self).milestone_deposited.deliver_later
+          ClientMailer.with(recipient: client.primary_contact, milestone: self).milestone_deposited.deliver_later
         end
       end
 

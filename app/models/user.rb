@@ -20,6 +20,9 @@ class User < ApplicationRecord
                  work_category: [:string, array: true, default: []],
                  work_type: :string
 
+  scope :client, -> { where.not(org_id: nil) }
+  scope :freelancer, -> { where(org_id: nil) }
+
   def after_database_authentication
     activate! unless active?
   end

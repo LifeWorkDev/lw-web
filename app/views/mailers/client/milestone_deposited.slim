@@ -1,0 +1,4 @@
+markdown:
+  We've withdrawn **#{@milestone.amount_with_fee&.format}** from your #{@milestone.client.primary_pay_method}, and will hold that until the next milestone, **#{@milestone.description}**, is completed on **#{@milestone.formatted_date}**, at which point we'll automatically pay it out to **#{@freelancer_name}**.
+
+.text-center = link_to 'Project Dashboard', [@recipient.type, @milestone.project, :comments], class: 'btn btn-primary'

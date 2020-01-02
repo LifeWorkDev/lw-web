@@ -12,6 +12,6 @@ private
   end
 
   def milestone_params
-    { recipient: User.first, milestone: Milestone.first }
+    { recipient: User.freelancer.first, milestone: Milestone.first }
   end
 end

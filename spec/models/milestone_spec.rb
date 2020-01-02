@@ -37,10 +37,11 @@ RSpec.describe Milestone, type: :model do
     let(:project) { freelancer.projects.first }
 
     describe '#deposit!' do
-      it "charges client's primary pay method, activates client, activates project, emails freelancer" do
+      it "charges client's primary pay method, activates client, activates project, emails freelancer, emails client" do
         expect do
           milestone.deposit!
-        end.to have_enqueued_mail(FreelancerMailer, :milestone_deposited).once
+        end.to enqueue_mail(FreelancerMailer, :milestone_deposited).once &
+               enqueue_mail(ClientMailer, :milestone_deposited).once
         expect(project.reload.active?).to be true
         expect(client.reload.active?).to be true
       end
@@ -52,8 +53,8 @@ RSpec.describe Milestone, type: :model do
         allow(Stripe::Transfer).to receive(:create).and_call_original
         expect do
           milestone.pay!
-        end.to have_enqueued_mail(ClientMailer, :milestone_paid).once &
-               have_enqueued_mail(FreelancerMailer, :milestone_paid).once
+        end.to enqueue_mail(ClientMailer, :milestone_paid).once &
+               enqueue_mail(FreelancerMailer, :milestone_paid).once
 
         expect(Stripe::Transfer).to have_received(:create).once
       end
