@@ -8,7 +8,7 @@ RSpec.describe User, type: :model do
       expect do
         User.invite!(Fabricate.attributes_for(:user))
       end.to change { User.count }.by(1) &
-             not_enqueue_job(ActionMailer::MailDeliveryJob)
+             not_enqueue_mail
     end
   end
 
