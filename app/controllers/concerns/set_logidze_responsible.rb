@@ -8,6 +8,6 @@ module SetLogidzeResponsible
 private
 
   def set_logidze_responsible(&block)
-    Logidze.with_responsible(current_user&.id, &block)
+    Logidze.with_responsible(current_user&.id, transactional: false, &block)
   end
 end
