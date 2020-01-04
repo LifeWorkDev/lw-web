@@ -22,4 +22,12 @@ class PayMethod < ApplicationRecord
   memoize def expires
     "#{exp_month}/#{exp_year}" if exp_month.present? && exp_year.present?
   end
+
+  memoize def expires_at
+    Date.new(exp_year, exp_month) + 1.month
+  end
+
+  memoize def expired?
+    expires_at <= Time.current
+  end
 end
