@@ -34,7 +34,7 @@ class PayMethods::Card < PayMethod
   def update_from_stripe_object!(stripe_object)
     card = stripe_object.card
     owner = stripe_object.owner
-    update!(exp_month: card.exp_month, exp_year: card.exp_year, last_digits: card.last4, postal_code: owner&.address&.postal_code)
+    update!(exp_month: card.exp_month, exp_year: card.exp_year, last_4: card.last4, postal_code: owner&.address&.postal_code)
   end
 
 private
