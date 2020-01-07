@@ -9,6 +9,9 @@ if ENV['CODECOV_TOKEN']
   SimpleCov.formatter = SimpleCov::Formatter::Codecov
 end
 
+require 'require_all'
+require_all 'spec/helpers'
+
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest

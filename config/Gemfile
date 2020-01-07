@@ -91,6 +91,7 @@ group :test do
   gem 'codecov', require: false
   gem 'colorize' # Easily colorize text output in the console
   gem 'rails-controller-testing' # Allows using assigns() to get controller instance variables in tests
+  gem 'require_all' # Easily require entire directories
   gem 'rspec-instafail', require: false
   gem 'rspec_junit_formatter' # For CircleCI enhanced test output
   gem 'selenium-webdriver'

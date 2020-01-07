@@ -18,13 +18,13 @@ RSpec.describe 'Client views', type: :system do
       it 'updates name, email, time zone, status when accepting an invitation' do
         url = accept_user_invitation_path(invitation_token: user.raw_invitation_token)
 
-        visit url
+        verify_visit url
         fill_in 'user[name]', with: new_name
         fill_in 'user[email]', with: new_email
         fill_in 'user[password]', with: Faker::Internet.password(special_characters: true)
         select time_zone, from: 'user[time_zone]'
         expect do
-          click_on 'Sign up'
+          click_sign_up
         end.to change { user.reload.name }.to(new_name) &
                change { user.email }.to(new_email) &
                change { user.time_zone }.to(time_zone) &
@@ -35,14 +35,14 @@ RSpec.describe 'Client views', type: :system do
         end
         choose Org::WORK_FREQUENCY.sample, allow_label_click: true
         expect do
-          click_on 'Continue >'
+          click_continue
         end.to change { project.client.reload.work_category }
         expect(page).to have_current_path polymorphic_path([:payments, :client, project])
         fill_in "milestone_project[milestones_attributes][#{milestone_index}][amount]", with: new_milestone_amount
         fill_in "milestone_project[milestones_attributes][#{milestone_index}][description]", with: Faker::Lorem.sentences.join(' ')
         fill_in 'milestone_project[amount]', with: new_project_amount
         expect do
-          click_on 'Continue >'
+          click_continue
         end.to change { project.reload.amount } &
                change { milestone.reload.amount } &
                change { milestone.description }
@@ -60,7 +60,7 @@ RSpec.describe 'Client views', type: :system do
 
     context 'when onboarding' do
       it 'redirects from / to the org edit page' do
-        visit '/'
+        verify_visit '/'
         expect(page).to have_current_path edit_client_org_path
       end
     end
@@ -68,20 +68,20 @@ RSpec.describe 'Client views', type: :system do
     context 'when active' do
       it 'redirects from / to the client project dashboard' do
         org.update(work_frequency: Org::WORK_FREQUENCY.sample)
-        visit '/'
+        verify_visit '/'
         expect(page).to have_current_path client_projects_path
       end
     end
 
     def shared_expectations
-      visit polymorphic_path [:payments, :client, project]
+      verify_visit polymorphic_path [:payments, :client, project]
       project.milestones.each do |milestone|
         expect(page).to have_selector("input[value='#{milestone.amount.input_format}']") &
                         have_content(milestone.formatted_date) &
                         have_selector("input[value='#{milestone.description}']")
       end
       expect(page).to have_selector("input[value='#{project.amount.input_format}']")
-      click_on 'Continue >'
+      click_continue
     end
 
     context 'without existing pay method' do

@@ -72,6 +72,8 @@ RSpec.configure do |config|
     config.include Devise::Test::IntegrationHelpers, type: type
   end
 
+  config.include SystemTestingHelper, type: :system
+
   # Print javascript console errors when system specs fail
   config.after(:each, type: :system) do |example|
     if example&.exception
