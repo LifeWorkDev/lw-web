@@ -65,7 +65,7 @@ IntercomRails.config do |config|
   #
   # Or if you are using devise you can just use the following config
   #
-  config.company.current = proc { current_user.org }
+  config.company.current = proc { true_user.org }
 
   # == Exclude company
   # A Proc that given a company returns true if the company should be excluded
