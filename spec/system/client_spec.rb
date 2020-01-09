@@ -92,7 +92,8 @@ RSpec.describe 'Client views', type: :system do
     end
 
     context 'with existing pay method' do
-      before { Fabricate(:bank_account_pay_method, created_by: user, org: org) }
+      let(:org) { Fabricate(:org_with_pay_method) }
+      let(:user) { org.users.first }
 
       it 'proceeds directly to deposit' do
         shared_expectations
