@@ -31,7 +31,7 @@ gem 'pg', '>= 0.18', '< 2.0'
 gem 'plaid' # Easy bank account linking
 gem 'pretender' # Impersonate users
 gem 'puma'
-gem 'que', github: 'que-rb/que' # Background job processor
+gem 'que', '~> 1.0.0.beta4' # Background job processor
 gem 'que-web'
 gem 'react-rails'
 gem 'redcarpet' # Markdown parser
