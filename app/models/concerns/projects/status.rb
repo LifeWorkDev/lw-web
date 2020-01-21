@@ -19,7 +19,7 @@ module Projects::Status
 
         after do
           user = client.primary_contact
-          ClientMailer.invite(user: user, project: self).deliver_later
+          ClientMailer.with(recipient: user, project: self).invite.deliver_later
         end
       end
 
