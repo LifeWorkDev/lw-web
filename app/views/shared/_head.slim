@@ -36,7 +36,7 @@ meta name='msapplication-TileColor' content='#FFFFFF'
 = stylesheet_link_tag 'https://use.typekit.net/brp1ynq.css'
 
 javascript:
-  window.RELEASE_STAGE = '#{Rails.env}'
+  window.RELEASE_STAGE = '#{Bugsnag.configuration.release_stage}'
 
 = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
 

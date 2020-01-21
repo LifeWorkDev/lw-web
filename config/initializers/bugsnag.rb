@@ -1,7 +1,10 @@
-NOTIFY_RELEASE_STAGES = %w[production staging].freeze
+NOTIFY_RELEASE_STAGES = %w[production staging demo].freeze
+release_stage = ENV.fetch('SUBDOMAIN', Rails.env)
+release_stage = 'production' if release_stage == 'app'
 
 Bugsnag.configure do |config|
   config.api_key = '71c984e7c30babb231447b66654b4a49'
+  config.release_stage = release_stage
   config.notify_release_stages = NOTIFY_RELEASE_STAGES
   config.send_environment = true
   config.app_version = ENV['HEROKU_RELEASE_VERSION']
