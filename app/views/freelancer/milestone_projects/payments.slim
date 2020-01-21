@@ -1,4 +1,6 @@
 - content_for :title, 'Edit Payments'
+- content_for :head_extra
+  = stylesheet_link_tag 'https://fonts.googleapis.com/css?family=Black+Ops+One'
 
 .text-center
   h2 = @heading
@@ -10,9 +12,9 @@
       ' before fees
     | at this time.
 
-.container.d-flex.flex-column.justify-content-center
+.container.no-gutters.d-flex.flex-column.justify-content-center
   = bootstrap_form_with(model: [current_namespace, @project], class: 'w-100 mt-2', control_col: 'col-sm-6 col-md-3', label_col: 'col-sm-6 text-sm-right', layout: :horizontal, local: true) do |f|
-    = react_component('PaymentsForm', isClient: current_namespace == 'client', lifeworkFee: LIFEWORK_FEE, maxPayment: ACH_MAX_BEFORE_FEE.to_i, milestones: @project.milestones, total: @project.amount.to_f)
-    = render 'shared/form_buttons', f: f, back: @back, submit_val: :payments
+    = react_component('PaymentsForm', isClient: current_namespace == 'client', lifeworkFee: 0.02, maxPayment: ACH_MAX_BEFORE_FEE.to_i, milestones: @project.milestones, total: @project.amount.to_f)
+    .neg-margin = render 'shared/form_buttons', f: f, back: @back, submit_val: :payments
 
 = render partial: 'shared/form_back_confirm'

@@ -72,6 +72,10 @@ $body-bg: $theme-background; // Don't apply to mailer body
   }
 }
 
+.form-control:disabled {
+  -webkit-text-fill-color: $input-color; // https://stackoverflow.com/a/4648315
+}
+
 .form-group {
   label {
     font-weight: 600;
@@ -233,8 +237,24 @@ label.list-group-item {
   }
 }
 
-#top-nav {
-  min-height: 56px;
+.neg-margin {
+  margin-left: -$grid-gutter-width / 2;
+  margin-right: -$grid-gutter-width / 2;
+}
+
+.rubber-stamp {
+  $color: green;
+  box-shadow: 0 0 0 3px $color, 0 0 0 2px $color inset;
+  border: 2px solid transparent;
+  border-radius: 4px;
+  display: inline-block;
+  padding: 0.2rem 0.5rem;
+  color: $color;
+  font-size: 1rem;
+  font-family: 'Black Ops One', cursive;
+  text-transform: uppercase;
+  text-align: center;
+  transform: rotate(-5deg);
 }
 
 // Style select placeholder. This is a hack because selects have a placeholder element that's disabled & selected by default. If the select is required, then the disabled placeholder is an invalid choice.
@@ -262,6 +282,10 @@ td.action-list {
   .btn {
     line-height: 1;
   }
+}
+
+#top-nav {
+  min-height: 56px;
 }
 
 .comments-list {
