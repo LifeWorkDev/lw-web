@@ -2,23 +2,45 @@ require 'rails_helper'
 
 RSpec.describe 'Freelancer views', type: :system do
   context "when unauth'd" do
+    let(:user) { User.last }
+    let(:user_name) { Faker::Name.name }
+    let(:user_email) { Faker::Internet.safe_email }
+    let(:user_time_zone) { ActiveSupport::TimeZone.basic_us_zone_names.sample }
+
     it 'renders signup form' do
       verify_visit '/'
       expect(page).to have_current_path '/sign_up'
     end
 
-    it 'redirects after sign up to user edit' do
+    it 'redirects after sign up to user edit, then onboarding video' do
       verify_visit '/sign_up'
-      fill_in 'user[name]', with: Faker::Name.name
-      fill_in 'user[email]', with: Faker::Internet.safe_email
-      fill_in 'user[password]', with: Devise.friendly_token[0, 20]
-      click_sign_up
+      fill_in 'user[name]', with: user_name
+      fill_in 'user[email]', with: user_email
+      fill_in 'user[password]', with: Faker::Internet.password(special_characters: true)
+      expect do
+        click_sign_up
+      end.to change { User.count }.by(1)
+      expect(user.name).to eq user_name
+      expect(user.email).to eq user_email
       expect(page).to have_current_path '/f/user/edit'
+      select user_time_zone, from: 'user[time_zone]'
+      WORK_CATEGORIES.sample(rand(1..WORK_CATEGORIES.size)).each do |category|
+        check category, allow_label_click: true
+      end
+      choose User::WORK_TYPES.sample, allow_label_click: true
+      expect do
+        click_continue
+      end.to change { user.reload.time_zone }.to(user_time_zone) &
+             change { user.work_category } &
+             change { user.work_type }
+      expect(page).to have_current_path '/f/content/walkthrough'
+      click_continue
+      expect(page).to have_current_path '/f/clients/new'
     end
   end
 
   context "when auth'd" do
-    let(:user) { Fabricate(:user) }
+    let(:user) { Fabricate(:active_user) }
     let(:amount) { Money.new(rand(100_00..1_000_00)) }
     let(:name) { Faker::Commerce.product_name }
     let(:new_project) { Project.last }

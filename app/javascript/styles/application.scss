@@ -64,7 +64,8 @@ $body-bg: $theme-background; // Don't apply to mailer body
 }
 
 @include media-breakpoint-down(xs) {
-  form {
+  form,
+  .form-buttons {
     .btn {
       width: 100%;
     }

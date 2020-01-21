@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Client views', type: :system do
   context "when unauth'd" do
     context 'when invited' do
+      let(:client) { project.client }
       let(:project) { Fabricate(:milestone_project_with_milestones) }
       let(:user) { User.invite!(email: Faker::Internet.safe_email, name: Faker::Name.name, org: project.client) }
       let(:new_project_amount) { project.amount - milestone.amount + new_milestone_amount }
@@ -36,7 +37,8 @@ RSpec.describe 'Client views', type: :system do
         choose Org::WORK_FREQUENCY.sample, allow_label_click: true
         expect do
           click_continue
-        end.to change { project.client.reload.work_category }
+        end.to change { client.reload.work_category } &
+               change { client.work_frequency }
         expect(page).to have_current_path polymorphic_path([:payments, :client, project])
         fill_in "milestone_project[milestones_attributes][#{milestone_index}][amount]", with: new_milestone_amount
         fill_in "milestone_project[milestones_attributes][#{milestone_index}][description]", with: Faker::Lorem.sentences.join(' ')
@@ -52,7 +54,7 @@ RSpec.describe 'Client views', type: :system do
   end
 
   context "when auth'd" do
-    let(:user) { Fabricate(:client) }
+    let(:user) { Fabricate(:active_client) }
     let(:org) { user.org }
     let(:project) { Fabricate(:milestone_project_with_milestones, client: org, status: :client_invited) }
 

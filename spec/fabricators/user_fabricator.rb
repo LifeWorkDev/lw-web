@@ -1,11 +1,11 @@
 Fabricator(:user) do
   name { Faker::Name.name }
   email { Faker::Internet.safe_email }
-  time_zone { ActiveSupport::TimeZone.all.sample.name }
 end
 
 Fabricator(:active_user, from: :user) do
   status :active
+  time_zone { ActiveSupport::TimeZone.all.sample.name }
 end
 
 Fabricator(:admin, from: :active_user) do
@@ -13,6 +13,10 @@ Fabricator(:admin, from: :active_user) do
 end
 
 Fabricator(:client, from: :user) do
+  org(fabricator: :named_org)
+end
+
+Fabricator(:active_client, from: :active_user) do
   org(fabricator: :named_org)
 end
 

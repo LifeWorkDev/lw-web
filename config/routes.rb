@@ -32,6 +32,9 @@ Rails.application.routes.draw do
     resources :projects, only: :index do
       match :status, on: :member, via: %i[get patch]
     end
+    scope controller: :content, as: :content, path: :content do
+      get :walkthrough
+    end
     scope controller: :stripe, as: :stripe, path: :stripe do
       get :callback
       get :connect

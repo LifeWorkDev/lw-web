@@ -34,6 +34,8 @@ RSpec.describe User, type: :model do
   end
 
   describe '#reminder_time' do
+    let(:user) { Fabricate(:active_user) }
+
     it 'handles a user with a time_zone' do
       time = user.reminder_time(Date.current)
       expect(time).to be_a ActiveSupport::TimeWithZone
