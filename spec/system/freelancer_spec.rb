@@ -34,8 +34,6 @@ RSpec.describe 'Freelancer views', type: :system do
              change { user.work_category } &
              change { user.work_type }
       expect(page).to have_current_path '/f/content/walkthrough'
-      click_continue
-      expect(page).to have_current_path '/f/clients/new'
     end
   end
 
