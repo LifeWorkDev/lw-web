@@ -4,8 +4,10 @@ Rails.application.routes.draw do
   namespace :client, path: 'c' do
     resource :org
     resources :milestone_projects do
-      match :deposit, on: :member, via: %i[get post]
-      get :payments, on: :member
+      member do
+        match :deposit, via: %i[get post]
+        get :payments
+      end
       resources :comments, only: %i[index create]
     end
     resources :pay_methods, except: :new do
@@ -24,10 +26,12 @@ Rails.application.routes.draw do
     resources :milestones
     resources :milestone_projects do
       resources :comments, only: %i[index create]
-      patch :activate, on: :member
-      get :milestones, on: :member
-      get :payments, on: :member
-      get :preview, on: :member
+      member do
+        patch :activate
+        get :milestones
+        get :payments
+        get :preview
+      end
     end
     resources :projects, only: :index do
       match :status, on: :member, via: %i[get patch]

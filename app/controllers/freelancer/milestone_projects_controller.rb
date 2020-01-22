@@ -1,4 +1,6 @@
 class Freelancer::MilestoneProjectsController < MilestoneProjectsController
+  include Freelancer::ProjectPath
+
   # PATCH/PUT /f/milestone_projects/1/activate
   def activate
     notice = 'Your client has been emailed an invitation to join the project.' if @project.invite_client!
@@ -18,6 +20,10 @@ class Freelancer::MilestoneProjectsController < MilestoneProjectsController
   def preview
     @back = [:payments, current_namespace, @project]
     @hide_email_footer = true
+  end
+
+  def show
+    redirect_to project_path(@project)
   end
 
   # PATCH/PUT /f/milestone_projects/1
