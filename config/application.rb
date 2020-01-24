@@ -89,4 +89,4 @@ ActiveRecord::Base.dump_schema_after_migration = Rails.env.development? &&
                                                  `git status db/migrate/ --porcelain`.present?
 
 REPLIES_HOST ||= "#{ENV['SUBDOMAIN']}-reply.lifeworkonline.com".freeze
-WORK_CATEGORIES = ['Accounting', 'Admin Support', 'Customer Service', 'Data Science & Analytics', 'Design & Creative', 'Engineering & Architecture', 'IT & Networking', 'Legal', 'Sales & Marketing', 'Translation', 'Web, Mobile & Software Dev', 'Writing'].freeze
+WORK_CATEGORIES = ['Accounting', 'Admin Support', 'Business Consulting', 'Customer Service', 'Data Science & Analytics', 'Design & Creative', 'Engineering & Architecture', 'IT & Networking', 'Legal', 'Sales & Marketing', 'Translation', 'Web, Mobile & Software Dev', 'Writing'].freeze
