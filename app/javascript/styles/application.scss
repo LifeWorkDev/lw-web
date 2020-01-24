@@ -77,7 +77,7 @@ $body-bg: $theme-background; // Don't apply to mailer body
 }
 
 .form-group {
-  label {
+  label:not(.form-check-label) {
     font-weight: 600;
   }
 
