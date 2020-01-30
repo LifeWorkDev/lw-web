@@ -1,1 +1,1 @@
-.badge class="badge-#{record.status_class} #{local_assigns[:class]}" = record.status.humanize
+.badge class="badge-#{record.status_class(for_client: client_namespace?)} #{local_assigns[:class]}" = record.client_invited? && client_namespace? ? 'Deposit Required' : record.status.humanize

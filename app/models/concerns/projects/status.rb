@@ -43,13 +43,14 @@ module Projects::Status
       PENDING_STATES.include? status.to_sym
     end
 
-    memoize def status_class
+    memoize def status_class(for_client: false)
       if status.to_sym == self.class.aasm.initial_state then :warning
       elsif proposal_sent? then :secondary
       elsif proposal_agreed? then :info
       elsif contract_sent? then :primary
       elsif active? then :success
-      else :light
+      elsif client_invited? then for_client ? :warning : :light
+      else :dark
       end
     end
   end

@@ -10,7 +10,7 @@ class AuthenticatedController < ApplicationController
   helper_method :current_org
 
   def current_entity
-    current_namespace == 'client' ? current_org : current_user
+    client_namespace? ? current_org : current_user
   end
   helper_method :current_entity
 

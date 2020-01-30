@@ -12,6 +12,6 @@
           td = link_to project.name, project.client_invited? ? [:payments, current_namespace, project] : [current_namespace, project, :comments]
           td = project.freelancer.name
           td = project.amount&.format
-          td = render 'shared/status_badge', record: project unless project.client_invited?
+          td = render 'shared/status_badge', record: project
 
 = link_to 'Change payment method', client_pay_methods_path, class: 'btn btn-primary float-right'

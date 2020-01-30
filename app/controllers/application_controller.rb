@@ -35,6 +35,16 @@ class ApplicationController < ActionController::Base
   end
   helper_method :current_namespace
 
+  def client_namespace?
+    current_namespace == 'client'
+  end
+  helper_method :client_namespace?
+
+  def freelancer_namespace?
+    current_namespace == 'freelancer'
+  end
+  helper_method :freelancer_namespace?
+
 protected
 
   def configure_permitted_parameters
