@@ -4,6 +4,7 @@ nav#top-nav.navbar.navbar-expand-sm.navbar-light.bg-white.mb-3.flex-shrink-0
   .container
     a.navbar-brand href=('/' if full_nav)
       = image_pack_tag 'lifework-logo.png'
+      = render 'shared/environment_badge'
     - if user_signed_in?
       - if full_nav
         button.navbar-toggler data-toggle='collapse' data-target='#navbar-collapse'

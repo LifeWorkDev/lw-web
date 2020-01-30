@@ -1,0 +1,9 @@
+- unless Rails.env.production?
+  - env = Bugsnag.configuration.release_stage
+  ruby:
+    css_class = case env
+                when 'development' then :dark
+                when 'staging' then :warning
+                when 'demo' then :info
+                end
+  span.badge.ml-2 class="badge-#{css_class}" = env.humanize
