@@ -5,7 +5,6 @@ module DeviseBootstrapHelper
     messages = resource.errors.full_messages.collect { |message| content_tag(:li, message.html_safe) }
     if flash[:alert].present?
       sentence = flash[:alert]
-      sentence += '<br><br>This is a demo server. All payments are fake, but emails are actually sent, so please make sure to <strong>only use email addresses that are yours.</strong>' if sentence == t('devise.failure.unauthenticated') && !Rails.env.production?
     elsif messages.any?
       message_tags = content_tag :ul, messages.join("\n").html_safe, class: 'mt-1 mb-0'
       sentence = <<-HTML
