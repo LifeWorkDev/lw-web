@@ -120,7 +120,8 @@ RSpec.describe 'Freelancer views', type: :system do
     context 'with existing project' do
       let(:user) { Fabricate(:active_freelancer) }
       let(:project) { user.projects.first }
-      let(:client_user) { project.client.primary_contact }
+      let(:client) { project.client }
+      let(:client_user) { client.primary_contact }
 
       it 'completes project creation for an existing client' do
         verify_visit '/f/projects'
@@ -152,6 +153,12 @@ RSpec.describe 'Freelancer views', type: :system do
         verify_visit '/f/projects'
         verify_click project.name
         expect(page).to have_current_path "/f/milestone_projects/#{project.slug}/comments"
+      end
+
+      it 'can view clients index' do
+        verify_visit '/f/clients'
+        expect(page).to have_content client.display_name
+        expect(page).to have_content client_user.email
       end
     end
   end

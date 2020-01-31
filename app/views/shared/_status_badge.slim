@@ -1,1 +1,10 @@
-.badge class="badge-#{record.status_class(for_client: client_namespace?)} #{local_assigns[:class]}" = record.client_invited? && client_namespace? ? 'Deposit Required' : record.status.humanize
+ruby:
+  badge_class = record.status_class
+  badge_text = record.status.humanize
+  
+  if record.is_a?(Project) && record.client_invited? && client_namespace?
+    badge_class = :warning
+    badge_text = 'Deposit Required'
+  end
+
+.badge class="badge-#{badge_class} #{local_assigns[:class]}" = badge_text
