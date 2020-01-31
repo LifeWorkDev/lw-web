@@ -1,8 +1,9 @@
 - content_for :title, 'Add Milestones'
 
-.text-center
+.col-md-7.p-0.mx-auto.text-center
   h2 Choose your milestones.
-  p If your contract includes a deposit, please include that date as a milestone. Please note that due to bank transfer timing, your first milestone must be at least 5 business days from today, and each subsequent milestone must be 5 business days apart.
+  p Your client will deposit funds for the first milestone when they accept the project. Please choose your first milestone on when work will be completed - there is no need to explicitly set an up-front deposit date.
+  p.small Note that due to bank transfer timing, your first milestone must be at least 5 business days from today, and each subsequent one must be 5 business days apart.
 
 .d-flex.justify-content-center
   = bootstrap_form_with(model: [current_namespace, @project], local: true) do |f|
