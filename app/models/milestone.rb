@@ -87,8 +87,9 @@ private
         description: to_s,
         destination: freelancer.stripe_id,
         metadata: stripe_metadata,
+        source_type: client.primary_pay_method.card? ? :card : :bank_account,
       },
-      idempotency_key: "milestone-#{id}",
+      idempotency_key: "milestone-#{id}-transfer",
     )
   end
 
