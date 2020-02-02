@@ -57,8 +57,7 @@ RSpec.describe 'Freelancer views', type: :system do
       Rails.logger.info "Clicking #{date['aria-label']}"
       date.click
       click_continue
-      expect(page).to have_content('Milestones were updated.') &
-                      have_content(new_milestone.formatted_date)
+      expect(page).to have_content(new_milestone.formatted_date)
       fill_in 'milestone_project[amount]', with: amount
       fill_in 'milestone_project[milestones_attributes][0][amount]', with: amount
       fill_in 'milestone_project[milestones_attributes][0][description]', with: Faker::Lorem.sentences.join(' ')
@@ -67,8 +66,7 @@ RSpec.describe 'Freelancer views', type: :system do
       end.to change { new_project.reload.amount } &
              change { new_milestone.reload.amount } &
              change { new_milestone.description }
-      expect(page).to have_content('Payments were updated.') &
-                      have_content(name) &
+      expect(page).to have_content(name) &
                       have_content(amount.format, count: 2) &
                       have_content(new_milestone.formatted_date) &
                       have_content(new_milestone.description)

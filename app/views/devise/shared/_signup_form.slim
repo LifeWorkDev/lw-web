@@ -1,4 +1,4 @@
-= render 'shared/staging_alert'
+= render 'shared/env_alerts/staging'
 
 = bootstrap_form_with(as: resource_name, layout: :horizontal, local: true, model: resource, url: resource.invitation_token ? invitation_path(resource_name) : registration_path(resource_name)) do |f|
 

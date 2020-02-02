@@ -1,0 +1,6 @@
+- if Rails.env.production? && current_user.projects.empty?
+  .alert.alert-warning
+    p.alert-heading.mb-0
+      ' If you aren't ready to start a project with a real client yet, you can try the whole process on
+      a.alert-link href='https://demo.lifeworkonline.com/' our demo site
+      | .
