@@ -30,15 +30,13 @@ class Freelancer::MilestoneProjectsController < MilestoneProjectsController
   def update
     @project.assign_attributes(milestone_project_params)
     if params[:button].present?
-      notice = "#{params[:button].capitalize} were updated." if @project.milestones_changed?
       view = params[:button] == 'payments' ? :preview : :payments
       path = [view, current_namespace, @project]
     else
-      notice = 'Project was successfully updated.' if @project.changed?
       path = next_step(@project)
     end
     if @project.save
-      redirect_to path, notice: notice
+      redirect_to path
     else
       render params[:button].to_sym
     end
