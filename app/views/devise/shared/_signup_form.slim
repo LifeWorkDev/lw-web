@@ -26,9 +26,12 @@
 
   = render 'shared/time_zone_select', f: f, user: resource if resource.invitation_token
 
-  .row.form-group
-     .col.offset-sm-2.col-sm-10.text-center.text-sm-left
-       small.text-muted
-         | By signing up, you are agreeing to our <a href="https://www.lifeworkonline.com/terms-of-service" target="_blank">Terms of Service</a>
+  .row
+    .col.offset-sm-2.col-sm-10
+      .form-group
+        = f.check_box :email_opt_in, label: t('devise_forms.user.email_opt_in')
+      .form-group
+        small.text-center.text-sm-left.text-muted
+           | By signing up, you are agreeing to our <a href="https://www.lifeworkonline.com/terms-of-service" target="_blank">Terms of Service</a>
 
   = render 'devise/shared/button', f: f, text: t('devise_forms.registrations.new.button')

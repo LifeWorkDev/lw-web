@@ -6,6 +6,7 @@ RSpec.describe 'Freelancer views', type: :system do
     let(:user_name) { Faker::Name.name }
     let(:user_email) { Faker::Internet.safe_email }
     let(:user_time_zone) { ActiveSupport::TimeZone.basic_us_zone_names.sample }
+    let(:user_opt_in) { [true, false].sample }
 
     it 'renders signup form' do
       verify_visit '/'
@@ -17,11 +18,13 @@ RSpec.describe 'Freelancer views', type: :system do
       fill_in 'user[name]', with: user_name
       fill_in 'user[email]', with: user_email
       fill_in 'user[password]', with: Faker::Internet.password(special_characters: true)
+      find(:checkbox, 'user[email_opt_in]').set(user_opt_in)
       expect do
         click_sign_up
       end.to change { User.count }.by(1)
       expect(user.name).to eq user_name
       expect(user.email).to eq user_email
+      expect(user.email_opt_in).to eq(user_opt_in)
       expect(page).to have_current_path '/f/user/edit'
       select user_time_zone, from: 'user[time_zone]'
       WORK_CATEGORIES.sample(rand(1..WORK_CATEGORIES.size)).each do |category|

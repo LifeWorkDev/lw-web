@@ -48,6 +48,7 @@ en:
       password_confirm_placeholder: "re-enter same password"
       current_password: "Current password"
       remember_me: "Remember me for 30 days"
+      email_opt_in: "Receive emails about updates to LifeWork (no more than once a week)"
     message:
       waiting_confirmation: "Currently waiting confirmation for: %{email}"
       blank_if_no_change: "(leave blank if you don't want to change it)"

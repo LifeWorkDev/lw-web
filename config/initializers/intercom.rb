@@ -52,6 +52,7 @@ IntercomRails.config do |config|
   # user object, or a Proc which will be passed the current user.
   #
   config.user.custom_data = {
+    email_opt_in: :email_opt_in,
     project_status: :max_pending_project_status,
     work_type: :work_type,
   }

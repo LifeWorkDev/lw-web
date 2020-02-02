@@ -11,6 +11,10 @@ h2.text-center.mt-2
   = render 'shared/time_zone_select', f: f, user: current_user
   = f.phone_field :phone, label: 'Phone', placeholder: '(555) 123-4567'
   = f.text_field :address, label: 'Address', placeholder: '555 Street, City, State 12345'
+  .row
+    .col.offset-sm-2.col-sm-10
+      .form-group
+        = f.check_box :email_opt_in, label: t('devise_forms.user.email_opt_in')
   .form-group
     = f.primary 'Save', class: 'btn btn-primary float-right', id: 'submit-form', render_as_button: true
     = link_to 'Cancel', :back, class: 'btn btn-outline-secondary mr-sm-2 mt-3 mt-sm-0 float-left'

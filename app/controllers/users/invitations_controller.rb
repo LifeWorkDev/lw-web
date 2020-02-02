@@ -4,6 +4,6 @@ class Users::InvitationsController < Devise::InvitationsController
 protected
 
   def permitted_update_parameters
-    devise_parameter_sanitizer.permit(:accept_invitation, keys: %i[name email time_zone])
+    devise_parameter_sanitizer.permit(:accept_invitation, keys: %i[name email time_zone email_opt_in])
   end
 end

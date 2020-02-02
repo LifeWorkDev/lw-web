@@ -18,7 +18,7 @@ private
 
   def attributes
     params.require(:user)
-          .permit(:name, :email, :phone, :address, :time_zone, :password)
+          .permit(:name, :email, :phone, :address, :time_zone, :password, :email_opt_in)
           .delete_if { |key, value| key == 'password' && value.blank? }
   end
 end

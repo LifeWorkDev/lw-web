@@ -48,7 +48,7 @@ class ApplicationController < ActionController::Base
 protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
+    devise_parameter_sanitizer.permit(:sign_up, keys: %i[name email_opt_in])
   end
 
   def redirect_with_query_string(destination:, status: :moved_permanently)

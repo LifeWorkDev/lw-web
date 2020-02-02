@@ -10,13 +10,14 @@ RSpec.describe 'Client views', type: :system do
       let(:new_milestone_amount) { Money.new(((100_00..1_000_00).to_a - [milestone.amount]).sample) }
       let(:new_name) { Faker::Name.name }
       let(:new_email) { Faker::Internet.safe_email }
+      let(:user_opt_in) { [true, false].sample }
       let(:time_zone) { ActiveSupport::TimeZone.basic_us_zones.sample.name }
       let(:milestone_index) { rand(0..project.milestones.size - 1) }
       let(:milestone) { project.reload.milestones[milestone_index] }
 
       before { user.invite! }
 
-      it 'updates name, email, time zone, status when accepting an invitation' do
+      it 'updates name, email, email opt in, time zone, status when accepting an invitation' do
         url = accept_user_invitation_path(invitation_token: user.raw_invitation_token)
 
         verify_visit url
@@ -24,12 +25,14 @@ RSpec.describe 'Client views', type: :system do
         fill_in 'user[email]', with: new_email
         fill_in 'user[password]', with: Faker::Internet.password(special_characters: true)
         select time_zone, from: 'user[time_zone]'
+        find(:checkbox, 'user[email_opt_in]').set(user_opt_in)
         expect do
           click_sign_up
         end.to change { user.reload.name }.to(new_name) &
                change { user.email }.to(new_email) &
                change { user.time_zone }.to(time_zone) &
                change { user.status }.from('pending').to('active')
+        expect(user.email_opt_in).to eq(user_opt_in)
         expect(page).to have_current_path edit_client_org_path
         WORK_CATEGORIES.sample(rand(1..WORK_CATEGORIES.size)).each do |category|
           check category, allow_label_click: true
