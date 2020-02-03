@@ -17,8 +17,9 @@ module Milestones::Status
           charge!
           project.activate!
           client.activate!
-          FreelancerMailer.with(recipient: freelancer, milestone: self).milestone_deposited.deliver_later
-          ClientMailer.with(recipient: client.primary_contact, milestone: self).milestone_deposited.deliver_later
+          send_deposit_emails
+          schedule_approaching_emails
+          schedule_payment
         end
       end
 
@@ -27,8 +28,11 @@ module Milestones::Status
 
         after do
           transfer!
-          ClientMailer.with(recipient: client.primary_contact, milestone: self).milestone_paid.deliver_later
-          FreelancerMailer.with(recipient: freelancer, milestone: self).milestone_paid.deliver_later
+          send_payment_emails
+
+          return unless (next_milestone = self.next)
+
+          next_milestone.schedule_deposit
         end
       end
     end

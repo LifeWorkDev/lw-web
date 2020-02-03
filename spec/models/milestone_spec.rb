@@ -29,7 +29,7 @@ RSpec.describe Milestone, type: :model do
   end
 
   describe 'state machine' do
-    subject(:milestone) { project.milestones.sample }
+    subject(:milestone) { project.milestones.first }
 
     let(:client) { project.client }
     let(:freelancer) { Fabricate(:active_freelancer) }
@@ -41,7 +41,10 @@ RSpec.describe Milestone, type: :model do
         expect do
           milestone.deposit!
         end.to enqueue_mail(FreelancerMailer, :milestone_deposited).once &
-               enqueue_mail(ClientMailer, :milestone_deposited).once
+               enqueue_mail(ClientMailer, :milestone_deposited).once &
+               enqueue_mail(FreelancerMailer, :milestone_approaching).once.at(milestone.freelancer_reminder_time) &
+               enqueue_mail(ClientMailer, :milestone_approaching).once.at(milestone.client_reminder_time) &
+               enqueue_job(Milestones::PayJob).once.at(milestone.payment_time)
         expect(project.reload.active?).to be true
         expect(client.reload.active?).to be true
       end
@@ -54,7 +57,8 @@ RSpec.describe Milestone, type: :model do
         expect do
           milestone.pay!
         end.to enqueue_mail(ClientMailer, :milestone_paid).once &
-               enqueue_mail(FreelancerMailer, :milestone_paid).once
+               enqueue_mail(FreelancerMailer, :milestone_paid).once &
+               enqueue_job(Milestones::DepositJob).once.at(milestone.deposit_time)
 
         expect(Stripe::Transfer).to have_received(:create).once
       end

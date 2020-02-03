@@ -33,18 +33,18 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe '#reminder_time' do
+  describe '#local_time' do
     let(:user) { Fabricate(:active_user) }
 
     it 'handles a user with a time_zone' do
-      time = user.reminder_time(Date.current)
+      time = user.local_time(Date.current)
       expect(time).to be_a ActiveSupport::TimeWithZone
       expect(time.time_zone.name).to eq user.time_zone
     end
 
     it 'handles a user without a time_zone' do
       user = Fabricate.build(:user, time_zone: nil)
-      time = user.reminder_time(Date.current)
+      time = user.local_time(Date.current)
       expect(time).to be_a ActiveSupport::TimeWithZone
       expect(time.time_zone.name).to eq 'Pacific Time (US & Canada)'
     end

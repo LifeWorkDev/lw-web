@@ -47,6 +47,24 @@ class Milestone < ApplicationRecord
     (amount || 0.to_money) / (project.amount || 0.to_money)
   end
 
+  # Stripe cuts off ACH for the day at 21:00 UTC
+  # https://stripe.com/docs/ach#ach-payments-workflow
+  memoize def deposit_time
+    Time.use_zone('UTC') do
+      Time.current.change(hour: 20, minute: 45, second: 0)
+    end
+  end
+
+  memoize def payment_date?
+    Time.use_zone(freelancer.time_zone) do
+      date == Date.current
+    end
+  end
+
+  memoize def payment_time
+    client.primary_contact.local_time(date).change(hour: 9)
+  end
+
   # 3 business days before Milestone date
   memoize def reminder_date
     Business::Calendar.load_cached('achus').subtract_business_days(date, 3)
@@ -54,7 +72,7 @@ class Milestone < ApplicationRecord
 
   # 9am local time
   def reminder_time(user)
-    user.reminder_time(reminder_date).change(hour: 9)
+    user.local_time(reminder_date).change(hour: 9)
   end
 
   memoize def client_reminder_time
@@ -66,11 +84,34 @@ class Milestone < ApplicationRecord
   end
 
   memoize def client_approaching_text
-    "At the end of the day on #{l(date, format: :text_without_year)} we'll release #{amount&.format} from our account to #{freelancer.name}"
+    "At the beginning of the day on #{l(date, format: :text_without_year)} we'll release #{amount&.format} from our account to #{freelancer.name}"
   end
 
   def to_s
     "#{description} (#{amount_cents && "#{amount&.format} on "}#{formatted_date})"
+  end
+
+  def send_deposit_emails
+    FreelancerMailer.with(recipient: freelancer, milestone: self).milestone_deposited.deliver_later
+    ClientMailer.with(recipient: client.primary_contact, milestone: self).milestone_deposited.deliver_later
+  end
+
+  def send_payment_emails
+    ClientMailer.with(recipient: client.primary_contact, milestone: self).milestone_paid.deliver_later
+    FreelancerMailer.with(recipient: freelancer, milestone: self).milestone_paid.deliver_later
+  end
+
+  def schedule_approaching_emails
+    FreelancerMailer.with(recipient: freelancer, milestone: self).milestone_approaching.deliver_later(wait_until: freelancer_reminder_time)
+    ClientMailer.with(recipient: client, milestone: self).milestone_approaching.deliver_later(wait_until: client_reminder_time)
+  end
+
+  def schedule_deposit
+    Milestones::DepositJob.set(wait_until: deposit_time).perform_later(self)
+  end
+
+  def schedule_payment
+    Milestones::PayJob.set(wait_until: payment_time).perform_later(self)
   end
 
 private

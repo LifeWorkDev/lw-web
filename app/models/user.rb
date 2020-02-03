@@ -52,7 +52,7 @@ class User < ApplicationRecord
     client? ? org_projects : projects
   end
 
-  def reminder_time(time)
+  def local_time(time)
     time.in_time_zone(time_zone || 'Pacific Time (US & Canada)')
   end
 
