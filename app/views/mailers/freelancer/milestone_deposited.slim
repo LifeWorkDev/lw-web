@@ -1,5 +1,10 @@
 h2.text-center Great news!
 
-p 
-  markdown:
-    We've received #{@milestone.client.display_name.possessive} deposit of #{@milestone.amount.format} for "#{@milestone.description}," so you can begin work on it with the certainty that you'll be paid upon completion.
+markdown:
+  We've received #{@milestone.client.display_name.possessive} deposit of **#{@milestone.amount.format}** for **#{@milestone.description}**, so you can begin work on it with the certainty that you'll be paid upon completion.
+
+markdown:
+  This milestone is due on **#{l(@milestone.date, format: :text_without_year)}**, so you can expect to be paid then if everything goes well.
+  
+markdown:
+  If you ever need to communicate with your client about this milestone, you can reply to this email, or #{link_to 'comment via our website', [@recipient.type, @milestone.project, :comments]}, and we'll pass the message along to them.

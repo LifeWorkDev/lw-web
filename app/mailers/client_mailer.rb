@@ -13,7 +13,7 @@ class ClientMailer < ApplicationMailer
   end
 
   def milestone_deposited
-    make_bootstrap_mail(subject: t('.subject', freelancer: @freelancer_name.possessive, project: @milestone.project))
+    make_bootstrap_mail(reply_to: @milestone.comment_reply_address, subject: t('.subject', freelancer: @freelancer_name.possessive, project: @milestone.project))
   end
 
   def milestone_paid
