@@ -52,8 +52,16 @@ class User < ApplicationRecord
     client? ? org_projects : projects
   end
 
+  def time_zone_with_fallback
+    time_zone || 'Pacific Time (US & Canada)'
+  end
+
   def local_time(time)
-    time.in_time_zone(time_zone || 'Pacific Time (US & Canada)')
+    time.in_time_zone(time_zone_with_fallback)
+  end
+
+  def use_zone
+    Time.use_zone(time_zone_with_fallback) { yield }
   end
 
   memoize def stripe_obj

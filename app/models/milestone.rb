@@ -50,13 +50,13 @@ class Milestone < ApplicationRecord
   # Stripe cuts off ACH for the day at 21:00 UTC
   # https://stripe.com/docs/ach#ach-payments-workflow
   memoize def deposit_time
-    Time.use_zone('UTC') do
-      Time.current.change(hour: 20, minute: 45, second: 0)
+    client.primary_contact.use_zone do
+      Time.current.change(hour: 20, min: 45, zone: 'UTC')
     end
   end
 
   memoize def payment_date?
-    Time.use_zone(freelancer.time_zone) do
+    freelancer.use_zone do
       date == Date.current
     end
   end
