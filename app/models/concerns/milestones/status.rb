@@ -30,9 +30,7 @@ module Milestones::Status
           transfer!
           send_payment_emails
 
-          return unless (next_milestone = self.next)
-
-          next_milestone.schedule_deposit
+          self.next&.schedule_deposit
         end
       end
     end
