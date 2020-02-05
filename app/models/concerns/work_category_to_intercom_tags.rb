@@ -7,7 +7,7 @@ module WorkCategoryToIntercomTags
     def set_intercom_tags
       return false unless (token = Rails.application.credentials.intercom&.dig(:token))
 
-      intercom = Intercom::Client.new(token: token, api_version: '2.0')
+      intercom = Intercom::Client.new(token: token)
 
       work_category&.each do |category|
         intercom.tags.tag(name: category, **intercom_metadata)
