@@ -103,7 +103,7 @@ class Milestone < ApplicationRecord
 
   def schedule_approaching_emails
     FreelancerMailer.with(recipient: freelancer, milestone: self).milestone_approaching.deliver_later(wait_until: freelancer_reminder_time)
-    ClientMailer.with(recipient: client, milestone: self).milestone_approaching.deliver_later(wait_until: client_reminder_time)
+    ClientMailer.with(recipient: client.primary_contact, milestone: self).milestone_approaching.deliver_later(wait_until: client_reminder_time)
   end
 
   def schedule_deposit
