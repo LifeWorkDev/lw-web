@@ -15,11 +15,14 @@ module Milestones::Status
 
         after do
           charge!
-          project.activate!
-          client.activate!
+        end
+
+        after_commit do
           send_deposit_emails
           schedule_approaching_emails
           schedule_payment
+          project.activate!
+          client.activate!
         end
       end
 
@@ -28,8 +31,10 @@ module Milestones::Status
 
         after do
           transfer!
-          send_payment_emails
+        end
 
+        after_commit do
+          send_payment_emails
           self.next&.schedule_deposit
         end
       end

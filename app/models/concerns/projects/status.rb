@@ -17,9 +17,8 @@ module Projects::Status
       event :invite_client do
         transitions from: :contract_sent, to: :client_invited
 
-        after do
-          user = client.primary_contact
-          ClientMailer.with(recipient: user, project: self).invite.deliver_later
+        after_commit do
+          ClientMailer.with(recipient: client.primary_contact, project: self).invite.deliver_later
         end
       end
 
