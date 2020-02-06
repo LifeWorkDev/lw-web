@@ -1,10 +1,10 @@
 en:
   devise:
     failure:
-      invited: "You have a pending invitation, accept it to finish creating your account."
+      invited: "Please check your email for an invitation from LifeWork or <a class='alert-link' href='/users/password/new?email=%{email}'>go here</a> to have us send you another."
     invitations:
       send_instructions: "An invitation email has been sent to %{email}."
-      invitation_token_invalid: "The invitation token provided is not valid!"
+      invitation_token_invalid: "This invitation is expired. Please check your email for a newer invite from LifeWork."
       updated: "Your password was set successfully. You are now signed in."
       updated_not_active: "Your password was set successfully."
       no_invitations_remaining: "No invitations remaining"
