@@ -1,6 +1,6 @@
 class ClientMailerPreview < ActionMailer::Preview
   def invite
-    ClientMailer.with(recipient: User.first, project: Project.first).invite
+    ClientMailer.with(recipient: User.active.sample, project: Project.not_pending.sample).invite
   end
 
   delegate :milestone_approaching, to: :milestone_mailer
@@ -14,6 +14,6 @@ private
   end
 
   def milestone_params
-    { recipient: User.client.first, milestone: Milestone.first }
+    { recipient: User.client.sample, milestone: Milestone.deposited.sample }
   end
 end

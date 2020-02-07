@@ -10,8 +10,6 @@ class Project < ApplicationRecord
   monetize :amount_cents, with_model_currency: :currency, allow_nil: true, numericality: { greater_than_or_equal_to: 0 }
 
   scope :milestone, -> { where(type: 'MilestoneProject') }
-  scope :pending, -> { where(status: PENDING_STATES) }
-  scope :not_pending, -> { where.not(status: PENDING_STATES) }
 
   def amount_with_fee
     amount * (1 + LIFEWORK_FEE)

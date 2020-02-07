@@ -22,7 +22,7 @@ scss:
   }
 
 - content_for :no_gutters
-  table.table.table-striped.mb-3
+  table.table.mb-3
     tbody
       - @milestone.comments.each do |comment|
         tr[class="#{comment.commenter == @recipient ? 'text-right' : 'text-left'}"]

@@ -13,4 +13,9 @@ class Comment < ApplicationRecord
   def formatted_read_at
     read_at && l(read_at)
   end
+
+  def recipient
+    project = commentable.project
+    project.freelancer == commenter ? project.client.primary_contact : project.freelancer
+  end
 end

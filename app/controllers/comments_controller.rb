@@ -10,7 +10,7 @@ class CommentsController < AuthenticatedController
   def create
     @comment = current_user.comments.new(comment_params)
     if @comment.save
-      CommentMailer.with(recipient: user_to_notify, milestone: @comment.commentable).notify_new_comment.deliver_later
+      CommentMailer.with(recipient: comment.recipient, milestone: @comment.commentable).notify_new_comment.deliver_later
       redirect_to [current_namespace, @project, :comments]
     else
       redirect_to [current_namespace, @project, :comments], alert: "Failed to create comment, #{@comment.errors.full_message.join(', ')}"
@@ -36,9 +36,5 @@ private
   # Only allow a trusted parameter "white list" through.
   def comment_params
     params.require(:comment).permit(:comment, :commentable_id, :commentable_type)
-  end
-
-  def user_to_notify
-    @project.freelancer == current_user ? @project.client.primary_contact : @project.freelancer
   end
 end

@@ -14,6 +14,11 @@ class ApplicationRecord < ActiveRecord::Base
     end.map(&:filter)
   end
 
+  def self.sample(limit = 1)
+    result = order(Arel.sql('random()')).limit(limit)
+    limit == 1 ? result.first : result
+  end
+
 private
 
   def raise_subclass_should_override
