@@ -111,3 +111,5 @@ IntercomRails.config do |config|
   # If you'd like to hide default launcher button uncomment this line
   # config.hide_default_launcher = true
 end
+
+Rails::MailersController.skip_after_action :intercom_rails_auto_include
