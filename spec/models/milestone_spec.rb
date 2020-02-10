@@ -37,6 +37,14 @@ RSpec.describe Milestone, type: :model do
     let(:project) { freelancer.projects.first }
 
     describe '#deposit!' do
+      it "doesn't schedule milestone approaching emails if they would be in the past" do
+        milestone.update!(date: Date.current)
+        expect do
+          milestone.deposit!
+        end.to not_enqueue_mail(FreelancerMailer, :milestone_approaching) &
+               not_enqueue_mail(ClientMailer, :milestone_approaching)
+      end
+
       it "charges client's primary pay method, activates client, activates project, emails freelancer, emails client" do
         expect do
           milestone.deposit!

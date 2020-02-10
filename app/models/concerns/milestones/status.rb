@@ -19,7 +19,7 @@ module Milestones::Status
 
         after_commit do
           send_deposit_emails
-          schedule_approaching_emails
+          schedule_approaching_emails if reminder_date.future?
           schedule_payment
           project.activate!
           client.activate!
