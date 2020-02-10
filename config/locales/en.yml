@@ -8,41 +8,42 @@ en:
       writing_proposal:
         help_html: Check out our guide to <a href="http://help.lifeworkonline.com/en/articles/3531058-sending-a-proposal" target="_blank" rel="noopener">Sending a Proposal</a> to get our advice on putting together a killer proposal. When you're ready, you can come back to our site to update your project's status.
         success:
-          status: "proposal_sent"
-          text: "I sent the proposal"
+          status: proposal_sent
+          text: I sent the proposal
       proposal_sent:
         help_html: We're sending positive vibes your way! Come back here and update when you hear back from your client.
         success:
-          status: "proposal_agreed"
-          text: "Client accepted proposal"
+          status: proposal_agreed
+          text: Client accepted proposal
         fail:
-          status: "proposal_rejected"
-          text: "Client rejected proposal"
+          status: proposal_rejected
+          text: Client rejected proposal
       proposal_agreed:
         help_html: Need some help <a href="http://help.lifeworkonline.com/en/articles/3531114-writing-the-contract" target="_blank" rel="noopener">Writing the Contract</a>? Our guide has everything you need, including templates for a contract, and an email for sending it to your client!
         success:
-          status: "contract_sent"
-          text: "I sent the contract"
+          status: contract_sent
+          text: I sent the contract
   time:
     formats:
       date_only: "%-m/%-d/%Y"
       default: "%-m/%-d/%Y %-l:%M%P"
   client_mailer:
     invite:
-      subject: "%{freelancer} has invited you to a project"
+      reminder: Reminder
+      subject: '%{freelancer} has invited you to a project'
     milestone_approaching:
-      subject: "A milestone payment for \"%{project}\" is approaching"
+      subject: A milestone payment for "%{project}" is approaching
     milestone_deposited:
-      subject: "A deposit for %{freelancer} project \"%{project}\" was made"
+      subject: A deposit for %{freelancer} project "%{project}" was made
     milestone_paid:
-      subject: "A payment for \"%{project}\" was made to %{freelancer}"
+      subject: A payment for "%{project}" was made to %{freelancer}
   comment_mailer:
     notify_new_comment:
-      subject: "New comment on project \"%{project}\""
+      subject: New comment on project "%{project}"
   freelancer_mailer:
     milestone_approaching:
-      subject: "A milestone for \"%{project}\" is due in 3 days"
+      subject: A milestone for "%{project}" is due in 3 days
     milestone_deposited:
-      subject: "Milestone deposit received for \"%{project}\""
+      subject: Milestone deposit received for "%{project}"
     milestone_paid:
-      subject: "Milestone payment received for \"%{project}\""
+      subject: Milestone payment received for "%{project}"

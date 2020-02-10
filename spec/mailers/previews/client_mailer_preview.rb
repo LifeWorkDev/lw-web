@@ -1,6 +1,8 @@
 class ClientMailerPreview < ActionMailer::Preview
   def invite
-    ClientMailer.with(recipient: User.active.sample, project: Project.not_pending.sample).invite
+    params = { recipient: User.active.sample, project: Project.not_pending.sample }
+    params[:reminder] = true if [true, false].sample
+    ClientMailer.with(params).invite
   end
 
   delegate :milestone_approaching, to: :milestone_mailer
