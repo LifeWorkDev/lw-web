@@ -27,7 +27,7 @@ environment.plugins.append(
 const chokidar = require('chokidar')
 environment.config.devServer.before = (app, server) => {
   chokidar
-    .watch(['config/locales/*.yml', 'app/views/**/*.slim'])
+    .watch(['config/locales/*.yml', 'app/helpers/**/*', 'app/views/**/*'])
     .on('change', () => setTimeout(() => {
       server.sockWrite(server.sockets, 'content-changed')
     }, 100))
