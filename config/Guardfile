@@ -61,22 +61,15 @@ guard :rspec, cmd: 'bin/rspec' do
   watch(rails.routes)          { "#{rspec.spec_dir}/routing" }
   watch(rails.app_controller)  { "#{rspec.spec_dir}/requests" }
 
-  # Capybara features specs
-  watch(rails.view_dirs)     { |m| rspec.spec.call("features/#{m[1]}") }
-  watch(rails.layouts)       { |m| rspec.spec.call("features/#{m[1]}") }
-
-  # Rails system specs
-  watch(rails.view_dirs)     { |m| rspec.spec.call("system/#{m[1]}") }
-  watch(rails.layouts)       { |m| rspec.spec.call("system/#{m[1]}") }
-
   # Fabricators
   watch(%r{^spec/fabricators/(.+)_fabricator\.rb$}) { |m| "spec/models/#{m[1]}_spec.rb" }
 
   # Concerns
   watch(%r{^app/models/concerns/(.+)/.+\.rb$}) { |m| "spec/models/#{m[1].singularize}_spec.rb" }
 
-  # Subclasses
+  # STI Subclasses
   watch(%r{^app/models/(.+)/.+\.rb$}) { |m| "spec/models/#{m[1].singularize}_spec.rb" }
+  watch(%r{^app/models/(.+)\.rb$}) { |m| "spec/models/#{m[1].pluralize}" }
 end
 
 guard :slimlint do
