@@ -11,7 +11,7 @@ h2.text-center.mt-2
   = render 'shared/work_category_select', f: f, label: 'What kinds of freelance work do you do?'
   .form-group.mb-0
     label.required What type of freelancer are you?
-  .list-group.mb-4.font-sans-serif
+  .list-group.check-list.mb-4.font-sans-serif
     = f.collection_radio_buttons_without_bootstrap :work_type, User::WORK_TYPES, :to_s, :to_s do |cb|
       = cb.radio_button
       = cb.label(class: 'list-group-item')

@@ -142,10 +142,6 @@ input[type='number'] {
   }
 }
 
-.list-group-item {
-  user-select: none;
-}
-
 label.list-group-item {
   margin: 0;
   // Restored from https://github.com/twbs/bootstrap/pull/28940
@@ -156,60 +152,47 @@ label.list-group-item {
   }
 }
 
-.list-group input[type='checkbox'] {
-  display: none;
-}
+.list-group.check-list {
+  input[type='checkbox'],
+  input[type='radio'] {
+    $input-height: 5px;
+    height: $input-height;
+    opacity: 0; // display: none would prevent validation messages from appearing with required: true
 
-.list-group input[type='checkbox'] + .list-group-item {
-  cursor: pointer;
-}
+    & + .list-group-item {
+      cursor: pointer;
+      margin-top: -$input-height; // Account for the checkbox/radio button
 
-.list-group input[type='radio'] {
-  display: none;
-}
+      &:before {
+        color: transparent;
+        font-weight: bold;
+        margin: auto 1em auto 0;
+      }
+    }
 
-.list-group input[type='radio'] + .list-group-item {
-  cursor: pointer;
-}
+    &:checked + .list-group-item {
+      background-color: $blue;
+      color: #fff;
 
-.list-group input[type='checkbox'] + .list-group-item:before {
-  content: '\2713';
-  color: transparent;
-  font-weight: bold;
-  margin-right: 1em;
-}
+      &:before {
+        color: inherit;
+      }
+    }
 
-.list-group input[type='checkbox']:not(:checked) + .list-group-item {
-  background-color: inherit;
-}
+    &:not(:checked) + .list-group-item {
+      background-color: inherit;
+    }
+  }
 
-.list-group input[type='checkbox']:checked + .list-group-item {
-  background-color: $blue;
-  color: #fff;
-}
+  &:not(.with-icon) {
+    input[type='checkbox'] + .list-group-item:before {
+      content: '\2713';
+    }
 
-.list-group input[type='radio'] + .list-group-item:before {
-  content: '\25C9';
-  color: transparent;
-  font-weight: bold;
-  margin-right: 1em;
-}
-
-.list-group input[type='checkbox']:checked + .list-group-item:before {
-  color: inherit;
-}
-
-.list-group input[type='radio']:not(:checked) + .list-group-item {
-  background-color: inherit;
-}
-
-.list-group input[type='radio']:checked + .list-group-item {
-  background-color: $blue;
-  color: #fff;
-}
-
-.list-group input[type='radio']:checked + .list-group-item:before {
-  color: inherit;
+    input[type='radio'] + .list-group-item:before {
+      content: '\25C9';
+    }
+  }
 }
 
 .login-button {
