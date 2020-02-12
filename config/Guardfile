@@ -70,6 +70,9 @@ guard :rspec, cmd: 'bin/rspec' do
   # STI Subclasses
   watch(%r{^app/models/(.+)/.+\.rb$}) { |m| "spec/models/#{m[1].singularize}_spec.rb" }
   watch(%r{^app/models/(.+)\.rb$}) { |m| "spec/models/#{m[1].pluralize}" }
+
+  # Project subclasses
+  watch(%r{^app/models/project.rb$}) { Dir['spec/models/*_project_spec.rb'] }
 end
 
 guard :slimlint do
