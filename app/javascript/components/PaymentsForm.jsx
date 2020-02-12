@@ -200,7 +200,7 @@ const PaymentForm = React.memo(
           <>
             <img
               className='align-text-bottom'
-              src='https://cdn.jsdelivr.net/npm/@mdi/svg@4.6.95/svg/flag-checkered.svg'
+              src='https://cdn.jsdelivr.net/npm/@mdi/svg@4.9.95/svg/flag-checkered.svg'
               width={20}
               height={20}
               style={{ filter: 'invert(1)' }}

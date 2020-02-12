@@ -95,7 +95,7 @@ const CommentItem = props => {
                   }}
                 >
                   <img
-                    src='https://cdn.jsdelivr.net/npm/@mdi/svg@4.6.95/svg/pencil.svg'
+                    src='https://cdn.jsdelivr.net/npm/@mdi/svg@4.9.95/svg/pencil.svg'
                     width={12}
                     height={12}
                   />
