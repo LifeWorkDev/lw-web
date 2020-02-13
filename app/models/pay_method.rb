@@ -1,11 +1,14 @@
 class PayMethod < ApplicationRecord
   include Status
+  include STIPreload
 
   belongs_to :org
   belongs_to :created_by, class_name: 'User'
 
   validates :last_4, numericality: { integer_only: true }
   validates :issuer, :kind, :stripe_id, presence: true
+
+  SUBCLASS_FILES = 'app/models/pay_methods/*.rb'.freeze
 
   def bank_account?
     false

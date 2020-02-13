@@ -8,15 +8,19 @@ class ApplicationRecord < ActiveRecord::Base
 
   delegate :l, :t, to: I18n, private: true
 
-  def self.callbacks_of_type(type, kind: :all)
-    send("_#{type}_callbacks").select do |cb|
-      [:all, cb.kind].include? kind
-    end.map(&:filter)
-  end
+  class << self
+    include Memery
 
-  def self.sample(limit = 1)
-    result = order(Arel.sql('random()')).limit(limit)
-    limit == 1 ? result.first : result
+    def callbacks_of_type(type, kind: :all)
+      send("_#{type}_callbacks").select do |cb|
+        [:all, cb.kind].include? kind
+      end.map(&:filter)
+    end
+
+    def sample(limit = 1)
+      result = order(Arel.sql('random()')).limit(limit)
+      limit == 1 ? result.first : result
+    end
   end
 
 private

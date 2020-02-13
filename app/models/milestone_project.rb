@@ -3,6 +3,13 @@ class MilestoneProject < Project
   has_many :comments, through: :milestones
   accepts_nested_attributes_for :milestones, reject_if: :existing_milestone?, allow_destroy: true
 
+  def milestones_changed?
+    milestones.any? do |m|
+      m.nilify_blanks # So that change from nil to '' isn't considered changed?
+      m.new_record? || m.marked_for_destruction? || m.changed?
+    end
+  end
+
 private
 
   def existing_milestone?(milestone_attrs)
