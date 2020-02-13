@@ -518,6 +518,8 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    store_base_sti_class (2.0.1)
+      activerecord (>= 4.0)
     stripe (5.14.0)
     strong_migrations (0.6.2)
       activerecord (>= 5)
@@ -639,6 +641,7 @@ DEPENDENCIES
   slim-rails
   slim_lint
   sprockets (< 4.0)
+  store_base_sti_class
   stripe
   stripe-ruby-mock!
   strong_migrations
