@@ -7,16 +7,16 @@ class PayMethods::Card < PayMethod
     true
   end
 
-  def charge!(amount:, metadata: {})
-    Stripe::PaymentIntent.create(
-      amount: amount.cents,
-      currency: amount.currency.to_s,
-      customer: org.stripe_id,
-      payment_method: stripe_id,
-      off_session: true,
-      confirm: true,
-      metadata: metadata,
-    )
+  def charge!(amount:, idempotency_key: '', metadata: {})
+    Stripe::PaymentIntent.create({
+                                   amount: amount.cents,
+                                   currency: amount.currency.to_s,
+                                   customer: org.stripe_id,
+                                   payment_method: stripe_id,
+                                   off_session: true,
+                                   confirm: true,
+                                   metadata: metadata,
+                                 }, idempotency_key: "#{idempotency_key}-pay-method-#{id}")
   end
 
   memoize def stripe_obj

@@ -117,7 +117,7 @@ class Milestone < ApplicationRecord
 private
 
   def charge!
-    client.primary_pay_method.charge!(amount: client_amount, metadata: stripe_metadata)
+    client.primary_pay_method.charge!(amount: client_amount, idempotency_key: "milestone-#{id}", metadata: stripe_metadata)
   end
 
   def transfer!
