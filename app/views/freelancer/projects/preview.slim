@@ -4,6 +4,7 @@
 
 .text-center
   h2 Review before we send to your client.
+  p You will be cc'd on this, and all future emails to your client.
 
 .row.pb-4
   .card.bg-transparent.mx-auto.shadow
@@ -14,6 +15,9 @@
       br
       strong From:
       |  #{Devise.mailer_sender}
+      br
+      strong Cc:
+      |  #{current_user.name} &lt;#{current_user.email}&gt;
       br
       strong Subject:
       =< t('client_mailer.invite.subject', freelancer: current_user.name)

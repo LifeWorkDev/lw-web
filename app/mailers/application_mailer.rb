@@ -15,7 +15,7 @@ private
 
   def set_params
     @milestone = params[:milestone]
-    @project = params[:project]
+    @project = params[:project] || @milestone.project
     @recipient = params[:recipient]
   end
 
