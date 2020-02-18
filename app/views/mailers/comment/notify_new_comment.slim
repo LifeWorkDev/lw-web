@@ -34,4 +34,4 @@ scss:
               = comment.comment
 
   .container
-    p You can respond to this comment by replying to this email, or #{link_to 'click here', [@recipient.type, @milestone.project, :comments]} to comment via our website.
+    p You can respond to this comment by replying to this email, or #{link_to 'click here', [@recipient.type, @milestone.project.becomes(Project), :comments]} to comment via our website.

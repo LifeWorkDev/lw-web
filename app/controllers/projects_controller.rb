@@ -7,14 +7,16 @@ class ProjectsController < AuthenticatedController
   end
 
   # GET /projects/1
-  def show; end
+  def show
+    redirect_to project_path(@project)
+  end
 
   # GET /projects/1/edit
   def edit; end
 
-  # GET /milestone_projects/new
+  # GET /projects/new
   def new
-    @project = current_entity.projects.build(type: project_type)
+    @project = current_entity.projects.build
   end
 
   # POST /projects
@@ -30,9 +32,8 @@ class ProjectsController < AuthenticatedController
 
   # PATCH/PUT /projects/1
   def update
-    if @project.update(project_params)
-      notice = 'Project was successfully updated.' if @project.changed?
-      redirect_to [current_namespace, Project], notice: notice
+    if @project.becomes(Project).update(project_params)
+      redirect_to next_step(@project)
     else
       render :edit
     end
@@ -47,7 +48,7 @@ class ProjectsController < AuthenticatedController
 private
 
   def project_params
-    params.require(project_type.to_s.underscore.to_sym).permit(:amount, :name, :org_id, :type, :status)
+    params.require(:project).permit(:name, :org_id, :type, :status)
   end
 
   def set_project

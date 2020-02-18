@@ -60,7 +60,11 @@ private
   def next_step(project)
     if project.may_invite_client?
       if current_user.stripe_id.present?
-        [:milestones, current_namespace, project]
+        if project.milestone?
+          [:milestones, current_namespace, project]
+        elsif project.retainer?
+          [:payment, current_namespace, project]
+        end
       else
         freelancer_stripe_connect_path
       end

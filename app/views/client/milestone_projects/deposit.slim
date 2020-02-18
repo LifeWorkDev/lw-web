@@ -1,15 +1,4 @@
-- title = "Deposit for #{@project.name}"
-- content_for :title, title
-
-.text-center
-  h2 = title
-
-p.lead.mt-4 Congratulations, you've successfully linked your payment method!
-- if current_org.primary_pay_method&.bank_account?
-  .alert.alert-warning.mt-4
-    ' If you only allow external withdrawals to specific banking institutions, please whitelist our partner, Stripe using
-    a.alert-link href='https://support.stripe.com/questions/ach-company-ids-to-whitelist-for-stripe' target='_blank' rel='noopener' these instructions
-    | .
+= render 'client/projects/deposit_header'
 
 - first_milestone = @project.milestones.first
 ol.lead
@@ -46,7 +35,4 @@ table.table.table-striped
       td.border-top.border-dark
       td.border-top.border-dark
 
-= bootstrap_form_with(url: [:deposit, current_namespace, @project], layout: :horizontal, local: true) do |f|
-  = f.primary class: 'btn btn-success float-right', id: 'submit-form', render_as_button: true, value: :deposit
-    = mdi_svg 'bank-transfer-out'
-    |  Deposit #{first_milestone.amount_with_fee&.format(no_cents: true)} now
+= render 'client/projects/deposit_form', amount: first_milestone.amount_with_fee

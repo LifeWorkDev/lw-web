@@ -12,8 +12,6 @@ class Client::OrgsController < AuthenticatedController
   # GET /orgs/new
   def new
     @org = Org.new
-    @org.projects.build(type: MilestoneProject)
-    @org.users.build
   end
 
   # GET /orgs/1/edit
@@ -25,7 +23,7 @@ class Client::OrgsController < AuthenticatedController
     @org.current_user = current_user
 
     if @org.save
-      redirect_to [:payments, current_namespace, @org.projects.last], notice: 'Account was successfully created.'
+      redirect_to [:payment, current_namespace, @org.projects.last], notice: 'Account was successfully created.'
     else
       render :new
     end
@@ -34,7 +32,7 @@ class Client::OrgsController < AuthenticatedController
   # PATCH/PUT /orgs/1
   def update
     if @org.update(org_params)
-      redirect_to [:payments, current_namespace, @org.projects.last], notice: 'Account was successfully updated.'
+      redirect_to [:payment, current_namespace, @org.projects.last], notice: 'Account was successfully updated.'
     else
       render :edit
     end

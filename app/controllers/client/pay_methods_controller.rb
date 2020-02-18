@@ -28,7 +28,7 @@ class Client::PayMethodsController < AuthenticatedController
 
     if @pay_method.save
       location = if params[:project].present?
-                   deposit_client_milestone_project_path(params[:project])
+                   deposit_client_project_path(params[:project], new_pay_method: true)
                  else
                    created_client_pay_methods_path
                  end

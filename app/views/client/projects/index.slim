@@ -9,7 +9,9 @@
     tbody
       - @projects.not_pending.each do |project|
         tr
-          td = link_to project.name, project.client_invited? ? [:payments, current_namespace, project] : [current_namespace, project, :comments]
+          td = link_to project.client_invited? ? [:deposit, current_namespace, project.becomes(Project)] : [current_namespace, project.becomes(Project), :comments]
+            => svg_inject project.class::ICON, title: project.class::NAME
+            = project.name
           td = project.freelancer.name
           td = project.amount&.format
           td = render 'shared/status_badge', record: project

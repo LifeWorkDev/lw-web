@@ -21,7 +21,7 @@
       = react_component('CommentsList', comments: ActiveModelSerializers::SerializableResource.new(milestone.comments).serializable_hash, currentUser: UserSerializer.new(current_user).serializable_hash)
       - if milestone == @milestones.find(&:deposited?)
         #comment-form.mt-3.mx-3.mx-sm-0
-          = bootstrap_form_with(model: [current_namespace, @project, milestone.comments.new], layout: :horizontal, local: true) do |f|
+          = bootstrap_form_with(model: [current_namespace, @project.becomes(Project), milestone.comments.new], layout: :horizontal, local: true) do |f|
             = f.alert_message 'Errors'
             = f.hidden_field :commentable_id
             = f.hidden_field :commentable_type

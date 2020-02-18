@@ -17,7 +17,7 @@ module ApplicationHelper
     "https://cdn.jsdelivr.net/npm/@mdi/svg@4.9.95/svg/#{icon}.svg"
   end
 
-  memoize def svg_inject(url, options)
+  memoize def svg_inject(url, options = {})
     options[:width] ||= options[:height] ||= options.delete(:size) || 24
     image_tag url, options.merge(onload: 'SVGInject(this)')
   end

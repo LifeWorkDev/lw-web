@@ -18,6 +18,14 @@ class Project < ApplicationRecord
         OpenStruct.new(c::FOR_SELECT.merge(value: c.to_s))
       end
     end
+
+    memoize def short_type
+      to_s.underscore.delete_suffix('_project')
+    end
+
+    memoize def short_types
+      subclasses.map(&:short_type)
+    end
   end
 
   # Create scopes like Project.milestone & type check methods like milestone?
@@ -39,7 +47,7 @@ class Project < ApplicationRecord
   end
 
   memoize def short_type
-    self.class.to_s.underscore.delete_suffix('_project')
+    self.class.short_type
   end
 
   memoize def display_type

@@ -4,17 +4,18 @@ Rails.application.routes.draw do
   namespace :client, path: 'c' do
     resource :org
     resources :milestone_projects do
-      member do
-        match :deposit, via: %i[get post]
-        get :payments
-      end
-      resources :comments, only: %i[index create]
+      get :payment, on: :member
     end
     resources :pay_methods, except: :new do
       get :created, on: :collection
     end
-    resources :projects, only: :index
-
+    resources :projects, only: :index do
+      resources :comments, only: %i[index create]
+      match :deposit, via: %i[get post], on: :member
+    end
+    resources :retainer_projects do
+      get :payment, on: :member
+    end
     get ':type/new', to: 'pay_methods#new', constraints: { type: %w[bank_accounts cards] }
   end
 
@@ -25,16 +26,21 @@ Rails.application.routes.draw do
     resources :orgs, path: :clients
     resources :milestones
     resources :milestone_projects do
+      member do
+        get :milestones
+        get :payment
+      end
+    end
+    resources :projects do
       resources :comments, only: %i[index create]
       member do
         patch :activate
-        get :milestones
-        get :payments
         get :preview
+        match :status, via: %i[get patch]
       end
     end
-    resources :projects, only: :index do
-      match :status, on: :member, via: %i[get patch]
+    resources :retainer_projects do
+      get :payment, on: :member
     end
     scope controller: :content, as: :content, path: :content do
       get :walkthrough

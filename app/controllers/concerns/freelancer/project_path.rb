@@ -7,10 +7,10 @@ module Freelancer::ProjectPath
         if project.client.pending?
           [:edit, current_namespace, project.client]
         else
-          [:edit, current_namespace, project]
+          [:edit, current_namespace, project.becomes(Project)]
         end
       else
-        [current_namespace, project, :comments]
+        [current_namespace, project.becomes(Project), :comments]
       end
     end
     helper_method :project_path

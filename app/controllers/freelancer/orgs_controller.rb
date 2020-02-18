@@ -12,7 +12,7 @@ class Freelancer::OrgsController < AuthenticatedController
   # GET /orgs/new
   def new
     @org = Org.new
-    @org.projects.build(type: MilestoneProject)
+    @org.projects.build
     @org.users.build
   end
 
@@ -23,7 +23,6 @@ class Freelancer::OrgsController < AuthenticatedController
   def create
     @org = Org.new(org_params.to_h.deep_merge(
                      projects_attributes: { '0': {
-                       type: MilestoneProject,
                        user_id: current_user.id,
                      } },
                      users_attributes: { '0': {
@@ -63,6 +62,6 @@ private
 
   # Only allow a trusted parameter "white list" through.
   def org_params
-    params.require(:org).permit(:name, projects_attributes: %i[id name status], users_attributes: %i[id name email])
+    params.require(:org).permit(:name, projects_attributes: %i[id name status type], users_attributes: %i[id name email])
   end
 end

@@ -2,6 +2,8 @@ class CommentsController < AuthenticatedController
   before_action :set_project, only: %i[index create]
 
   def index
+    return unless @project.milestone?
+
     @milestones = @project.milestones.includes(comments: %i[commenter read_by])
     @project.comments.where.not(commenter: current_user)
             .where(read_at: nil).find_each { |c| c.update(read_by_id: current_user.id, read_at: Time.current) }
@@ -10,10 +12,10 @@ class CommentsController < AuthenticatedController
   def create
     @comment = current_user.comments.new(comment_params)
     if @comment.save
-      CommentMailer.with(recipient: comment.recipient, milestone: @comment.commentable).notify_new_comment.deliver_later
-      redirect_to [current_namespace, @project, :comments]
+      CommentMailer.with(recipient: @comment.recipient, milestone: @comment.commentable).notify_new_comment.deliver_later
+      redirect_to [current_namespace, @project.becomes(Project), :comments]
     else
-      redirect_to [current_namespace, @project, :comments], alert: "Failed to create comment, #{@comment.errors.full_message.join(', ')}"
+      redirect_to [current_namespace, @project.becomes(Project), :comments], alert: "Failed to create comment, #{@comment.errors.full_message.join(', ')}"
     end
   end
 
@@ -30,7 +32,7 @@ private
 
   # Use callbacks to share common setup or constraints between actions.
   def set_project
-    @project = current_entity.projects.find(params[:milestone_project_id])
+    @project = current_entity.projects.find(params[:project_id])
   end
 
   # Only allow a trusted parameter "white list" through.

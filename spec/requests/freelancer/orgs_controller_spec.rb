@@ -8,10 +8,10 @@ RSpec.describe Freelancer::OrgsController, type: :request do
   describe 'GET /f/clients/new' do
     let(:org) { assigns(:org) }
 
-    it 'builds milestone project, user' do
+    it 'builds project, user' do
       get new_freelancer_org_path
       expect(response).to have_http_status(:ok)
-      expect(org.projects.first.type).to eq 'MilestoneProject'
+      expect(org.projects.size).to eq 1
       expect(org.users.size).to eq 1
     end
   end
@@ -21,7 +21,9 @@ RSpec.describe Freelancer::OrgsController, type: :request do
     let(:new_org) { Org.last }
     let(:new_project) { Project.last }
     let(:new_user) { User.last }
-    let(:projects_attributes) { { '0': { name: Faker::Commerce.product_name } } }
+    let(:project_status) { Project::PENDING_STATES.sample.to_s }
+    let(:project_type) { Project.subclasses.sample.to_s }
+    let(:projects_attributes) { { '0': { name: Faker::Commerce.product_name, status: project_status, type: project_type } } }
     let(:params) do
       {
         org: org_attributes.merge(
@@ -34,7 +36,7 @@ RSpec.describe Freelancer::OrgsController, type: :request do
     context 'with new user' do
       let(:users_attributes) { { '0': Fabricate.attributes_for(:user) } }
 
-      it 'creates org, milestone project, user' do
+      it 'creates org, project, user' do
         expect do
           post freelancer_orgs_path, params: params
         end.to change { Org.count }.by(1) &
@@ -44,7 +46,8 @@ RSpec.describe Freelancer::OrgsController, type: :request do
         expect(new_user.invited_by).to eq freelancer
         expect(new_project.client).to eq new_org
         expect(new_project.freelancer).to eq freelancer
-        expect(new_project.type).to eq 'MilestoneProject'
+        expect(new_project.status).to eq project_status
+        expect(new_project.type).to eq project_type
       end
     end
 

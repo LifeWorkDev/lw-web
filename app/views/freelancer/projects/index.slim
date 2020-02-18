@@ -12,13 +12,17 @@
       - @projects.each do |project|
         tr
           td
+            - icon = svg_inject project.class::ICON, title: project.class::NAME
             - if project.proposal_rejected?
+              => icon
               = project.name
             - else
-              = link_to project.name, project_path(project)
+              = link_to project_path(project)
+                => icon
+                = project.name
           td = project.client.display_name
           td = project.amount&.format
           td = render 'shared/status_badge', record: project
 
-- path = current_user.clients.any? ? new_freelancer_milestone_project_path : new_freelancer_org_path
+- path = current_user.clients.any? ? new_freelancer_project_path : new_freelancer_org_path
 = render 'shared/add_button', path: path, text: 'Project'

@@ -1,4 +1,4 @@
 markdown:
   We've withdrawn **#{@milestone.amount_with_fee&.format}** from your #{@milestone.client.primary_pay_method}, and will hold that until the next milestone, **#{@milestone.description}**, is completed on **#{l(@milestone.date, format: :text_without_year)}**, at which point we'll automatically pay it out to **#{@freelancer_name}**.
 
-p If you need to communicate with #{@freelancer_name} about this milestone, just reply to this email, or #{link_to 'comment via our website', [@recipient.type, @milestone.project, :comments]}.
+p If you need to communicate with #{@freelancer_name} about this milestone, just reply to this email, or #{link_to 'comment via our website', [@recipient.type, @milestone.project.becomes(Project), :comments]}.

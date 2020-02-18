@@ -1,4 +1,15 @@
 - project = f.object
 = f.text_field :name, label: 'Project Name', placeholder: 'XYZ Project', required: true
-- if project.pending?
+- if project.pending? 
   = f.collection_select :status, Project::PENDING_STATES - [:proposal_rejected], :to_s, ->(status) { status.to_s.humanize }, { disabled: '', label: 'Project Status', prompt: 'Please select', required: true, selected: project.persisted? ? project.status : '' }, control_class: 'custom-select', required: true
+  .row.form-group
+    label.col-form-label.col-md-5.col-lg-4.col-xl-3.required Project Type
+    .col-md-7.col-lg-8.col-xl-9
+      .list-group.check-list.with-icon.mb-4.font-sans-serif
+        = f.collection_radio_buttons_without_bootstrap :type, Project.for_select, :value, :name do |cb|
+          = cb.radio_button(required: true)
+          = cb.label(class: 'list-group-item form-check-label d-flex')
+            .icon.my-auto.mr-3 = svg_inject cb.object.icon, size: 38
+            .d-inline-block
+              div = cb.text
+              .small = cb.object.description

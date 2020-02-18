@@ -1,10 +1,9 @@
 h2.text-center.mt-2
   | Tell us about your project.
 
-= bootstrap_form_with(model: [current_namespace, @project], control_col: 'col-md-9 col-xl-10', label_col: 'col-md-3 col-xl-2', layout: :horizontal, local: true) do |f|
+= bootstrap_form_with(model: [current_namespace, @project.becomes(Project)], control_col: 'col-md-7 col-lg-8 col-xl-9', label_col: 'col-md-5 col-lg-4 col-xl-3', layout: :horizontal, local: true) do |f|
   = f.alert_message 'Errors'
   - if @project.new_record? # Don't show on Edit page
-    = f.hidden_field :type
     = f.collection_select :org_id, current_user.clients, :id, :display_name, { disabled: '', label: 'Client', prompt: 'Please select', required: true, selected: '' }, control_class: 'custom-select', required: true
   = render 'freelancer/projects/fields', f: f
   = render 'shared/form_buttons', f: f, back: :back

@@ -2,26 +2,9 @@ p
   strong => @project.freelancer.name
   ' would like to be paid for
   strong => @project.name
-  | through LifeWork. They have created a payment schedule based on the following milestones, which you will have the opportunity to modify, if necessary.
+  | through LifeWork. They have created the following payment schedule:
 
 - if @get_started_url.present?
   .mb-3.text-center = link_to 'Get started', @get_started_url, class: 'btn btn-primary'
 
-- content_for :no_gutters
-  table.table.table-striped.mb-0
-    thead
-      tr
-        th.text-center Date
-        th.text-right Amount
-        th Description
-    tbody
-      - @project.milestones.each do |milestone|
-        tr
-          td.text-center = milestone.formatted_date
-          td.text-right = milestone.amount&.format
-          td = milestone.description
-    tfoot.font-weight-bold
-      tr
-        td.border-top.border-dark.text-center Total:
-        td.border-top.border-dark.text-bold.text-right = @project.amount&.format
-        td.border-top.border-dark
+= render "mailers/client/invite/#{@project.short_type}"

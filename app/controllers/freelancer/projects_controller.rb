@@ -1,6 +1,19 @@
 class Freelancer::ProjectsController < ProjectsController
   include Freelancer::ProjectPath
 
+  # PATCH/PUT /f/projects/1/activate
+  def activate
+    notice = 'Your client has been emailed an invitation to join the project.' if @project.invite_client!
+    redirect_to [current_namespace, Project], notice: notice
+  end
+
+  # GET /f/projects/1/preview
+  def preview
+    @back = [:payment, current_namespace, @project]
+    @hide_email_footer = true
+  end
+
+  # GET /f/projects/1/status
   def status
     return if request.get?
 

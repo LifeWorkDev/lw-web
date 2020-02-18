@@ -1,0 +1,7 @@
+= render 'client/projects/deposit_header'
+
+p.lead
+  = @project.description
+  | , billed to your #{current_org.primary_pay_method}.
+
+= render 'client/projects/deposit_form', amount: @project.amount

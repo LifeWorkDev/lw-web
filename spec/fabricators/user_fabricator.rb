@@ -21,10 +21,14 @@ Fabricator(:active_client, from: :active_user) do
 end
 
 Fabricator(:freelancer, from: :active_user) do
-  projects(count: 1, fabricator: :milestone_project)
+  transient project_type: Project.short_types.sample
+
+  projects(count: 1) { |attrs| Fabricate("#{attrs[:project_type]}_project") }
 end
 
 Fabricator(:active_freelancer, from: :active_user) do
-  projects(count: 1, fabricator: :active_milestone_project)
+  transient project_type: Project.short_types.sample
+
+  projects(count: 1) { |attrs| Fabricate("active_#{attrs[:project_type]}_project") }
   stripe_id { Stripe::Account.create(type: :custom).id }
 end

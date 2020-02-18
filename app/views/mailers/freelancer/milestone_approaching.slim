@@ -3,4 +3,4 @@ h2.text-center Just a reminder...
 markdown:
   **#{@milestone.description}** is due on **#{l(@milestone.date, format: :text_without_year)}**. Assuming your client doesn't object between now and then, we'll release payment that morning.
 markdown:
-  Now is the time to communicate to **#{@client_name}** if there are any potential issues with delivering this milestone as expected. You can reply to this email, or #{link_to 'comment via our website', [@recipient.type, @milestone.project, :comments]}, and we'll pass the message along to them.
+  Now is the time to communicate to **#{@client_name}** if there are any potential issues with delivering this milestone as expected. You can reply to this email, or #{link_to 'comment via our website', [@recipient.type, @milestone.project.becomes(Project), :comments]}, and we'll pass the message along to them.

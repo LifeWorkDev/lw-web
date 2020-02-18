@@ -27,31 +27,28 @@ RSpec.describe 'Client views', type: :system do
         select time_zone, from: 'user[time_zone]'
         find(:checkbox, 'user[email_opt_in]').set(user_opt_in)
         expect do
-          click_sign_up
+          click_sign_up edit_client_org_path
         end.to change { user.reload.name }.to(new_name) &
                change { user.email }.to(new_email) &
                change { user.time_zone }.to(time_zone) &
                change { user.status }.from('pending').to('active')
         expect(user.email_opt_in).to eq(user_opt_in)
-        expect(page).to have_current_path edit_client_org_path
         WORK_CATEGORIES.sample(rand(1..WORK_CATEGORIES.size)).each do |category|
           check category, allow_label_click: true
         end
         choose Org::WORK_FREQUENCY.sample, allow_label_click: true
         expect do
-          click_continue
+          click_continue polymorphic_path([:payment, :client, project])
         end.to change { client.reload.work_category } &
                change { client.work_frequency }
-        expect(page).to have_current_path polymorphic_path([:payments, :client, project])
         fill_in "milestone_project[milestones_attributes][#{milestone_index}][amount]", with: new_milestone_amount
         fill_in "milestone_project[milestones_attributes][#{milestone_index}][description]", with: Faker::Lorem.sentences.join(' ')
         fill_in 'milestone_project[amount]', with: new_project_amount
         expect do
-          click_continue
+          click_continue client_pay_methods_path(project: project)
         end.to change { project.reload.amount } &
                change { milestone.reload.amount } &
                change { milestone.description }
-        expect(page).to have_current_path client_pay_methods_path(project: project)
       end
     end
   end
@@ -79,7 +76,7 @@ RSpec.describe 'Client views', type: :system do
     end
 
     def shared_expectations
-      verify_visit polymorphic_path [:payments, :client, project]
+      verify_visit polymorphic_path [:payment, :client, project]
       project.milestones.each do |milestone|
         expect(page).to have_selector("input[value='#{milestone.amount.input_format}']") &
                         have_content(milestone.formatted_date) &
@@ -102,7 +99,7 @@ RSpec.describe 'Client views', type: :system do
 
       it 'proceeds directly to deposit' do
         shared_expectations
-        expect(page).to have_current_path polymorphic_path([:deposit, :client, project])
+        expect(page).to have_current_path polymorphic_path([:deposit, :client, project.becomes(Project)])
       end
     end
   end

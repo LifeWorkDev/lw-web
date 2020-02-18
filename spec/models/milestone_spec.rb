@@ -32,7 +32,7 @@ RSpec.describe Milestone, type: :model do
     subject(:milestone) { project.milestones.first }
 
     let(:client) { project.client }
-    let(:freelancer) { Fabricate(:active_freelancer) }
+    let(:freelancer) { Fabricate(:active_freelancer, project_type: :milestone) }
     let(:pay_method) { client.primary_pay_method }
     let(:project) { freelancer.projects.first }
 
