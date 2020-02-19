@@ -9,16 +9,6 @@ GIT
       sprockets-rails (>= 2.0.0)
 
 GIT
-  remote: https://github.com/dbdrive/stripe-ruby-mock.git
-  revision: 72021c85b1a9fb5468368e8bd90074c9cab47801
-  branch: stripe-v5-compatability
-  specs:
-    stripe-ruby-mock (2.6.0)
-      dante (>= 0.2.0)
-      multi_json (~> 1.0)
-      stripe (> 5, < 6)
-
-GIT
   remote: https://github.com/scambra/devise_invitable.git
   revision: 6e51479df5aca922d26ec99a4e25ccb0959821ab
   specs:
@@ -161,7 +151,7 @@ GEM
     bootstrap_form (4.3.0)
       actionpack (>= 5.0)
       activemodel (>= 5.0)
-    brakeman (4.7.2)
+    brakeman (4.8.0)
     brotli (0.2.3)
     bugsnag (6.13.0)
       concurrent-ruby (~> 1.0)
@@ -185,7 +175,7 @@ GEM
       url
     coderay (1.1.2)
     colorize (0.8.1)
-    concurrent-ruby (1.1.5)
+    concurrent-ruby (1.1.6)
     connection_pool (2.2.2)
     crass (1.0.6)
     css_parser (1.7.1)
@@ -212,7 +202,7 @@ GEM
     facter (2.5.7)
     facter (2.5.7-universal-darwin)
       CFPropertyList (~> 2.2)
-    faker (2.10.1)
+    faker (2.10.2)
       i18n (>= 1.6, < 2)
     faraday (0.17.3)
       multipart-post (>= 1.2, < 3)
@@ -344,7 +334,7 @@ GEM
       railties (>= 4.1)
     pg (1.2.2)
     pgreset (0.1.1)
-    plaid (8.4.0)
+    plaid (8.5.0)
       faraday
       faraday_middleware
       hashie (>= 3.4.3)
@@ -368,7 +358,7 @@ GEM
       erubis
       que (~> 1.0.0.beta3)
       sinatra
-    rack (2.2.1)
+    rack (2.2.2)
     rack-brotli (1.0.0)
       brotli (>= 0.1.7)
       git-version-bump (>= 0.15)
@@ -429,6 +419,7 @@ GEM
     responders (3.0.0)
       actionpack (>= 5.0)
       railties (>= 5.0)
+    rexml (3.2.4)
     route_downcaser (1.2.3)
       activesupport (>= 3.2)
     rspec (3.9.0)
@@ -456,11 +447,12 @@ GEM
     rspec-support (3.9.2)
     rspec_junit_formatter (0.4.1)
       rspec-core (>= 2, < 4, != 2.12.0)
-    rubocop (0.79.0)
+    rubocop (0.80.0)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
       parser (>= 2.7.0.1)
       rainbow (>= 2.2.2, < 4.0)
+      rexml
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 1.4.0, < 1.7)
     rubocop-performance (1.5.2)
@@ -468,7 +460,7 @@ GEM
     rubocop-rails (2.4.2)
       rack (>= 1.1)
       rubocop (>= 0.72.0)
-    rubocop-rspec (1.37.1)
+    rubocop-rspec (1.38.1)
       rubocop (>= 0.68.1)
     ruby-progressbar (1.10.1)
     ruby2_keywords (0.0.2)
@@ -490,12 +482,12 @@ GEM
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
     shellany (0.0.1)
-    shoulda-matchers (4.2.0)
+    shoulda-matchers (4.3.0)
       activesupport (>= 4.2.0)
-    simplecov (0.18.1)
+    simplecov (0.18.2)
       docile (~> 1.1)
-      simplecov-html (~> 0.11.0)
-    simplecov-html (0.11.0)
+      simplecov-html (~> 0.11)
+    simplecov-html (0.12.0)
     sinatra (2.0.8.1)
       mustermann (~> 1.0)
       rack (~> 2.0)
@@ -520,7 +512,11 @@ GEM
       sprockets (>= 3.0.0)
     store_base_sti_class (2.0.1)
       activerecord (>= 4.0)
-    stripe (5.14.0)
+    stripe (5.15.0)
+    stripe-ruby-mock (3.0.1)
+      dante (>= 0.2.0)
+      multi_json (~> 1.0)
+      stripe (> 5, < 6)
     strong_migrations (0.6.2)
       activerecord (>= 5)
     symbol-fstring (0.1.0)
@@ -643,7 +639,7 @@ DEPENDENCIES
   sprockets (< 4.0)
   store_base_sti_class
   stripe
-  stripe-ruby-mock!
+  stripe-ruby-mock
   strong_migrations
   symbol-fstring
   terminal-notifier
@@ -656,7 +652,7 @@ DEPENDENCIES
   webpacker
 
 RUBY VERSION
-   ruby 2.6.5p114
+   ruby 2.7.0p0
 
 BUNDLED WITH
    2.0.2
