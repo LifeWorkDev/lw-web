@@ -52,6 +52,16 @@ GIT
       activesupport (>= 3.0.0)
 
 GIT
+  remote: https://github.com/swrobel/que-web.git
+  revision: 3655323e913bfd9659a0dd127f26cde146951407
+  branch: activejob
+  specs:
+    que-web (0.8.0)
+      erubis
+      que (~> 1.0.0.beta3)
+      sinatra
+
+GIT
   remote: https://github.com/swrobel/rack-toolbar.git
   revision: 4b270b459439a17781cd9657fdf2d0c64b714806
   branch: rails-pages
@@ -354,10 +364,6 @@ GEM
     puma (4.3.1)
       nio4r (~> 2.0)
     que (1.0.0.beta4)
-    que-web (0.8.0)
-      erubis
-      que (~> 1.0.0.beta3)
-      sinatra
     rack (2.2.2)
     rack-brotli (1.0.0)
       brotli (>= 0.1.7)
@@ -612,7 +618,7 @@ DEPENDENCIES
   pretender
   puma
   que (~> 1.0.0.beta4)
-  que-web
+  que-web!
   rack-brotli
   rack-toolbar!
   rails (~> 6.0.0)
