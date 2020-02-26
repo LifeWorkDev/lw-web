@@ -3,6 +3,7 @@ class AuthenticatedController < ApplicationController
 
   around_action :set_time_zone
   prepend_before_action :authenticate_user!
+  protect_from_forgery prepend: true, with: :reset_session
 
   def current_org
     current_user.org
