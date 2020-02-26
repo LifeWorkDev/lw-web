@@ -32,6 +32,11 @@ rescue ActiveRecord::PendingMigrationError => e
   puts e.to_s.strip
   exit 1
 end
+
+DoubleEntry::Locking.configure do |config|
+  config.running_inside_transactional_fixtures = true
+end
+
 RSpec.configure do |config|
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
@@ -88,6 +93,12 @@ RSpec.configure do |config|
 
   # Actionmailbox Support
   config.include ActionMailbox::TestHelper, type: :mailbox
+end
+
+class Money
+  def input_format
+    format(symbol: false, drop_trailing_zeros: true, thousands_separator: false)
+  end
 end
 
 Shoulda::Matchers.configure do |config|

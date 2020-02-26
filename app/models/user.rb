@@ -29,12 +29,20 @@ class User < ApplicationRecord
     activate! unless active?
   end
 
-  def finished_onboarding?
-    client? ? org.active? : projects.not_pending.any?
+  memoize def account_disbursement
+    DoubleEntry.account(:disbursement, scope: self)
+  end
+
+  memoize def account_receivable
+    DoubleEntry.account(:receivable, scope: self)
   end
 
   def client?
     org_id.present?
+  end
+
+  def finished_onboarding?
+    client? ? org.active? : projects.not_pending.any?
   end
 
   def freelancer?

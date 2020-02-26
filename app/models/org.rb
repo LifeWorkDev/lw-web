@@ -23,6 +23,10 @@ class Org < ApplicationRecord
 
   WORK_FREQUENCY = ['Regularly', 'Sometimes', 'Rarely', 'Just this once'].freeze
 
+  memoize def account_cash
+    DoubleEntry.account(:cash, scope: self)
+  end
+
   def primary_contact
     users.first
   end

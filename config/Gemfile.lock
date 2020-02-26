@@ -9,6 +9,16 @@ GIT
       sprockets-rails (>= 2.0.0)
 
 GIT
+  remote: https://github.com/envato/double_entry.git
+  revision: 3914bd67828479286005a8243b9526224d10c47e
+  specs:
+    double_entry (2.0.0.beta4)
+      activerecord (>= 3.2.0)
+      activesupport (>= 3.2.0)
+      money (>= 6.0.0)
+      railties (>= 3.2.0)
+
+GIT
   remote: https://github.com/scambra/devise_invitable.git
   revision: 4e1ee6ad6787d57cad758d0a316fbfcd88c22251
   specs:
@@ -588,6 +598,7 @@ DEPENDENCIES
   colorize
   devise
   devise_invitable!
+  double_entry!
   email_reply_parser
   fabrication
   faker
