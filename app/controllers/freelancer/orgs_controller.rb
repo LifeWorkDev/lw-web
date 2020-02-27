@@ -3,7 +3,7 @@ class Freelancer::OrgsController < AuthenticatedController
 
   # GET /orgs
   def index
-    @clients = current_user.clients
+    @clients = current_user.clients.order(:name)
   end
 
   # GET /orgs/1
