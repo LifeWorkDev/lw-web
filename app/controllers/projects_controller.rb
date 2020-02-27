@@ -3,7 +3,7 @@ class ProjectsController < AuthenticatedController
 
   # GET /projects
   def index
-    @projects = current_entity.projects.all
+    @projects = current_entity.projects
   end
 
   # GET /projects/1

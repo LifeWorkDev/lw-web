@@ -7,6 +7,10 @@ class Freelancer::ProjectsController < ProjectsController
     redirect_to [current_namespace, Project], notice: notice
   end
 
+  def index
+    @projects = current_entity.projects.not_archived.order(:name) + current_entity.projects.archived.order(:name)
+  end
+
   # GET /f/projects/1/preview
   def preview
     @back = [:payment, current_namespace, @project]

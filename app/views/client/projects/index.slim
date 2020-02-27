@@ -7,7 +7,7 @@
 = render 'shared/overflow_scroll'
   table.table.table-hover.table-striped
     tbody
-      - @projects.not_pending.each do |project|
+      - @projects.each do |project|
         tr
           td = link_to project.client_invited? ? [:deposit, current_namespace, project.becomes(Project)] : [current_namespace, project.becomes(Project), :comments]
             => svg_inject project.class::ICON, title: project.class::NAME

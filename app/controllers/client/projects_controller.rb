@@ -1,4 +1,8 @@
 class Client::ProjectsController < ProjectsController
+  def index
+    @projects = current_entity.projects.not_archived.not_pending.order(:name) + current_entity.projects.archived.order(:name)
+  end
+
   def deposit
     if request.post?
       @project.deposit!
