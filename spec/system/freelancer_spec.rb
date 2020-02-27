@@ -61,6 +61,7 @@ RSpec.describe 'Freelancer views', type: :system do
     end
 
     def milestone_project_expectations
+      expect(new_project.type).to eq 'MilestoneProject'
       # Choose a random selectable date
       date = all('div', class: %w[DayPicker-Day !DayPicker-Day--disabled !DayPicker-Day--outside]).sample
       Rails.logger.info "Clicking #{date['aria-label']}"
@@ -83,6 +84,7 @@ RSpec.describe 'Freelancer views', type: :system do
     end
 
     def retainer_project_expectations
+      expect(new_project.type).to eq 'RetainerProject'
       fill_in 'retainer_project[amount]', with: amount
       expect do
         click_continue
@@ -102,7 +104,7 @@ RSpec.describe 'Freelancer views', type: :system do
         fill_in 'org[users_attributes][0][email]', with: Faker::Internet.safe_email
         fill_in 'org[projects_attributes][0][name]', with: name
         first('#org_projects_attributes_0_status option[value=contract_sent]').select_option # Placeholder is first
-        choose :org_projects_attributes_0_type_milestoneproject, allow_label_click: true
+        # choose :org_projects_attributes_0_type_milestoneproject, allow_label_click: true
         expect do
           click_continue
         end.to change { Org.count }.by(1) &
@@ -146,14 +148,14 @@ RSpec.describe 'Freelancer views', type: :system do
 
       it 'completes milestone project creation for an existing client' do
         fill_new_project
-        choose :project_type_milestoneproject, allow_label_click: true
+        # choose :project_type_milestoneproject, allow_label_click: true
         click_continue
         expect(page).to have_content('Project was successfully created.')
         expect(page).to have_link '< Back', href: %r{/f/projects/.+/edit$}
         milestone_project_expectations
       end
 
-      it 'completes retainer project creation for an existing client' do
+      skip 'completes retainer project creation for an existing client' do
         fill_new_project
         choose :project_type_retainerproject, allow_label_click: true
         click_continue
