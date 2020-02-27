@@ -53,7 +53,7 @@ private
       self.stripe_id = source.id
     else
       customer = Stripe::Customer.create(
-        name: org.display_name,
+        name: org.name,
         email: org.primary_contact&.email,
         source: stripe_token,
         metadata: {

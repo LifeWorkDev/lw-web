@@ -4,7 +4,7 @@
   h2
     => @project
     span.font-weight-normal timeline
-  h4 = "Client: #{@project.client.display_name}"
+  h4 = "Client: #{@project.client.name}"
   h5 = "Contract amount: #{@project.amount.format}"
 
 - if @project.active?

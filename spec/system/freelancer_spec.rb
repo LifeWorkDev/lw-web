@@ -181,7 +181,7 @@ RSpec.describe 'Freelancer views', type: :system do
 
       it 'can view clients index' do
         verify_visit '/f/clients'
-        expect(page).to have_content client.display_name
+        expect(page).to have_content client.name
         expect(page).to have_content client_user.email
       end
     end

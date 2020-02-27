@@ -20,7 +20,7 @@
               = link_to project_path(project)
                 => icon
                 = project.name
-          td = project.client.display_name
+          td = project.client.name
           td = project.amount&.format
           td = render 'shared/status_badge', record: project
 

@@ -44,7 +44,7 @@ private
       Stripe::PaymentMethod.attach(stripe_id, customer: org.stripe_id)
     else
       customer = Stripe::Customer.create(
-        name: org.display_name,
+        name: org.name,
         email: org.primary_contact&.email,
         payment_method: stripe_id,
         metadata: {

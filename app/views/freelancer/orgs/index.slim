@@ -9,7 +9,7 @@
     tbody
       - @clients.each do |client|
         tr
-          td = client.display_name
+          td = client.name
           td = client.primary_contact.name
           td = client.primary_contact.email
           td = render 'shared/status_badge', record: client

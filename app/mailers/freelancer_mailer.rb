@@ -1,6 +1,6 @@
 class FreelancerMailer < ApplicationMailer
   def milestone_approaching
-    @client_name = @milestone.client.display_name
+    @client_name = @milestone.client.name
     make_bootstrap_mail(reply_to: @milestone.comment_reply_address, subject: t('.subject', project: @milestone.project))
   end
 
