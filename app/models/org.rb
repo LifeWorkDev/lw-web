@@ -32,6 +32,10 @@ class Org < ApplicationRecord
   end
 
   memoize def stripe_obj
+    get_stripe_obj
+  end
+
+  def get_stripe_obj
     Stripe::Customer.retrieve(stripe_id)
   end
 

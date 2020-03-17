@@ -30,6 +30,10 @@ class PayMethods::BankAccount < PayMethod
   end
 
   memoize def stripe_obj
+    get_stripe_obj
+  end
+
+  def get_stripe_obj
     Stripe::Source.retrieve(stripe_id)
   end
 

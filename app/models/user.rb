@@ -65,6 +65,10 @@ class User < ApplicationRecord
   end
 
   memoize def stripe_obj
+    get_stripe_obj
+  end
+
+  def get_stripe_obj
     Stripe::Account.retrieve(stripe_id)
   end
 

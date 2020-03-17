@@ -20,6 +20,10 @@ class PayMethods::Card < PayMethod
   end
 
   memoize def stripe_obj
+    get_stripe_obj
+  end
+
+  def get_stripe_obj
     Stripe::PaymentMethod.retrieve(stripe_id)
   end
 
