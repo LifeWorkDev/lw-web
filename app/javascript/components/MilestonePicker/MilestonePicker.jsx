@@ -11,7 +11,7 @@ import {
 
 import './MilestonePicker.scss'
 
-const MilestonePicker = props => {
+const MilestonePicker = (props) => {
   const [milestones, setMilestones] = useState(props.milestones)
   const [selectedDays, setSelectedDays] = useState(
     getMilestoneDays(props.milestones),
@@ -25,18 +25,20 @@ const MilestonePicker = props => {
     submitButton.disabled = selectedDays.length == 0
   }, [selectedDays])
 
-  const disabledDays = selectedDays.flatMap(selectedDay =>
+  const disabledDays = selectedDays.flatMap((selectedDay) =>
     eachDayOfInterval({
       end: addBusinessDays(selectedDay, 5),
       start: subBusinessDays(selectedDay, 5),
-    }).flatMap(date => (isSameDay(date, selectedDay) ? [] : [date.getTime()])),
+    }).flatMap((date) =>
+      isSameDay(date, selectedDay) ? [] : [date.getTime()],
+    ),
   )
 
   function getMilestoneDays(milestones) {
     let days = []
     let timezoneOffset = new Date().getTimezoneOffset()
     if (milestones != null) {
-      milestones.map(milestone => {
+      milestones.map((milestone) => {
         let date = new Date(milestone.date)
         date.setHours(date.getHours() + timezoneOffset / 60)
         days.push(date)
@@ -48,7 +50,7 @@ const MilestonePicker = props => {
   function removeMilestoneOfDate(date) {
     const newMilestones = milestones.slice()
     const milestoneIndex = newMilestones.findIndex(
-      milestone => milestone.date == date.toLocaleDateString(),
+      (milestone) => milestone.date == date.toLocaleDateString(),
     )
     const milestoneToUpdate = newMilestones[milestoneIndex]
     if (milestoneToUpdate.id !== undefined) {
@@ -62,7 +64,7 @@ const MilestonePicker = props => {
   function addMilestoneDate(date) {
     const newMilestones = milestones.slice()
     const milestoneIndex = newMilestones.findIndex(
-      milestone => milestone.date == date.toLocaleDateString(),
+      (milestone) => milestone.date == date.toLocaleDateString(),
     )
     if (milestoneIndex > 0) {
       const milestoneToUpdate = milestones[milestoneIndex]
@@ -78,7 +80,7 @@ const MilestonePicker = props => {
     return date < minDate || disabledDays.includes(date)
   }
 
-  const removeData = index => {
+  const removeData = (index) => {
     const newSelectedDays = selectedDays.slice()
     removeMilestoneOfDate(newSelectedDays[index])
     delete newSelectedDays[index]
@@ -90,7 +92,7 @@ const MilestonePicker = props => {
     const newSelectedDays = selectedDays.slice()
 
     if (selected) {
-      const selectedIndex = newSelectedDays.findIndex(selectedDay =>
+      const selectedIndex = newSelectedDays.findIndex((selectedDay) =>
         isSameDay(selectedDay, day),
       )
       removeMilestoneOfDate(day)
@@ -104,13 +106,13 @@ const MilestonePicker = props => {
     setSelectedDays(newSelectedDays)
   }
 
-  const orderedDays = selectedDays.sort(function(date1, date2) {
+  const orderedDays = selectedDays.sort(function (date1, date2) {
     if (date1 > date2) return 1
     if (date1 < date2) return -1
     return 0
   })
 
-  const deletedMilestones = milestones.filter(function(milestone) {
+  const deletedMilestones = milestones.filter(function (milestone) {
     return milestone.deleted !== undefined && milestone.deleted == true
   })
 

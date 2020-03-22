@@ -8,7 +8,7 @@ const Milestone = PropTypes.shape({
   id: PropTypes.number.isRequired,
 })
 
-const formatCurrency = value =>
+const formatCurrency = (value) =>
   value
     .toLocaleString('en-US', {
       currency: 'USD',
@@ -17,7 +17,7 @@ const formatCurrency = value =>
     .replace('$', '')
     .replace('.00', '')
 
-const PaymentsForm = props => {
+const PaymentsForm = (props) => {
   const [milestones, setMilestones] = useState(props.milestones)
   const [total, setTotal] = useState(Number(props.total))
   const submitButton = document.getElementById('submit-form')
@@ -77,7 +77,7 @@ const PaymentsForm = props => {
               inputMode='decimal'
               min='1'
               name='milestone_project[amount]'
-              onChange={e => setTotal(Number(e.target.value))}
+              onChange={(e) => setTotal(Number(e.target.value))}
               placeholder='0.00'
               required
               step='0.01'
@@ -221,7 +221,7 @@ const PaymentForm = React.memo(
                 inputMode='decimal'
                 max={maxPayment}
                 name={`milestone_project[milestones_attributes][${index}][amount]`}
-                onChange={e =>
+                onChange={(e) =>
                   updateAmount({ amount: e.target.value, index: index })
                 }
                 placeholder='0.00'
@@ -239,7 +239,7 @@ const PaymentForm = React.memo(
               <input
                 className='form-control text-right'
                 inputMode='decimal'
-                onChange={e =>
+                onChange={(e) =>
                   updateAmount({
                     amount:
                       e.target.value &&

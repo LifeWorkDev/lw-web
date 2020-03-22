@@ -15,7 +15,7 @@ const Comment = PropTypes.shape({
   read_by: User,
 })
 
-const CommentItem = props => {
+const CommentItem = (props) => {
   const [comment, setComment] = useState(props.comment)
   const [currentUser] = useState(props.currentUser)
   const isCurrentUser = comment.commenter.id === currentUser.id
@@ -25,7 +25,7 @@ const CommentItem = props => {
   const ErrorBoundary = window.bugsnagClient.getPlugin('react')
   const commentForm = document.getElementById('comment-form')
 
-  const handleCommentChange = event => {
+  const handleCommentChange = (event) => {
     setCommentText(event.target.value)
   }
 
@@ -54,7 +54,7 @@ const CommentItem = props => {
         method: 'PUT',
         mode: 'cors',
       })
-      .then(response => {
+      .then((response) => {
         editingOff()
         if (response.ok) return response.json()
         else setIsError(true)
@@ -136,7 +136,7 @@ CommentItem.propTypes = {
   currentUser: User,
 }
 
-const CommentsList = props => {
+const CommentsList = (props) => {
   const [comments] = useState(props.comments)
   const [currentUser] = useState(props.currentUser)
 
