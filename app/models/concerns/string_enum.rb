@@ -17,7 +17,7 @@ module StringEnum
 
       # We want to transform the array of values into a hash, which is most easily done by
       # creating an array of arrays of [ key, value ], then calling to_h on it.
-      definitions[field] = values.collect { |v| [v, v.to_s] }.to_h
+      definitions[field] = values.index_with(&:to_s)
 
       # Define the enum using Rails' built-in enum method
       enum(definitions)
