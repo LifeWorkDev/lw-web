@@ -35,7 +35,7 @@ guard :rubocop, all_on_start: true, cli: %w[--auto-correct --display-cop-names] 
   watch(%r{(?:.+/)?\.?rubocop(?:_todo)?\.yml$}) { '.' }
 end
 
-guard :rspec, cmd: 'bin/rspec' do
+guard :rspec, cmd: 'ruby -W:no-deprecated bin/rspec' do
   # RSpec files
   rspec = dsl.rspec
   watch(rspec.spec_files)
