@@ -1,4 +1,4 @@
-class Payments::RefundJob < ApplicationJob
+class Payments::TransferJob < ApplicationJob
   def perform(payment)
     payment.transfer!
   end
