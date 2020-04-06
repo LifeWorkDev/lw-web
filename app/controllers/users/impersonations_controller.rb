@@ -4,7 +4,7 @@ class Users::ImpersonationsController < AuthenticatedController
     raise AuthenticatedController::Forbidden unless true_user.admin?
 
     impersonate_user(user)
-    redirect_to [user.type, Project]
+    redirect_to '/'
   end
 
   def stop_impersonating
