@@ -11,7 +11,9 @@
     
 = bootstrap_form_with(model: [current_namespace, @project], layout: :horizontal, local: true) do |f|
   .text-center.mb-4
-    = @project.description_begin
+    = t('retainer_project.description.begin')
     = f.number_field :amount, autofocus: true, hide_label: true, input_group_class: 'input-group-sm', layout: :inline, inputmode: 'decimal', max: ACH_MAX_BEFORE_FEE.to_i, min: 1, placeholder: '0.00', prepend: '$', required: true, step: 0.01, style: 'width: 4.6rem;', wrapper_class: 'd-inline-block mb-0 mx-2'
-    = "#{@project.description_end}."
+    = t('retainer_project.description.middle')
+    = f.date_field :start_date, class: 'form-control-sm', hide_label: true, layout: :inline, min: Date.current, required: true, style: 'min-width: 7rem;', wrapper_class: 'd-inline-block mb-0 mx-2'
+    = "#{t('retainer_project.description.end')}."
   = render 'shared/form_buttons', f: f, back: @back

@@ -12,9 +12,11 @@ end
 Fabricator(:milestone_project, from: :project, class_name: :milestone_project)
 
 Fabricator(:milestone_project_with_milestones, from: :milestone_project) do
+  transient :count
+
   after_build do |project, transients|
-    milestones_count = transients[:count] || rand(3..7)
-    dates = (10.days.from_now.to_date..60.days.from_now.to_date).to_a.sample(milestones_count)
+    milestone_count = transients[:count] || rand(3..7)
+    dates = (10.days.from_now.to_date..60.days.from_now.to_date).to_a.sample(milestone_count)
     dates.each do |date|
       milestone = Fabricate.build(:milestone, date: date, project: project)
       project.milestones << milestone
@@ -29,9 +31,11 @@ Fabricator(:active_milestone_project, from: :milestone_project_with_milestones) 
 end
 
 Fabricator(:retainer_project, from: :project, class_name: :retainer_project) do
-  amount_cents { rand(1_000_00..10_000_00) }
+  amount { Faker::Commerce.price(range: 500..1_000) }
+  start_date { Faker::Date.between_except(from: Date.current.beginning_of_month, to: Date.current.end_of_month, excepted: Date.current.beginning_of_month) }
 end
 
 Fabricator(:active_retainer_project, from: :active_project, class_name: :retainer_project) do
-  amount_cents { rand(1_000_00..10_000_00) }
+  amount { Faker::Commerce.price(range: 500..1_000) }
+  start_date { Faker::Date.between_except(from: Date.current.beginning_of_month, to: Date.current.end_of_month, excepted: Date.current.beginning_of_month) }
 end
