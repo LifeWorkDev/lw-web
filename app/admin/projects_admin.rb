@@ -39,7 +39,7 @@ Trestle.resource(:projects) do
       text_field :name
       auto_field :slug
       collection_select_with_link :org_id, Org.all, :id, :name, label: 'Client'
-      collection_select_with_link :user_id, User.all, :id, :name, label: 'Freelancer'
+      collection_select_with_link :user_id, User.freelancer, :id, :name, label: 'Freelancer'
       select :status, Project.aasm.states_for_select
       collection_select :type, Project.subclasses, :to_s, :to_s
       number_field :amount, prepend: '$'
