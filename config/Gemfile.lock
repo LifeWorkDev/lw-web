@@ -78,6 +78,15 @@ GIT
     rack-toolbar (0.1.4)
 
 GIT
+  remote: https://github.com/swrobel/stripe-ruby-mock.git
+  revision: 5e1c9d221ac570c2c7dd7b58d11dd78bc424f1cc
+  specs:
+    stripe-ruby-mock (3.0.1)
+      dante (>= 0.2.0)
+      multi_json (~> 1.0)
+      stripe (> 5, < 6)
+
+GIT
   remote: https://github.com/volkanunsal/jsonb_accessor.git
   revision: c3bae1462e9d51569c978c6eea4624f613ff88b7
   specs:
@@ -527,10 +536,6 @@ GEM
     store_base_sti_class (2.0.1)
       activerecord (>= 4.0)
     stripe (5.17.0)
-    stripe-ruby-mock (3.0.1)
-      dante (>= 0.2.0)
-      multi_json (~> 1.0)
-      stripe (> 5, < 6)
     strong_migrations (0.6.3)
       activerecord (>= 5)
     symbol-fstring (0.1.0)
@@ -656,7 +661,7 @@ DEPENDENCIES
   sprockets (< 4.0)
   store_base_sti_class
   stripe
-  stripe-ruby-mock
+  stripe-ruby-mock!
   strong_migrations
   symbol-fstring
   terminal-notifier

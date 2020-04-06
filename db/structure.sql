@@ -941,6 +941,50 @@ ALTER SEQUENCE public.pay_methods_id_seq OWNED BY public.pay_methods.id;
 
 
 --
+-- Name: payments; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.payments (
+    id bigint NOT NULL,
+    amount_cents integer DEFAULT 0 NOT NULL,
+    currency character varying DEFAULT 'USD'::character varying NOT NULL,
+    status character varying NOT NULL,
+    scheduled_for timestamp without time zone,
+    paid_at timestamp without time zone,
+    note public.citext,
+    stripe_id character varying,
+    stripe_fee_cents integer DEFAULT 0 NOT NULL,
+    stripe_fee_currency character varying DEFAULT 'USD'::character varying NOT NULL,
+    metadata jsonb,
+    pays_for_type character varying NOT NULL,
+    pays_for_id bigint NOT NULL,
+    pay_method_id bigint NOT NULL,
+    user_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: payments_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.payments_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: payments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.payments_id_seq OWNED BY public.payments.id;
+
+
+--
 -- Name: projects; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1159,8 +1203,8 @@ ALTER TABLE ONLY public.comments ALTER COLUMN id SET DEFAULT nextval('public.com
 
 ALTER TABLE ONLY public.double_entry_account_balances ALTER COLUMN id SET DEFAULT nextval('public.double_entry_account_balances_id_seq'::regclass);
 
---
 
+--
 -- Name: double_entry_line_checks id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1200,6 +1244,13 @@ ALTER TABLE ONLY public.orgs ALTER COLUMN id SET DEFAULT nextval('public.orgs_id
 --
 
 ALTER TABLE ONLY public.pay_methods ALTER COLUMN id SET DEFAULT nextval('public.pay_methods_id_seq'::regclass);
+
+
+--
+-- Name: payments id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.payments ALTER COLUMN id SET DEFAULT nextval('public.payments_id_seq'::regclass);
 
 
 --
@@ -1317,6 +1368,14 @@ ALTER TABLE ONLY public.orgs
 
 ALTER TABLE ONLY public.pay_methods
     ADD CONSTRAINT pay_methods_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: payments payments_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.payments
+    ADD CONSTRAINT payments_pkey PRIMARY KEY (id);
 
 
 --
@@ -1477,6 +1536,13 @@ CREATE UNIQUE INDEX index_orgs_on_slug ON public.orgs USING btree (slug);
 --
 
 CREATE INDEX index_pay_methods_on_org_id_and_status_and_type ON public.pay_methods USING btree (org_id, status, type);
+
+
+--
+-- Name: index_payments_on_pays_for_type_and_pays_for_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_payments_on_pays_for_type_and_pays_for_id ON public.payments USING btree (pays_for_type, pays_for_id);
 
 
 --
@@ -1676,11 +1742,27 @@ CREATE TRIGGER que_state_notify AFTER INSERT OR DELETE OR UPDATE ON public.que_j
 
 
 --
+-- Name: payments fk_rails_081dc04a02; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.payments
+    ADD CONSTRAINT fk_rails_081dc04a02 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
 -- Name: projects fk_rails_4ab09e4d6e; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.projects
     ADD CONSTRAINT fk_rails_4ab09e4d6e FOREIGN KEY (org_id) REFERENCES public.orgs(id);
+
+
+--
+-- Name: payments fk_rails_6d94f5a487; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.payments
+    ADD CONSTRAINT fk_rails_6d94f5a487 FOREIGN KEY (pay_method_id) REFERENCES public.pay_methods(id);
 
 
 --

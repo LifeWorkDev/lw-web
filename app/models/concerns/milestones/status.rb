@@ -11,10 +11,10 @@ module Milestones::Status
       state :rejected
 
       event :deposit do
-        transitions from: :pending, to: :deposited
-
-        after do
-          charge!
+        transitions from: :pending, to: :deposited do
+          guard do |user|
+            payments.create!(amount: client_amount, pay_method: pay_method, user: user).charge!
+          end
         end
 
         after_commit do
@@ -27,10 +27,10 @@ module Milestones::Status
       end
 
       event :pay do
-        transitions from: :deposited, to: :paid
-
-        after do
-          transfer!
+        transitions from: :deposited, to: :paid do
+          guard do
+            payment.transfer!
+          end
         end
 
         after_commit do

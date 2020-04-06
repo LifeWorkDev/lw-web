@@ -6,6 +6,7 @@ class Org < ApplicationRecord
   friendly_id :name
 
   has_many :pay_methods, dependent: :destroy
+  has_many :payments, through: :users
   has_many :bank_accounts, dependent: :destroy, class_name: 'PayMethods::BankAccount'
   has_many :cards, dependent: :destroy, class_name: 'PayMethods::Card'
   has_many :projects, dependent: :destroy, inverse_of: :client

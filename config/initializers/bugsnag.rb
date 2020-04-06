@@ -12,5 +12,4 @@ Bugsnag.configure do |config|
   config.ignore_classes << ActiveRecord::RecordNotFound
   config.ignore_classes << AuthenticatedController::Forbidden
   config.ignore_classes << ApplicationController::Unauthorized
-  config.ignore_classes << Stripe::CardError
 end

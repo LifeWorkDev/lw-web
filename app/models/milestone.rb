@@ -6,6 +6,7 @@ class Milestone < ApplicationRecord
   has_one :client, through: :project
   has_one :freelancer, through: :project
   has_many :comments, -> { order(:created_at) }, as: :commentable, inverse_of: :commentable, dependent: :destroy
+  has_many :payments, as: :pays_for, dependent: :destroy
 
   delegate :currency, to: :project
   monetize :amount_cents, with_model_currency: :currency, allow_nil: true, numericality: { greater_than_or_equal_to: 0 }
@@ -114,24 +115,8 @@ class Milestone < ApplicationRecord
     Milestones::PayJob.set(wait_until: payment_time).perform_later(self)
   end
 
-private
-
-  def charge!
-    client.primary_pay_method.charge!(amount: client_amount, idempotency_key: "milestone-#{id}", metadata: stripe_metadata)
-  end
-
-  def transfer!
-    Stripe::Transfer.create(
-      {
-        amount: freelancer_amount.cents,
-        currency: currency.to_s,
-        description: to_s,
-        destination: freelancer.stripe_id,
-        metadata: stripe_metadata,
-        source_type: client.primary_pay_method.card? ? :card : :bank_account,
-      },
-      idempotency_key: "milestone-#{id}-transfer",
-    )
+  def idempotency_key
+    "milestone-#{id}"
   end
 
   def stripe_metadata

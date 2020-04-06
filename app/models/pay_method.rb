@@ -4,6 +4,7 @@ class PayMethod < ApplicationRecord
 
   belongs_to :org
   belongs_to :created_by, class_name: 'User'
+  has_many :payments, dependent: :destroy
 
   validates :last_4, numericality: { integer_only: true }
   validates :issuer, :kind, :stripe_id, presence: true

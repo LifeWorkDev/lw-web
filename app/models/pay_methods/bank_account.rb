@@ -12,17 +12,23 @@ class PayMethods::BankAccount < PayMethod
   def charge!(amount:, idempotency_key: '', metadata: {})
     raise "Insufficent balance for Bank Account #{id}. Attempted to charge #{amount.format} to account with balance #{balance.format}" if Rails.env.production? && balance < amount
 
-    Stripe::Charge.create({
-                            amount: amount.cents,
-                            currency: amount.currency.to_s,
-                            customer: org.stripe_id,
-                            source: stripe_id,
-                            metadata: metadata,
-                          }, idempotency_key: "#{idempotency_key}-pay-method-#{id}")
+    Stripe::Charge.create(
+      {
+        amount: amount.cents,
+        currency: amount.currency.to_s,
+        customer: org.stripe_id,
+        source: stripe_id,
+        metadata: metadata,
+        expand: ['balance_transaction'],
+      }, idempotency_key: "#{idempotency_key}-pay-method-#{id}"
+    )
   end
 
   memoize def balance
-    (plaid_obj.balances['available'] || plaid_obj.balances['current']).to_money(plaid_obj.balances['iso_currency_code'])
+    (
+      plaid_obj.balances['available'] ||
+      plaid_obj.balances['current']
+    ).to_money(plaid_obj.balances['iso_currency_code'])
   end
 
   memoize def plaid_obj

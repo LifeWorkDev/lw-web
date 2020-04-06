@@ -35,6 +35,8 @@ RSpec.describe Milestone, type: :model do
     let(:freelancer) { Fabricate(:active_freelancer, project_type: :milestone) }
     let(:pay_method) { client.primary_pay_method }
     let(:project) { freelancer.projects.first }
+    let(:payment) { Payment.last }
+    let(:user) { client.primary_contact }
 
     describe '#deposit!' do
       it "doesn't schedule milestone approaching emails if they would be in the past" do
@@ -55,10 +57,21 @@ RSpec.describe Milestone, type: :model do
                enqueue_job(Milestones::PayJob).once.at(milestone.payment_time)
         expect(project.reload.active?).to be true
         expect(client.reload.active?).to be true
+        expect(payment.amount).to eq milestone.client_amount
+        expect(payment.pays_for).to eq milestone
+        expect(payment.pay_method).to eq milestone.client.primary_pay_method
+        expect(payment.user).to be_nil
+      end
+
+      it 'sets a user if provided' do
+        milestone.deposit!(user)
+        expect(payment.user).to eq user
       end
     end
 
     describe '#pay!' do
+      before { Fabricate(:succeeded_payment, pays_for: milestone) }
+
       it 'creates Stripe transfers' do
         milestone.update(status: :deposited)
         allow(Stripe::Transfer).to receive(:create).and_call_original
@@ -67,7 +80,6 @@ RSpec.describe Milestone, type: :model do
         end.to enqueue_mail(ClientMailer, :milestone_paid).once &
                enqueue_mail(FreelancerMailer, :milestone_paid).once &
                enqueue_job(Milestones::DepositJob).once.at(milestone.deposit_time)
-
         expect(Stripe::Transfer).to have_received(:create).once
       end
     end

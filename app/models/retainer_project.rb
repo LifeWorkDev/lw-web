@@ -1,4 +1,6 @@
 class RetainerProject < Project
+  has_many :payments, as: :pays_for, dependent: :destroy
+
   ICON = mdi_url('autorenew').freeze
   NAME = 'Monthly Retainer'.freeze
 
@@ -8,9 +10,9 @@ class RetainerProject < Project
     description: 'A recurring, fixed retainer payment'.freeze,
   }.freeze
 
-  def deposit!
-    client.primary_pay_method.charge!(amount: amount, idempotency_key: "retainer-#{id}", metadata: stripe_metadata)
-    activate!
+  def deposit!(user = nil)
+    activate! if payments.create!(amount: first_client_amount, pay_method: pay_method, user: user).charge!
+  end
   end
 
   memoize def description
@@ -25,7 +27,9 @@ class RetainerProject < Project
     "starting on #{l(Date.current.end_of_month, format: :text_without_year)}, and paid on the last calendar date of every month thereafter"
   end
 
-private
+  def idempotency_key
+    "retainer-#{id}"
+  end
 
   def stripe_metadata
     { 'Retainer Project ID': id }
