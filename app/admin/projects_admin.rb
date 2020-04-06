@@ -38,7 +38,8 @@ Trestle.resource(:projects) do
     tab :project do
       text_field :name
       auto_field :slug
-      collection_select_with_link :org_id, Org.all, :id, :name, label: 'Client'
+      org_collection = User.find_by(id: params[:user_id])&.clients || Org.all
+      collection_select_with_link :org_id, org_collection, :id, :name, label: 'Client'
       collection_select_with_link :user_id, User.freelancer, :id, :name, label: 'Freelancer'
       select :status, Project.aasm.states_for_select
       collection_select :type, Project.subclasses, :to_s, :to_s
