@@ -3,7 +3,7 @@
 - first_milestone = @project.milestones.first
 ol.lead
   li
-    | Today we'll withdraw #{first_milestone.amount_with_fee&.format} from #{current_org.primary_pay_method}, the payment for the first milestone
+    | Today we'll withdraw #{first_milestone.client_amount&.format} from #{current_org.primary_pay_method}, the payment for the first milestone
     - if LIFEWORK_FEE > 0
       |  (including our #{number_to_percentage(LIFEWORK_FEE * 100, precision: 0)} fee)
     | , and hold it in our account.
@@ -25,14 +25,14 @@ table.table.table-striped
     - @project.milestones.each_with_index do |milestone, index|
       tr
         td.text-center = index == 0 ? 'Today' : @project.milestones[index - 1].formatted_date
-        td.text-right = milestone.amount_with_fee&.format
+        td.text-right = milestone.client_amount&.format
         td = milestone.description
         td.text-center = milestone.formatted_date
   tfoot.font-weight-bold
     tr
       td.border-top.border-dark.text-center Total:
-      td.border-top.border-dark.text-bold.text-right = @project.amount_with_fee&.format
+      td.border-top.border-dark.text-bold.text-right = @project.client_amount&.format
       td.border-top.border-dark
       td.border-top.border-dark
 
-= render 'client/projects/deposit_form', amount: first_milestone.amount_with_fee
+= render 'client/projects/deposit_form', amount: first_milestone.client_amount

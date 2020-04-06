@@ -8,6 +8,6 @@ markdown:
 
 - if @next_milestone
   markdown:
-    At the end of today, we will automatically withdraw **#{@next_milestone.amount_with_fee&.format}** from your #{@milestone.client.primary_pay_method}, and hold that until the next milestone, **#{@next_milestone.description}**, is completed on **#{l(@next_milestone.date, format: :text_without_year)}**.
+    At the end of today, we will automatically withdraw **#{@next_milestone.client_amount&.format}** from your #{@milestone.pay_method}, and hold that until the next milestone, **#{@next_milestone.description}**, is completed on **#{l(@next_milestone.date, format: :text_without_year)}**.
   p
     em If for some reason you do not want us to do so, please reply to this email immediately.
