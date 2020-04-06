@@ -73,13 +73,14 @@ jobs:
 
       - run:
           name: Yarn Install
-          command: yarn install --verbose
+          command: yarn install
 
       - save_cache:
           name: Store yarn cache
           key: v1-lifework-yarn-{{ .Branch }}-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
+            - node_modules
 
       - run:
           name: ESLint & StyleLint
