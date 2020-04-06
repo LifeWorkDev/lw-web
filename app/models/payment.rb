@@ -45,6 +45,7 @@ class Payment < ApplicationRecord
     self.stripe_id = charge.id
     self.stripe_fee = Money.new(charge.balance_transaction.fee, charge.balance_transaction.fee_details.first.currency)
     self.paid_at = Time.zone.at(charge.created)
+    save!
   end
 
   memoize def stripe_obj
