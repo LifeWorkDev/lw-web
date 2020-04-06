@@ -3,7 +3,7 @@
 - first_milestone = @project.milestones.first
 ol.lead
   li
-    | Today we'll withdraw #{first_milestone.client_amount&.format} from #{current_org.primary_pay_method}, the payment for the first milestone
+    | Today we'll withdraw #{first_milestone.client_amount&.format} from your #{current_org.primary_pay_method}, the payment for the first milestone
     - if LIFEWORK_FEE > 0
       |  (including our #{number_to_percentage(LIFEWORK_FEE * 100, precision: 0)} fee)
     | , and hold it in our account.
