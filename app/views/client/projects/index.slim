@@ -16,4 +16,5 @@
           td = project.amount&.format
           td = render 'shared/status_badge', record: project
 
+p.text-right = "Payment method: #{current_org.primary_pay_method}"
 = link_to 'Change payment method', client_pay_methods_path, class: 'btn btn-primary float-right'

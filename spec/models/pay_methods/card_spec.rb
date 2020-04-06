@@ -18,6 +18,6 @@ RSpec.describe PayMethods::Card, type: :model do
   end
 
   it 'charges' do
-    expect(card.charge!(amount: amount)).to be_a Stripe::PaymentIntent
+    expect(card.charge!(amount: amount)).to be_a Stripe::Charge
   end
 end

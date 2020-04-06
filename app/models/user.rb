@@ -5,6 +5,7 @@ class User < ApplicationRecord
   include WorkCategoryToIntercomTags
 
   belongs_to :org, optional: true
+  has_many :payments, dependent: :destroy
   has_many :projects, dependent: :destroy, inverse_of: :freelancer
   has_many :clients, -> { distinct }, through: :projects
   has_many :org_projects, through: :org, source: :projects
@@ -17,6 +18,7 @@ class User < ApplicationRecord
          :rememberable, :trackable, :validatable
 
   jsonb_accessor :metadata,
+                 fee_percent: [:float, default: LIFEWORK_FEE],
                  work_category: [:string, array: true, default: []],
                  work_type: :string
 
@@ -29,12 +31,20 @@ class User < ApplicationRecord
     activate! unless active?
   end
 
-  def finished_onboarding?
-    client? ? org.active? : projects.not_pending.any?
+  memoize def account_disbursement
+    DoubleEntry.account(:disbursement, scope: self)
+  end
+
+  memoize def account_receivable
+    DoubleEntry.account(:receivable, scope: self)
   end
 
   def client?
     org_id.present?
+  end
+
+  def finished_onboarding?
+    client? ? org.active? : projects.not_pending.any?
   end
 
   def freelancer?

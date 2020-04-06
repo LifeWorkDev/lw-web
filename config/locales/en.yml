@@ -23,6 +23,11 @@ en:
         success:
           status: contract_sent
           text: I sent the contract
+  retainer_project:
+    description:
+      begin: A monthly retainer of
+      middle: withdrawn%{pay_method}begining on
+      end: and disbursed on the first day of every month thereafter
   time:
     formats:
       date_only: "%-m/%-d/%Y"
@@ -37,6 +42,8 @@ en:
       subject: A deposit for %{freelancer} project "%{project}" was made
     milestone_paid:
       subject: A payment for "%{project}" was made to %{freelancer}
+    retainer_deposited:
+      subject: A deposit for %{freelancer} project "%{project}" was made
   comment_mailer:
     notify_new_comment:
       subject: New comment on project "%{project}"
@@ -47,3 +54,5 @@ en:
       subject: Milestone deposit received for "%{project}"
     milestone_paid:
       subject: Milestone payment received for "%{project}"
+    retainer_deposited:
+      subject: Deposit received for retainer with %{client}

@@ -100,9 +100,3 @@ RSpec::Mocks.configuration.allow_message_expectations_on_nil = false
 RSpec::Matchers.define_negated_matcher :not_change, :change
 RSpec::Matchers.define_negated_matcher :not_enqueue_job, :enqueue_job
 RSpec::Matchers.define_negated_matcher :not_enqueue_mail, :enqueue_mail
-
-class Money
-  def input_format
-    format(symbol: false, drop_trailing_zeros: true, thousands_separator: false)
-  end
-end

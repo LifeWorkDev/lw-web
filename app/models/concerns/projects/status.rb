@@ -35,7 +35,7 @@ module Projects::Status
     end
 
     STATE_NAMES = aasm.states.map(&:name).freeze
-    PENDING_STATES = STATE_NAMES.first(STATE_NAMES.find_index(:client_invited)).freeze
+    PENDING_STATES = STATE_NAMES.first(STATE_NAMES.find_index(:client_invited)).freeze # up to, but not including client_invited
 
     scope :pending, -> { where(status: PENDING_STATES) }
     scope :not_pending, -> { where.not(status: PENDING_STATES) }

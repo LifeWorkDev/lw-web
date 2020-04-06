@@ -7,8 +7,11 @@
 h2.text-center.mt-2 = title
 
 .mx-auto.mt-4 style='max-width: 500px;'
+  .alert.alert-success.text-center.shadow-none
+    => mdi_svg 'information-outline', size: 18, style: 'margin-bottom: 2px;'
+    | Using a #{link_to 'bank account', "/c/bank_accounts/new?project=#{params[:project]}", class: 'alert-link'} to pay will give you a 3% discount.
   - unless Rails.env.production?
-    .alert.alert-warning.text-center Use these <a href='https://stripe.com/docs/testing#cards' target='_blank' rel='noopener' class='alert-link'>fake cards</a> to test the system.
+    .alert.alert-warning.text-center.shadow-none Use these <a href='https://stripe.com/docs/testing#cards' target='_blank' rel='noopener' class='alert-link'>fake cards</a> to test the system.
   form#form
     #card-element.form-control.h-auto
     #card-errors.mt-2.alert.alert-danger.d-none

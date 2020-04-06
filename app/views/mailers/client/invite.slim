@@ -1,8 +1,8 @@
-p
+p.lead
   strong => @project.freelancer.name
   ' would like to be paid for
   strong => @project.name
-  | through LifeWork. They have created the following payment schedule:
+  | through LifeWork. They have set up the following payment schedule:
 
 - if @get_started_url.present?
   .mb-3.text-center = link_to 'Get started', @get_started_url, class: 'btn btn-primary'

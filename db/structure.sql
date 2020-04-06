@@ -686,6 +686,113 @@ ALTER SEQUENCE public.comments_id_seq OWNED BY public.comments.id;
 
 
 --
+-- Name: double_entry_account_balances; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.double_entry_account_balances (
+    id bigint NOT NULL,
+    account character varying NOT NULL,
+    scope character varying,
+    balance bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: double_entry_account_balances_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.double_entry_account_balances_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: double_entry_account_balances_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.double_entry_account_balances_id_seq OWNED BY public.double_entry_account_balances.id;
+
+
+--
+-- Name: double_entry_line_checks; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.double_entry_line_checks (
+    id bigint NOT NULL,
+    last_line_id bigint NOT NULL,
+    errors_found boolean NOT NULL,
+    log text,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: double_entry_line_checks_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.double_entry_line_checks_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: double_entry_line_checks_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.double_entry_line_checks_id_seq OWNED BY public.double_entry_line_checks.id;
+
+
+--
+-- Name: double_entry_lines; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.double_entry_lines (
+    id bigint NOT NULL,
+    account character varying NOT NULL,
+    scope character varying,
+    code character varying NOT NULL,
+    amount bigint NOT NULL,
+    balance bigint NOT NULL,
+    partner_id bigint,
+    partner_account character varying NOT NULL,
+    partner_scope character varying,
+    detail_type character varying,
+    detail_id bigint,
+    metadata jsonb,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: double_entry_lines_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.double_entry_lines_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: double_entry_lines_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.double_entry_lines_id_seq OWNED BY public.double_entry_lines.id;
+
+
+--
 -- Name: friendly_id_slugs; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -810,7 +917,8 @@ CREATE TABLE public.pay_methods (
     plaid_token character varying,
     stripe_id character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    metadata jsonb
 );
 
 
@@ -831,6 +939,50 @@ CREATE SEQUENCE public.pay_methods_id_seq
 --
 
 ALTER SEQUENCE public.pay_methods_id_seq OWNED BY public.pay_methods.id;
+
+
+--
+-- Name: payments; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.payments (
+    id bigint NOT NULL,
+    amount_cents integer DEFAULT 0 NOT NULL,
+    currency character varying DEFAULT 'USD'::character varying NOT NULL,
+    status character varying NOT NULL,
+    scheduled_for timestamp without time zone,
+    paid_at timestamp without time zone,
+    note public.citext,
+    stripe_id character varying,
+    stripe_fee_cents integer DEFAULT 0 NOT NULL,
+    stripe_fee_currency character varying DEFAULT 'USD'::character varying NOT NULL,
+    metadata jsonb,
+    pays_for_type character varying NOT NULL,
+    pays_for_id bigint NOT NULL,
+    pay_method_id bigint NOT NULL,
+    user_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: payments_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.payments_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: payments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.payments_id_seq OWNED BY public.payments.id;
 
 
 --
@@ -1047,6 +1199,27 @@ ALTER TABLE ONLY public.comments ALTER COLUMN id SET DEFAULT nextval('public.com
 
 
 --
+-- Name: double_entry_account_balances id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.double_entry_account_balances ALTER COLUMN id SET DEFAULT nextval('public.double_entry_account_balances_id_seq'::regclass);
+
+
+--
+-- Name: double_entry_line_checks id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.double_entry_line_checks ALTER COLUMN id SET DEFAULT nextval('public.double_entry_line_checks_id_seq'::regclass);
+
+
+--
+-- Name: double_entry_lines id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.double_entry_lines ALTER COLUMN id SET DEFAULT nextval('public.double_entry_lines_id_seq'::regclass);
+
+
+--
 -- Name: friendly_id_slugs id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1072,6 +1245,13 @@ ALTER TABLE ONLY public.orgs ALTER COLUMN id SET DEFAULT nextval('public.orgs_id
 --
 
 ALTER TABLE ONLY public.pay_methods ALTER COLUMN id SET DEFAULT nextval('public.pay_methods_id_seq'::regclass);
+
+
+--
+-- Name: payments id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.payments ALTER COLUMN id SET DEFAULT nextval('public.payments_id_seq'::regclass);
 
 
 --
@@ -1136,6 +1316,30 @@ ALTER TABLE ONLY public.comments
 
 
 --
+-- Name: double_entry_account_balances double_entry_account_balances_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.double_entry_account_balances
+    ADD CONSTRAINT double_entry_account_balances_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: double_entry_line_checks double_entry_line_checks_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.double_entry_line_checks
+    ADD CONSTRAINT double_entry_line_checks_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: double_entry_lines double_entry_lines_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.double_entry_lines
+    ADD CONSTRAINT double_entry_lines_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: friendly_id_slugs friendly_id_slugs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1165,6 +1369,14 @@ ALTER TABLE ONLY public.orgs
 
 ALTER TABLE ONLY public.pay_methods
     ADD CONSTRAINT pay_methods_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: payments payments_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.payments
+    ADD CONSTRAINT payments_pkey PRIMARY KEY (id);
 
 
 --
@@ -1213,6 +1425,20 @@ ALTER TABLE ONLY public.schema_migrations
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: index_account_balances_on_account; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_account_balances_on_account ON public.double_entry_account_balances USING btree (account);
+
+
+--
+-- Name: index_account_balances_on_scope_and_account; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_account_balances_on_scope_and_account ON public.double_entry_account_balances USING btree (scope, account);
 
 
 --
@@ -1314,6 +1540,13 @@ CREATE INDEX index_pay_methods_on_org_id_and_status_and_type ON public.pay_metho
 
 
 --
+-- Name: index_payments_on_pays_for_type_and_pays_for_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_payments_on_pays_for_type_and_pays_for_id ON public.payments USING btree (pays_for_type, pays_for_id);
+
+
+--
 -- Name: index_projects_on_metadata; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1398,6 +1631,41 @@ CREATE UNIQUE INDEX index_users_on_unlock_token ON public.users USING btree (unl
 
 
 --
+-- Name: line_checks_created_at_last_line_id_idx; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX line_checks_created_at_last_line_id_idx ON public.double_entry_line_checks USING btree (created_at, last_line_id);
+
+
+--
+-- Name: lines_account_code_created_at_idx; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX lines_account_code_created_at_idx ON public.double_entry_lines USING btree (account, code, created_at);
+
+
+--
+-- Name: lines_account_created_at_idx; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX lines_account_created_at_idx ON public.double_entry_lines USING btree (account, created_at);
+
+
+--
+-- Name: lines_scope_account_created_at_idx; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX lines_scope_account_created_at_idx ON public.double_entry_lines USING btree (scope, account, created_at);
+
+
+--
+-- Name: lines_scope_account_id_idx; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX lines_scope_account_id_idx ON public.double_entry_lines USING btree (scope, account, id);
+
+
+--
 -- Name: que_jobs_args_gin_idx; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1475,11 +1743,27 @@ CREATE TRIGGER que_state_notify AFTER INSERT OR DELETE OR UPDATE ON public.que_j
 
 
 --
+-- Name: payments fk_rails_081dc04a02; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.payments
+    ADD CONSTRAINT fk_rails_081dc04a02 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
 -- Name: projects fk_rails_4ab09e4d6e; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.projects
     ADD CONSTRAINT fk_rails_4ab09e4d6e FOREIGN KEY (org_id) REFERENCES public.orgs(id);
+
+
+--
+-- Name: payments fk_rails_6d94f5a487; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.payments
+    ADD CONSTRAINT fk_rails_6d94f5a487 FOREIGN KEY (pay_method_id) REFERENCES public.pay_methods(id);
 
 
 --
@@ -1559,6 +1843,10 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20191204233902'),
 ('20191218224143'),
 ('20200202215401'),
-('20200226235714');
+('20200223221229'),
+('20200226235714'),
+('20200403232549'),
+('20200405201425'),
+('20200406025019');
 
 

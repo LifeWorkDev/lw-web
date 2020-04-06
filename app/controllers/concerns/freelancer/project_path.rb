@@ -6,6 +6,8 @@ module Freelancer::ProjectPath
       if project.pending?
         if project.client.pending?
           [:edit, current_namespace, project.client]
+        elsif project.contract_sent?
+          next_step(project)
         else
           [:edit, current_namespace, project.becomes(Project)]
         end

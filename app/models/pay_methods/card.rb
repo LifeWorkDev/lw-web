@@ -1,6 +1,9 @@
 class PayMethods::Card < PayMethod
   before_validation :associate_with_stripe_customer!, on: :create
 
+  jsonb_accessor :metadata,
+                 fee_percent: [:float, default: 0.03]
+
   validates :exp_month, :exp_year, numericality: { integer_only: true }
 
   def card?
@@ -8,15 +11,18 @@ class PayMethods::Card < PayMethod
   end
 
   def charge!(amount:, idempotency_key: '', metadata: {})
-    Stripe::PaymentIntent.create({
-                                   amount: amount.cents,
-                                   currency: amount.currency.to_s,
-                                   customer: org.stripe_id,
-                                   payment_method: stripe_id,
-                                   off_session: true,
-                                   confirm: true,
-                                   metadata: metadata,
-                                 }, idempotency_key: "#{idempotency_key}-pay-method-#{id}")
+    Stripe::PaymentIntent.create(
+      {
+        amount: amount.cents,
+        currency: amount.currency.to_s,
+        customer: org.stripe_id,
+        payment_method: stripe_id,
+        off_session: true,
+        confirm: true,
+        metadata: metadata,
+        expand: ['charges.data.balance_transaction'],
+      }, idempotency_key: "#{idempotency_key}-pay-method-#{id}"
+    ).charges.data.first
   end
 
   memoize def stripe_obj
@@ -37,8 +43,7 @@ class PayMethods::Card < PayMethod
 
   def update_from_stripe_object!(stripe_object)
     card = stripe_object.card
-    owner = stripe_object.owner
-    update!(exp_month: card.exp_month, exp_year: card.exp_year, last_4: card.last4, postal_code: owner&.address&.postal_code)
+    update!(exp_month: card.exp_month, exp_year: card.exp_year, last_4: card.last4)
   end
 
 private

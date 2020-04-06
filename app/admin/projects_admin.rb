@@ -43,13 +43,16 @@ Trestle.resource(:projects) do
       select :status, Project.aasm.states_for_select
       number_field :amount, prepend: '$'
       select :currency, Money::Currency.map(&:iso_code)
+      date_field :start_date if project.retainer?
       auto_field :created_at
       auto_field :updated_at
     end
 
-    tab :milestones, badge: project.milestones.size do
-      table MilestonesAdmin.table, collection: project.milestones
-      concat admin_link_to('New Milestone', admin: :milestones, action: :new, params: { project_id: project.id }, class: 'btn btn-success mt-3')
+    if project.milestone?
+      tab :milestones, badge: project.milestones.size do
+        table MilestonesAdmin.table, collection: project.milestones
+        concat admin_link_to('New Milestone', admin: :milestones, action: :new, params: { project_id: project.id }, class: 'btn btn-success mt-3')
+      end
     end
   end
 

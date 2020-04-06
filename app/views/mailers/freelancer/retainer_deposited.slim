@@ -1,0 +1,10 @@
+h2.text-center Great news!
+
+markdown:
+  We've received #{@project.client.name.possessive} deposit of **#{@project.first_amount.format}** for **#{@project}**, so you can begin work on it with the certainty that you'll be paid upon completion.
+
+markdown:
+  We will disburse that amount, net of fees, on **#{l(@project.date, format: :text_without_year)}**.
+  
+markdown:
+  If you ever need to communicate with your client about this milestone, you can reply to this email, and we'll pass the message along to them.
