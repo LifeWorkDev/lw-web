@@ -63,7 +63,7 @@ private
         if project.milestone?
           [:milestones, current_namespace, project]
         elsif project.retainer?
-          [:payment, current_namespace, project]
+          [:preview, current_namespace, project.becomes(Project)]
         end
       else
         freelancer_stripe_connect_path
