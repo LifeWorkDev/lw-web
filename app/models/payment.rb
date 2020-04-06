@@ -103,6 +103,7 @@ class Payment < ApplicationRecord
           detail: self,
           from: freelancer.account_receivable,
           to: ACCOUNT_FEES,
+          metadata: { transfer_id: transfer.id },
         )
       end
     end
