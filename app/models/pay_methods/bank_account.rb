@@ -9,6 +9,13 @@ class PayMethods::BankAccount < PayMethod
     true
   end
 
+  memoize def balance
+    (
+      plaid_obj.balances['available'] ||
+      plaid_obj.balances['current']
+    ).to_money(plaid_obj.balances['iso_currency_code'])
+  end
+
   def charge!(amount:, idempotency_key: '', metadata: {})
     raise "Insufficent balance for Bank Account #{id}. Attempted to charge #{amount.format} to account with balance #{balance.format}" if Rails.env.production? && balance < amount
 
@@ -24,11 +31,8 @@ class PayMethods::BankAccount < PayMethod
     )
   end
 
-  memoize def balance
-    (
-      plaid_obj.balances['available'] ||
-      plaid_obj.balances['current']
-    ).to_money(plaid_obj.balances['iso_currency_code'])
+  def fee_percent
+    0
   end
 
   memoize def plaid_obj
