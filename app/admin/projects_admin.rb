@@ -42,6 +42,7 @@ Trestle.resource(:projects) do
       collection_select_with_link :user_id, User.all, :id, :name, label: 'Freelancer'
       select :status, Project.aasm.states_for_select
       number_field :amount, prepend: '$'
+      number_field :fee_percent
       select :currency, Money::Currency.map(&:iso_code)
       date_field :start_date if project.retainer?
       auto_field :created_at
