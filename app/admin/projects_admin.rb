@@ -11,7 +11,7 @@ Trestle.resource(:projects) do
             else
               Project
             end
-    scope.new(attrs.merge(type: MilestoneProject))
+    scope.new(attrs)
   end
 
   collection { Project.order(id: :asc) }
@@ -41,9 +41,10 @@ Trestle.resource(:projects) do
       collection_select_with_link :org_id, Org.all, :id, :name, label: 'Client'
       collection_select_with_link :user_id, User.all, :id, :name, label: 'Freelancer'
       select :status, Project.aasm.states_for_select
+      collection_select :type, Project.subclasses, :to_s, :to_s
       number_field :amount, prepend: '$'
-      number_field :fee_percent
       select :currency, Money::Currency.map(&:iso_code)
+      number_field :fee_percent
       date_field :start_date if project.retainer?
       auto_field :created_at
       auto_field :updated_at
