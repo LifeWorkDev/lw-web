@@ -17,7 +17,11 @@ class RetainerProject < Project
   }.freeze
 
   def deposit!(user = nil)
-    activate! if payments.create!(amount: first_client_amount, pay_method: pay_method, user: user).charge!
+    return unless payments.create!(amount: first_client_amount, pay_method: pay_method, user: user).charge!
+
+    send_deposit_emails
+    activate!
+    client.activate!
   end
 
   memoize def description(for_client: false, pay_method: ' ')
@@ -47,6 +51,11 @@ class RetainerProject < Project
     (start_date + 1.month).beginning_of_month
   end
   alias date next_date
+
+  def send_deposit_emails
+    FreelancerMailer.with(recipient: freelancer, project: self).retainer_deposited.deliver_later
+    ClientMailer.with(recipient: client.primary_contact, project: self).retainer_deposited.deliver_later
+  end
 
   def stripe_metadata
     { 'Retainer Project ID': id }
