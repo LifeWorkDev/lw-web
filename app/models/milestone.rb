@@ -1,11 +1,11 @@
 class Milestone < ApplicationRecord
   has_logidze
+  include Commentable
   include Milestones::Status
 
   belongs_to :project, class_name: 'MilestoneProject'
   has_one :client, through: :project
   has_one :freelancer, through: :project
-  has_many :comments, -> { order(:created_at) }, as: :commentable, inverse_of: :commentable, dependent: :destroy
   has_many :payments, as: :pays_for, dependent: :destroy
 
   delegate :currency, to: :project
@@ -34,10 +34,6 @@ class Milestone < ApplicationRecord
 
   def formatted_date
     date && l(date)
-  end
-
-  memoize def comment_reply_address
-    "comments-#{id}@#{REPLIES_HOST}"
   end
 
   def next

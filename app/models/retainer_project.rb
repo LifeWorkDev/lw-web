@@ -1,4 +1,5 @@
 class RetainerProject < Project
+  include Commentable
   has_many :payments, as: :pays_for, dependent: :destroy
 
   ICON = mdi_url('autorenew').freeze
