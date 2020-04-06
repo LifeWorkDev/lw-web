@@ -44,7 +44,7 @@ Trestle.resource(:projects) do
       collection_select :type, Project.subclasses, :to_s, :to_s
       number_field :amount, prepend: '$'
       select :currency, Money::Currency.map(&:iso_code)
-      number_field :fee_percent
+      number_field :fee_percent, min: 0, max: 1, step: 0.01
       date_field :start_date if project.retainer?
       auto_field :created_at
       auto_field :updated_at
