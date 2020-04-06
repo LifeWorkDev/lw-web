@@ -18,7 +18,7 @@ module Fees
     end
 
     def processing_fee
-      amount * pay_method.fee_percent
+      amount * (pay_method&.fee_percent || 0)
     end
 
     def pay_method
