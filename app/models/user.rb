@@ -39,7 +39,7 @@ class User < ApplicationRecord
     DoubleEntry.account(:receivable, scope: self)
   end
 
-  def client?
+  memoize def client?
     org_id.present?
   end
 
@@ -47,7 +47,7 @@ class User < ApplicationRecord
     client? ? org.active? : projects.not_pending.any?
   end
 
-  def freelancer?
+  memoize def freelancer?
     !client?
   end
 
@@ -86,7 +86,7 @@ class User < ApplicationRecord
     Stripe::Account.create_login_link(stripe_id).url
   end
 
-  def type
+  memoize def type
     client? ? :client : :freelancer
   end
 

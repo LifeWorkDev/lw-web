@@ -48,9 +48,9 @@ RSpec.describe 'Freelancer views', type: :system do
 
     before { sign_in user }
 
-    it 'redirects from / to the freelancer project dashboard' do
+    it 'redirects from / to the new client page' do
       verify_visit '/'
-      expect(page).to have_current_path '/f/projects'
+      expect(page).to have_current_path '/f/clients/new'
     end
 
     def invite_expectations
@@ -132,40 +132,65 @@ RSpec.describe 'Freelancer views', type: :system do
       end
     end
 
-    context 'with existing project' do
-      let(:user) { Fabricate(:active_freelancer) }
+    context 'with a project' do
       let(:project) { user.projects.first }
       let(:client) { project.client }
       let(:client_user) { client.primary_contact }
 
-      def fill_new_project
-        verify_visit '/f/projects'
-        verify_click '+ Project', '/f/projects/new'
-        all('#project_org_id option')[1].select_option # Placeholder is first
-        fill_in 'project[name]', with: name
-        first('#project_status option[value=contract_sent]').select_option # Placeholder is first
+      describe 'that is active' do
+        let(:user) { Fabricate(:active_freelancer) }
+
+        def fill_new_project
+          verify_visit '/f/projects'
+          verify_click '+ Project', '/f/projects/new'
+          all('#project_org_id option')[1].select_option # Placeholder is first
+          fill_in 'project[name]', with: name
+          first('#project_status option[value=contract_sent]').select_option # Placeholder is first
+        end
+
+        it 'redirects from / to the project dashboard' do
+          verify_visit '/'
+          expect(page).to have_current_path freelancer_projects_path
+        end
+
+        it 'completes milestone project creation for an existing client' do
+          fill_new_project
+          # choose :project_type_milestoneproject, allow_label_click: true
+          click_continue
+          expect(page).to have_content('Project was successfully created.')
+          expect(page).to have_link '< Back', href: %r{/f/projects/.+/edit$}
+          milestone_project_expectations
+        end
+
+        skip 'completes retainer project creation for an existing client' do
+          fill_new_project
+          choose :project_type_retainerproject, allow_label_click: true
+          click_continue
+          expect(page).to have_content('Project was successfully created.')
+          expect(page).to have_link '< Back', href: %r{/f/projects/.+/edit$}
+          retainer_project_expectations
+        end
+
+        it 'can view comments' do
+          project.try(:milestones)&.first&.update!(status: :deposited)
+          verify_visit '/f/projects'
+          verify_click project.name, "/f/projects/#{project.slug}/comments"
+        end
+
+        it 'can view clients index' do
+          verify_visit '/f/clients'
+          expect(page).to have_content client.name
+          expect(page).to have_content client_user.email
+        end
       end
 
-      it 'completes milestone project creation for an existing client' do
-        fill_new_project
-        # choose :project_type_milestoneproject, allow_label_click: true
-        click_continue
-        expect(page).to have_content('Project was successfully created.')
-        expect(page).to have_link '< Back', href: %r{/f/projects/.+/edit$}
-        milestone_project_expectations
-      end
-
-      skip 'completes retainer project creation for an existing client' do
-        fill_new_project
-        choose :project_type_retainerproject, allow_label_click: true
-        click_continue
-        expect(page).to have_content('Project was successfully created.')
-        expect(page).to have_link '< Back', href: %r{/f/projects/.+/edit$}
-        retainer_project_expectations
-      end
-
-      context 'when pending' do
+      describe 'that is pending' do
         let(:user) { Fabricate(:freelancer, project_type: :milestone) }
+
+        it 'redirects from / to the edit client page for the first project' do
+          verify_visit '/'
+          expect(page).to have_current_path edit_freelancer_org_path(client)
+        end
 
         it 'can edit' do
           verify_visit '/f/projects'
@@ -173,18 +198,6 @@ RSpec.describe 'Freelancer views', type: :system do
           click_continue status_freelancer_project_path(project)
           expect(page).not_to have_content 'updated'
         end
-      end
-
-      it 'can view comments for an active project' do
-        project.try(:milestones)&.first&.update!(status: :deposited)
-        verify_visit '/f/projects'
-        verify_click project.name, "/f/projects/#{project.slug}/comments"
-      end
-
-      it 'can view clients index' do
-        verify_visit '/f/clients'
-        expect(page).to have_content client.name
-        expect(page).to have_content client_user.email
       end
     end
   end

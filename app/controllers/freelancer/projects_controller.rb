@@ -18,6 +18,10 @@ class Freelancer::ProjectsController < ProjectsController
     @for_client = false
   end
 
+  def show
+    redirect_to project_path(@project)
+  end
+
   # GET /f/projects/1/status
   def status
     return if request.get?

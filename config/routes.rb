@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     resources :pay_methods, except: :new do
       get :created, on: :collection
     end
-    resources :projects, only: :index do
+    resources :projects, only: %i[index show] do
       resources :comments, only: %i[index create]
       match :deposit, via: %i[get post], on: :member
     end
@@ -85,5 +85,5 @@ Rails.application.routes.draw do
   %w[signup users].each { |path| get path, to: redirect('/sign_up') }
   get 'users/password', to: redirect('/passwords/new')
 
-  root to: 'application#home'
+  root to: 'authenticated#home'
 end

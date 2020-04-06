@@ -8,14 +8,6 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery prepend: true, with: :reset_session
 
-  def home
-    if user_signed_in?
-      redirect_to user_default_path
-    else
-      redirect_to '/sign_up'
-    end
-  end
-
   def styleguide; end
 
   def after_sign_out_path_for(_resource_or_scope)
@@ -57,22 +49,6 @@ protected
 
 private
 
-  def next_step(project)
-    if project.may_invite_client?
-      if current_user.stripe_id.present?
-        if project.milestone?
-          [:milestones, current_namespace, project]
-        elsif project.retainer?
-          [:preview, current_namespace, project.becomes(Project)]
-        end
-      else
-        freelancer_stripe_connect_path
-      end
-    else
-      [:status, current_namespace, project.becomes(Project)]
-    end
-  end
-
   def storable_location?
     request.get? && is_navigational_format? && !devise_controller? && !request.xhr?
   end
@@ -80,20 +56,6 @@ private
   def store_user_location!
     # :user is the scope we are authenticating
     store_location_for(:user, request.fullpath)
-  end
-
-  def user_default_path
-    if current_user.time_zone.present?
-      if current_user.client? && current_user.org.work_frequency.blank?
-        edit_client_org_path
-      else
-        [current_user.type, Project]
-      end
-    elsif current_user.freelancer?
-      edit_freelancer_user_path
-    else
-      edit_user_path
-    end
   end
 
   class Unauthorized < StandardError; end

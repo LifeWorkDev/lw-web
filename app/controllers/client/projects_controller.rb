@@ -1,8 +1,4 @@
 class Client::ProjectsController < ProjectsController
-  def index
-    @projects = current_entity.projects.not_archived.not_pending.order(:name) + current_entity.projects.archived.order(:name)
-  end
-
   def deposit
     if request.post?
       @project.deposit!(current_user)
@@ -14,4 +10,17 @@ class Client::ProjectsController < ProjectsController
       redirect_to "/c/pay_methods?project=#{@project.slug}"
     end
   end
+
+  def index
+    @projects = current_entity.projects.not_archived.not_pending.order(:name) + current_entity.projects.archived.order(:name)
+  end
+
+  def show
+    redirect_to project_path(@project)
+  end
+
+  def project_path(project)
+    project.client_invited? ? [:deposit, current_namespace, project.becomes(Project)] : [current_namespace, project.becomes(Project), :comments]
+  end
+  helper_method :project_path
 end

@@ -9,7 +9,7 @@
     tbody
       - @projects.each do |project|
         tr
-          td = link_to project.client_invited? ? [:deposit, current_namespace, project.becomes(Project)] : [current_namespace, project.becomes(Project), :comments]
+          td = link_to project_path(project)
             => svg_inject project.class::ICON, title: project.class::NAME
             = project.name
           td = project.freelancer.name

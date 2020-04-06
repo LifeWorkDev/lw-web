@@ -67,11 +67,13 @@ RSpec.describe 'Client views', type: :system do
       end
     end
 
-    context 'when active' do
+    context 'when finished onboarding' do
+      before { project } # Fabricate
+
       it 'redirects from / to the client project dashboard' do
         org.update(work_frequency: Org::WORK_FREQUENCY.sample)
         verify_visit '/'
-        expect(page).to have_current_path client_projects_path
+        expect(page).to have_current_path "/c/pay_methods?project=#{project.slug}"
       end
     end
 
