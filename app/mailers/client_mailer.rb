@@ -1,5 +1,6 @@
 class ClientMailer < ApplicationMailer
   before_action do
+    @for_client = true
     @freelancer_name = (@milestone || @project)&.freelancer&.name
   end
 

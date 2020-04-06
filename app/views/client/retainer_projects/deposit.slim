@@ -4,6 +4,6 @@ p.lead
   = @project.first_description(for_client: true)
 
 p.lead
-  = "#{@project.description(for_client: true, pay_method: " from your #{current_org.primary_pay_method} ")}."
+  = "#{@project.description(for_client: true)}."
 
 = render 'client/projects/deposit_form', amount: @project.first_client_amount

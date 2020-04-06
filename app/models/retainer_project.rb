@@ -24,8 +24,8 @@ class RetainerProject < Project
     client.activate!
   end
 
-  memoize def description(for_client: false, pay_method: ' ')
-    "#{t('retainer_project.description.begin')} #{(for_client ? client_amount : amount).format(no_cents_if_whole: true)} #{' will then be ' if for_client} #{t('retainer_project.description.middle', pay_method: pay_method)} #{l(next_date, format: :text_without_year)}, #{t('retainer_project.description.end')}"
+  memoize def description(for_client: false)
+    "#{t('retainer_project.description.begin')} #{(for_client ? client_amount : amount).format(no_cents_if_whole: true)} #{' will then be ' if for_client} #{t('retainer_project.description.middle', pay_method: for_client ? " from your #{pay_method} " : ' ')} #{l(next_date, format: :text_without_year)}, #{t('retainer_project.description.end')}"
   end
 
   memoize def first_amount
