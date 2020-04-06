@@ -12,8 +12,8 @@ class MilestoneProject < Project
     description: 'Set amounts, paid on specific dates'.freeze,
   }.freeze
 
-  def deposit!
-    milestones.first.deposit!
+  def deposit!(user = nil)
+    milestones.first.deposit!(user)
   end
 
   def milestones_changed?
