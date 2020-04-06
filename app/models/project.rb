@@ -1,5 +1,6 @@
 class Project < ApplicationRecord
   has_logidze
+  include Fees
   include Projects::Status
   include STIPreload
   extend FriendlyId
@@ -8,7 +9,13 @@ class Project < ApplicationRecord
   belongs_to :client, class_name: 'Org', foreign_key: :org_id, inverse_of: :projects
   belongs_to :freelancer, class_name: 'User', foreign_key: :user_id, inverse_of: :projects
 
+  before_validation :set_defaults, on: :create
+
   monetize :amount_cents, with_model_currency: :currency, allow_nil: true, numericality: { greater_than_or_equal_to: 0 }
+
+  jsonb_accessor :metadata,
+                 fee_percent: :float,
+                 client_pays_fees: [:boolean, default: false]
 
   class << self
     delegate :fa_url, :mdi_url, to: 'ApplicationController.helpers', private: true
@@ -42,10 +49,6 @@ class Project < ApplicationRecord
     end
   end
 
-  def amount_with_fee
-    amount * (1 + LIFEWORK_FEE)
-  end
-
   memoize def short_type
     self.class.short_type
   end
@@ -59,6 +62,10 @@ class Project < ApplicationRecord
   end
 
 private
+
+  def set_defaults
+    self.fee_percent ||= freelancer.fee_percent
+  end
 
   def should_generate_new_friendly_id?
     name_changed? || super

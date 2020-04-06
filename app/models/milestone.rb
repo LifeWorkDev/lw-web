@@ -1,6 +1,7 @@
 class Milestone < ApplicationRecord
   has_logidze
   include Commentable
+  include Fees
   include Milestones::Status
 
   belongs_to :project, class_name: 'MilestoneProject'
@@ -8,20 +9,8 @@ class Milestone < ApplicationRecord
   has_one :freelancer, through: :project
   has_many :payments, as: :pays_for, dependent: :destroy
 
-  delegate :currency, to: :project
+  delegate :currency, :client_pays_fees?, :fee_percent, to: :project
   monetize :amount_cents, with_model_currency: :currency, allow_nil: true, numericality: { greater_than_or_equal_to: 0 }
-
-  def amount_with_fee
-    amount * (1 + LIFEWORK_FEE)
-  end
-
-  def client_amount
-    amount_with_fee
-  end
-
-  def freelancer_amount
-    amount
-  end
 
   def as_json(*)
     {

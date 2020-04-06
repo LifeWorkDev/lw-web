@@ -917,7 +917,8 @@ CREATE TABLE public.pay_methods (
     plaid_token character varying,
     stripe_id character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    metadata jsonb
 );
 
 
@@ -1843,6 +1844,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20191218224143'),
 ('20200202215401'),
 ('20200223221229'),
-('20200226235714');
+('20200226235714'),
+('20200403232549'),
+('20200405201425'),
+('20200406025019');
 
 

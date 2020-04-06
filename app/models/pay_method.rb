@@ -19,6 +19,10 @@ class PayMethod < ApplicationRecord
     false
   end
 
+  def fee_percent
+    0
+  end
+
   memoize def display_type
     model_name.human.titleize
   end
