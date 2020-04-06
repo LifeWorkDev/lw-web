@@ -4,7 +4,9 @@ module Freelancer::ProjectPath
   included do
     def project_path(project)
       if project.pending?
-        if project.client.pending? && project.client.projects.size <= 1
+        if project.retainer?
+          next_step(project)
+        elsif project.client.pending? && project.client.projects.size <= 1
           [:edit, current_namespace, project.client]
         elsif project.contract_sent?
           next_step(project)

@@ -13,7 +13,7 @@ class Freelancer::ProjectsController < ProjectsController
 
   # GET /f/projects/1/preview
   def preview
-    @back = [:payment, current_namespace, @project]
+    @back = [:payment, current_namespace, @project] if @project.milestone?
     @hide_email_footer = true
   end
 

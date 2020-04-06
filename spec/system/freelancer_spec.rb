@@ -165,9 +165,9 @@ RSpec.describe 'Freelancer views', type: :system do
       end
 
       context 'when pending' do
-        let(:user) { Fabricate(:freelancer) }
+        let(:user) { Fabricate(:freelancer, project_type: :milestone) }
 
-        it 'can edit pending project' do
+        it 'can edit' do
           verify_visit '/f/projects'
           verify_click project.name, edit_freelancer_org_path(project.client)
           click_continue status_freelancer_project_path(project)
