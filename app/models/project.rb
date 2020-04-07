@@ -57,6 +57,10 @@ class Project < ApplicationRecord
     short_type.humanize
   end
 
+  def for_subject
+    'a project'.freeze
+  end
+
   def to_s
     name
   end

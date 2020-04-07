@@ -43,6 +43,10 @@ class RetainerProject < Project
     "The first payment of #{(for_client ? first_client_amount : first_amount).format(no_cents_if_whole: true)} is due by #{l(start_date, format: :text_without_year)}, and will be disbursed to #{freelancer.name} on #{l(next_date, format: :text_without_year)}."
   end
 
+  def for_subject
+    'a new engagement'.freeze
+  end
+
   def idempotency_key
     "retainer-#{id}"
   end

@@ -35,7 +35,7 @@ en:
   client_mailer:
     invite:
       reminder: Reminder
-      subject: '%{freelancer} has invited you to a project'
+      subject: '%{freelancer} has invited you to %{project}'
     milestone_approaching:
       subject: A milestone payment for "%{project}" is approaching
     milestone_deposited:

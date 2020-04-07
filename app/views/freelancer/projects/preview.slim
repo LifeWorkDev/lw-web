@@ -16,7 +16,7 @@
       |  #{Devise.mailer_sender}
       br
       strong Subject:
-      =< t('client_mailer.invite.subject', freelancer: current_user.name)
+      =< t('client_mailer.invite.subject', freelancer: current_user.name, project: @project.for_subject)
     .card-body.mw-600px.p-0 = render template: 'mailers/client/invite', layout: 'mailers/_body'
 
 .mw-600px.mx-auto
