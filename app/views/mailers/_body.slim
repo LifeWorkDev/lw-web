@@ -1,10 +1,14 @@
 .container.py-3
-  = link_to root_url, target: :_blank, rel: :noopener
-    = image_pack_tag 'lifework-logo.png', height: 26, width: 150
+  - logo = image_pack_tag 'lifework-logo.png', height: 26, width: 150
+  - if @for_client
+    = link_to logo, root_url, target: :_blank, rel: :noopener
+  - else
+    = logo
+    
 .container.py-3
   = yield
 .container.p-0
   = yield :no_gutters
-- unless @hide_email_footer
+- if @for_client
   .container.bg-dark.py-3
     .text-center.text-muted &copy; #{Time.zone.today.year} LifeWork Holdings, Inc.
