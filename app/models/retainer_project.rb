@@ -16,6 +16,8 @@ class RetainerProject < Project
     description: 'A recurring, fixed retainer payment'.freeze,
   }.freeze
 
+  alias first_amount amount
+
   def deposit!(user = nil)
     return unless payments.create!(amount: first_client_amount, pay_method: pay_method, user: user).charge!
 
@@ -25,14 +27,7 @@ class RetainerProject < Project
   end
 
   memoize def description(for_client: false)
-    "#{t('retainer_project.description.begin')} #{(for_client ? client_amount : amount).format(no_cents_if_whole: true)} #{' will then be ' if for_client} #{t('retainer_project.description.middle', pay_method: for_client ? " from your #{pay_method} " : ' ')} #{l(next_date, format: :text_without_year)}, #{t('retainer_project.description.end')}"
-  end
-
-  memoize def first_amount
-    return amount if start_date.day == 1
-
-    days = Time.days_in_month(start_date.month, start_date.year)
-    amount * (days + 1 - start_date.day).fdiv(days)
+    "#{t('retainer_project.description.begin')} #{(for_client ? client_amount : amount).format(no_cents_if_whole: true)} #{' will then be ' if for_client} #{t('retainer_project.description.middle', pay_method: for_client ? " from your #{pay_method} " : ' ')} #{l(next_date, format: :text_without_year)}, #{t('retainer_project.description.end', day: start_date.day.ordinalize)}"
   end
 
   memoize def first_client_amount
@@ -52,7 +47,7 @@ class RetainerProject < Project
   end
 
   def next_date
-    (start_date + 1.month).beginning_of_month
+    start_date + 1.month
   end
   alias date next_date
 

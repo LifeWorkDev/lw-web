@@ -27,7 +27,7 @@ en:
     description:
       begin: A monthly retainer of
       middle: withdrawn%{pay_method}begining on
-      end: and disbursed on the first day of every month thereafter
+      end: and disbursed on the %{day} day of every month thereafter
   time:
     formats:
       date_only: "%-m/%-d/%Y"
