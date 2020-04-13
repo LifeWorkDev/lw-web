@@ -3,6 +3,21 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   subject(:user) { Fabricate(:user) }
 
+  describe 'defaults' do
+    it 'sets a random password when provided value is nil' do
+      expect { Fabricate(:user).encrypted_password }.not_to raise_error
+    end
+
+    it 'sets a random password when provided value is blank' do
+      expect { Fabricate(:user, password: '').encrypted_password }.not_to raise_error
+    end
+
+    it 'does not override a provided password' do
+      password = Faker::Internet.password
+      expect(Fabricate(:user, password: password).valid_password?(password)).to eq true
+    end
+  end
+
   describe '.invite' do
     it 'does not send invitation email' do
       expect do

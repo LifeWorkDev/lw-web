@@ -115,6 +115,6 @@ private
   end
 
   def set_defaults
-    self.password ||= Devise.friendly_token[0, 20]
+    password.blank? && self.password = Devise.friendly_token[0, 20]
   end
 end
