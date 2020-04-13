@@ -29,7 +29,7 @@ class Org < ApplicationRecord
   end
 
   def primary_contact
-    users.first
+    users.last
   end
 
   def primary_pay_method
