@@ -60,7 +60,7 @@ private
     self.plaid_token = response['access_token']
     response = PLAID_CLIENT.processor.stripe.bank_account_token.create(plaid_token, plaid_id)
     stripe_token = response['stripe_bank_account_token']
-    PLAID_CLIENT.item.webhook.update(plaid_token, PLAID_WEBHOOK_ENDPOINT)
+    PLAID_CLIENT.item.webhook.update(plaid_token, PLAID_WEBHOOK_ENDPOINT) if PLAID_WEBHOOK_ENDPOINT
 
     if org.stripe_id.present?
       source = Stripe::Customer.create_source(org.stripe_id, source: stripe_token)
