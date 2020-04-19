@@ -77,8 +77,8 @@ javascript:
             stripe_id: result.setupIntent.payment_method,
           })
         } else {
-          window.bugsnagClient.metaData = { result: result }
-          window.bugsnagClient.notify(new Error('Unhandled confirmCardSetup result'))
+          window.Bugsnag.addMetadata('custom', { result: result })
+          window.Bugsnag.notify(new Error('Unhandled confirmCardSetup result'))
         }
       })
     })

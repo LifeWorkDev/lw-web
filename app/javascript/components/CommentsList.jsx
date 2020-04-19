@@ -22,7 +22,7 @@ const CommentItem = (props) => {
   const [editing, setEditing] = useState(false)
   const [commentText, setCommentText] = useState(comment.comment)
   const [isError, setIsError] = useState(false)
-  const ErrorBoundary = window.bugsnagClient.getPlugin('react')
+  const ErrorBoundary = window.Bugsnag.getPlugin('react')
   const commentForm = document.getElementById('comment-form')
 
   const handleCommentChange = (event) => {

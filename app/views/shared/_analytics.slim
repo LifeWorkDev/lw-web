@@ -18,9 +18,5 @@
 
 - if user_signed_in?
   javascript:
-    if (window.bugsnagClient)
-      window.bugsnagClient.user = {
-        id: #{true_user.id},
-        name: '#{true_user.name}',
-        email: '#{true_user.email}',
-      }
+    if (window.Bugsnag)
+      window.Bugsnag.setUser(#{true_user.id}, '#{true_user.email}', '#{true_user.name}')

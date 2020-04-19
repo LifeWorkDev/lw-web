@@ -16,7 +16,7 @@ const MilestonePicker = (props) => {
   const [selectedDays, setSelectedDays] = useState(
     getMilestoneDays(props.milestones),
   )
-  const ErrorBoundary = window.bugsnagClient.getPlugin('react')
+  const ErrorBoundary = window.Bugsnag.getPlugin('react')
   const isMobile = window.innerWidth < 768 // iPad portrait & below
   const minDate = addBusinessDays(new Date().setHours(0, 0, 0, 0), 5)
   const submitButton = document.getElementById('submit-form')

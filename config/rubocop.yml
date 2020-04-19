@@ -12,6 +12,7 @@ AllCops:
     - tmp/**/*
     - vendor/**/*
   ExtraDetails: true
+  NewCops: enable
 
 Layout/AccessModifierIndentation:
   EnforcedStyle: outdent

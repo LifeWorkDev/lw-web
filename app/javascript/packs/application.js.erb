@@ -1,13 +1,12 @@
 import 'bootstrap.native/dist/bootstrap-native-v4'
-import bugsnag from '@bugsnag/js'
-import bugsnagReact from '@bugsnag/plugin-react'
+import Bugsnag from '@bugsnag/js'
+import BugsnagPluginReact from '@bugsnag/plugin-react'
 import React from 'react'
 
 require('@rails/ujs').start()
 require('turbolinks').start()
 
-window.bugsnagClient = bugsnag({ apiKey: 'c5a97432b84ea8031cc78cc2997cb2ba', releaseStage: window.RELEASE_STAGE, notifyReleaseStages: <%= NOTIFY_RELEASE_STAGES %>, appVersion: '<%= ENV['HEROKU_RELEASE_VERSION'] || 'dev' %>', logger: null })
-window.bugsnagClient.use(bugsnagReact, React)
+window.Bugsnag = Bugsnag.start({ apiKey: 'c5a97432b84ea8031cc78cc2997cb2ba', releaseStage: window.RELEASE_STAGE, enabledReleaseStages: <%= NOTIFY_RELEASE_STAGES %>, appVersion: '<%= ENV['HEROKU_RELEASE_VERSION'] || 'dev' %>', logger: null, plugins: [new BugsnagPluginReact(React)]})
 
 require.context('../images', true)
 // Support component names relative to this directory:
@@ -41,8 +40,8 @@ window.createPayMethod = function(data) {
     .then(response => {
       if (!response.ok) {
         console.error(response)
-        window.bugsnagClient.metaData = { response: response }
-        window.bugsnagClient.notify(new Error('Payment Method creation error'))
+        window.Bugsnag.addMetadata('custom', { response: response })
+        window.Bugsnag.notify(new Error('Payment Method creation error'))
       } else return response.json()
     }).then(data => window.location.replace(data.location))
 }

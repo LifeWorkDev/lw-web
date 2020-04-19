@@ -21,7 +21,7 @@ const PaymentsForm = (props) => {
   const [milestones, setMilestones] = useState(props.milestones)
   const [total, setTotal] = useState(Number(props.total))
   const submitButton = document.getElementById('submit-form')
-  const ErrorBoundary = window.bugsnagClient.getPlugin('react')
+  const ErrorBoundary = window.Bugsnag.getPlugin('react')
   let errorText
   let sum = 0
 
