@@ -72,7 +72,7 @@ group :development do
   gem 'guard-rubocop', require: false
   gem 'guard-shell', require: false
   gem 'guard-slimlint', require: false
-  gem 'invoker', github: 'swrobel/invoker'
+  gem 'invoker'
   install_if -> { RUBY_PLATFORM =~ /linux/ } do
     gem 'libnotify' # System notifications for Linux
   end

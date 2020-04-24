@@ -37,22 +37,6 @@ GIT
       rails (>= 3)
 
 GIT
-  remote: https://github.com/swrobel/invoker.git
-  revision: d831d2b1552bb9ff35aec6a6161367da60570846
-  specs:
-    invoker (1.5.7)
-      colorize (~> 0.8.1)
-      dotenv (~> 2.0, != 2.4.0, != 2.3.0)
-      em-proxy (~> 0.1)
-      eventmachine (~> 1.0.4)
-      formatador (~> 0.2)
-      http-parser-lite (~> 0.6)
-      iniparse (~> 1.1)
-      rubydns (~> 0.8.5)
-      thor (~> 0.19)
-      uuid (~> 2.3)
-
-GIT
   remote: https://github.com/swrobel/nilify_blanks.git
   revision: 33fe3904e38b01b11fc4452ba434d9f210963179
   specs:
@@ -282,6 +266,17 @@ GEM
     intercom (3.9.5)
     intercom-rails (0.4.1)
       activesupport (> 3.0)
+    invoker (1.5.7)
+      colorize (~> 0.8.1)
+      dotenv (~> 2.0, != 2.4.0, != 2.3.0)
+      em-proxy (~> 0.1)
+      eventmachine (~> 1.0.4)
+      formatador (~> 0.2)
+      http-parser-lite (~> 0.6)
+      iniparse (~> 1.1)
+      rubydns (~> 0.8.5)
+      thor (>= 0.19, < 2)
+      uuid (~> 2.3)
     jaro_winkler (1.5.4)
     json (2.3.0)
     jsonapi-renderer (0.2.2)
@@ -543,7 +538,7 @@ GEM
     temple (0.8.2)
     terminal-notifier (2.0.0)
     terminal-notifier-guard (1.7.0)
-    thor (0.20.3)
+    thor (1.0.1)
     thread_safe (0.3.6)
     tilt (2.0.10)
     turbolinks (5.2.1)
@@ -615,7 +610,7 @@ DEPENDENCIES
   guard-slimlint
   intercom (~> 3.9.5)
   intercom-rails
-  invoker!
+  invoker
   jsonb_accessor!
   libnotify
   listen (>= 3.0.5, < 3.2)
