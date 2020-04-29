@@ -1,7 +1,7 @@
 h2.text-center Payment is on the way!
 
 markdown:
-  We've transferred **#{@milestone.amount.format}** to your Stripe account for the successful completion of **#{@milestone.description}**. You should see it hit your bank account within a few business days.
+  We've transferred **#{@milestone.amount.format}** to your Stripe account for the successful completion of **#{@milestone.description}** for **#{@milestone.client.name}**. You should see it hit your bank account within a few business days.
 
 - if @next_milestone
   markdown:
