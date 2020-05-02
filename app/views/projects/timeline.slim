@@ -15,14 +15,14 @@
   .row.text-center.mt-5
     .column.w-100
       = render 'shared/section_heading'
-        strong = l(@project.start_date)
+        strong => l(@project.start_date)
         = render 'shared/status_badge', class: 'align-text-bottom', record: @project.payments.first
       .mt-2.mb-3
         p Received #{@project.amount.format} deposit from #{@project.client}
   .row.text-center.mt-5
     .column.w-100
       = render 'shared/section_heading'
-        strong = l(@project.next_date)
+        strong => l(@project.next_date)
         = render 'shared/status_badge', class: 'align-text-bottom', record: Payment.new
       .mt-2.mb-3
         p #{@project.freelancer_amount.format} will be transferred to #{@project.freelancer}
