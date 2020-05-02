@@ -3,13 +3,13 @@ class MilestoneProject < Project
   has_many :comments, through: :milestones
   accepts_nested_attributes_for :milestones, reject_if: :existing_milestone?, allow_destroy: true
 
-  ICON = mdi_url('flag-checkered').freeze
-  NAME = 'Milestone-based'.freeze
+  ICON = mdi_url("flag-checkered").freeze
+  NAME = "Milestone-based".freeze
 
   FOR_SELECT = {
     name: NAME,
     icon: ICON,
-    description: 'Set amounts, paid on specific dates'.freeze,
+    description: "Set amounts, paid on specific dates".freeze,
   }.freeze
 
   def deposit!(user = nil)

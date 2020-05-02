@@ -13,9 +13,9 @@ class Freelancer::StripeController < AuthenticatedController
                  else
                    user_default_path
                  end
-      redirect_to redirect, notice: 'Successfully linked to Stripe.'
+      redirect_to redirect, notice: "Successfully linked to Stripe."
     else
-      redirect_to freelancer_stripe_connect_path, alert: 'Could not link to Stripe. Please try again.'
+      redirect_to freelancer_stripe_connect_path, alert: "Could not link to Stripe. Please try again."
     end
   end
 

@@ -1,5 +1,5 @@
 class AddLogidzeToProjects < ActiveRecord::Migration[5.0]
-  require 'logidze/migration'
+  require "logidze/migration"
   include Logidze::Migration
 
   def up
@@ -22,7 +22,7 @@ class AddLogidzeToProjects < ActiveRecord::Migration[5.0]
 
   def down
     safety_assured do
-      execute 'DROP TRIGGER IF EXISTS logidze_on_projects on projects;'
+      execute "DROP TRIGGER IF EXISTS logidze_on_projects on projects;"
     end
 
     remove_column :projects, :log_data

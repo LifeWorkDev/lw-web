@@ -6,7 +6,7 @@ module Dates
     # https://stripe.com/docs/ach#ach-payments-workflow
     memoize def deposit_time
       client.primary_contact.use_zone do
-        Time.current.change(hour: 20, min: 45, zone: 'UTC')
+        Time.current.change(hour: 20, min: 45, zone: "UTC")
       end
     end
 
@@ -22,7 +22,7 @@ module Dates
 
     # 3 business days before Milestone date
     memoize def reminder_date
-      Business::Calendar.load_cached('achus').subtract_business_days(date, 3)
+      Business::Calendar.load_cached("achus").subtract_business_days(date, 3)
     end
 
     # 9am local time

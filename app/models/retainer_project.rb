@@ -7,13 +7,13 @@ class RetainerProject < Project
   jsonb_accessor :metadata,
                  start_date: :date
 
-  ICON = mdi_url('autorenew').freeze
-  NAME = 'Monthly Retainer'.freeze
+  ICON = mdi_url("autorenew").freeze
+  NAME = "Monthly Retainer".freeze
 
   FOR_SELECT = {
     name: NAME,
     icon: ICON,
-    description: 'A recurring, fixed retainer payment'.freeze,
+    description: "A recurring, fixed retainer payment".freeze,
   }.freeze
 
   alias first_amount amount
@@ -39,7 +39,7 @@ class RetainerProject < Project
   end
 
   def for_subject
-    'a new engagement'.freeze
+    "a new engagement".freeze
   end
 
   def idempotency_key

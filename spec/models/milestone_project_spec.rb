@@ -1,9 +1,9 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe MilestoneProject, type: :model do
   subject(:project) { Fabricate(:milestone_project) }
 
-  describe 'accepts_nested_attributes_for :milestones' do
+  describe "accepts_nested_attributes_for :milestones" do
     subject(:project) { Fabricate(:milestone_project_with_milestones) }
 
     it "doesn't create multiple milestones for the same date" do

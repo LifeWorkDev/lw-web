@@ -11,12 +11,12 @@ class PayMethods::BankAccount < PayMethod
 
   memoize def balance
     (
-      plaid_obj.balances['available'] ||
-      plaid_obj.balances['current']
-    ).to_money(plaid_obj.balances['iso_currency_code'])
+      plaid_obj.balances["available"] ||
+      plaid_obj.balances["current"]
+    ).to_money(plaid_obj.balances["iso_currency_code"])
   end
 
-  def charge!(amount:, idempotency_key: '', metadata: {})
+  def charge!(amount:, idempotency_key: "", metadata: {})
     raise "Insufficent balance for Bank Account #{id}. Attempted to charge #{amount.format} to account with balance #{balance.format}" if Rails.env.production? && balance < amount
 
     Stripe::Charge.create(
@@ -26,7 +26,7 @@ class PayMethods::BankAccount < PayMethod
         customer: org.stripe_id,
         source: stripe_id,
         metadata: metadata,
-        expand: ['balance_transaction'],
+        expand: ["balance_transaction"],
       }, idempotency_key: "#{idempotency_key}-pay-method-#{id}"
     )
   end
@@ -36,7 +36,7 @@ class PayMethods::BankAccount < PayMethod
   end
 
   memoize def plaid_obj
-    PLAID_CLIENT.accounts.balance.get(plaid_token, account_ids: [plaid_id])['accounts'].first
+    PLAID_CLIENT.accounts.balance.get(plaid_token, account_ids: [plaid_id])["accounts"].first
   end
 
   memoize def stripe_obj
@@ -57,9 +57,9 @@ private
     return if stripe_id.present?
 
     response = PLAID_CLIENT.item.public_token.exchange(plaid_link_token)
-    self.plaid_token = response['access_token']
+    self.plaid_token = response["access_token"]
     response = PLAID_CLIENT.processor.stripe.bank_account_token.create(plaid_token, plaid_id)
-    stripe_token = response['stripe_bank_account_token']
+    stripe_token = response["stripe_bank_account_token"]
     PLAID_CLIENT.item.webhook.update(plaid_token, PLAID_WEBHOOK_ENDPOINT) if PLAID_WEBHOOK_ENDPOINT
 
     if org.stripe_id.present?

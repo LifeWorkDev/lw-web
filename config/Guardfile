@@ -1,6 +1,6 @@
-require 'active_support/core_ext/string'
+require "active_support/core_ext/string"
 
-require 'guard/rspec/dsl'
+require "guard/rspec/dsl"
 dsl = Guard::RSpec::Dsl.new(self)
 
 directories %w[app config db lib spec]
@@ -8,34 +8,34 @@ directories %w[app config db lib spec]
 guard :shell, first_match: true do
   # Restart puma
   watch(%r{config/((.ruby-version|Gemfile.lock)|(application|environment|puma)\.rb|(credentials.+\.enc)|(environments/development.rb|initializers/.+\.rb))|app/admin/fields/.+\.rb}) do |m|
-    n "#{m[0]} changed", 'Restarting server/worker...'
+    n "#{m[0]} changed", "Restarting server/worker..."
     # Copied from https://github.com/rails/rails/blob/master/railties/lib/rails/tasks/restart.rake
-    FileUtils.mkdir_p 'tmp'
-    FileUtils.touch 'tmp/restart.txt'
+    FileUtils.mkdir_p "tmp"
+    FileUtils.touch "tmp/restart.txt"
     `bin/invoker restart lifework-jobs`
     nil
   end
 
   # Run yarn
-  watch('config/package.json') do
+  watch("config/package.json") do
     `bin/yarn`
   end
 
   # Run bundler
-  watch('config/Gemfile') do
+  watch("config/Gemfile") do
     ::Bundler.with_clean_env do
       `bin/bundle --without production | awk '!/^(Using|Fetching)/'`
     end
   end
 end
 
-guard :rubocop, all_on_start: true, cli: %w[--auto-correct --display-cop-names] do
+guard :rubocop, all_on_start: true, cli: %w[--auto-correct --display-cop-names --config=config/rubocop_strict.yml], command: "bin/rubocop-daemon" do
   watch(/.+\.(rb|rake)$/)
-  watch('config/Gemfile')
-  watch(%r{(?:.+/)?\.?rubocop(?:_todo)?\.yml$}) { '.' }
+  watch("config/Gemfile")
+  watch(%r{(?:.+/)?\.?rubocop(?:_todo)?\.yml$}) { "." }
 end
 
-guard :rspec, cmd: 'ruby -W:no-deprecated bin/rspec' do
+guard :rspec, cmd: "ruby -W:no-deprecated bin/rspec" do
   # RSpec files
   rspec = dsl.rspec
   watch(rspec.spec_files)
@@ -72,10 +72,10 @@ guard :rspec, cmd: 'ruby -W:no-deprecated bin/rspec' do
   watch(%r{^app/models/(.+)\.rb$}) { |m| "spec/models/#{m[1].pluralize}" }
 
   # Project subclasses
-  watch(%r{^app/models/project.rb$}) { Dir['spec/models/*_project_spec.rb'] }
+  watch(%r{^app/models/project.rb$}) { Dir["spec/models/*_project_spec.rb"] }
 end
 
 guard :slimlint do
   watch(%r{app/views/.*\.slim$})
-  watch(%r{config/slim-lint\.yml$}) { 'app/views' }
+  watch(%r{config/slim-lint\.yml$}) { "app/views" }
 end

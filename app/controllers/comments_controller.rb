@@ -14,9 +14,9 @@ class CommentsController < AuthenticatedController
   def update
     comment = current_user.comments.find(params[:id])
     if comment.update(comment: params[:comment])
-      render json: { message: 'Comment successfully updated.' }
+      render json: { message: "Comment successfully updated." }
     else
-      render json: { error: comment.errors.full_messages.join(', ') }, status: 400
+      render json: { error: comment.errors.full_messages.join(", ") }, status: 400
     end
   end
 

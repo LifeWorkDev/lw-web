@@ -10,7 +10,7 @@ class PayMethods::Card < PayMethod
     true
   end
 
-  def charge!(amount:, idempotency_key: '', metadata: {})
+  def charge!(amount:, idempotency_key: "", metadata: {})
     Stripe::PaymentIntent.create(
       {
         amount: amount.cents,
@@ -20,7 +20,7 @@ class PayMethods::Card < PayMethod
         off_session: true,
         confirm: true,
         metadata: metadata,
-        expand: ['charges.data.balance_transaction'],
+        expand: ["charges.data.balance_transaction"],
       }, idempotency_key: "#{idempotency_key}-pay-method-#{id}"
     ).charges.data.first
   end

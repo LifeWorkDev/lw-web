@@ -14,11 +14,11 @@ class Webhook < ApplicationRecord
 
   def process!
     case source
-    when 'stripe'
+    when "stripe"
       case event
-      when 'charge.succeeded'
-        payment_id = data.dig('data', 'object', 'id')
-        return unless payment_id.start_with? 'py_' # ACH payments only
+      when "charge.succeeded"
+        payment_id = data.dig("data", "object", "id")
+        return unless payment_id.start_with? "py_" # ACH payments only
 
         Payment.find(payment_id).succeed!
       else

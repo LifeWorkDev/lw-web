@@ -23,7 +23,7 @@ class Client::OrgsController < AuthenticatedController
     @org.current_user = current_user
 
     if @org.save
-      redirect_to [:payment, current_namespace, @org.projects.last], notice: 'Account was successfully created.'
+      redirect_to [:payment, current_namespace, @org.projects.last], notice: "Account was successfully created."
     else
       render :new
     end
@@ -32,7 +32,7 @@ class Client::OrgsController < AuthenticatedController
   # PATCH/PUT /orgs/1
   def update
     if @org.update(org_params)
-      redirect_to [:payment, current_namespace, @org.projects.last], notice: 'Account was successfully updated.'
+      redirect_to [:payment, current_namespace, @org.projects.last], notice: "Account was successfully updated."
     else
       render :edit
     end
@@ -41,7 +41,7 @@ class Client::OrgsController < AuthenticatedController
   # DELETE /orgs/1
   def destroy
     @org.destroy
-    redirect_to orgs_url, notice: 'Account was successfully destroyed.'
+    redirect_to orgs_url, notice: "Account was successfully destroyed."
   end
 
 private

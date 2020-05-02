@@ -3,7 +3,7 @@ class Freelancer::ProjectsController < ProjectsController
 
   # PATCH/PUT /f/projects/1/activate
   def activate
-    notice = 'Your client has been emailed an invitation to join the project.' if @project.invite_client!
+    notice = "Your client has been emailed an invitation to join the project." if @project.invite_client!
     redirect_to [current_namespace, Project], notice: notice
   end
 
@@ -27,6 +27,6 @@ class Freelancer::ProjectsController < ProjectsController
 
     @project.update(status: params[:button])
     redirect_to [current_namespace, Project], notice: "We're sorry to hear that. Feel free to reach out and we'll see if we can help!" if @project.proposal_rejected?
-    redirect_to next_step(@project), notice: 'Congratulations on getting your contract out!' if @project.contract_sent?
+    redirect_to next_step(@project), notice: "Congratulations on getting your contract out!" if @project.contract_sent?
   end
 end

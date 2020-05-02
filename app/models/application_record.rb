@@ -18,7 +18,7 @@ class ApplicationRecord < ActiveRecord::Base
     end
 
     def sample(limit = 1)
-      result = order(Arel.sql('random()')).limit(limit)
+      result = order(Arel.sql("random()")).limit(limit)
       limit == 1 ? result.first : result
     end
   end

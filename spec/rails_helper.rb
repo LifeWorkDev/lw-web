@@ -1,14 +1,14 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
-require 'spec_helper'
-ENV['RAILS_ENV'] ||= 'test'
-require File.expand_path('../config/environment', __dir__)
+require "spec_helper"
+ENV["RAILS_ENV"] ||= "test"
+require File.expand_path("../config/environment", __dir__)
 # Prevent database truncation if the environment is production
-abort('The Rails environment is running in production mode!') if Rails.env.production?
-require 'rspec/rails'
+abort("The Rails environment is running in production mode!") if Rails.env.production?
+require "rspec/rails"
 # Add additional requires below this line. Rails is not loaded until this point!
-require 'money-rails/test_helpers'
-require 'webdrivers/chromedriver'
-require 'action_mailbox/test_helper'
+require "money-rails/test_helpers"
+require "webdrivers/chromedriver"
+require "action_mailbox/test_helper"
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end
@@ -65,7 +65,7 @@ RSpec.configure do |config|
 
   # Enable Rails system tests
   config.before(:all, type: :system) do
-    Capybara.server = :puma, { Silent: true, Threads: '1:1' }
+    Capybara.server = :puma, { Silent: true, Threads: "1:1" }
     Capybara.raise_server_errors = false # Render error pages instead of blowing up
   end
 
@@ -83,7 +83,7 @@ RSpec.configure do |config|
   config.after(:each, type: :system) do |example|
     if example&.exception
       logs = page.driver.browser.manage.logs.get(:browser)
-      errors = logs&.select { |l| l.level == 'SEVERE' }
+      errors = logs&.select { |l| l.level == "SEVERE" }
       if errors.any?
         puts "\njs errors in #{example.example_group_instance.method_name}:".red
         errors.each { |er| puts "  #{er.message.gsub('\n', "\n").gsub('\u003C', "\u003C")}".red }

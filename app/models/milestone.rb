@@ -5,7 +5,7 @@ class Milestone < ApplicationRecord
   include Fees
   include Milestones::Status
 
-  belongs_to :project, class_name: 'MilestoneProject'
+  belongs_to :project, class_name: "MilestoneProject"
   has_one :client, through: :project
   has_one :freelancer, through: :project
   has_many :payments, as: :pays_for, dependent: :destroy

@@ -1,4 +1,4 @@
-require 'action_dispatch/middleware/static'
+require "action_dispatch/middleware/static"
 
 ActionDispatch::FileHandler.class_eval do
 private

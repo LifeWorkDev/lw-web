@@ -1,5 +1,5 @@
 class LogidzeInstall < ActiveRecord::Migration[5.0]
-  require 'logidze/migration'
+  require "logidze/migration"
   include Logidze::Migration
 
   def up

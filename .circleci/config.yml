@@ -8,6 +8,7 @@ jobs:
           PGHOST: 127.0.0.1
           PGUSER: lifework
           RAILS_ENV: test
+          RUBYOPT: -W:no-deprecated
           NODE_ENV: development
       - image: circleci/postgres:12-alpine-ram
         environment:
@@ -48,7 +49,7 @@ jobs:
 
       - run:
           name: Bundle Install
-          command: ruby -W:no-deprecated bin/bundle install --path vendor/bundle --jobs 5 --retry 3 --without production development && ruby -W:no-deprecated bin/bundle clean
+          command: bin/bundle install --path vendor/bundle --jobs 5 --retry 3 --without production development && bin/bundle clean
 
       - save_cache:
           name: Store bundle cache
@@ -58,11 +59,11 @@ jobs:
 
       - run:
           name: Rubocop
-          command: ruby -W:no-deprecated bin/rubocop --parallel
+          command: bin/rubocop --parallel --config=config/rubocop_strict.yml
 
       - run:
           name: Slim Lint
-          command: ruby -W:no-deprecated bin/slim-lint app/views
+          command: bin/slim-lint app/views
 
       - restore_cache:
           name: Restore yarn cache
@@ -104,11 +105,11 @@ jobs:
           name: Database setup
           command: |
             cp config/database.yml.example config/database.yml
-            ruby -W:no-deprecated bin/rake db:setup --trace
+            bin/rake db:setup --trace
 
       - run:
           name: Compile packs
-          command: ruby -W:no-deprecated bin/rake webpacker:compile --trace
+          command: bin/rake webpacker:compile --trace
 
       - save_cache:
           name: Store webpacker cache
@@ -124,7 +125,7 @@ jobs:
 
       - run:
           name: Ruby tests
-          command: CODECOV_FLAG=ruby ruby -W:no-deprecated bin/rspec spec/ --format progress --format RspecJunitFormatter -o ~/test-results/rspec/rspec.xml
+          command: CODECOV_FLAG=ruby bin/rspec spec/ --format progress --format RspecJunitFormatter -o ~/test-results/rspec/rspec.xml
 
       - store_test_results:
           path: ~/test-results/rspec/

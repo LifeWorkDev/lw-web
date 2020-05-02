@@ -3,7 +3,7 @@ Trestle.configure do |config|
   #
   # Set the page title shown in the main header within the admin.
   #
-  config.site_title = 'LifeWork admin'
+  config.site_title = "LifeWork admin"
 
   # Specify a custom image to be used in place of the site title for mobile and
   # expanded/desktop navigation. These images should be placed within your
@@ -60,8 +60,8 @@ Trestle.configure do |config|
   # Add an explicit menu block to be added to the admin navigation.
   #
   config.menu do
-    item 'Background Jobs', '/admin/que', data: { turbolinks: false }, icon: 'fa fa-cogs', priority: :last
-    item 'Email Templates', '/rails/mailers', icon: 'fa fa-envelope-open-text', priority: :last unless Rails.env.production?
+    item "Background Jobs", "/admin/que", data: { turbolinks: false }, icon: "fa fa-cogs", priority: :last
+    item "Email Templates", "/rails/mailers", icon: "fa fa-envelope-open-text", priority: :last unless Rails.env.production?
   end
 
   # == Extension Options
@@ -124,15 +124,15 @@ Trestle.configure do |config|
   # config.debug_form_errors = true
   # Optional, but it is always nice to give folks the option of
   # logging out:
-  config.hook 'view.header' do
-    render 'admin/header'
+  config.hook "view.header" do
+    render "admin/header"
   end
 
   config.hook :head do
-    favicon_pack_tag 'favicon.ico', rel: 'shortcut icon'
+    favicon_pack_tag "favicon.ico", rel: "shortcut icon"
   end
 end
-require 'trestle-devise/controller_methods'
+require "trestle-devise/controller_methods"
 Trestle::ApplicationController.include Trestle::Auth::ControllerMethods
 Trestle::ApplicationController.include SetLogidzeResponsible
 Trestle::ApplicationController.skip_after_action :intercom_rails_auto_include

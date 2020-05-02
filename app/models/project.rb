@@ -6,8 +6,8 @@ class Project < ApplicationRecord
   extend FriendlyId
   friendly_id :name, use: :scoped, scope: :user_id
 
-  belongs_to :client, class_name: 'Org', foreign_key: :org_id, inverse_of: :projects
-  belongs_to :freelancer, class_name: 'User', foreign_key: :user_id, inverse_of: :projects
+  belongs_to :client, class_name: "Org", foreign_key: :org_id, inverse_of: :projects
+  belongs_to :freelancer, class_name: "User", foreign_key: :user_id, inverse_of: :projects
 
   before_validation :set_defaults, on: :create
 
@@ -18,7 +18,7 @@ class Project < ApplicationRecord
                  client_pays_fees: [:boolean, default: false]
 
   class << self
-    delegate :fa_url, :mdi_url, to: 'ApplicationController.helpers', private: true
+    delegate :fa_url, :mdi_url, to: "ApplicationController.helpers", private: true
 
     memoize def for_select
       subclasses.map do |c|
@@ -27,7 +27,7 @@ class Project < ApplicationRecord
     end
 
     memoize def short_type
-      to_s.underscore.delete_suffix('_project')
+      to_s.underscore.delete_suffix("_project")
     end
 
     memoize def short_types
@@ -37,11 +37,11 @@ class Project < ApplicationRecord
 
   # Create scopes like Project.milestone & type check methods like milestone?
   # while avoiding load-order issues
-  SUBCLASS_FILES = 'app/models/*_project.rb'.freeze
+  SUBCLASS_FILES = "app/models/*_project.rb".freeze
   Dir[SUBCLASS_FILES].each do |file|
-    type = File.basename(file, '.*')
+    type = File.basename(file, ".*")
     class_name = type.camelize
-    type.delete_suffix!('_project')
+    type.delete_suffix!("_project")
     scope type, -> { where(type: class_name) }
 
     define_method "#{type}?" do
@@ -58,7 +58,7 @@ class Project < ApplicationRecord
   end
 
   def for_subject
-    'a project'.freeze
+    "a project".freeze
   end
 
   def to_s

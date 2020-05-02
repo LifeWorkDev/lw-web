@@ -16,13 +16,13 @@ Rails.application.configure do
 
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
-  if Rails.root.join('tmp/caching-dev.txt').exist?
+  if Rails.root.join("tmp/caching-dev.txt").exist?
     config.action_controller.perform_caching = true
     config.action_controller.enable_fragment_cache_logging = true
 
     config.cache_store = :memory_store
     config.public_file_server.headers = {
-      'Cache-Control' => "public, max-age=#{2.days.to_i}",
+      "Cache-Control" => "public, max-age=#{2.days.to_i}",
     }
   else
     config.action_controller.perform_caching = false
@@ -37,7 +37,7 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.perform_caching = false
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = { address: 'localhost', port: 1025 }
+  config.action_mailer.smtp_settings = { address: "localhost", port: 1025 }
   config.action_mailer.logger = nil
 
   # Print deprecation notices to the Rails logger.
@@ -62,6 +62,6 @@ Rails.application.configure do
   WEBPACK_SCRIPT_TAG ||= "<script src='#{'http' + (dev_server[:https] && 's')}://#{dev_server[:host]}:#{dev_server[:port]}/webpack-dev-server.js'></script>".freeze
   config.middleware.insert_before ActionDispatch::ShowExceptions, Rack::Toolbar,
                                   snippet: WEBPACK_SCRIPT_TAG,
-                                  insertion_point: '</head>',
+                                  insertion_point: "</head>",
                                   insertion_method: :before
 end

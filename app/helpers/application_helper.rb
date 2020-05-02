@@ -19,6 +19,6 @@ module ApplicationHelper
 
   memoize def svg_inject(url, options = {})
     options[:width] ||= options[:height] ||= options.delete(:size) || 24
-    image_tag url, options.merge(onload: 'SVGInject(this)')
+    image_tag url, options.merge(onload: "SVGInject(this)")
   end
 end

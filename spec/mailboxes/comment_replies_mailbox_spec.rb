@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe CommentRepliesMailbox, type: :mailbox do
   let(:user) { Fabricate(:user) }
@@ -7,7 +7,7 @@ RSpec.describe CommentRepliesMailbox, type: :mailbox do
   let(:subject_line) { Faker::Lorem.sentence }
   let(:body) { Faker::Lorem.paragraphs(number: rand(2..5)).join("\n") }
 
-  context 'with known user, known milestone' do
+  context "with known user, known milestone" do
     subject(:inbound_email) do
       receive_inbound_email_from_mail(
         from: milestone.freelancer.email,
@@ -23,7 +23,7 @@ RSpec.describe CommentRepliesMailbox, type: :mailbox do
     end
   end
 
-  context 'with known user not associated with known milestone' do
+  context "with known user not associated with known milestone" do
     subject(:inbound_email) do
       receive_inbound_email_from_mail(
         from: user.email,
@@ -38,10 +38,10 @@ RSpec.describe CommentRepliesMailbox, type: :mailbox do
     end
   end
 
-  context 'with unknown user, known milestone' do
+  context "with unknown user, known milestone" do
     subject(:inbound_email) do
       receive_inbound_email_from_mail(
-        from: 'testing@mailinator',
+        from: "testing@mailinator",
         to: milestone.comment_reply_address,
         subject: subject_line,
         body: body,
@@ -54,7 +54,7 @@ RSpec.describe CommentRepliesMailbox, type: :mailbox do
     end
   end
 
-  context 'with known user, unknown milestone' do
+  context "with known user, unknown milestone" do
     subject(:inbound_email) do
       receive_inbound_email_from_mail(
         from: user.email,
@@ -70,10 +70,10 @@ RSpec.describe CommentRepliesMailbox, type: :mailbox do
     end
   end
 
-  context 'with unknown user, unknown milestone' do
+  context "with unknown user, unknown milestone" do
     subject(:inbound_email) do
       receive_inbound_email_from_mail(
-        from: 'testing@mailinator.com',
+        from: "testing@mailinator.com",
         to: "comments-foobar-1@#{REPLIES_HOST}",
         subject: subject_line,
         body: body,
@@ -86,7 +86,7 @@ RSpec.describe CommentRepliesMailbox, type: :mailbox do
     end
   end
 
-  context 'when legacy inbound email' do
+  context "when legacy inbound email" do
     subject(:inbound_email) do
       receive_inbound_email_from_mail(
         from: user.email,
@@ -102,7 +102,7 @@ RSpec.describe CommentRepliesMailbox, type: :mailbox do
     end
   end
 
-  context 'with retainer project' do
+  context "with retainer project" do
     subject(:inbound_email) do
       receive_inbound_email_from_mail(
         from: project.freelancer.email,

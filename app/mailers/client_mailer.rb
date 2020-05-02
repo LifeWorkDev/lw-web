@@ -12,19 +12,19 @@ class ClientMailer < ApplicationMailer
   end
 
   def milestone_approaching
-    make_bootstrap_mail(reply_to: @milestone.comment_reply_address, subject: t('.subject', project: @milestone.project))
+    make_bootstrap_mail(reply_to: @milestone.comment_reply_address, subject: t(".subject", project: @milestone.project))
   end
 
   def milestone_deposited
-    make_bootstrap_mail(reply_to: @milestone.comment_reply_address, subject: t('.subject', freelancer: @freelancer_name.possessive, project: @milestone.project))
+    make_bootstrap_mail(reply_to: @milestone.comment_reply_address, subject: t(".subject", freelancer: @freelancer_name.possessive, project: @milestone.project))
   end
 
   def milestone_paid
     @next_milestone = @milestone.next
-    make_bootstrap_mail(subject: t('.subject', freelancer: @freelancer_name, project: @milestone.project))
+    make_bootstrap_mail(subject: t(".subject", freelancer: @freelancer_name, project: @milestone.project))
   end
 
   def retainer_deposited
-    make_bootstrap_mail(reply_to: @project.comment_reply_address, subject: t('.subject', freelancer: @freelancer_name.possessive, project: @project))
+    make_bootstrap_mail(reply_to: @project.comment_reply_address, subject: t(".subject", freelancer: @freelancer_name.possessive, project: @project))
   end
 end

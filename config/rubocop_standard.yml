@@ -1,0 +1,8 @@
+inherit_from: rubocop.yml
+
+# Enabled until standard works w/ Rubocop 0.82+ and we can use
+# https://evilmartians.com/chronicles/rubocoping-with-legacy-bring-your-ruby-code-up-to-standard
+Style/StringLiterals:
+  Enabled: true
+  EnforcedStyle: double_quotes
+  ConsistentQuotesInMultiline: false

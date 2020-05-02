@@ -1,4 +1,5 @@
 exclude:
+  - app/views/application/styleguide.slim
   - bin/**/*
   - node_modules/**/*
   - tmp/**/*

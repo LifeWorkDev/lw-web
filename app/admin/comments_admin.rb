@@ -1,6 +1,6 @@
 Trestle.resource(:comments) do
   menu do
-    item :comments, icon: 'fa fa-comments', priority: 4
+    item :comments, icon: "fa fa-comments", priority: 4
   end
 
   build_instance do |attrs, params|
@@ -19,7 +19,7 @@ Trestle.resource(:comments) do
   table do
     column :id, sort: { default: true, default_order: :asc }
     column :commenter, sort: :commenter_id
-    column :commentable, header: 'Commented on', sort: :commentable_id
+    column :commentable, header: "Commented on", sort: :commentable_id
     column :comment, sort: false
     column :created_at, align: :center
     column :updated_at, align: :center
@@ -33,7 +33,7 @@ Trestle.resource(:comments) do
     else
       auto_field :commenter
     end
-    auto_field :commentable, label: 'Commenting on'
+    auto_field :commentable, label: "Commenting on"
     text_area :comment
     if comment.new_record?
       hidden_field :commentable_id

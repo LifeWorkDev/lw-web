@@ -1,12 +1,12 @@
 module DeviseBootstrapHelper
   def devise_bootstrap_error_messages!
-    return '' if (resource.blank? || resource.errors.empty?) && flash[:alert].blank? && flash[:notice].blank?
+    return "" if (resource.blank? || resource.errors.empty?) && flash[:alert].blank? && flash[:notice].blank?
 
     messages = resource.errors.full_messages.collect { |message| content_tag(:li, message.html_safe) }
     if flash[:alert].present?
       sentence = flash[:alert]
     elsif messages.any?
-      message_tags = content_tag :ul, messages.join("\n").html_safe, class: 'mt-1 mb-0'
+      message_tags = content_tag :ul, messages.join("\n").html_safe, class: "mt-1 mb-0"
       sentence = <<-HTML
       <strong>
         #{t(
@@ -18,7 +18,7 @@ module DeviseBootstrapHelper
       HTML
     end
 
-    html = ''
+    html = ""
 
     if sentence
       html << <<-HTML

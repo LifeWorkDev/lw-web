@@ -1,5 +1,5 @@
 class AddLogidzeToMilestones < ActiveRecord::Migration[5.0]
-  require 'logidze/migration'
+  require "logidze/migration"
   include Logidze::Migration
 
   def up
@@ -22,7 +22,7 @@ class AddLogidzeToMilestones < ActiveRecord::Migration[5.0]
 
   def down
     safety_assured do
-      execute 'DROP TRIGGER IF EXISTS logidze_on_milestones on milestones;'
+      execute "DROP TRIGGER IF EXISTS logidze_on_milestones on milestones;"
     end
 
     remove_column :milestones, :log_data

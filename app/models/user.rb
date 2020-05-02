@@ -25,7 +25,7 @@ class User < ApplicationRecord
   scope :client, -> { where.not(org_id: nil) }
   scope :freelancer, -> { where(org_id: nil) }
 
-  WORK_TYPES = ['Part-Time', 'Full-Time', 'Team Leader'].freeze
+  WORK_TYPES = ["Part-Time", "Full-Time", "Team Leader"].freeze
 
   def after_database_authentication
     activate! unless active?
@@ -63,7 +63,7 @@ class User < ApplicationRecord
   end
 
   def time_zone_with_fallback
-    time_zone || 'Pacific Time (US & Canada)'
+    time_zone || "Pacific Time (US & Canada)"
   end
 
   def local_time(time)

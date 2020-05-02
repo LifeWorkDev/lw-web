@@ -1,4 +1,12 @@
 GIT
+  remote: https://github.com/Novtopro/guard-rubocop.git
+  revision: 222582edef1c1999ce848e7338a558bf4a5504f7
+  specs:
+    guard-rubocop (1.3.0)
+      guard (~> 2.0)
+      rubocop (~> 0.20)
+
+GIT
   remote: https://github.com/TrestleAdmin/trestle.git
   revision: a6b053846ea57e7e0e9a0fe79690c88faaf49b63
   specs:
@@ -246,9 +254,6 @@ GEM
       guard (~> 2.1)
       guard-compat (~> 1.1)
       rspec (>= 2.99.0, < 4.0)
-    guard-rubocop (1.3.0)
-      guard (~> 2.0)
-      rubocop (~> 0.20)
     guard-shell (0.7.1)
       guard (>= 2.0.0)
       guard-compat (~> 1.0)
@@ -471,6 +476,8 @@ GEM
       rexml
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 1.4.0, < 2.0)
+    rubocop-daemon (0.3.2)
+      rubocop
     rubocop-performance (1.5.2)
       rubocop (>= 0.71.0)
     rubocop-rails (2.5.2)
@@ -606,7 +613,7 @@ DEPENDENCIES
   goldiloader
   guard
   guard-rspec
-  guard-rubocop
+  guard-rubocop!
   guard-shell
   guard-slimlint
   intercom (~> 3.9.5)
@@ -645,6 +652,7 @@ DEPENDENCIES
   rspec-rails (~> 4.0.0.beta3)
   rspec_junit_formatter
   rubocop
+  rubocop-daemon
   rubocop-performance
   rubocop-rails
   rubocop-rspec

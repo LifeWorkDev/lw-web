@@ -2,7 +2,7 @@ class Client::PayMethodsController < AuthenticatedController
   before_action :set_pay_method, only: %i[show edit update destroy]
 
   def created
-    redirect_to client_projects_path, notice: 'Payment method was successfully changed.'
+    redirect_to client_projects_path, notice: "Payment method was successfully changed."
   end
 
   # GET /pay_methods
@@ -15,7 +15,7 @@ class Client::PayMethodsController < AuthenticatedController
 
   # GET /pay_methods/new
   def new
-    @intent = Stripe::SetupIntent.create if params[:type] == 'cards'
+    @intent = Stripe::SetupIntent.create if params[:type] == "cards"
     render "client/pay_methods/#{params[:type]}/new"
   end
 
@@ -34,14 +34,14 @@ class Client::PayMethodsController < AuthenticatedController
                  end
       render json: { location: location }
     else
-      render json: { error: @pay_method.errors.full_messages.join(', ') }, status: 400
+      render json: { error: @pay_method.errors.full_messages.join(", ") }, status: 400
     end
   end
 
   # PATCH/PUT /pay_methods/1
   def update
     if @pay_method.update(pay_method_params)
-      redirect_to [current_namespace, @pay_method], notice: 'Payment method was successfully updated.'
+      redirect_to [current_namespace, @pay_method], notice: "Payment method was successfully updated."
     else
       render :edit
     end
@@ -50,7 +50,7 @@ class Client::PayMethodsController < AuthenticatedController
   # DELETE /pay_methods/1
   def destroy
     @pay_method.destroy
-    redirect_to [current_namespace, PayMethod], notice: 'Pay method was successfully destroyed.'
+    redirect_to [current_namespace, PayMethod], notice: "Pay method was successfully destroyed."
   end
 
 private

@@ -1,0 +1,10 @@
+inherit_from: rubocop_standard.yml
+
+Lint/Debugger: # don't leave byebug
+  Enabled: true
+
+RSpec/Focus: # run ALL tests on CI
+  Enabled: true
+
+Rails/Output: # Don't leave puts-debugging
+  Enabled: true

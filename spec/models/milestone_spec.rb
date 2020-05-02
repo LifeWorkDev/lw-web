@@ -1,34 +1,34 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Milestone, type: :model do
   subject(:milestone) { Fabricate(:milestone) }
 
-  describe '#next' do
+  describe "#next" do
     subject(:milestone) { project.milestones.first }
 
     let(:project) { Fabricate(:milestone_project_with_milestones) }
 
-    it 'returns the next milestone by date' do
+    it "returns the next milestone by date" do
       project.reload # Make sure milestones are loaded from the DB in correct order
       expect(milestone.next.date).to eq(project.milestones.pluck(:date).second)
     end
   end
 
-  describe '#reminder_date' do
+  describe "#reminder_date" do
     subject(:milestone) { Fabricate(:milestone, date: 1.week.from_now.beginning_of_week(:monday)) }
 
-    it 'handles weekends correctly' do
+    it "handles weekends correctly" do
       expect((milestone.date - milestone.reminder_date).to_i).to be >= 5
     end
   end
 
-  describe '#reminder_time' do
-    it 'sets hour to 9am' do
+  describe "#reminder_time" do
+    it "sets hour to 9am" do
       expect(milestone.reminder_time(User.all.sample).hour).to eq 9
     end
   end
 
-  describe 'state machine' do
+  describe "state machine" do
     subject(:milestone) { project.milestones.first }
 
     let(:client) { project.client }
@@ -38,7 +38,7 @@ RSpec.describe Milestone, type: :model do
     let(:payment) { Payment.last }
     let(:user) { client.primary_contact }
 
-    describe '#deposit!' do
+    describe "#deposit!" do
       it "doesn't schedule milestone approaching emails if they would be in the past" do
         milestone.update!(date: Date.current)
         expect do
@@ -63,16 +63,16 @@ RSpec.describe Milestone, type: :model do
         expect(payment.user).to be_nil
       end
 
-      it 'sets a user if provided' do
+      it "sets a user if provided" do
         milestone.deposit!(user)
         expect(payment.user).to eq user
       end
     end
 
-    describe '#pay!' do
+    describe "#pay!" do
       before { Fabricate(:succeeded_payment, pays_for: milestone) }
 
-      it 'creates Stripe transfers' do
+      it "creates Stripe transfers" do
         milestone.update(status: :deposited)
         allow(Stripe::Transfer).to receive(:create).and_call_original
         expect do

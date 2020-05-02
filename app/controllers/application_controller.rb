@@ -28,12 +28,12 @@ class ApplicationController < ActionController::Base
   helper_method :current_namespace
 
   def client_namespace?
-    current_namespace == 'client'
+    current_namespace == "client"
   end
   helper_method :client_namespace?
 
   def freelancer_namespace?
-    current_namespace == 'freelancer'
+    current_namespace == "freelancer"
   end
   helper_method :freelancer_namespace?
 
@@ -44,7 +44,7 @@ protected
   end
 
   def redirect_with_query_string(destination:, status: :moved_permanently)
-    redirect_to "#{destination}?#{request.query_string}".chomp('?'), status: status
+    redirect_to "#{destination}?#{request.query_string}".chomp("?"), status: status
   end
 
 private

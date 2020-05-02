@@ -1,6 +1,6 @@
 Trestle.resource(:projects) do
   menu do
-    item :projects, icon: 'fa fa-briefcase', priority: 2
+    item :projects, icon: "fa fa-briefcase", priority: 2
   end
 
   build_instance do |attrs, params|
@@ -39,11 +39,11 @@ Trestle.resource(:projects) do
       text_field :name
       auto_field :slug
       org_collection = User.find_by(id: params[:user_id])&.clients || Org.all
-      collection_select_with_link :org_id, org_collection, :id, :name, label: 'Client'
-      collection_select_with_link :user_id, User.freelancer, :id, :name, label: 'Freelancer'
+      collection_select_with_link :org_id, org_collection, :id, :name, label: "Client"
+      collection_select_with_link :user_id, User.freelancer, :id, :name, label: "Freelancer"
       select :status, Project.aasm.states_for_select
       collection_select :type, Project.subclasses, :to_s, :to_s
-      number_field :amount, prepend: '$'
+      number_field :amount, prepend: "$"
       select :currency, Money::Currency.map(&:iso_code)
       number_field :fee_percent, min: 0, max: 1, step: 0.01
       date_field :start_date, required: true if project.retainer?
@@ -54,7 +54,7 @@ Trestle.resource(:projects) do
     if project.milestone?
       tab :milestones, badge: project.milestones.size do
         table MilestonesAdmin.table, collection: project.milestones
-        concat admin_link_to('New Milestone', admin: :milestones, action: :new, params: { project_id: project.id }, class: 'btn btn-success mt-3')
+        concat admin_link_to("New Milestone", admin: :milestones, action: :new, params: { project_id: project.id }, class: "btn btn-success mt-3")
       end
     end
   end

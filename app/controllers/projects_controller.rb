@@ -24,7 +24,7 @@ class ProjectsController < AuthenticatedController
     @project = current_entity.projects.build(project_params)
 
     if @project.save
-      redirect_to next_step(@project), notice: 'Project was successfully created.'
+      redirect_to next_step(@project), notice: "Project was successfully created."
     else
       render :new
     end
@@ -42,7 +42,7 @@ class ProjectsController < AuthenticatedController
   # DELETE /projects/1
   def destroy
     @project.destroy
-    redirect_to [current_namespace, Project], notice: 'Project was successfully destroyed.'
+    redirect_to [current_namespace, Project], notice: "Project was successfully destroyed."
   end
 
   def timeline

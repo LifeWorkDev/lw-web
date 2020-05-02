@@ -1,7 +1,7 @@
 class ApplicationMailer < ActionMailer::Base
   default from: Devise.mailer_sender
   default to: -> { @recipient.email }
-  layout 'mailer'
+  layout "mailer"
 
   before_action :set_params
   around_action :use_recipient_zone

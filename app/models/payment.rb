@@ -53,9 +53,9 @@ class Payment < ApplicationRecord
   end
 
   def get_stripe_obj
-    if stripe_id.start_with? 'pi_'
+    if stripe_id.start_with? "pi_"
       Stripe::PaymentIntent.retrieve(stripe_id)
-    elsif stripe_id.start_with? 'ch_', 'py_'
+    elsif stripe_id.start_with? "ch_", "py_"
       Stripe::Charge.retrieve(stripe_id)
     else
       raise "Unrecognized Stripe ID type: #{stripe_id}"

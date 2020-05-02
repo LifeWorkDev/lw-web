@@ -4,7 +4,7 @@ class WebhooksController < ApplicationController
   def stripe
     stripe_event = Stripe::Webhook.construct_event(
       request_data,
-      request_headers['HTTP_STRIPE_SIGNATURE'],
+      request_headers["HTTP_STRIPE_SIGNATURE"],
       Rails.application.credentials.stripe[:webhook_secret],
     )
 

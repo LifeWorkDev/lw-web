@@ -24,6 +24,9 @@ Lint/AmbiguousBlockAssociation:
   Exclude:
     - spec/**/*
 
+Lint/Debugger:
+  Enabled: false
+
 Lint/EmptyWhen:
   Enabled: false
 
@@ -104,6 +107,9 @@ Rails/DynamicFindBy:
 Rails/LexicallyScopedActionFilter:
   Enabled: false
 
+Rails/Output:
+  Enabled: false
+
 Rails/OutputSafety:
   Exclude:
     - app/helpers/devise_bootstrap_helper.rb
@@ -133,6 +139,9 @@ RSpec/ExampleLength:
 
 RSpec/ExpectChange:
   EnforcedStyle: block
+
+RSpec/Focus:
+  Enabled: false
 
 RSpec/MultipleExpectations:
   Enabled: false

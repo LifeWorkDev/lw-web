@@ -1,6 +1,6 @@
 Trestle.resource(:milestones) do
   menu do
-    item :milestones, icon: 'fa fa-tasks', priority: 3
+    item :milestones, icon: "fa fa-tasks", priority: 3
   end
 
   build_instance do |attrs, params|
@@ -30,7 +30,7 @@ Trestle.resource(:milestones) do
     tab :milestone do
       collection_select_with_link :project_id, Project.all, :id, :name
       text_field :description
-      number_field :amount, prepend: '$'
+      number_field :amount, prepend: "$"
       select :status, Milestone.aasm.states_for_select
       date_field :date
       auto_field :created_at
@@ -39,7 +39,7 @@ Trestle.resource(:milestones) do
 
     tab :comments, badge: milestone.comments.size do
       table CommentsAdmin.table, collection: milestone.comments
-      concat admin_link_to('New Comment', admin: :comments, action: :new, params: { milestone_id: milestone.id }, class: 'btn btn-success mt-3')
+      concat admin_link_to("New Comment", admin: :comments, action: :new, params: { milestone_id: milestone.id }, class: "btn btn-success mt-3")
     end
   end
 

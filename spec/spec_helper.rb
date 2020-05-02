@@ -1,16 +1,16 @@
-if ENV['CODECOV_TOKEN']
-  require 'simplecov'
+if ENV["CODECOV_TOKEN"]
+  require "simplecov"
   SimpleCov.start :rails do
-    command_name 'rspec'
-    add_group 'Mailboxes', 'app/mailboxes'
-    add_group 'Serializers', 'app/serializers'
+    command_name "rspec"
+    add_group "Mailboxes", "app/mailboxes"
+    add_group "Serializers", "app/serializers"
   end
-  require 'codecov'
+  require "codecov"
   SimpleCov.formatter = SimpleCov::Formatter::Codecov
 end
 
-require 'require_all'
-require_all 'spec/helpers'
+require "require_all"
+require_all "spec/helpers"
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate

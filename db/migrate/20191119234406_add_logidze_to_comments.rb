@@ -1,5 +1,5 @@
 class AddLogidzeToComments < ActiveRecord::Migration[5.0]
-  require 'logidze/migration'
+  require "logidze/migration"
   include Logidze::Migration
 
   def up
@@ -22,7 +22,7 @@ class AddLogidzeToComments < ActiveRecord::Migration[5.0]
 
   def down
     safety_assured do
-      execute 'DROP TRIGGER IF EXISTS logidze_on_comments on comments;'
+      execute "DROP TRIGGER IF EXISTS logidze_on_comments on comments;"
     end
 
     remove_column :comments, :log_data

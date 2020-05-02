@@ -3,7 +3,7 @@ Fabricator(:pay_method) do
   org(fabricator: :named_org)
 end
 
-Fabricator(:bank_account_pay_method, class_name: 'pay_methods/bank_account', from: :pay_method) do
+Fabricator(:bank_account_pay_method, class_name: "pay_methods/bank_account", from: :pay_method) do
   type         PayMethods::BankAccount
   issuer       { Faker::Bank.name }
   kind         { %i[checking savings].sample }
@@ -13,7 +13,7 @@ Fabricator(:bank_account_pay_method, class_name: 'pay_methods/bank_account', fro
   stripe_id    { StripeMock.generate_bank_token }
 end
 
-Fabricator(:card_pay_method, class_name: 'pay_methods/card', from: :pay_method) do
+Fabricator(:card_pay_method, class_name: "pay_methods/card", from: :pay_method) do
   type       PayMethods::Card
-  stripe_id  { Stripe::PaymentMethod.create(type: 'card').id }
+  stripe_id  { Stripe::PaymentMethod.create(type: "card").id }
 end

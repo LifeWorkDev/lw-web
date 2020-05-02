@@ -1,14 +1,14 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Freelancer::OrgsController, type: :request do
   let(:freelancer) { Fabricate(:freelancer) }
 
   before { sign_in freelancer }
 
-  describe 'GET /f/clients/new' do
+  describe "GET /f/clients/new" do
     let(:org) { assigns(:org) }
 
-    it 'builds project, user' do
+    it "builds project, user" do
       get new_freelancer_org_path
       expect(response).to have_http_status(:ok)
       expect(org.projects.size).to eq 1
@@ -16,7 +16,7 @@ RSpec.describe Freelancer::OrgsController, type: :request do
     end
   end
 
-  describe 'POST /f/clients' do
+  describe "POST /f/clients" do
     let(:org_attributes) { Fabricate.attributes_for(:named_org) }
     let(:new_org) { Org.last }
     let(:new_project) { Project.last }
@@ -33,10 +33,10 @@ RSpec.describe Freelancer::OrgsController, type: :request do
       }
     end
 
-    context 'with new user' do
+    context "with new user" do
       let(:users_attributes) { { '0': Fabricate.attributes_for(:user) } }
 
-      it 'creates org, project, user' do
+      it "creates org, project, user" do
         expect do
           post freelancer_orgs_path, params: params
         end.to change { Org.count }.by(1) &
@@ -51,11 +51,11 @@ RSpec.describe Freelancer::OrgsController, type: :request do
       end
     end
 
-    context 'with existing user' do
+    context "with existing user" do
       let(:org) { assigns(:org) }
       let(:users_attributes) { { '0': { email: freelancer.email } } }
 
-      it 'returns errors' do
+      it "returns errors" do
         expect do
           post freelancer_orgs_path, params: params
         end.to not_change { Org.count } &

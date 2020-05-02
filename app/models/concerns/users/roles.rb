@@ -7,7 +7,7 @@ module Users
       scope :admins, -> { with_roles(:admin) }
 
       module Role
-        ADMIN = 'admin'.freeze
+        ADMIN = "admin".freeze
       end
 
       ROLES = [

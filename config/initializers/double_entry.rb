@@ -13,10 +13,10 @@ DoubleEntry.configure do |config|
     acct.define identifier: :fees, positive_only: true
     ACCOUNT_FEES ||= DoubleEntry.account :fees
 
-    org_scope = class_scope('Org')
+    org_scope = class_scope("Org")
     acct.define identifier: :cash, scope_identifier: org_scope
 
-    user_scope = class_scope('User')
+    user_scope = class_scope("User")
     acct.define identifier: :receivable,   scope_identifier: user_scope
     acct.define identifier: :disbursement, scope_identifier: user_scope
   end

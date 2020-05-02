@@ -31,7 +31,7 @@ class Freelancer::OrgsController < AuthenticatedController
                    ))
 
     if @org.save
-      redirect_to next_step(@org.projects.last), notice: 'Client was successfully created.'
+      redirect_to next_step(@org.projects.last), notice: "Client was successfully created."
     else
       render :new
     end
@@ -40,7 +40,7 @@ class Freelancer::OrgsController < AuthenticatedController
   # PATCH/PUT /orgs/1
   def update
     if @org.update(org_params)
-      notice = 'Client was successfully updated.' if @org.changed?
+      notice = "Client was successfully updated." if @org.changed?
       redirect_to next_step(@org.projects.last), notice: notice
     else
       render :edit
@@ -50,7 +50,7 @@ class Freelancer::OrgsController < AuthenticatedController
   # DELETE /orgs/1
   def destroy
     @org.destroy
-    redirect_to orgs_url, notice: 'Client was successfully destroyed.'
+    redirect_to orgs_url, notice: "Client was successfully destroyed."
   end
 
 private

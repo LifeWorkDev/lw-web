@@ -23,9 +23,9 @@ Rails.application.configure do
 
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
-  config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
+  config.public_file_server.enabled = ENV["RAILS_SERVE_STATIC_FILES"].present?
   config.public_file_server.headers = {
-    'Cache-Control' => "public, max-age=#{1.year.to_i}, immutable",
+    "Cache-Control" => "public, max-age=#{1.year.to_i}, immutable",
   }
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
@@ -65,10 +65,10 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
   config.action_mailer.smtp_settings = {
-    user_name: ENV['SENDGRID_USERNAME'],
-    password: ENV['SENDGRID_PASSWORD'],
-    domain: 'lifeworkonline.com',
-    address: 'smtp.sendgrid.net',
+    user_name: ENV["SENDGRID_USERNAME"],
+    password: ENV["SENDGRID_PASSWORD"],
+    domain: "lifeworkonline.com",
+    address: "smtp.sendgrid.net",
     port: 587,
     authentication: :plain,
     enable_starttls_auto: true,
@@ -88,7 +88,7 @@ Rails.application.configure do
   # require 'syslog/logger'
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
 
-  if ENV['RAILS_LOG_TO_STDOUT'].present?
+  if ENV["RAILS_LOG_TO_STDOUT"].present?
     logger           = ActiveSupport::Logger.new(STDOUT)
     logger.formatter = config.log_formatter
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
