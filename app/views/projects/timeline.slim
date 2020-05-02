@@ -6,7 +6,7 @@
     span.font-weight-normal timeline
   h5.font-sans-serif = "Client: #{@project.client.name}"
   - unless @project.retainer?
-    .font-sans-serif = "Contract amount: #{@project.amount.format}"
+    .font-sans-serif = "Contract amount: #{@project.amount&.format}"
 
 - if @project.active?
   p.lead.mt-4.text-center Your project is currently in progress, so if you need to make any changes to dates or amounts, please <a href='javascript:Intercom("show")'>contact us</a>.

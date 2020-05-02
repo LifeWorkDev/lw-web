@@ -1,4 +1,6 @@
 ruby:
+  return if record.blank?
+  
   badge_class = record.status_class
   badge_text = record.status.humanize
   
