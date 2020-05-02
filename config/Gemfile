@@ -15,6 +15,7 @@ gem 'devise' # Authentication
 gem 'devise_invitable', github: 'scambra/devise_invitable'
 gem 'double_entry', github: 'envato/double_entry'
 gem 'email_reply_parser'
+gem 'errbase' # Generic exception reporting service interface
 gem 'fast_blank' # Much faster version of #blank?
 gem 'friendly_id' # "friendly" urls like /projects/cool-project
 gem 'goldiloader' # Automatic eager-loading to avoid N+1s

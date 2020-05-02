@@ -58,7 +58,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :comments, only: %i[update]
+  resources :comments, only: :update
+
+  %w[stripe].each do |source|
+    post "webhooks/#{source}", controller: :webhooks
+  end
 
   as :user do
     get :login, to: 'users/sessions#new', as: :new_user_session
