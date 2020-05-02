@@ -23,6 +23,10 @@ class MilestoneProject < Project
     end
   end
 
+  def start_date
+    milestones.first&.date
+  end
+
 private
 
   def existing_milestone?(milestone_attrs)
