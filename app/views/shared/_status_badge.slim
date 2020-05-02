@@ -6,5 +6,7 @@ ruby:
     badge_class = :warning
     badge_text = 'Deposit Required'
   end
+  
+  badge_text = 'Deposited' if record.is_a?(Payment) && record.succeeded?
 
 .badge class="badge-#{badge_class} #{local_assigns[:class]}" = badge_text
