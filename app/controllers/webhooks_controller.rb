@@ -2,19 +2,18 @@ class WebhooksController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def stripe
-    stripe_event = Stripe::Webhook.construct_event(
+    Stripe::Webhook::Signature.verify_header(
       request_data,
       request_headers["HTTP_STRIPE_SIGNATURE"],
       Rails.application.credentials.stripe[:webhook_secret],
     )
 
-    webhook.data = stripe_event.to_h
-    webhook.event = stripe_event.type
+    webhook.event = webhook.data["type"]
     webhook.save!
-
     head :ok
   rescue JSON::ParserError, Stripe::SignatureVerificationError => e
     logger.error e.inspect
+    Errbase.report(e, { headers: request_headers, data: request_data })
     head :bad_request && return
   end
 
@@ -32,6 +31,7 @@ private
     @webhook ||= Webhook.new(
       source: params[:action],
       headers: request_headers,
+      data: JSON.parse(request_data),
     )
   end
 end
