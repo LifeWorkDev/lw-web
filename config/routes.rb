@@ -10,8 +10,12 @@ Rails.application.routes.draw do
       get :created, on: :collection
     end
     resources :projects, only: %i[index show] do
-      resources :comments, only: %i[index create]
-      match :deposit, via: %i[get post], on: :member
+      resources :comments, only: :create
+      member do
+        get :comments, to: redirect('/c/projects/%{id}/timeline')
+        match :deposit, via: %i[get post]
+        get :timeline
+      end
     end
     resources :retainer_projects do
       get :payment, on: :member
@@ -32,11 +36,13 @@ Rails.application.routes.draw do
       end
     end
     resources :projects do
-      resources :comments, only: %i[index create]
+      resources :comments, only: :create
       member do
         patch :activate
+        get :comments, to: redirect('/f/projects/%{id}/timeline')
         get :preview
         match :status, via: %i[get patch]
+        get :timeline
       end
     end
     resources :retainer_projects do

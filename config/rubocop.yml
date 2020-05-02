@@ -152,6 +152,10 @@ Style/Documentation:
 Style/Encoding:
   Enabled: false
 
+Style/FormatStringToken:
+  Exclude:
+    - config/routes.rb
+
 Style/FrozenStringLiteralComment:
   Enabled: false
 

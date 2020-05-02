@@ -171,10 +171,11 @@ RSpec.describe 'Freelancer views', type: :system do
           retainer_project_expectations
         end
 
-        it 'can view comments' do
+        it 'can view timeline' do
           project.try(:milestones)&.first&.update!(status: :deposited)
           verify_visit '/f/projects'
-          verify_click project.name, "/f/projects/#{project.slug}/comments"
+          verify_click project.name, "/f/projects/#{project.slug}/timeline"
+          expect(page).to have_content("#{project.name} timeline")
         end
 
         it 'can view clients index' do

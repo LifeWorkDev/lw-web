@@ -1,13 +1,5 @@
 class CommentsController < AuthenticatedController
-  before_action :set_project, only: %i[index create]
-
-  def index
-    return unless @project.milestone?
-
-    @milestones = @project.milestones.includes(comments: %i[commenter read_by])
-    @project.comments.where.not(commenter: current_user)
-            .where(read_at: nil).find_each { |c| c.update(read_by_id: current_user.id, read_at: Time.current) }
-  end
+  before_action :set_project, only: :create
 
   def create
     @comment = current_user.comments.new(comment_params)

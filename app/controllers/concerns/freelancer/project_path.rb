@@ -14,7 +14,7 @@ module Freelancer::ProjectPath
           [:edit, current_namespace, project.becomes(Project)]
         end
       else
-        [current_namespace, project.becomes(Project), :comments]
+        [:timeline, current_namespace, project.becomes(Project)]
       end
     end
     helper_method :project_path

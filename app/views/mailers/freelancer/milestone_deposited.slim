@@ -7,4 +7,4 @@ markdown:
   This milestone is due on **#{l(@milestone.date, format: :text_without_year)}**, so you can expect to be paid then if everything goes well.
   
 markdown:
-  If you ever need to communicate with your client about this milestone, you can reply to this email, or #{link_to 'comment via our website', [@recipient.type, @milestone.project.becomes(Project), :comments]}, and we'll pass the message along to them.
+  If you ever need to communicate with your client about this milestone, you can reply to this email, or #{link_to 'comment via our website', [:timeline, @recipient.type, @milestone.project.becomes(Project)]}, and we'll pass the message along to them.

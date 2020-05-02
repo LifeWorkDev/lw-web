@@ -20,7 +20,7 @@ class Client::ProjectsController < ProjectsController
   end
 
   def project_path(project)
-    project.client_invited? ? [:deposit, current_namespace, project.becomes(Project)] : [current_namespace, project.becomes(Project), :comments]
+    project.client_invited? ? [:deposit, current_namespace, project.becomes(Project)] : [:timeline, current_namespace, project.becomes(Project)]
   end
   helper_method :project_path
 end

@@ -4,11 +4,27 @@
   h2
     => @project
     span.font-weight-normal timeline
-  h4 = "Client: #{@project.client.name}"
-  h5 = "Contract amount: #{@project.amount.format}"
+  h5.font-sans-serif = "Client: #{@project.client.name}"
+  - unless @project.retainer?
+    .font-sans-serif = "Contract amount: #{@project.amount.format}"
 
 - if @project.active?
-  p.lead.mt-4 Your project is currently in progress, so if you need to make any changes to dates or amounts, please <a href='javascript:Intercom("show")'>contact us</a>.
+  p.lead.mt-4.text-center Your project is currently in progress, so if you need to make any changes to dates or amounts, please <a href='javascript:Intercom("show")'>contact us</a>.
+
+- if @project.retainer?
+  .row.text-center.mt-5
+    .column.w-100
+      = render 'shared/section_heading'
+        strong = l(@project.start_date)
+      .mt-2.mb-3
+        p Received #{@project.amount.format} deposit from #{@project.client}
+  .row.text-center.mt-5
+    .column.w-100
+      = render 'shared/section_heading'
+        strong = l(@project.next_date)
+      .mt-2.mb-3
+        p #{@project.freelancer_amount.format} will be transferred to you
+        p #{@project.client} will auto-deposit #{@project.amount.format}
 
 - @milestones&.each do |milestone|
   .row.text-center.mt-5

@@ -1,4 +1,2 @@
 markdown:
   We've withdrawn **#{@project.first_client_amount&.format}** from your #{@project.pay_method}, and will hold that until **#{l(@project.date, format: :text_without_year)}**, at which point we'll automatically pay it out to **#{@freelancer_name}**.
-
-p If you need to communicate with #{@freelancer_name} about this retainer, just reply to this email.
