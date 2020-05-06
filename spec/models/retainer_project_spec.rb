@@ -5,6 +5,6 @@ RSpec.describe RetainerProject, type: :model do
 
   describe "#next_date" do
     it { expect(project.next_date.month).to eq project.start_date.month + 1 }
-    it { expect(project.next_date.day).to eq project.start_date.day }
+    it { expect(project.next_date.day).to be <= project.start_date.day }
   end
 end
