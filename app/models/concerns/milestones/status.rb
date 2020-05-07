@@ -22,7 +22,6 @@ module Milestones::Status
           schedule_approaching_emails if reminder_date.future?
           schedule_payment
           project.activate!
-          client.activate!
         end
       end
 

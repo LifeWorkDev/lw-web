@@ -23,7 +23,6 @@ class RetainerProject < Project
 
     send_deposit_emails
     activate!
-    client.activate!
   end
 
   memoize def description(for_client: false)

@@ -47,7 +47,7 @@ RSpec.describe Milestone, type: :model do
           not_enqueue_mail(ClientMailer, :milestone_approaching)
       end
 
-      it "charges client's primary pay method, activates client, activates project, emails freelancer, emails client" do
+      it "charges client's primary pay method, activates project, emails freelancer, emails client" do
         expect {
           milestone.deposit!
         }.to enqueue_mail(FreelancerMailer, :milestone_deposited).once &
@@ -56,7 +56,6 @@ RSpec.describe Milestone, type: :model do
           enqueue_mail(ClientMailer, :milestone_approaching).once.at(milestone.client_reminder_time) &
           enqueue_job(Milestones::PayJob).once.at(milestone.payment_time)
         expect(project.reload.active?).to be true
-        expect(client.reload.active?).to be true
         expect(payment.amount).to eq milestone.client_amount
         expect(payment.pays_for).to eq milestone
         expect(payment.pay_method).to eq milestone.client.primary_pay_method
