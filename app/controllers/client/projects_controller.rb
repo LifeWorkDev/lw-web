@@ -1,8 +1,13 @@
 class Client::ProjectsController < ProjectsController
+  def activate
+    @project.activate!
+    redirect_to [current_namespace, Project], notice: "Your project with #{@project.freelancer} is good to go! We'll notify you on #{l(@project.start_date, format: :text_without_year)} when the first deposit is withdrawn."
+  end
+
   def deposit
     if request.post?
       @project.deposit!(current_user)
-      redirect_to [current_namespace, Project], notice: "Your deposit was received. #{@project.freelancer.name} has been notified so they can start work on your project."
+      redirect_to [current_namespace, Project], notice: "Your deposit was received. #{@project.freelancer} has been notified so they can start work on your project."
     elsif current_org.primary_pay_method
       render "client/#{@project.type.underscore.pluralize}/deposit"
     else

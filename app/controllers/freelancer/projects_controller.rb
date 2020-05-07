@@ -1,8 +1,8 @@
 class Freelancer::ProjectsController < ProjectsController
   include Freelancer::ProjectPath
 
-  # PATCH/PUT /f/projects/1/activate
-  def activate
+  # PATCH/PUT /f/projects/1/invite
+  def invite
     notice = "Your client has been emailed an invitation to join the project." if @project.invite_client!
     redirect_to [current_namespace, Project], notice: notice
   end

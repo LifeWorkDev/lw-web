@@ -4,20 +4,15 @@ RSpec.describe "Client views", type: :system do
   context "when unauth'd" do
     context "when invited" do
       let(:client) { project.client }
-      let(:project) { Fabricate(:milestone_project_with_milestones) }
       let(:user) { User.invite!(email: Faker::Internet.safe_email, name: Faker::Name.name, org: project.client) }
-      let(:new_project_amount) { project.amount - milestone.amount + new_milestone_amount }
-      let(:new_milestone_amount) { Money.new(((100_00..1_000_00).to_a - [milestone.amount]).sample) }
       let(:new_name) { Faker::Name.name }
       let(:new_email) { Faker::Internet.safe_email }
       let(:user_opt_in) { [true, false].sample }
       let(:time_zone) { ActiveSupport::TimeZone.basic_us_zones.sample.name }
-      let(:milestone_index) { rand(0..project.milestones.size - 1) }
-      let(:milestone) { project.reload.milestones[milestone_index] }
 
       before { user.invite! }
 
-      it "updates name, email, email opt in, time zone, status when accepting an invitation" do
+      def shared_expectations(project_path)
         url = accept_user_invitation_path(invitation_token: user.raw_invitation_token)
 
         verify_visit url
@@ -38,17 +33,37 @@ RSpec.describe "Client views", type: :system do
         end
         choose Org::WORK_FREQUENCY.sample, allow_label_click: true
         expect {
-          click_continue polymorphic_path([:payment, :client, project])
+          click_continue project_path
         }.to change { client.reload.work_category } &
           change { client.work_frequency }
-        fill_in "milestone_project[milestones_attributes][#{milestone_index}][amount]", with: new_milestone_amount
-        fill_in "milestone_project[milestones_attributes][#{milestone_index}][description]", with: Faker::Lorem.sentences.join(" ")
-        fill_in "milestone_project[amount]", with: new_project_amount
-        expect {
-          click_continue client_pay_methods_path(project: project)
-        }.to change { project.reload.amount } &
-          change { milestone.reload.amount } &
-          change { milestone.description }
+      end
+
+      context "to a milestone project" do
+        let(:project) { Fabricate(:milestone_project_with_milestones) }
+        let(:new_project_amount) { project.amount - milestone.amount + new_milestone_amount }
+        let(:new_milestone_amount) { Money.new(((100_00..1_000_00).to_a - [milestone.amount]).sample) }
+        let(:milestone_index) { rand(0..project.milestones.size - 1) }
+        let(:milestone) { project.reload.milestones[milestone_index] }
+
+        it "updates name, email, email opt in, time zone, status, and allows updating payment schedule when accepting" do
+          shared_expectations(polymorphic_path([:payment, :client, project]))
+          fill_in "milestone_project[milestones_attributes][#{milestone_index}][amount]", with: new_milestone_amount
+          fill_in "milestone_project[milestones_attributes][#{milestone_index}][description]", with: Faker::Lorem.sentences.join(" ")
+          fill_in "milestone_project[amount]", with: new_project_amount
+          expect {
+            click_continue client_pay_methods_path(project: project)
+          }.to change { project.reload.amount } &
+            change { milestone.reload.amount } &
+            change { milestone.description }
+        end
+      end
+
+      context "to a retainer project" do
+        let(:project) { Fabricate(:retainer_project) }
+
+        it "updates name, email, email opt in, time zone, status, and asks for a payment method when accepting" do
+          shared_expectations(client_pay_methods_path(project: project))
+        end
       end
     end
   end

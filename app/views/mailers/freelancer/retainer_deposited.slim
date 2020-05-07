@@ -1,7 +1,7 @@
-h2.text-center Great news!
+h2.mb-4 Great news!
 
 markdown:
-  We've received #{@project.client.name.possessive} deposit of **#{@project.first_amount.format}** for **#{@project}**, so you can begin work on it with the certainty that you'll be paid upon completion.
+  We've received #{@project.client.name.possessive} deposit of **#{@project.first_amount.format}** for **#{link_to @project, timeline_freelancer_project_url(@project)}**, so you can begin work on it with the certainty that you'll be paid upon completion.
 
 markdown:
   We will disburse that amount, net of fees, on **#{l(@project.date, format: :text_without_year)}**.

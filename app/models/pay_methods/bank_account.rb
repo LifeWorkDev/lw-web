@@ -48,7 +48,7 @@ class PayMethods::BankAccount < PayMethod
   end
 
   def to_s
-    "#{name || "#{issuer.titleize} #{kind.downcase}"} ending in #{last_4}"
+    "#{issuer.titleize} #{kind.downcase} account ending in #{last_4}"
   end
 
 private

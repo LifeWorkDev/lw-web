@@ -1,0 +1,7 @@
+h2.mb-4 Great news!
+
+markdown:
+  #{@project.client.name} has linked a payment method for **#{link_to @project, timeline_freelancer_project_url(@project)}**.
+
+markdown:
+  We will notify you on **#{l(@project.start_date, format: :text_without_year)}** when their deposit has been received.

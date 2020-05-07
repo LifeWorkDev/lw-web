@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     resources :projects, only: %i[index show] do
       resources :comments, only: :create
       member do
+        patch :activate
         get :comments, to: redirect("/c/projects/%{id}/timeline")
         match :deposit, via: %i[get post]
         get :timeline
@@ -38,8 +39,8 @@ Rails.application.routes.draw do
     resources :projects do
       resources :comments, only: :create
       member do
-        patch :activate
         get :comments, to: redirect("/f/projects/%{id}/timeline")
+        patch :invite
         get :preview
         match :status, via: %i[get patch]
         get :timeline

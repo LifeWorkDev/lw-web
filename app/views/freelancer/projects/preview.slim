@@ -20,5 +20,5 @@
     .card-body.mw-600px.p-0 = render template: 'mailers/client/invite', layout: 'mailers/_body'
 
 .mw-600px.mx-auto
-  = bootstrap_form_with(url: [:activate, current_namespace, @project.becomes(Project)], class: 'w-100 mt-2', control_col: 'col-sm-6 col-md-3', label_col: 'col-sm-6 text-sm-right', layout: :horizontal, local: true, method: :patch) do |f|
+  = bootstrap_form_with(url: [:invite, current_namespace, @project.becomes(Project)], class: 'w-100 mt-2', control_col: 'col-sm-6 col-md-3', label_col: 'col-sm-6 text-sm-right', layout: :horizontal, local: true, method: :patch) do |f|
     = render 'shared/form_buttons', f: f, back: @back, submit_val: :payment

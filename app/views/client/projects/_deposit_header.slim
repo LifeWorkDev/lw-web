@@ -1,4 +1,4 @@
-- title = "Deposit for #{@project.name}"
+- title = "Payment schedule for #{@project.name}"
 - content_for :title, title
 
 .text-center
@@ -6,7 +6,7 @@
 
 p.lead.mt-4
   - if params[:new_pay_method]
-    | Congratulations, you've successfully linked your payment method!
+    | You've successfully linked a #{current_org.primary_pay_method}.
 - if current_org.primary_pay_method&.bank_account?
   .alert.alert-warning.mt-4
     ' If your account only allows withdrawals to specific banking institutions, please whitelist our partner, Stripe using

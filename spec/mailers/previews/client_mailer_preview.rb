@@ -1,8 +1,10 @@
 class ClientMailerPreview < ActionMailer::Preview
-  def invite
-    params = {recipient: User.active.sample, project: Project.not_pending.sample}
-    params[:reminder] = true if [true, false].sample
-    ClientMailer.with(params).invite
+  def milestone_invite
+    invite(MilestoneProject.not_pending.sample)
+  end
+
+  def retainer_invite
+    invite(random_retainer_project)
   end
 
   delegate :milestone_approaching, to: :milestone_mailer
@@ -12,6 +14,12 @@ class ClientMailerPreview < ActionMailer::Preview
 
 private
 
+  def invite(project)
+    params = {recipient: User.active.sample, project: project}
+    params[:reminder] = true if [true, false].sample
+    ClientMailer.with(params).invite
+  end
+
   def milestone_mailer
     ClientMailer.with(milestone_params)
   end
@@ -20,11 +28,15 @@ private
     {recipient: User.client.sample, milestone: Milestone.deposited.sample}
   end
 
+  def random_retainer_project
+    RetainerProject.not_pending.sample
+  end
+
   def retainer_mailer
     ClientMailer.with(retainer_params)
   end
 
   def retainer_params
-    {recipient: User.client.sample, project: RetainerProject.not_pending.sample}
+    {recipient: User.client.sample, project: random_retainer_project}
   end
 end

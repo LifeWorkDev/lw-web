@@ -16,6 +16,16 @@ class RetainerProject < Project
     description: "A recurring, fixed retainer payment".freeze,
   }.freeze
 
+  aasm do
+    event :activate do
+      transitions from: :client_invited, to: :active
+
+      after_commit do
+        FreelancerMailer.with(recipient: freelancer, project: self).retainer_agreed.deliver_later
+      end
+    end
+  end
+
   alias first_amount amount
 
   def deposit!(user = nil)
@@ -34,7 +44,7 @@ class RetainerProject < Project
   end
 
   memoize def first_description(for_client: false)
-    "The first payment of #{(for_client ? first_client_amount : first_amount).format(no_cents_if_whole: true)} is due by #{l(start_date, format: :text_without_year)}, and will be disbursed to #{freelancer.name} on #{l(next_date, format: :text_without_year)}."
+    "The first payment of #{(for_client ? first_client_amount : first_amount).format(no_cents_if_whole: true)} is due on #{l(start_date, format: :text_without_year)}, and will be disbursed to #{freelancer.name} on #{l(next_date, format: :text_without_year)}."
   end
 
   def for_subject

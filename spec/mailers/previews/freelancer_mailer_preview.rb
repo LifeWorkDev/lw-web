@@ -2,6 +2,7 @@ class FreelancerMailerPreview < ActionMailer::Preview
   delegate :milestone_approaching, to: :milestone_mailer
   delegate :milestone_deposited, to: :milestone_mailer
   delegate :milestone_paid, to: :milestone_mailer
+  delegate :retainer_agreed, to: :retainer_mailer
   delegate :retainer_deposited, to: :retainer_mailer
 
 private

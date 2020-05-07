@@ -2,7 +2,7 @@ class Client::PayMethodsController < AuthenticatedController
   before_action :set_pay_method, only: %i[show edit update destroy]
 
   def created
-    redirect_to client_projects_path, notice: "Payment method was successfully changed."
+    redirect_to client_projects_path, notice: "Payment method was set to #{current_org.primary_pay_method}."
   end
 
   # GET /pay_methods

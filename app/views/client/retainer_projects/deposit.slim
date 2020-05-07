@@ -6,4 +6,7 @@ p.lead
 p.lead
   = "#{@project.description(for_client: true)}."
 
-= render 'client/projects/deposit_form', amount: @project.first_client_amount
+= bootstrap_form_with(url: [:activate, current_namespace, @project.becomes(Project)], layout: :horizontal, local: true, method: :patch) do |f|
+  = f.primary class: 'btn btn-success float-right', id: 'submit-form', render_as_button: true
+    = mdi_svg 'handshake'
+    |  Agree to this schedule
