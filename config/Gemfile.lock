@@ -352,6 +352,9 @@ GEM
       shellany (~> 0.0)
     oj (3.10.6)
     orm_adapter (0.5.0)
+    overcommit (0.53.0)
+      childprocess (>= 0.6.3, < 4)
+      iniparse (~> 1.4)
     parallel (1.19.1)
     parser (2.7.1.2)
       ast (~> 2.4.0)
@@ -535,6 +538,9 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    standard (0.3.0)
+      rubocop (~> 0.82.0)
+      rubocop-performance (~> 1.5.2)
     store_base_sti_class (2.0.1)
       activerecord (>= 4.0)
     stripe (5.21.0)
@@ -631,6 +637,7 @@ DEPENDENCIES
   nilify_blanks!
   norobots
   oj
+  overcommit
   partially_useful
   pg (>= 0.18, < 2.0)
   pgreset
@@ -664,6 +671,7 @@ DEPENDENCIES
   slim-rails
   slim_lint
   sprockets (< 4.0)
+  standard (>= 0.3)
   store_base_sti_class
   stripe
   stripe-ruby-mock!

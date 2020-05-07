@@ -2,7 +2,8 @@ class Freelancer::MilestoneProjectsController < MilestoneProjectsController
   include Freelancer::ProjectPath
 
   # GET /f/milestone_projects/1/milestones
-  def milestones; end
+  def milestones
+  end
 
   # GET /f/milestone_projects/1/payment
   def payment
@@ -14,10 +15,10 @@ class Freelancer::MilestoneProjectsController < MilestoneProjectsController
   def update
     @project.assign_attributes(milestone_project_params)
     path = if params[:button].present?
-             params[:button] == "milestones" ? [:payment, current_namespace, @project] : [:preview, current_namespace, @project.becomes(Project)]
-           else
-             next_step(@project)
-           end
+      params[:button] == "milestones" ? [:payment, current_namespace, @project] : [:preview, current_namespace, @project.becomes(Project)]
+    else
+      next_step(@project)
+    end
     if @project.save
       redirect_to path
     else

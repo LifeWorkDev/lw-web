@@ -11,7 +11,7 @@ class Milestone < ApplicationRecord
   has_many :payments, as: :pays_for, dependent: :destroy
 
   delegate :currency, :client_pays_fees?, :fee_percent, to: :project
-  monetize :amount_cents, with_model_currency: :currency, allow_nil: true, numericality: { greater_than_or_equal_to: 0 }
+  monetize :amount_cents, with_model_currency: :currency, allow_nil: true, numericality: {greater_than_or_equal_to: 0}
 
   def as_json(*)
     {
@@ -74,6 +74,6 @@ class Milestone < ApplicationRecord
   end
 
   def stripe_metadata
-    { 'Milestone ID': id }
+    {'Milestone ID': id}
   end
 end

@@ -20,7 +20,7 @@ Rails.application.routes.draw do
     resources :retainer_projects do
       get :payment, on: :member
     end
-    get ":type/new", to: "pay_methods#new", constraints: { type: %w[bank_accounts cards] }
+    get ":type/new", to: "pay_methods#new", constraints: {type: %w[bank_accounts cards]}
   end
 
   namespace :freelancer, path: "f" do
@@ -72,12 +72,12 @@ Rails.application.routes.draw do
     get :sign_up, to: "users/registrations#new", as: :new_user_registration
   end
   devise_for :users,
-             skip: [:sessions],
-             controllers: {
-               invitations: "users/invitations",
-               registrations: "users/registrations",
-               sessions: "users/sessions",
-             }
+    skip: [:sessions],
+    controllers: {
+      invitations: "users/invitations",
+      registrations: "users/registrations",
+      sessions: "users/sessions",
+    }
   namespace :users do
     post ":id/impersonate", to: "impersonations#impersonate", as: :impersonate
     post :stop_impersonating, to: "impersonations#stop_impersonating"

@@ -1,5 +1,5 @@
 environment ENV.fetch("RAILS_ENV") { "development" }
-port        ENV.fetch("PORT") { 3000 }
+port ENV.fetch("PORT") { 3000 }
 workers 1
 
 if Rails.env.development?

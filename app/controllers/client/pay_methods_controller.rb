@@ -11,7 +11,8 @@ class Client::PayMethodsController < AuthenticatedController
   end
 
   # GET /pay_methods/1
-  def show; end
+  def show
+  end
 
   # GET /pay_methods/new
   def new
@@ -20,7 +21,8 @@ class Client::PayMethodsController < AuthenticatedController
   end
 
   # GET /pay_methods/1/edit
-  def edit; end
+  def edit
+  end
 
   # POST /pay_methods
   def create
@@ -28,13 +30,13 @@ class Client::PayMethodsController < AuthenticatedController
 
     if @pay_method.save
       location = if params[:project].present?
-                   deposit_client_project_path(params[:project], new_pay_method: true)
-                 else
-                   created_client_pay_methods_path
-                 end
-      render json: { location: location }
+        deposit_client_project_path(params[:project], new_pay_method: true)
+      else
+        created_client_pay_methods_path
+      end
+      render json: {location: location}
     else
-      render json: { error: @pay_method.errors.full_messages.join(", ") }, status: 400
+      render json: {error: @pay_method.errors.full_messages.join(", ")}, status: 400
     end
   end
 

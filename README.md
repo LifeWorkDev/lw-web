@@ -37,10 +37,11 @@ Controllers & views are namespaced under Client & Freelancer. The routes have sh
 1. `cd config/ssl && mkcert lifework.localhost lifework-packs.localhost mail.localhost localhost 127.0.0.1 ::1 && cd ../../`
 1. `gem install bundler -v '>= 2.0.2'`
 1. `bundle`
+1. `bin/overcommit --install`
 1. `yarn`
 1. `cp config/database.yml.example config/database.yml`
 1. `bin/rails db:setup`
-1. `rvmsudo bin/invoker setup --tld localhost` (help available [here](http://invoker.codemancers.com/ruby_managers.html))
+1. `rvmsudo bin/invoker install --tld localhost` (help available [here](http://invoker.codemancers.com/ruby_managers.html))
 1. `bin/server`
 1. Open https://lifework.localhost
 1. To view outbound emails, open https://mail.localhost
@@ -67,7 +68,7 @@ There isn't currently any seed data. You will need to register as a new user and
 
 We use the following linters/formatters:
 
-* [rubocop](https://docs.rubocop.org/en/stable/) (Ruby/Rails format/lint)
+* [standardrb](https://github.com/testdouble/standard) (Ruby/Rails format/lint)
 * [prettier](https://prettier.io/) (JavaScript/JSX format)
 * [eslint](https://eslint.org/) (JavaScript/JSX lint)
 * [slim-lint](https://github.com/sds/slim-lint) (Rails view lint)

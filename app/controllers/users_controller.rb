@@ -1,5 +1,6 @@
 class UsersController < AuthenticatedController
-  def edit; end
+  def edit
+  end
 
   # PATCH /user
   def update
@@ -18,7 +19,7 @@ private
 
   def attributes
     params.require(:user)
-          .permit(:name, :email, :phone, :address, :time_zone, :password, :email_opt_in)
-          .delete_if { |key, value| key == "password" && value.blank? }
+      .permit(:name, :email, :phone, :address, :time_zone, :password, :email_opt_in)
+      .delete_if { |key, value| key == "password" && value.blank? }
   end
 end

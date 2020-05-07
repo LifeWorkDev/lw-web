@@ -1,8 +1,8 @@
 class Payment < ApplicationRecord
   include Payments::Status
 
-  monetize :amount_cents, with_model_currency: :currency, numericality: { greater_than: 0 }
-  monetize :stripe_fee_cents, numericality: { greater_than_or_equal_to: 0 }
+  monetize :amount_cents, with_model_currency: :currency, numericality: {greater_than: 0}
+  monetize :stripe_fee_cents, numericality: {greater_than_or_equal_to: 0}
 
   belongs_to :pays_for, polymorphic: true
   belongs_to :pay_method
@@ -20,7 +20,7 @@ class Payment < ApplicationRecord
     true
   rescue Stripe::CardError => e
     fail!(e.error.message)
-    Errbase.report(e, { payment: self })
+    Errbase.report(e, {payment: self})
     false
   end
 
@@ -85,7 +85,7 @@ class Payment < ApplicationRecord
         detail: self,
         from: freelancer.account_receivable,
         to: freelancer.account_disbursement,
-        metadata: { transfer_id: transfer.id },
+        metadata: {transfer_id: transfer.id},
       )
 
       DoubleEntry.transfer(
@@ -94,7 +94,7 @@ class Payment < ApplicationRecord
         detail: self,
         from: freelancer.account_receivable,
         to: ACCOUNT_FEES,
-        metadata: { transfer_id: transfer.id },
+        metadata: {transfer_id: transfer.id},
       )
 
       if processing_fee.positive?
@@ -104,7 +104,7 @@ class Payment < ApplicationRecord
           detail: self,
           from: freelancer.account_receivable,
           to: ACCOUNT_FEES,
-          metadata: { transfer_id: transfer.id },
+          metadata: {transfer_id: transfer.id},
         )
       end
     end

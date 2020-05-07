@@ -19,9 +19,9 @@ RSpec.describe "Freelancer views", type: :system do
       fill_in "user[email]", with: user_email
       fill_in "user[password]", with: Faker::Internet.password(special_characters: true)
       find(:checkbox, "user[email_opt_in]").set(user_opt_in)
-      expect do
+      expect {
         click_sign_up "/f/user/edit"
-      end.to change { User.count }.by(1)
+      }.to change { User.count }.by(1)
       expect(user.name).to eq user_name
       expect(user.email).to eq user_email
       expect(user.email_opt_in).to eq(user_opt_in)
@@ -30,11 +30,11 @@ RSpec.describe "Freelancer views", type: :system do
         check category, allow_label_click: true
       end
       choose User::WORK_TYPES.sample, allow_label_click: true
-      expect do
+      expect {
         click_continue
-      end.to change { user.reload.time_zone }.to(user_time_zone) &
-             change { user.work_category } &
-             change { user.work_type }
+      }.to change { user.reload.time_zone }.to(user_time_zone) &
+        change { user.work_category } &
+        change { user.work_type }
       expect(page).to have_current_path "/f/content/walkthrough"
     end
   end
@@ -54,9 +54,9 @@ RSpec.describe "Freelancer views", type: :system do
     end
 
     def invite_expectations
-      expect do
+      expect {
         click_continue "/f/projects"
-      end.to enqueue_mail(ClientMailer, :invite).once
+      }.to enqueue_mail(ClientMailer, :invite).once
       expect(page).to have_content("Your client has been emailed an invitation to join the project.")
     end
 
@@ -64,33 +64,33 @@ RSpec.describe "Freelancer views", type: :system do
       expect(new_project.type).to eq "MilestoneProject"
       # Choose a random selectable date
       date = all("div", class: %w[DayPicker-Day !DayPicker-Day--disabled !DayPicker-Day--outside]).sample
-      Rails.logger.info "Clicking #{date['aria-label']}"
+      Rails.logger.info "Clicking #{date["aria-label"]}"
       date.click
       click_continue
       expect(page).to have_content(new_milestone.formatted_date)
       fill_in "milestone_project[amount]", with: amount
       fill_in "milestone_project[milestones_attributes][0][amount]", with: amount
       fill_in "milestone_project[milestones_attributes][0][description]", with: Faker::Lorem.sentences.join(" ")
-      expect do
+      expect {
         click_continue
-      end.to change { new_project.reload.amount } &
-             change { new_milestone.reload.amount } &
-             change { new_milestone.description }
+      }.to change { new_project.reload.amount } &
+        change { new_milestone.reload.amount } &
+        change { new_milestone.description }
       expect(page).to have_content(name) &
-                      have_content(amount.format, count: 2) &
-                      have_content(new_milestone.formatted_date) &
-                      have_content(new_milestone.description)
+        have_content(amount.format, count: 2) &
+        have_content(new_milestone.formatted_date) &
+        have_content(new_milestone.description)
       invite_expectations
     end
 
     def retainer_project_expectations
       expect(new_project.type).to eq "RetainerProject"
       fill_in "retainer_project[amount]", with: amount
-      expect do
+      expect {
         click_continue
-      end.to change { new_project.reload.amount }
+      }.to change { new_project.reload.amount }
       expect(page).to have_content(name) &
-                      have_content(amount.format)
+        have_content(amount.format)
       invite_expectations
     end
 
@@ -105,11 +105,11 @@ RSpec.describe "Freelancer views", type: :system do
         fill_in "org[projects_attributes][0][name]", with: name
         first("#org_projects_attributes_0_status option[value=contract_sent]").select_option # Placeholder is first
         # choose :org_projects_attributes_0_type_milestoneproject, allow_label_click: true
-        expect do
+        expect {
           click_continue
-        end.to change { Org.count }.by(1) &
-               change { Project.count }.by(1) &
-               change { User.count }.by(1)
+        }.to change { Org.count }.by(1) &
+          change { Project.count }.by(1) &
+          change { User.count }.by(1)
         expect(client_user.invited_by).to eq(user)
         expect(page).to have_content("Client was successfully created.")
       end

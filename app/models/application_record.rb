@@ -12,9 +12,9 @@ class ApplicationRecord < ActiveRecord::Base
     include Memery
 
     def callbacks_of_type(type, kind: :all)
-      send("_#{type}_callbacks").select do |cb|
+      send("_#{type}_callbacks").select { |cb|
         [:all, cb.kind].include? kind
-      end.map(&:filter)
+      }.map(&:filter)
     end
 
     def sample(limit = 1)

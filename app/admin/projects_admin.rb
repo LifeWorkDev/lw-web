@@ -5,19 +5,19 @@ Trestle.resource(:projects) do
 
   build_instance do |attrs, params|
     scope = if params[:org_id]
-              Org.find(params[:org_id]).projects
-            elsif params[:user_id]
-              User.find(params[:user_id]).projects
-            else
-              Project
-            end
+      Org.find(params[:org_id]).projects
+    elsif params[:user_id]
+      User.find(params[:user_id]).projects
+    else
+      Project
+    end
     scope.new(attrs)
   end
 
   collection { Project.order(id: :asc) }
 
   table do
-    column :id, sort: { default: true, default_order: :asc }
+    column :id, sort: {default: true, default_order: :asc}
     column :name
     column :status, sort: :status, align: :center do |project|
       status_tag(project.status.humanize, project.status_class)
@@ -54,7 +54,7 @@ Trestle.resource(:projects) do
     if project.milestone?
       tab :milestones, badge: project.milestones.size do
         table MilestonesAdmin.table, collection: project.milestones
-        concat admin_link_to("New Milestone", admin: :milestones, action: :new, params: { project_id: project.id }, class: "btn btn-success mt-3")
+        concat admin_link_to("New Milestone", admin: :milestones, action: :new, params: {project_id: project.id}, class: "btn btn-success mt-3")
       end
     end
   end

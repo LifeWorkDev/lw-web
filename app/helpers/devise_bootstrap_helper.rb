@@ -10,7 +10,7 @@ module DeviseBootstrapHelper
       sentence = <<-HTML
       <strong>
         #{t(
-          'errors.messages.not_saved',
+          "errors.messages.not_saved",
           count: messages.size,
           resource: resource.class.model_name.human.downcase,
         )}

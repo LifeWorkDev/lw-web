@@ -41,20 +41,20 @@ RSpec.describe Milestone, type: :model do
     describe "#deposit!" do
       it "doesn't schedule milestone approaching emails if they would be in the past" do
         milestone.update!(date: Date.current)
-        expect do
+        expect {
           milestone.deposit!
-        end.to not_enqueue_mail(FreelancerMailer, :milestone_approaching) &
-               not_enqueue_mail(ClientMailer, :milestone_approaching)
+        }.to not_enqueue_mail(FreelancerMailer, :milestone_approaching) &
+          not_enqueue_mail(ClientMailer, :milestone_approaching)
       end
 
       it "charges client's primary pay method, activates client, activates project, emails freelancer, emails client" do
-        expect do
+        expect {
           milestone.deposit!
-        end.to enqueue_mail(FreelancerMailer, :milestone_deposited).once &
-               enqueue_mail(ClientMailer, :milestone_deposited).once &
-               enqueue_mail(FreelancerMailer, :milestone_approaching).once.at(milestone.freelancer_reminder_time) &
-               enqueue_mail(ClientMailer, :milestone_approaching).once.at(milestone.client_reminder_time) &
-               enqueue_job(Milestones::PayJob).once.at(milestone.payment_time)
+        }.to enqueue_mail(FreelancerMailer, :milestone_deposited).once &
+          enqueue_mail(ClientMailer, :milestone_deposited).once &
+          enqueue_mail(FreelancerMailer, :milestone_approaching).once.at(milestone.freelancer_reminder_time) &
+          enqueue_mail(ClientMailer, :milestone_approaching).once.at(milestone.client_reminder_time) &
+          enqueue_job(Milestones::PayJob).once.at(milestone.payment_time)
         expect(project.reload.active?).to be true
         expect(client.reload.active?).to be true
         expect(payment.amount).to eq milestone.client_amount
@@ -75,11 +75,11 @@ RSpec.describe Milestone, type: :model do
       it "creates Stripe transfers" do
         milestone.update(status: :deposited)
         allow(Stripe::Transfer).to receive(:create).and_call_original
-        expect do
+        expect {
           milestone.pay!
-        end.to enqueue_mail(ClientMailer, :milestone_paid).once &
-               enqueue_mail(FreelancerMailer, :milestone_paid).once &
-               enqueue_job(Milestones::DepositJob).once.at(milestone.deposit_time)
+        }.to enqueue_mail(ClientMailer, :milestone_paid).once &
+          enqueue_mail(FreelancerMailer, :milestone_paid).once &
+          enqueue_job(Milestones::DepositJob).once.at(milestone.deposit_time)
         expect(Stripe::Transfer).to have_received(:create).once
       end
     end

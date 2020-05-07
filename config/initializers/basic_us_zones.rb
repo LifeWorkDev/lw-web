@@ -4,10 +4,10 @@ module ActiveSupport
       include Memery
 
       memoize def basic_us_zones
-        TZInfo::Country.get("US").zone_identifiers.map do |tz_id|
+        TZInfo::Country.get("US").zone_identifiers.map { |tz_id|
           name = ActiveSupport::TimeZone::MAPPING.key(tz_id)
           name && ActiveSupport::TimeZone[name]
-        end.compact.sort!
+        }.compact.sort!
       end
 
       memoize def basic_us_zone_names

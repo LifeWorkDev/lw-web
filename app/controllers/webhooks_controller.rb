@@ -13,7 +13,7 @@ class WebhooksController < ApplicationController
     head :ok
   rescue JSON::ParserError, Stripe::SignatureVerificationError => e
     logger.error e.inspect
-    Errbase.report(e, { headers: request_headers, data: request_data })
+    Errbase.report(e, {headers: request_headers, data: request_data})
     head :bad_request && return
   end
 

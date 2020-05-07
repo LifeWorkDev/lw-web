@@ -17,15 +17,15 @@ DoubleEntry.configure do |config|
     acct.define identifier: :cash, scope_identifier: org_scope
 
     user_scope = class_scope("User")
-    acct.define identifier: :receivable,   scope_identifier: user_scope
+    acct.define identifier: :receivable, scope_identifier: user_scope
     acct.define identifier: :disbursement, scope_identifier: user_scope
   end
 
   config.define_transfers do |tx|
-    tx.define code: :payment,      from: :cash,       to: :receivable
-    tx.define code: :platform,     from: :receivable, to: :fees
-    tx.define code: :processing,   from: :receivable, to: :fees
+    tx.define code: :payment, from: :cash, to: :receivable
+    tx.define code: :platform, from: :receivable, to: :fees
+    tx.define code: :processing, from: :receivable, to: :fees
     tx.define code: :disbursement, from: :receivable, to: :disbursement
-    tx.define code: :refund,       from: :receivable, to: :cash
+    tx.define code: :refund, from: :receivable, to: :cash
   end
 end

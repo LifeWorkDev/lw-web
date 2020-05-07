@@ -3,8 +3,8 @@ class CreateOrgs < ActiveRecord::Migration[6.0]
     create_table :orgs do |t|
       t.citext :name
       t.string :status, null: false
-      t.string :slug, null: false, index: { unique: true }
-      t.jsonb  :metadata
+      t.string :slug, null: false, index: {unique: true}
+      t.jsonb :metadata
       t.string :stripe_id
 
       t.timestamps

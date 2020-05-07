@@ -37,7 +37,7 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.perform_caching = false
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = { address: "localhost", port: 1025 }
+  config.action_mailer.smtp_settings = {address: "localhost", port: 1025}
   config.action_mailer.logger = nil
 
   # Print deprecation notices to the Rails logger.
@@ -59,9 +59,9 @@ Rails.application.configure do
   config.force_ssl = true
 
   dev_server = Webpacker.config.dev_server
-  WEBPACK_SCRIPT_TAG ||= "<script src='#{'http' + (dev_server[:https] && 's')}://#{dev_server[:host]}:#{dev_server[:port]}/webpack-dev-server.js'></script>".freeze
+  WEBPACK_SCRIPT_TAG ||= "<script src='#{"http" + (dev_server[:https] && "s")}://#{dev_server[:host]}:#{dev_server[:port]}/webpack-dev-server.js'></script>".freeze
   config.middleware.insert_before ActionDispatch::ShowExceptions, Rack::Toolbar,
-                                  snippet: WEBPACK_SCRIPT_TAG,
-                                  insertion_point: "</head>",
-                                  insertion_method: :before
+    snippet: WEBPACK_SCRIPT_TAG,
+    insertion_point: "</head>",
+    insertion_method: :before
 end

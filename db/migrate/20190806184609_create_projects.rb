@@ -7,7 +7,7 @@ class CreateProjects < ActiveRecord::Migration[6.0]
       t.string :status, null: false
       t.string :type, null: false
       t.integer :amount_cents
-      t.string  :currency, null: false, default: "USD"
+      t.string :currency, null: false, default: "USD"
       t.string :slug, null: false
       t.jsonb :metadata
 

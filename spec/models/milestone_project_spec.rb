@@ -8,7 +8,7 @@ RSpec.describe MilestoneProject, type: :model do
 
     it "doesn't create multiple milestones for the same date" do
       Time.use_zone(ActiveSupport::TimeZone.basic_us_zones.sample) do
-        milestone_attrs = project.milestones.collect { |m| { date: m.date.to_s } }
+        milestone_attrs = project.milestones.collect { |m| {date: m.date.to_s} }
         expect { project.update(milestones_attributes: milestone_attrs) }.to not_change(Milestone, :count)
       end
     end

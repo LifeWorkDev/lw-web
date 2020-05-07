@@ -7,10 +7,10 @@ class ApplicationMailbox < ActionMailbox::Base
 
   memoize def parsed_mail_body
     body = if mail.multipart? && mail.text_part
-             mail.text_part.body.decoded
-           else
-             mail.decoded
-           end
+      mail.text_part.body.decoded
+    else
+      mail.decoded
+    end
     EmailReplyParser.parse_reply(body)
   end
 end

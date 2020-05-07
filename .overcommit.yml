@@ -1,0 +1,24 @@
+gemfile: .overcommit_gems.rb
+
+CommitMsg:
+  TextWidth:
+    enabled: false
+
+PreCommit:
+  RuboCop:
+    command:
+      - bin/rubocop-daemon
+      - --parallel
+      - --config=config/rubocop_strict.yml
+    enabled: true
+    on_warn: fail
+
+  SlimLint:
+    enabled: true
+    on_warn: fail
+
+  TrailingWhitespace:
+    enabled: true
+    exclude:
+      - '**/*.slim' # Markdown blocks need 2 trailing spaces to insert <br>
+      - '**/db/structure.sql'

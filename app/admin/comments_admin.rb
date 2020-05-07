@@ -5,19 +5,19 @@ Trestle.resource(:comments) do
 
   build_instance do |attrs, params|
     scope = if params[:milestone_id]
-              Milestone.find(params[:milestone_id]).comments
-            elsif params[:commenter_id]
-              User.find(params[:commenter_id]).comments
-            else
-              Comment
-            end
+      Milestone.find(params[:milestone_id]).comments
+    elsif params[:commenter_id]
+      User.find(params[:commenter_id]).comments
+    else
+      Comment
+    end
     scope.new(attrs)
   end
 
   collection { Comment.order(id: :asc) }
 
   table do
-    column :id, sort: { default: true, default_order: :asc }
+    column :id, sort: {default: true, default_order: :asc}
     column :commenter, sort: :commenter_id
     column :commentable, header: "Commented on", sort: :commentable_id
     column :comment, sort: false

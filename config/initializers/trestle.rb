@@ -60,7 +60,7 @@ Trestle.configure do |config|
   # Add an explicit menu block to be added to the admin navigation.
   #
   config.menu do
-    item "Background Jobs", "/admin/que", data: { turbolinks: false }, icon: "fa fa-cogs", priority: :last
+    item "Background Jobs", "/admin/que", data: {turbolinks: false}, icon: "fa fa-cogs", priority: :last
     item "Email Templates", "/rails/mailers", icon: "fa fa-envelope-open-text", priority: :last unless Rails.env.production?
   end
 

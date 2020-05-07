@@ -42,18 +42,18 @@ module LifeWork
     config.action_mailer.deliver_later_queue_name = "default"
 
     config.generators do |g|
-      g.helper          false
-      g.stylesheets     false
-      g.javascripts     false
-      g.resource_route  false
-      g.serializer      false
-      g.system_tests    false
+      g.helper false
+      g.stylesheets false
+      g.javascripts false
+      g.resource_route false
+      g.serializer false
+      g.system_tests false
       g.template_engine false
-      g.test_framework  :rspec,
-                        controller_specs: false,
-                        request_specs: false,
-                        routing_specs: false,
-                        view_specs: false
+      g.test_framework :rspec,
+        controller_specs: false,
+        request_specs: false,
+        routing_specs: false,
+        view_specs: false
     end
 
     config.lograge.enabled = true
@@ -67,26 +67,26 @@ module LifeWork
       exceptions = %w[_method action authenticity_token base code commit controller format id mode path utf8]
       params = event.payload[:params].except(*exceptions)
       # gsub is to use less-verbose new hash syntax
-      params.present? ? { params: params.deep_symbolize_keys.to_s.gsub(/(:(\w+)\s?=>\s?)/, '\\2: ') } : nil
+      params.present? ? {params: params.deep_symbolize_keys.to_s.gsub(/(:(\w+)\s?=>\s?)/, '\\2: ')} : nil
     end
 
     host = ENV["DOMAIN"].presence
-    host ||= "#{ENV['SUBDOMAIN']}.lifeworkonline.com" if ENV["SUBDOMAIN"]
-    host ||= "#{ENV['HEROKU_APP_NAME']}.herokuapp.com" if ENV["HEROKU_APP_NAME"]
+    host ||= "#{ENV["SUBDOMAIN"]}.lifeworkonline.com" if ENV["SUBDOMAIN"]
+    host ||= "#{ENV["HEROKU_APP_NAME"]}.herokuapp.com" if ENV["HEROKU_APP_NAME"]
     host ||= "lifework.localhost"
     server_url = "https://#{host}"
 
     unless Rails.env.test?
       config.action_mailer.asset_host = server_url
       config.hosts << host
-      Rails.application.routes.default_url_options = { host: server_url, protocol: "https" }
+      Rails.application.routes.default_url_options = {host: server_url, protocol: "https"}
     end
   end
 end
 
 # Faster migrations: https://github.com/ankane/strong_migrations#faster-migrations
 ActiveRecord::Base.dump_schema_after_migration = Rails.env.development? &&
-                                                 `git status db/migrate/ --porcelain`.present?
+  `git status db/migrate/ --porcelain`.present?
 
-REPLIES_HOST ||= "#{ENV['SUBDOMAIN']}-reply.lifeworkonline.com".freeze
+REPLIES_HOST ||= "#{ENV["SUBDOMAIN"]}-reply.lifeworkonline.com".freeze
 WORK_CATEGORIES = ["Accounting", "Admin Support", "Business Consulting", "Customer Service", "Data Science & Analytics", "Design & Creative", "Engineering & Architecture", "IT & Networking", "Legal", "Sales & Marketing", "Translation", "Web, Mobile & Software Dev", "Writing"].freeze

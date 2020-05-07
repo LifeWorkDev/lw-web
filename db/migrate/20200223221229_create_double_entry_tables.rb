@@ -1,24 +1,24 @@
 class CreateDoubleEntryTables < ActiveRecord::Migration[6.0]
   def self.up
     create_table "double_entry_account_balances" do |t|
-      t.string     "account", null: false
-      t.string     "scope"
-      t.bigint     "balance", null: false
-      t.timestamps            null: false
+      t.string "account", null: false
+      t.string "scope"
+      t.bigint "balance", null: false
+      t.timestamps null: false
     end
 
     add_index "double_entry_account_balances", ["account"], name: "index_account_balances_on_account"
     add_index "double_entry_account_balances", %w[scope account], name: "index_account_balances_on_scope_and_account", unique: true
 
     create_table "double_entry_lines" do |t|
-      t.string     "account",         null: false
-      t.string     "scope"
-      t.string     "code",            null: false
-      t.bigint     "amount",          null: false
-      t.bigint     "balance",         null: false
+      t.string "account", null: false
+      t.string "scope"
+      t.string "code", null: false
+      t.bigint "amount", null: false
+      t.bigint "balance", null: false
       t.references "partner", index: false
-      t.string     "partner_account", null: false
-      t.string     "partner_scope"
+      t.string "partner_account", null: false
+      t.string "partner_scope"
       t.references "detail", index: false, polymorphic: true
       if ActiveRecord::Base.connection.adapter_name == "PostgreSQL"
         t.jsonb "metadata"
@@ -31,12 +31,12 @@ class CreateDoubleEntryTables < ActiveRecord::Migration[6.0]
     add_index "double_entry_lines", %w[account code created_at], name: "lines_account_code_created_at_idx"
     add_index "double_entry_lines", %w[account created_at], name: "lines_account_created_at_idx"
     add_index "double_entry_lines", %w[scope account created_at], name: "lines_scope_account_created_at_idx"
-    add_index "double_entry_lines", %w[scope account id],         name: "lines_scope_account_id_idx"
+    add_index "double_entry_lines", %w[scope account id], name: "lines_scope_account_id_idx"
 
     create_table "double_entry_line_checks" do |t|
-      t.references "last_line",    null: false, index: false
-      t.boolean    "errors_found", null: false
-      t.text       "log"
+      t.references "last_line", null: false, index: false
+      t.boolean "errors_found", null: false
+      t.text "log"
       t.timestamps null: false
     end
 

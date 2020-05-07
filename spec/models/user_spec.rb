@@ -20,10 +20,10 @@ RSpec.describe User, type: :model do
 
   describe ".invite" do
     it "does not send invitation email" do
-      expect do
+      expect {
         User.invite!(Fabricate.attributes_for(:user))
-      end.to change { User.count }.by(1) &
-             not_enqueue_mail
+      }.to change { User.count }.by(1) &
+        not_enqueue_mail
     end
   end
 

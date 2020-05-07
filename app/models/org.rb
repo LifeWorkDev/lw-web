@@ -19,8 +19,8 @@ class Org < ApplicationRecord
   validates :name, presence: true
 
   jsonb_accessor :metadata,
-                 work_category: [:string, array: true, default: []],
-                 work_frequency: :string
+    work_category: [:string, array: true, default: []],
+    work_frequency: :string
 
   WORK_FREQUENCY = ["Regularly", "Sometimes", "Rarely", "Just this once"].freeze
 
@@ -51,7 +51,7 @@ class Org < ApplicationRecord
 private
 
   memoize def intercom_metadata
-    { companies: [{ company_id: id }] }
+    {companies: [{company_id: id}]}
   end
 
   def nilify_blanks

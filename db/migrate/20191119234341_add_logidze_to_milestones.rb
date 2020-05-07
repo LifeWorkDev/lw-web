@@ -9,7 +9,7 @@ class AddLogidzeToMilestones < ActiveRecord::Migration[5.0]
       execute <<-SQL
         CREATE TRIGGER logidze_on_milestones
         BEFORE UPDATE OR INSERT ON milestones FOR EACH ROW
-        WHEN (coalesce(#{current_setting('logidze.disabled')}, '') <> 'on')
+        WHEN (coalesce(#{current_setting("logidze.disabled")}, '') <> 'on')
         EXECUTE PROCEDURE logidze_logger(null, 'updated_at', '{id,created_at,updated_at}');
       SQL
 

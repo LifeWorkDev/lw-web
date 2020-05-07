@@ -7,7 +7,8 @@ class Client::OrgsController < AuthenticatedController
   end
 
   # GET /orgs/1
-  def show; end
+  def show
+  end
 
   # GET /orgs/new
   def new
@@ -15,7 +16,8 @@ class Client::OrgsController < AuthenticatedController
   end
 
   # GET /orgs/1/edit
-  def edit; end
+  def edit
+  end
 
   # POST /orgs
   def create

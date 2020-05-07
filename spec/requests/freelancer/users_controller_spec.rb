@@ -8,7 +8,7 @@ RSpec.describe Freelancer::UsersController, type: :request do
   describe "PATCH /f/user" do
     subject(:req) { patch freelancer_user_path, params: params }
 
-    let(:params) { { 'user[time_zone]': time_zone } }
+    let(:params) { {'user[time_zone]': time_zone} }
     let(:time_zone) { ActiveSupport::TimeZone.basic_us_zone_names.sample }
 
     context "when user is outside North America" do

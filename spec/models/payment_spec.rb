@@ -9,7 +9,7 @@ RSpec.describe Payment, type: :model do
   describe "charge!" do
     it "creates acccounting records, changes status" do
       expect { payment.charge! }.to change { DoubleEntry::Line.count }.by(2) &
-                                    change { payment.status }.from("scheduled").to("succeeded")
+        change { payment.status }.from("scheduled").to("succeeded")
       expect(payment.stripe_id).to be_present
     end
   end

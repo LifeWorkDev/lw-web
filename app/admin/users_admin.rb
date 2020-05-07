@@ -11,7 +11,7 @@ Trestle.resource(:users) do
   collection { User.order(id: :asc) }
 
   table do
-    column :id, sort: { default: true, default_order: :asc }
+    column :id, sort: {default: true, default_order: :asc}
     column :name
     column :email
     column :status, sort: :status, align: :center do |user|
@@ -58,7 +58,7 @@ Trestle.resource(:users) do
 
     tab :projects, badge: user.projects_collection.size do
       table ProjectsAdmin.table, collection: user.projects_collection
-      concat admin_link_to("New Project", admin: :projects, action: :new, params: { user_id: user.id }, class: "btn btn-success mt-3")
+      concat admin_link_to("New Project", admin: :projects, action: :new, params: {user_id: user.id}, class: "btn btn-success mt-3")
     end
 
     tab :comments, badge: user.comments.size do

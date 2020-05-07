@@ -2,9 +2,9 @@ class PayMethods::Card < PayMethod
   before_validation :associate_with_stripe_customer!, on: :create
 
   jsonb_accessor :metadata,
-                 fee_percent: [:float, default: 0.03]
+    fee_percent: [:float, default: 0.03]
 
-  validates :exp_month, :exp_year, numericality: { integer_only: true }
+  validates :exp_month, :exp_year, numericality: {integer_only: true}
 
   def card?
     true

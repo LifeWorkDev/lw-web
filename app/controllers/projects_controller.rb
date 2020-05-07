@@ -12,7 +12,8 @@ class ProjectsController < AuthenticatedController
   end
 
   # GET /projects/1/edit
-  def edit; end
+  def edit
+  end
 
   # GET /projects/new
   def new
@@ -50,7 +51,7 @@ class ProjectsController < AuthenticatedController
 
     @milestones = @project.milestones.includes(comments: %i[commenter read_by])
     @project.comments.where.not(commenter: current_user)
-            .where(read_at: nil).find_each { |c| c.update(read_by_id: current_user.id, read_at: Time.current) }
+      .where(read_at: nil).find_each { |c| c.update(read_by_id: current_user.id, read_at: Time.current) }
   end
 
 private

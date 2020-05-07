@@ -65,7 +65,7 @@ RSpec.configure do |config|
 
   # Enable Rails system tests
   config.before(:all, type: :system) do
-    Capybara.server = :puma, { Silent: true, Threads: "1:1" }
+    Capybara.server = :puma, {Silent: true, Threads: "1:1"}
     Capybara.raise_server_errors = false # Render error pages instead of blowing up
   end
 

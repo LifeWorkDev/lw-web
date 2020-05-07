@@ -7,16 +7,16 @@ class CommentsController < AuthenticatedController
       CommentMailer.with(recipient: @comment.recipient, milestone: @comment.commentable).notify_new_comment.deliver_later
       redirect_to [current_namespace, @project.becomes(Project), :comments]
     else
-      redirect_to [current_namespace, @project.becomes(Project), :comments], alert: "Failed to create comment, #{@comment.errors.full_message.join(', ')}"
+      redirect_to [current_namespace, @project.becomes(Project), :comments], alert: "Failed to create comment, #{@comment.errors.full_message.join(", ")}"
     end
   end
 
   def update
     comment = current_user.comments.find(params[:id])
     if comment.update(comment: params[:comment])
-      render json: { message: "Comment successfully updated." }
+      render json: {message: "Comment successfully updated."}
     else
-      render json: { error: comment.errors.full_messages.join(", ") }, status: 400
+      render json: {error: comment.errors.full_messages.join(", ")}, status: 400
     end
   end
 

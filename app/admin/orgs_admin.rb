@@ -6,7 +6,7 @@ Trestle.resource(:orgs) do
   collection { Org.order(id: :asc) }
 
   table do
-    column :id, sort: { default: true, default_order: :asc }
+    column :id, sort: {default: true, default_order: :asc}
     column :name
     column :status, sort: :status, align: :center do |org|
       status_tag(org.status.humanize, org.status_class)
@@ -34,12 +34,12 @@ Trestle.resource(:orgs) do
 
     tab :users, badge: org.users.size do
       table UsersAdmin.table, collection: org.users
-      concat admin_link_to("New User", admin: :users, action: :new, params: { org_id: org.id }, class: "btn btn-success mt-3")
+      concat admin_link_to("New User", admin: :users, action: :new, params: {org_id: org.id}, class: "btn btn-success mt-3")
     end
 
     tab :projects, badge: org.projects.size do
       table ProjectsAdmin.table, collection: org.projects
-      concat admin_link_to("New Project", admin: :projects, action: :new, params: { org_id: org.id }, class: "btn btn-success mt-3")
+      concat admin_link_to("New Project", admin: :projects, action: :new, params: {org_id: org.id}, class: "btn btn-success mt-3")
     end
 
     tab :pay_methods, badge: org.pay_methods.size do

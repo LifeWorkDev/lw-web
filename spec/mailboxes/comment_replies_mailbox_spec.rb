@@ -50,7 +50,7 @@ RSpec.describe CommentRepliesMailbox, type: :mailbox do
 
     it do
       expect { inbound_email }.to not_change { Comment.count } &
-                                  raise_error(ActiveRecord::RecordNotFound)
+        raise_error(ActiveRecord::RecordNotFound)
     end
   end
 
@@ -66,7 +66,7 @@ RSpec.describe CommentRepliesMailbox, type: :mailbox do
 
     it do
       expect { inbound_email }.to not_change { Comment.count } &
-                                  raise_error(NameError)
+        raise_error(NameError)
     end
   end
 
@@ -82,7 +82,7 @@ RSpec.describe CommentRepliesMailbox, type: :mailbox do
 
     it do
       expect { inbound_email }.to not_change { Comment.count } &
-                                  raise_error(ActiveRecord::RecordNotFound)
+        raise_error(ActiveRecord::RecordNotFound)
     end
   end
 
@@ -98,7 +98,7 @@ RSpec.describe CommentRepliesMailbox, type: :mailbox do
 
     it do
       expect { inbound_email }.to not_change { Comment.count } &
-                                  raise_error(ActionMailbox::Router::RoutingError)
+        raise_error(ActionMailbox::Router::RoutingError)
     end
   end
 

@@ -7,7 +7,8 @@ class Freelancer::MilestonesController < AuthenticatedController
   end
 
   # GET /milestones/1
-  def show; end
+  def show
+  end
 
   # GET /milestones/new
   def new
@@ -15,7 +16,8 @@ class Freelancer::MilestonesController < AuthenticatedController
   end
 
   # GET /milestones/1/edit
-  def edit; end
+  def edit
+  end
 
   # POST /milestones
   def create

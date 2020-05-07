@@ -1,5 +1,6 @@
 class Freelancer::UsersController < AuthenticatedController
-  def edit; end
+  def edit
+  end
 
   def update
     @user = current_user
@@ -14,7 +15,8 @@ class Freelancer::UsersController < AuthenticatedController
     end
   end
 
-  def waitlist; end
+  def waitlist
+  end
 
 private
 

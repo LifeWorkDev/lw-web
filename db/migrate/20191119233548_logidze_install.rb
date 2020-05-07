@@ -29,7 +29,7 @@ class LogidzeInstall < ActiveRecord::Migration[5.0]
                       'c',
                       logidze_exclude_keys(data, VARIADIC array_append(blacklist, 'log_data'))
                      );
-            IF coalesce(#{current_setting('logidze.meta')}, '') <> '' THEN
+            IF coalesce(#{current_setting("logidze.meta")}, '') <> '' THEN
               buf := jsonb_set(buf, ARRAY['m'], current_setting('logidze.meta')::jsonb);
             END IF;
             RETURN buf;

@@ -7,7 +7,8 @@ class Freelancer::OrgsController < AuthenticatedController
   end
 
   # GET /orgs/1
-  def show; end
+  def show
+  end
 
   # GET /orgs/new
   def new
@@ -17,18 +18,19 @@ class Freelancer::OrgsController < AuthenticatedController
   end
 
   # GET /orgs/1/edit
-  def edit; end
+  def edit
+  end
 
   # POST /orgs
   def create
     @org = Org.new(org_params.to_h.deep_merge(
-                     projects_attributes: { '0': {
-                       user_id: current_user.id,
-                     } },
-                     users_attributes: { '0': {
-                       invited_by: current_user,
-                     } },
-                   ))
+      projects_attributes: {'0': {
+        user_id: current_user.id,
+      }},
+      users_attributes: {'0': {
+        invited_by: current_user,
+      }},
+    ))
 
     if @org.save
       redirect_to next_step(@org.projects.last), notice: "Client was successfully created."

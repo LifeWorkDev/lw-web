@@ -26,29 +26,29 @@ RSpec.describe "Client views", type: :system do
         fill_in "user[password]", with: Faker::Internet.password(special_characters: true)
         select time_zone, from: "user[time_zone]"
         find(:checkbox, "user[email_opt_in]").set(user_opt_in)
-        expect do
+        expect {
           click_sign_up edit_client_org_path
-        end.to change { user.reload.name }.to(new_name) &
-               change { user.email }.to(new_email) &
-               change { user.time_zone }.to(time_zone) &
-               change { user.status }.from("pending").to("active")
+        }.to change { user.reload.name }.to(new_name) &
+          change { user.email }.to(new_email) &
+          change { user.time_zone }.to(time_zone) &
+          change { user.status }.from("pending").to("active")
         expect(user.email_opt_in).to eq(user_opt_in)
         WORK_CATEGORIES.sample(rand(1..WORK_CATEGORIES.size)).each do |category|
           check category, allow_label_click: true
         end
         choose Org::WORK_FREQUENCY.sample, allow_label_click: true
-        expect do
+        expect {
           click_continue polymorphic_path([:payment, :client, project])
-        end.to change { client.reload.work_category } &
-               change { client.work_frequency }
+        }.to change { client.reload.work_category } &
+          change { client.work_frequency }
         fill_in "milestone_project[milestones_attributes][#{milestone_index}][amount]", with: new_milestone_amount
         fill_in "milestone_project[milestones_attributes][#{milestone_index}][description]", with: Faker::Lorem.sentences.join(" ")
         fill_in "milestone_project[amount]", with: new_project_amount
-        expect do
+        expect {
           click_continue client_pay_methods_path(project: project)
-        end.to change { project.reload.amount } &
-               change { milestone.reload.amount } &
-               change { milestone.description }
+        }.to change { project.reload.amount } &
+          change { milestone.reload.amount } &
+          change { milestone.description }
       end
     end
   end
@@ -81,8 +81,8 @@ RSpec.describe "Client views", type: :system do
       verify_visit polymorphic_path [:payment, :client, project]
       project.milestones.each do |milestone|
         expect(page).to have_selector("input[value='#{milestone.amount.input_format}']") &
-                        have_content(milestone.formatted_date) &
-                        have_selector("input[value='#{milestone.description}']")
+          have_content(milestone.formatted_date) &
+          have_selector("input[value='#{milestone.description}']")
       end
       expect(page).to have_selector("input[value='#{project.amount.input_format}']")
       click_continue

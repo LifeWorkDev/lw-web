@@ -14,13 +14,13 @@ class User < ApplicationRecord
   before_validation :set_defaults, on: :create
 
   devise :database_authenticatable, :lockable,
-         :invitable, :registerable, :recoverable,
-         :rememberable, :trackable, :validatable
+    :invitable, :registerable, :recoverable,
+    :rememberable, :trackable, :validatable
 
   jsonb_accessor :metadata,
-                 fee_percent: [:float, default: LIFEWORK_FEE],
-                 work_category: [:string, array: true, default: []],
-                 work_type: :string
+    fee_percent: [:float, default: LIFEWORK_FEE],
+    work_category: [:string, array: true, default: []],
+    work_type: :string
 
   scope :client, -> { where.not(org_id: nil) }
   scope :freelancer, -> { where(org_id: nil) }
@@ -111,7 +111,7 @@ protected
 private
 
   memoize def intercom_metadata
-    { users: [{ user_id: id }] }
+    {users: [{user_id: id}]}
   end
 
   def set_defaults

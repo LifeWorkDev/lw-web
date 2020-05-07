@@ -1,3 +1,4 @@
 class Freelancer::ContentController < AuthenticatedController
-  def walkthrough; end
+  def walkthrough
+  end
 end

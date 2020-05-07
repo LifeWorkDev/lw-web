@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-ruby "~> #{File.read('.ruby-version').strip}"
+ruby "~> #{File.read(".ruby-version").strip}"
 
 gem "rails", "~> 6.0.0"
 
@@ -57,11 +57,6 @@ group :development, :test do
   gem "pgreset" # Automatically disconnect active pg clients when dropping database
   gem "referral", require: false # Finds definitions & references in Ruby
   gem "rspec-rails", "~> 4.0.0.beta3"
-  gem "rubocop", require: false
-  gem "rubocop-performance", require: false
-  gem "rubocop-rails", require: false
-  gem "rubocop-rspec", require: false
-  gem "slim_lint", require: false
 end
 
 group :development do
@@ -80,7 +75,6 @@ group :development do
   gem "listen", ">= 3.0.5", "< 3.2"
   gem "partially_useful" # Add html comments around partials
   gem "rack-toolbar", github: "swrobel/rack-toolbar", branch: "rails-pages" # Insert arbitrary code into Rails pages
-  gem "rubocop-daemon", require: false # Run rubocop as a daemon so it starts up faster
   gem "strong_migrations" # complains about migration worst-practices
   install_if -> { RUBY_PLATFORM =~ /darwin/ } do
     gem "terminal-notifier" # System notifications for Mac
@@ -114,3 +108,6 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
+
+file = ".overcommit_gems.rb"
+eval(File.read(file), nil, file) # rubocop:disable Security/Eval

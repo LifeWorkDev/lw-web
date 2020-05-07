@@ -11,7 +11,7 @@ private
   end
 
   def milestone_params
-    { recipient: User.freelancer.sample, milestone: Milestone.deposited.sample }
+    {recipient: User.freelancer.sample, milestone: Milestone.deposited.sample}
   end
 
   def retainer_mailer
@@ -19,6 +19,6 @@ private
   end
 
   def retainer_params
-    { recipient: User.freelancer.sample, project: RetainerProject.not_pending.sample }
+    {recipient: User.freelancer.sample, project: RetainerProject.not_pending.sample}
   end
 end

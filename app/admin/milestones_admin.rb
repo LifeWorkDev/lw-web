@@ -11,7 +11,7 @@ Trestle.resource(:milestones) do
   collection { Milestone.order(id: :asc) }
 
   table do
-    column :id, sort: { default: true, default_order: :asc }
+    column :id, sort: {default: true, default_order: :asc}
     column :project
     column :date
     column :status, sort: :status, align: :center do |milestone|
@@ -39,7 +39,7 @@ Trestle.resource(:milestones) do
 
     tab :comments, badge: milestone.comments.size do
       table CommentsAdmin.table, collection: milestone.comments
-      concat admin_link_to("New Comment", admin: :comments, action: :new, params: { milestone_id: milestone.id }, class: "btn btn-success mt-3")
+      concat admin_link_to("New Comment", admin: :comments, action: :new, params: {milestone_id: milestone.id}, class: "btn btn-success mt-3")
     end
   end
 
