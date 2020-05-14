@@ -19,9 +19,7 @@ module Projects::Status
 
         after_commit do
           ClientMailer.with(recipient: client.primary_contact, project: self).invite.deliver_later
-          Mailers::ClientReminderJob.set(wait: 6.hours).perform_later(self)
-          Mailers::ClientReminderJob.set(wait: 24.hours).perform_later(self)
-          Mailers::ClientReminderJob.set(wait: 36.hours).perform_later(self)
+          Mailers::ClientReminderJob.set(wait: 12.hours).perform_later(self)
         end
       end
 
