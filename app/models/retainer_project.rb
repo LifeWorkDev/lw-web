@@ -30,8 +30,7 @@ class RetainerProject < Project
   alias first_amount amount
 
   def deposit!(user = nil)
-    scheduled_for = client.primary_contact.local_time(latest_payment ? next_date : start_date)
-    return unless payments.create!(amount: first_client_amount, pay_method: pay_method, scheduled_for: scheduled_for, user: user).charge!
+    return unless payments.create!(amount: first_client_amount, pay_method: pay_method, scheduled_for: deposit_time(latest_payment ? next_date : start_date), user: user).charge!
 
     send_deposit_emails
     schedule_disbursement
@@ -80,7 +79,7 @@ class RetainerProject < Project
   end
 
   def schedule_disbursement
-    Retainer::DisburseJob.set(wait_until: payment_time).perform_later(self)
+    Retainer::DisburseJob.set(wait_until: disbursement_time).perform_later(self)
   end
 
   def send_disbursement_emails
