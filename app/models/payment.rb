@@ -63,6 +63,8 @@ class Payment < ApplicationRecord
   end
 
   def transfer!
+    raise "Payment #{id} must be in 'succeeded' state to transfer" unless succeeded?
+
     record_transfer! Stripe::Transfer.create(
       {
         amount: transfer_amount.cents,
