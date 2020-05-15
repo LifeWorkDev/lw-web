@@ -44,6 +44,8 @@ en:
       subject: A payment for "%{project}" was made to %{freelancer}
     retainer_deposited:
       subject: A deposit for %{freelancer} project "%{project}" was made
+    retainer_disbursed:
+      subject: A payment was made to %{freelancer} for project "%{project}"
   comment_mailer:
     notify_new_comment:
       subject: New comment on project "%{project}"
@@ -53,8 +55,10 @@ en:
     milestone_deposited:
       subject: Milestone deposit received for "%{project}"
     milestone_paid:
-      subject: Milestone payment received for "%{project}"
+      subject: Milestone payment disbursed for "%{project}"
     retainer_agreed:
       subject: "%{client} has set up payment for your retainer"
     retainer_deposited:
       subject: Deposit received for your retainer with %{client}
+    retainer_disbursed:
+      subject: Payment disbursed for your retainer with %{client}

@@ -5,6 +5,6 @@ markdown:
 
 - if @next_milestone
   markdown:
-    At the end of today, we will automatically withdraw **#{@next_milestone.freelancer_amount&.format}** from your client's saved payment method, and hold that until the next milestone, **#{@next_milestone.description}**, is completed. Look for another message from us when that occurs, so that you know your next payment is secure.
+    At the end of today, we will automatically withdraw **#{@next_milestone.amount&.format}** from your client's saved payment method, and hold that until the next milestone, **#{@next_milestone.description}**, is completed. Look for another message from us when that occurs, so that you know your next payment is secure.
   p
     em If for some reason you do not want us to do so, please reply to this email immediately.

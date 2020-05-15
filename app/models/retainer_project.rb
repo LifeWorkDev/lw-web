@@ -22,6 +22,7 @@ class RetainerProject < Project
 
       after_commit do
         FreelancerMailer.with(recipient: freelancer, project: self).retainer_agreed.deliver_later
+        Retainer::DepositJob.set(wait_until: deposit_time).perform_later(self)
       end
     end
   end
@@ -29,10 +30,20 @@ class RetainerProject < Project
   alias first_amount amount
 
   def deposit!(user = nil)
-    return unless payments.create!(amount: first_client_amount, pay_method: pay_method, user: user).charge!
+    scheduled_for = client.primary_contact.local_time(latest_payment ? next_date : start_date)
+    return unless payments.create!(amount: first_client_amount, pay_method: pay_method, scheduled_for: scheduled_for, user: user).charge!
 
     send_deposit_emails
+    schedule_disbursement
     activate!
+  end
+
+  def disburse!
+    return unless latest_payment
+
+    latest_payment.disburse!
+    send_disbursement_emails
+    schedule_deposit
   end
 
   memoize def description(for_client: false)
@@ -55,10 +66,27 @@ class RetainerProject < Project
     "retainer-#{id}"
   end
 
+  def latest_payment
+    payments.succeeded.last
+  end
+
   def next_date
-    start_date + 1.month
+    (latest_payment&.scheduled_for&.to_date || start_date) + 1.month
   end
   alias date next_date
+
+  def schedule_deposit
+    Retainer::DepositJob.set(wait_until: deposit_time).perform_later(self)
+  end
+
+  def schedule_disbursement
+    Retainer::DisburseJob.set(wait_until: payment_time).perform_later(self)
+  end
+
+  def send_disbursement_emails
+    ClientMailer.with(recipient: client.primary_contact, project: self).retainer_disbursed.deliver_later
+    FreelancerMailer.with(recipient: freelancer, project: self).retainer_disbursed.deliver_later
+  end
 
   def send_deposit_emails
     FreelancerMailer.with(recipient: freelancer, project: self).retainer_deposited.deliver_later

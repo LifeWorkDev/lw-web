@@ -1,7 +1,10 @@
-class Milestones::PayJob < ApplicationJob
-  def perform(milestone)
-    return unless milestone.payment_date?
+module Milestones
+  class PayJob < Job
+    def perform(milestone)
+      super
+      return unless milestone.payment_date?
 
-    milestone.pay!
+      milestone.pay!
+    end
   end
 end

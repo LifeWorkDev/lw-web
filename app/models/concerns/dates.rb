@@ -4,14 +4,14 @@ module Dates
   included do
     # Stripe cuts off ACH for the day at 21:00 UTC
     # https://stripe.com/docs/ach#ach-payments-workflow
-    memoize def deposit_time
+    memoize def deposit_time(deposit_date = date)
       client.primary_contact.use_zone do
-        Time.current.change(hour: 20, min: 45, zone: "UTC")
+        deposit_date.to_time(:utc).change(hour: 20, min: 45)
       end
     end
 
     memoize def payment_date?
-      freelancer.use_zone do
+      client.primary_contact.use_zone do
         date == Date.current
       end
     end
@@ -19,6 +19,7 @@ module Dates
     memoize def payment_time
       client.primary_contact.local_time(date).change(hour: 9)
     end
+    alias_method :disbursement_time, :payment_time
 
     # 3 business days before Milestone date
     memoize def reminder_date

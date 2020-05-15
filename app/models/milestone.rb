@@ -61,8 +61,8 @@ class Milestone < ApplicationRecord
     ClientMailer.with(recipient: client.primary_contact, milestone: self).milestone_approaching.deliver_later(wait_until: client_reminder_time)
   end
 
-  def schedule_deposit
-    Milestones::DepositJob.set(wait_until: deposit_time).perform_later(self)
+  def schedule_deposit(schedule_for = deposit_time)
+    Milestones::DepositJob.set(wait_until: schedule_for).perform_later(self)
   end
 
   def schedule_payment

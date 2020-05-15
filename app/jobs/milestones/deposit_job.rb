@@ -1,5 +1,8 @@
-class Milestones::DepositJob < ApplicationJob
-  def perform(milestone)
-    milestone.deposit!
+module Milestones
+  class DepositJob < Job
+    def perform(milestone)
+      super
+      milestone.deposit!
+    end
   end
 end

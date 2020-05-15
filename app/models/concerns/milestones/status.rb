@@ -34,7 +34,7 @@ module Milestones::Status
 
         after_commit do
           send_payment_emails
-          self.next&.schedule_deposit
+          self.next&.schedule_deposit(deposit_time)
         end
       end
     end

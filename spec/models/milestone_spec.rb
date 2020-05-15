@@ -71,7 +71,7 @@ RSpec.describe Milestone, type: :model do
     describe "#pay!" do
       before { Fabricate(:succeeded_payment, pays_for: milestone) }
 
-      it "creates Stripe transfers" do
+      it "creates Stripe transfers, emails client & freelancer, schedules next deposit" do
         milestone.update(status: :deposited)
         allow(Stripe::Transfer).to receive(:create).and_call_original
         expect {

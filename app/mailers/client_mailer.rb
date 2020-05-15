@@ -27,4 +27,8 @@ class ClientMailer < ApplicationMailer
   def retainer_deposited
     make_bootstrap_mail(reply_to: @project.comment_reply_address, subject: t(".subject", freelancer: @freelancer_name.possessive, project: @project))
   end
+
+  def retainer_disbursed
+    make_bootstrap_mail(subject: t(".subject", freelancer: @freelancer_name, project: @project))
+  end
 end
