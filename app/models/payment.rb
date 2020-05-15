@@ -10,6 +10,8 @@ class Payment < ApplicationRecord
 
   delegate :client, :freelancer, :platform_fee, :processing_fee, to: :pays_for
 
+  scope :pending_or_succeeded, -> { where(status: %i[pending succeeded]) }
+
   def charge!
     set_stripe_fields pay_method.charge!(
       amount: amount,
