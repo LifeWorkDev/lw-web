@@ -7,6 +7,6 @@ markdown:
 
 - if @project.active?
   markdown:
-    At the end of today, we will automatically withdraw **#{@project.client_amount&.format}** from your #{@project.pay_method}, and hold that until **#{l(@project.next_date, format: :text_without_year)}**.
+    At the end of today, we will automatically withdraw **#{@project.client_amount&.format}** from your #{@project.pay_method}, and hold that until **#{l(@project.next_date + 1.month, format: :text_without_year)}**.
   p
     em If for some reason you do not want us to do so, please reply to this email immediately.

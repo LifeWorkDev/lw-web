@@ -4,4 +4,4 @@ markdown:
   We've received #{@project.client.name.possessive} deposit of **#{@project.amount.format}** for **#{link_to @project, timeline_freelancer_project_url(@project)}**, so you can begin work on it with the certainty that you'll be paid upon completion.
 
 markdown:
-  We will disburse that amount, net of fees, on **#{l(@project.date, format: :text_without_year)}**.
+  We will disburse that amount, net of fees, on **#{l(@project.next_date, format: :text_without_year)}**.

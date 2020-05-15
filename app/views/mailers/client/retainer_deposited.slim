@@ -1,2 +1,2 @@
 markdown:
-  We've withdrawn **#{@project.client_amount&.format}** from your #{@project.pay_method}, and will hold that until **#{l(@project.date, format: :text_without_year)}**, at which point we'll automatically pay it out to **#{@freelancer_name}**.
+  We've withdrawn **#{@project.client_amount&.format}** from your #{@project.pay_method}, and will hold that until **#{l(@project.next_date, format: :text_without_year)}**, at which point we'll automatically pay it out to **#{@freelancer_name}**.
