@@ -7,16 +7,6 @@ GIT
       rubocop (~> 0.20)
 
 GIT
-  remote: https://github.com/TrestleAdmin/trestle.git
-  revision: fad7b7bf7c82b6a2ce89db1236d4660457c10f67
-  specs:
-    trestle (0.9.3)
-      activemodel (>= 4.2.0)
-      kaminari (>= 1.1.0)
-      railties (>= 4.2.0)
-      sprockets-rails (>= 2.0.0)
-
-GIT
   remote: https://github.com/envato/double_entry.git
   revision: 3914bd67828479286005a8243b9526224d10c47e
   specs:
@@ -554,6 +544,11 @@ GEM
     thor (1.0.1)
     thread_safe (0.3.6)
     tilt (2.0.10)
+    trestle (0.9.3)
+      activemodel (>= 4.2.0)
+      kaminari (>= 1.1.0)
+      railties (>= 4.2.0)
+      sprockets-rails (>= 2.0.0)
     turbolinks (5.2.1)
       turbolinks-source (~> 5.2)
     turbolinks-source (5.2.0)
@@ -679,7 +674,7 @@ DEPENDENCIES
   symbol-fstring
   terminal-notifier
   terminal-notifier-guard
-  trestle!
+  trestle
   turbolinks (~> 5.2)
   tzinfo-data
   web-console

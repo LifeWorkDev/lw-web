@@ -132,6 +132,8 @@ Trestle.configure do |config|
     favicon_pack_tag "favicon.ico", rel: "shortcut icon"
   end
 end
+
+require "trestle/application_controller"
 require "trestle-devise/controller_methods"
 Trestle::ApplicationController.include Trestle::Auth::ControllerMethods
 Trestle::ApplicationController.include SetLogidzeResponsible

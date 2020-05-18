@@ -45,7 +45,7 @@ gem "sprockets", "< 4.0", require: false
 gem "store_base_sti_class" # Store actual class in polymorphic _type columns
 gem "stripe"
 gem "symbol-fstring", require: "fstring/all" # Improve performance of Symbol#to_s
-gem "trestle", github: "TrestleAdmin/trestle"
+gem "trestle"
 gem "turbolinks", "~> 5.2"
 gem "webpacker"
 
