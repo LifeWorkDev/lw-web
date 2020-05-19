@@ -48,7 +48,7 @@ const PaymentsForm = (props) => {
   })
 
   if (Math.abs(total - sum) > 0.01) {
-    console.error(total, sum)
+    console.error(`Total ${total} != Sum ${sum}`)
     errorText = 'Must add up to 100%'
     submitButton.disabled = true
   } else {
