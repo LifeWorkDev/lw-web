@@ -10,7 +10,7 @@ RSpec.describe RetainerProject, type: :model do
           project.activate!
         }.to change { project.status }.to("active") &
           enqueue_mail(FreelancerMailer, :retainer_agreed).once &
-          enqueue_job(Retainer::DepositJob).once.at(project.deposit_time)
+          enqueue_job(Retainer::DepositJob).once.at(project.deposit_time(project.start_date))
       end
     end
   end
@@ -39,8 +39,63 @@ RSpec.describe RetainerProject, type: :model do
     end
   end
 
+  describe "#first_amount" do
+    context "when start_date.day == disbursement_day" do
+      subject(:project) { Fabricate(:retainer_project, disbursement_day: 1, start_date: "2020-05-01") }
+
+      it "equals amount" do
+        expect(project.first_amount).to eq(project.amount)
+      end
+    end
+
+    context "when start_date.day != disbursement_day" do
+      subject(:project) { Fabricate(:retainer_project, amount: 15_000, disbursement_day: 1, start_date: "2020-05-25") }
+
+      it "calculates correctly" do
+        expect(project.first_amount).to eq(3_387.10.to_money)
+      end
+    end
+  end
+
   describe "#next_date" do
-    it { expect(project.next_date.month).to eq project.start_date.month + 1 }
-    it { expect(project.next_date.day).to be <= project.start_date.day }
+    context "when start_date.day > disbursement_day" do
+      subject(:project) { Fabricate(:retainer_project, disbursement_day: 1, start_date: "2020-05-15") }
+
+      it "calculates correctly" do
+        expect(project.next_date).to eq(Date.parse("2020-06-01"))
+      end
+    end
+
+    context "when start_date.day == disbursement_day" do
+      subject(:project) { Fabricate(:retainer_project, disbursement_day: 15, start_date: "2020-05-15") }
+
+      it "calculates correctly" do
+        expect(project.next_date).to eq(Date.parse("2020-06-15"))
+      end
+    end
+
+    context "when start_date.day < disbursement_day" do
+      subject(:project) { Fabricate(:retainer_project, disbursement_day: 31, start_date: "2020-05-15") }
+
+      it "calculates correctly" do
+        expect(project.next_date).to eq(Date.parse("2020-05-31"))
+      end
+    end
+
+    context "when start_date.day < disbursement_day in a month with less than 31 days" do
+      subject(:project) { Fabricate(:retainer_project, disbursement_day: 31, start_date: "2020-06-15") }
+
+      it "calculates correctly" do
+        expect(project.next_date).to eq(Date.parse("2020-06-30"))
+      end
+    end
+
+    context "when start_date.day is last day of a month with less than 31 days" do
+      subject(:project) { Fabricate(:retainer_project, disbursement_day: 31, start_date: "2020-06-30") }
+
+      it "calculates correctly" do
+        expect(project.next_date).to eq(Date.parse("2020-07-31"))
+      end
+    end
   end
 end

@@ -5,6 +5,7 @@ class RetainerProject < Project
   has_many :payments, as: :pays_for, dependent: :destroy
 
   jsonb_accessor :metadata,
+    disbursement_day: [:integer, default: 1],
     start_date: :date
 
   ICON = mdi_url("autorenew").freeze
@@ -22,15 +23,18 @@ class RetainerProject < Project
 
       after_commit do
         FreelancerMailer.with(recipient: freelancer, project: self).retainer_agreed.deliver_later
-        Retainer::DepositJob.set(wait_until: deposit_time).perform_later(self)
+        Retainer::DepositJob.set(wait_until: deposit_time(start_date)).perform_later(self)
       end
     end
   end
 
-  alias first_amount amount
-
   def deposit!(user = nil)
-    return unless payments.create!(amount: first_client_amount, pay_method: pay_method, scheduled_for: deposit_time(latest_payment ? next_date : start_date), user: user).charge!
+    return unless payments.create!(
+      amount: latest_payment ? client_amount : first_client_amount,
+      pay_method: pay_method,
+      scheduled_for: deposit_time(latest_payment ? next_date : start_date),
+      user: user,
+    ).charge!
 
     send_deposit_emails
     schedule_disbursement
@@ -46,7 +50,14 @@ class RetainerProject < Project
   end
 
   memoize def description(for_client: false)
-    "#{t("retainer_project.description.begin")} #{(for_client ? client_amount : amount).format(no_cents_if_whole: true)} #{" will then be " if for_client} #{t("retainer_project.description.middle", pay_method: for_client ? " from your #{pay_method} " : " ")} #{l(next_date, format: :text_without_year)}, #{t("retainer_project.description.end", day: start_date.day.ordinalize)}"
+    "#{t("retainer_project.description.begin")} #{(for_client ? client_amount : amount).format(no_cents_if_whole: true)} #{" will then be " if for_client} #{t("retainer_project.description.middle", pay_method: for_client ? " from your #{pay_method} " : " ")} #{l(next_date, format: :text_without_year)}, #{t("retainer_project.description.end", day: disbursement_day.ordinalize)}"
+  end
+
+  def first_amount
+    return amount if start_date.day == disbursement_day
+
+    days = Time.days_in_month(start_date.month, start_date.year)
+    amount * (next_date - start_date).fdiv(days)
   end
 
   memoize def first_client_amount
@@ -70,7 +81,10 @@ class RetainerProject < Project
   end
 
   def next_date
-    (latest_payment&.scheduled_for&.to_date || start_date) + 1.month
+    current_date = latest_payment&.scheduled_for&.to_date || start_date
+    next_date = current_date.safe_change_day(disbursement_day)
+    next_date += 1.month if next_date <= current_date
+    next_date.safe_change_day(disbursement_day)
   end
   alias date next_date
 

@@ -30,12 +30,18 @@ Fabricator(:active_milestone_project, from: :milestone_project_with_milestones) 
   client(fabricator: :org_with_pay_method)
 end
 
+def random_date_this_month
+  Faker::Date.between(from: Date.current.beginning_of_month, to: Date.current.end_of_month)
+end
+
 Fabricator(:retainer_project, from: :project, class_name: :retainer_project) do
   amount { Faker::Commerce.price(range: 500..1_000) }
-  start_date { Faker::Date.between_except(from: Date.current.beginning_of_month, to: Date.current.end_of_month, excepted: Date.current.beginning_of_month) }
+  disbursement_day { rand(1..31) }
+  start_date { random_date_this_month }
 end
 
 Fabricator(:active_retainer_project, from: :active_project, class_name: :retainer_project) do
   amount { Faker::Commerce.price(range: 500..1_000) }
-  start_date { Faker::Date.between_except(from: Date.current.beginning_of_month, to: Date.current.end_of_month, excepted: Date.current.beginning_of_month) }
+  disbursement_day { rand(1..31) }
+  start_date { random_date_this_month }
 end
