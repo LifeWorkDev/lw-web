@@ -23,7 +23,7 @@ module.exports = {
     ecmaVersion: 2018,
     sourceType: 'module',
   },
-  plugins: ['sort-imports-es6-autofix', 'sort-keys-fix'],
+  plugins: ['sort-keys-fix'],
   rules: {
     'prettier/prettier': ['error', {}],
     camelcase: ['error', { properties: 'never' }],
@@ -40,28 +40,21 @@ module.exports = {
     'react/jsx-fragments': ['error', 'syntax'],
     'react/no-typos': 'error',
     semi: ['error', 'never'],
-    'sort-imports-es6-autofix/sort-imports-es6': [
-      'error',
-      {
-        ignoreCase: true,
-        memberSyntaxSortOrder: ['none', 'all', 'single', 'multiple']
-      }
-    ],
     'sort-keys-fix/sort-keys-fix': [
       'error',
       'asc',
       {
         caseSensitive: false,
         natural: true,
-      }
-    ]
+      },
+    ],
   },
   settings: {
     'import/resolver': {
       webpack: {
-        config: path.resolve('config/webpack/development.js')
-      }
+        config: path.resolve('config/webpack/development.js'),
+      },
     },
-    react: { version: 'detect' }
-  }
+    react: { version: 'detect' },
+  },
 }
