@@ -8,21 +8,22 @@ class Webhook < ApplicationRecord
     state :processed
 
     event :process do
-      transitions from: :received, to: :processed
-    end
-  end
+      transitions from: :received, to: :processed do
+        guard do
+          case source
+          when "stripe"
+            case event
+            when "charge.succeeded"
+              payment_id = data.dig("data", "object", "id")
 
-  def process!
-    case source
-    when "stripe"
-      case event
-      when "charge.succeeded"
-        payment_id = data.dig("data", "object", "id")
-        return unless payment_id.start_with? "py_" # ACH payments only
-
-        Payment.find(payment_id).succeed!
-      else
-        raise "No handler for Stripe event #{event}"
+              if payment_id.start_with? "py_" # ACH payments only
+                Payment.find_by(stripe_id: payment_id).succeed!
+              else true; end
+            else
+              raise "No handler for Stripe event #{event}"
+            end
+          end
+        end
       end
     end
   end
