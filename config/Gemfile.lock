@@ -44,11 +44,10 @@ GIT
 
 GIT
   remote: https://github.com/swrobel/que-web.git
-  revision: 3655323e913bfd9659a0dd127f26cde146951407
+  revision: 55f2e96c2f9ad1340e351ab9bc1c21bc3668116f
   branch: activejob
   specs:
-    que-web (0.8.0)
-      erubis
+    que-web (0.9.2)
       que (~> 1.0.0.beta3)
       sinatra
 
@@ -204,7 +203,6 @@ GEM
     email_reply_parser (0.5.10)
     errbase (0.2.0)
     erubi (1.9.0)
-    erubis (2.7.0)
     eventmachine (1.0.9.1)
     execjs (2.7.0)
     fabrication (2.21.1)
