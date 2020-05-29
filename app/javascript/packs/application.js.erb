@@ -23,9 +23,8 @@ window.createPayMethod = function(data) {
   const csrf = document
     .querySelector("meta[name='csrf-token']")
     .getAttribute('content')
-  const params = new URLSearchParams(window.location.search)
   window
-    .fetch(`/c/pay_methods?${params.toString()}`, {
+    .fetch('/c/pay_methods' + window.location.search, {
       body: JSON.stringify({
         pay_method: data
       }),
@@ -43,5 +42,5 @@ window.createPayMethod = function(data) {
         window.Bugsnag.addMetadata('custom', { response: response })
         window.Bugsnag.notify(new Error('Payment Method creation error'))
       } else return response.json()
-    }).then(data => window.location.replace(data.location))
+    }).then(data => window.location.assign(data.location))
 }
