@@ -14,16 +14,13 @@ nav#top-nav.navbar.navbar-expand-sm.navbar-light.bg-white.mb-3.flex-shrink-0
             - if current_user.admin?
               li.nav-item.border-right
                 a.nav-link href='/admin' Admin
-            li.nav-item.border-right
-              = link_to 'Projects', [current_user.type, Project], class: 'nav-link'
+            = render 'shared/nav_link_unless_current', text: 'Projects', path: [current_user.type, Project]
             - if current_user.freelancer?
-              li.nav-item.border-right
-                = link_to 'Clients', [current_user.type, Org], class: 'nav-link'
+              = render 'shared/nav_link_unless_current', text: 'Clients', path: [current_user.type, Org]
               - if current_user.stripe_id.present?
                 li.nav-item.border-right
                   = link_to 'Balance', freelancer_stripe_dashboard_path, class: 'nav-link', rel: :noopener, target: :_blank
-            li.nav-item.border-right
-              = link_to 'Profile', edit_user_path, class: 'nav-link'
+            = render 'shared/nav_link_unless_current', text: 'Profile', path: edit_user_path
             li.nav-item
               a.nav-link href='/logout' Log out
     - else
