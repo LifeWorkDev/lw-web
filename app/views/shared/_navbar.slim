@@ -19,8 +19,9 @@ nav#top-nav.navbar.navbar-expand-sm.navbar-light.bg-white.mb-3.flex-shrink-0
             - if current_user.freelancer?
               li.nav-item.border-right
                 = link_to 'Clients', [current_user.type, Org], class: 'nav-link'
-              li.nav-item.border-right
-                = link_to 'Balance', freelancer_stripe_dashboard_path, class: 'nav-link', rel: :noopener, target: :_blank
+              - if current_user.stripe_id.present?
+                li.nav-item.border-right
+                  = link_to 'Balance', freelancer_stripe_dashboard_path, class: 'nav-link', rel: :noopener, target: :_blank
             li.nav-item.border-right
               = link_to 'Profile', edit_user_path, class: 'nav-link'
             li.nav-item
