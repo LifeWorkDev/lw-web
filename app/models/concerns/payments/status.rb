@@ -24,7 +24,7 @@ module Payments::Status
       end
 
       event :disburse do
-        transitions from: :succeeded, to: :disbursed do
+        transitions from: %i[pending succeeded], to: :disbursed do
           guard do
             transfer!
           end

@@ -8,6 +8,10 @@ Fabricator(:payment) do
   end
 end
 
+Fabricator(:pending_payment, from: :payment) do
+  status :pending
+end
+
 Fabricator(:succeeded_payment, from: :payment) do
   status :succeeded
 end

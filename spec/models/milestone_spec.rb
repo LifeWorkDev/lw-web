@@ -69,17 +69,29 @@ RSpec.describe Milestone, type: :model do
     end
 
     describe "#pay!" do
-      before { Fabricate(:succeeded_payment, pays_for: milestone) }
+      shared_examples :pay do
+        it "creates Stripe transfers, emails client & freelancer, schedules next deposit" do
+          milestone.update(status: :deposited)
+          allow(Stripe::Transfer).to receive(:create).and_call_original
+          expect {
+            milestone.pay!
+          }.to enqueue_mail(ClientMailer, :milestone_paid).once &
+            enqueue_mail(FreelancerMailer, :milestone_paid).once &
+            enqueue_job(Milestones::DepositJob).once.at(milestone.deposit_time)
+          expect(Stripe::Transfer).to have_received(:create).once
+        end
+      end
 
-      it "creates Stripe transfers, emails client & freelancer, schedules next deposit" do
-        milestone.update(status: :deposited)
-        allow(Stripe::Transfer).to receive(:create).and_call_original
-        expect {
-          milestone.pay!
-        }.to enqueue_mail(ClientMailer, :milestone_paid).once &
-          enqueue_mail(FreelancerMailer, :milestone_paid).once &
-          enqueue_job(Milestones::DepositJob).once.at(milestone.deposit_time)
-        expect(Stripe::Transfer).to have_received(:create).once
+      context "with pending payment" do
+        before { Fabricate(:pending_payment, pays_for: milestone) }
+
+        include_examples :pay
+      end
+
+      context "with succeeded payment" do
+        before { Fabricate(:succeeded_payment, pays_for: milestone) }
+
+        include_examples :pay
       end
     end
   end
