@@ -531,8 +531,6 @@ GEM
     standard (0.4.7)
       rubocop (~> 0.85.0)
       rubocop-performance (~> 1.6.0)
-    store_base_sti_class (2.0.1)
-      activerecord (>= 4.0)
     stripe (5.22.0)
     strong_migrations (0.6.8)
       activerecord (>= 5)
@@ -667,7 +665,6 @@ DEPENDENCIES
   slim_lint
   sprockets (< 4.0)
   standard (>= 0.3)
-  store_base_sti_class
   stripe
   stripe-ruby-mock!
   strong_migrations
