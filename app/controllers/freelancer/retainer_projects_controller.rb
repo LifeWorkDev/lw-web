@@ -1,9 +1,8 @@
 class Freelancer::RetainerProjectsController < RetainerProjectsController
-  include Freelancer::ProjectPath
+  include Freelancer::ProjectHelpers
 
   # GET /f/retainer_projects/1/payment
   def payment
-    @back = [:edit, current_namespace, @project.becomes(Project)]
     @heading = "Tell us how much you should get paid."
   end
 

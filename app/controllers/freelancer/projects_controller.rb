@@ -1,5 +1,5 @@
 class Freelancer::ProjectsController < ProjectsController
-  include Freelancer::ProjectPath
+  include Freelancer::ProjectHelpers
 
   # PATCH/PUT /f/projects/1/invite
   def invite
@@ -13,7 +13,6 @@ class Freelancer::ProjectsController < ProjectsController
 
   # GET /f/projects/1/preview
   def preview
-    @back = [:payment, current_namespace, @project] if @project.milestone?
     @for_client = false
   end
 

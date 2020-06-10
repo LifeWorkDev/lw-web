@@ -1,4 +1,3 @@
-import 'react-day-picker/lib/style.css'
 import DayPicker from 'react-day-picker'
 import PropTypes from 'prop-types'
 import React, { useLayoutEffect, useState } from 'react'
@@ -9,7 +8,7 @@ import {
   subBusinessDays,
 } from 'date-fns'
 
-import './MilestonePicker.scss'
+import 'styles/DayPicker.scss'
 
 const MilestonePicker = (props) => {
   const [milestones, setMilestones] = useState(props.milestones)

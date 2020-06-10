@@ -1,5 +1,5 @@
 class Freelancer::MilestoneProjectsController < MilestoneProjectsController
-  include Freelancer::ProjectPath
+  include Freelancer::ProjectHelpers
 
   # GET /f/milestone_projects/1/milestones
   def milestones

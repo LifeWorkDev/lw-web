@@ -2,18 +2,22 @@
 
 .text-center
   h2 = @heading
-  p
-    | Please note that we can only accept individual payments of up to
+  p.lead
+    | Please note that we can only accept monthly payments of up to
     strong =<> ACH_MAX_BEFORE_FEE.format(no_cents: true)
     - if LIFEWORK_FEE > 0
       ' before fees
     | at this time.
     
 = bootstrap_form_with(model: [current_namespace, @project], layout: :horizontal, local: true) do |f|
-  .text-center.mb-4
+  .text-center.mb-4 style='line-height: 2.5;'
     = t('retainer_project.description.begin')
-    = f.number_field :amount, autofocus: true, hide_label: true, input_group_class: 'input-group-sm', layout: :inline, inputmode: 'decimal', max: ACH_MAX_BEFORE_FEE.to_i, min: 1, placeholder: '0.00', prepend: '$', required: true, step: 0.01, style: 'width: 4.6rem;', wrapper_class: 'd-inline-block mb-0 mx-2'
-    = t('retainer_project.description.middle')
-    = f.date_field :start_date, class: 'form-control-sm', hide_label: true, layout: :inline, min: Date.current, required: true, style: 'min-width: 7rem;', wrapper_class: 'd-inline-block mb-0 mx-2'
-    = "#{t('retainer_project.description.end')}."
-  = render 'shared/form_buttons', f: f, back: @back
+    |  $
+    = f.number_field :amount, autofocus: true, class: 'text-center', hide_label: true, layout: :inline, inputmode: 'decimal', max: ACH_MAX_BEFORE_FEE.to_i, min: 1, placeholder: '0.00', required: true, step: 0.01, style: 'width: 4.4rem;', wrapper_class: 'form-underline d-inline-block mb-0 mr-2'
+    br.d-sm-none
+    = t('retainer_project.description.middle', pay_method: ' ')
+    - end_parts = t('retainer_project.description.end').split('%{day}')
+    = react_component 'RetainerPayment', { middleText: end_parts[0], endText: end_parts[1], startDate: @project.start_date, disbursementDay: @project.disbursement_day&.to_s }, { class: 'd-inline-block' }
+  = render 'shared/form_buttons', f: f, back: edit_path(@project)
+
+= render partial: 'shared/form_back_confirm'

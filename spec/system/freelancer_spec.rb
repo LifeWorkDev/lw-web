@@ -53,6 +53,13 @@ RSpec.describe "Freelancer views", type: :system do
       expect(page).to have_current_path "/f/clients/new"
     end
 
+    def choose_date
+      # Choose a random selectable date
+      date = all("div", class: %w[DayPicker-Day !DayPicker-Day--disabled !DayPicker-Day--outside]).sample
+      Rails.logger.info "Clicking #{date["aria-label"]}"
+      date.click
+    end
+
     def invite_expectations
       expect {
         click_continue "/f/projects"
@@ -62,10 +69,7 @@ RSpec.describe "Freelancer views", type: :system do
 
     def milestone_project_expectations
       expect(new_project.type).to eq "MilestoneProject"
-      # Choose a random selectable date
-      date = all("div", class: %w[DayPicker-Day !DayPicker-Day--disabled !DayPicker-Day--outside]).sample
-      Rails.logger.info "Clicking #{date["aria-label"]}"
-      date.click
+      choose_date
       click_continue
       expect(page).to have_content(new_milestone.formatted_date)
       fill_in "milestone_project[amount]", with: amount
@@ -86,25 +90,31 @@ RSpec.describe "Freelancer views", type: :system do
     def retainer_project_expectations
       expect(new_project.type).to eq "RetainerProject"
       fill_in "retainer_project[amount]", with: amount
+      find("#retainer_project_start_date_picker").click
+      choose_date
       expect {
         click_continue
-      }.to change { new_project.reload.amount }
+      }.to change { new_project.reload.amount } &
+        change { new_project.start_date } &
+        change { new_project.disbursement_day }
       expect(page).to have_content(name) &
-        have_content(amount.format)
+        have_content(amount.format(no_cents_if_whole: true)) &
+        have_content(I18n.l(new_project.start_date, format: :text_without_year)) &
+        have_content(new_project.disbursement_day.ordinalize)
       invite_expectations
     end
 
     context "without existing projects" do
       let(:client_user) { User.last }
 
-      def new_client_expectations
+      def new_client_expectations(project_type)
         verify_visit "/f/projects"
         verify_click "+ Project", "/f/clients/new"
         fill_in "org[users_attributes][0][name]", with: Faker::Name.name
         fill_in "org[users_attributes][0][email]", with: Faker::Internet.safe_email
         fill_in "org[projects_attributes][0][name]", with: name
         first("#org_projects_attributes_0_status option[value=contract_sent]").select_option # Placeholder is first
-        # choose :org_projects_attributes_0_type_milestoneproject, allow_label_click: true
+        choose "org_projects_attributes_0_type_#{project_type}project", allow_label_click: true
         expect {
           click_continue
         }.to change { Org.count }.by(1) &
@@ -117,16 +127,22 @@ RSpec.describe "Freelancer views", type: :system do
       context "with stripe account" do
         let(:user) { Fabricate(:user, stripe_id: 1) }
 
-        it "completes an entire client/project creation" do
-          new_client_expectations
+        it "completes client/milestone project creation" do
+          new_client_expectations(:milestone)
           expect(page).to have_link "< Back", href: %r{/f/clients/.+/edit$}
           milestone_project_expectations
+        end
+
+        it "completes client/retainer project creation" do
+          new_client_expectations(:retainer)
+          expect(page).to have_link "< Back", href: %r{/f/clients/.+/edit$}
+          retainer_project_expectations
         end
       end
 
       context "without stripe account" do
         it "requires stripe connect" do
-          new_client_expectations
+          new_client_expectations(%i[milestone retainer].sample)
           expect(page).to have_current_path freelancer_stripe_connect_path
         end
       end
@@ -140,12 +156,16 @@ RSpec.describe "Freelancer views", type: :system do
       describe "that is active" do
         let(:user) { Fabricate(:active_freelancer) }
 
-        def fill_new_project
+        def new_project_expectations(project_type)
           verify_visit "/f/projects"
           verify_click "+ Project", "/f/projects/new"
           all("#project_org_id option")[1].select_option # Placeholder is first
           fill_in "project[name]", with: name
           first("#project_status option[value=contract_sent]").select_option # Placeholder is first
+          choose "project_type_#{project_type}project", allow_label_click: true
+          click_continue
+          expect(page).to have_content("Project was successfully created.")
+          expect(page).to have_link "< Back", href: %r{/f/projects/.+/edit$}
         end
 
         it "redirects from / to the project dashboard" do
@@ -154,20 +174,12 @@ RSpec.describe "Freelancer views", type: :system do
         end
 
         it "completes milestone project creation for an existing client" do
-          fill_new_project
-          # choose :project_type_milestoneproject, allow_label_click: true
-          click_continue
-          expect(page).to have_content("Project was successfully created.")
-          expect(page).to have_link "< Back", href: %r{/f/projects/.+/edit$}
+          new_project_expectations(:milestone)
           milestone_project_expectations
         end
 
-        skip "completes retainer project creation for an existing client" do
-          fill_new_project
-          choose :project_type_retainerproject, allow_label_click: true
-          click_continue
-          expect(page).to have_content("Project was successfully created.")
-          expect(page).to have_link "< Back", href: %r{/f/projects/.+/edit$}
+        it "completes retainer project creation for an existing client" do
+          new_project_expectations(:retainer)
           retainer_project_expectations
         end
 

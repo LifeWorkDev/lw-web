@@ -1,4 +1,6 @@
 class Freelancer::StripeController < AuthenticatedController
+  include Freelancer::ProjectHelpers
+
   def connect
   end
 

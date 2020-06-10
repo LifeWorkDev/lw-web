@@ -8,6 +8,6 @@
 .d-flex.justify-content-center
   = bootstrap_form_with(model: [current_namespace, @project], local: true) do |f|
     = react_component('MilestonePicker/MilestonePicker', milestones: @project.milestones)
-    .mt-4 = render 'shared/form_buttons', f: f, back: [:edit, current_namespace, @project.client.primary_contact.active? ? @project.becomes(Project) : @project.client], submit_val: :milestones
+    .mt-4 = render 'shared/form_buttons', f: f, back: edit_path(@project), submit_val: :milestones
 
 = render partial: 'shared/form_back_confirm'

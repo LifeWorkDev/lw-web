@@ -76,7 +76,25 @@ $body-bg: $theme-background; // Don't apply to mailer body
   -webkit-text-fill-color: $input-color; // https://stackoverflow.com/a/4648315
 }
 
+.form-control[readonly] {
+  background-color: $input-bg;
+
+  &:focus {
+    background-color: $input-focus-bg;
+  }
+}
+
 .form-group {
+  &.form-underline input {
+    border-left: 0;
+    border-right: 0;
+    border-top: 0;
+    height: auto;
+    margin-left: 2px;
+    margin-bottom: 2px;
+    padding: 0;
+  }
+
   label:not(.form-check-label) {
     font-weight: 600;
   }
@@ -86,6 +104,22 @@ $body-bg: $theme-background; // Don't apply to mailer body
     font-size: 85%;
     font-weight: normal;
     font-style: italic;
+  }
+}
+
+.input-group {
+  .input-group-prepend ~ input {
+    border-left: none;
+  }
+
+  input:not(:last-child) {
+    border-right: none;
+  }
+
+  &:focus-within {
+    .input-group-text {
+      border-color: $input-focus-border-color;
+    }
   }
 }
 

@@ -6,7 +6,7 @@ h2.text-center.mt-2
   | Tell us a little about you
 
 = bootstrap_form_with(model: [current_namespace, current_user]) do |f|
-  = hidden_field_tag :org, params[:org] if params[:org].present?
+  = hidden_field_tag :client, params[:client] if params[:client].present?
   = render 'shared/time_zone_select', f: f, user: current_user
   = render 'shared/work_category_select', f: f, label: 'What kinds of freelance work do you do?'
   .form-group.mb-0

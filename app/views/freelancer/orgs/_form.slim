@@ -14,4 +14,4 @@ h2.text-center.mt-2
   = f.fields_for :projects do |p|
     = p.hidden_field :id if p.object.id.present?
     = render 'freelancer/projects/fields', f: p
-  = render 'shared/form_buttons', f: f, back: :back
+  = render 'shared/form_buttons', f: f, back: current_user.finished_onboarding? ? [current_namespace, Project] : edit_freelancer_user_path(client: @org)

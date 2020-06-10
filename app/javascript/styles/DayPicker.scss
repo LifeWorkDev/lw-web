@@ -1,0 +1,15 @@
+@import '~react-day-picker/lib/style';
+
+.DayPicker {
+  background: white;
+  line-height: 1.25;
+}
+
+.DayPicker-Day--today:not(.DayPicker-Day--outside) {
+  color: unset;
+
+  &.DayPicker-Day--disabled {
+    box-shadow: 0 0 0 1px #dce0e0;
+    color: #dce0e0;
+  }
+}

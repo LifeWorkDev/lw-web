@@ -5,7 +5,7 @@ class RetainerProject < Project
   has_many :payments, as: :pays_for, dependent: :destroy
 
   jsonb_accessor :metadata,
-    disbursement_day: [:integer, default: 1],
+    disbursement_day: :integer,
     start_date: :date
 
   ICON = mdi_url("autorenew").freeze

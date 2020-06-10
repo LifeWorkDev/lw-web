@@ -6,4 +6,4 @@ h2.text-center.mt-2
   - if @project.new_record? # Don't show on Edit page
     = f.collection_select :org_id, current_user.clients, :id, :name, { disabled: '', label: 'Client', prompt: 'Please select', required: true, selected: '' }, control_class: 'custom-select', required: true
   = render 'freelancer/projects/fields', f: f
-  = render 'shared/form_buttons', f: f, back: :back
+  = render 'shared/form_buttons', f: f, back: [current_namespace, Project]

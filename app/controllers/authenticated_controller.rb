@@ -25,22 +25,6 @@ class AuthenticatedController < ApplicationController
 
 private
 
-  def next_step(project)
-    if project.may_invite_client?
-      if current_user.stripe_id.present?
-        if project.milestone?
-          [:milestones, current_namespace, project]
-        elsif project.retainer?
-          [:preview, current_namespace, project.becomes(Project)]
-        end
-      else
-        freelancer_stripe_connect_path
-      end
-    else
-      [:status, current_namespace, project.becomes(Project)]
-    end
-  end
-
   def set_time_zone
     Time.use_zone(current_user&.time_zone) { yield }
   end

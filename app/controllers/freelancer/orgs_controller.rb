@@ -1,4 +1,6 @@
 class Freelancer::OrgsController < AuthenticatedController
+  include Freelancer::ProjectHelpers
+
   before_action :set_org, only: %i[show edit update destroy]
 
   # GET /orgs
