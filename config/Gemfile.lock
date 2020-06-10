@@ -35,6 +35,14 @@ GIT
       rails (>= 3)
 
 GIT
+  remote: https://github.com/swrobel/friendly_id.git
+  revision: 039c77ee6b6f25986b8e9d7c4dc90f4e82e3de55
+  branch: non-distinct-history
+  specs:
+    friendly_id (5.3.0)
+      activerecord (>= 4.0.0)
+
+GIT
   remote: https://github.com/swrobel/nilify_blanks.git
   revision: 33fe3904e38b01b11fc4452ba434d9f210963179
   specs:
@@ -218,8 +226,6 @@ GEM
       ffi (>= 1.0.0)
       rake
     formatador (0.2.5)
-    friendly_id (5.3.0)
-      activerecord (>= 4.0.0)
     gindex (0.2.0)
       railties (>= 5)
     git-version-bump (0.17.0)
@@ -607,7 +613,7 @@ DEPENDENCIES
   fabrication
   faker
   fast_blank
-  friendly_id
+  friendly_id!
   gindex
   goldiloader
   guard
