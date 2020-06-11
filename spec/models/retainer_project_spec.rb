@@ -27,6 +27,8 @@ RSpec.describe RetainerProject, type: :model do
   end
 
   describe "#disburse!" do
+    subject(:project) { Fabricate(:active_retainer_project) }
+
     it "disburses payment, schedules next deposit, emails client & freelancer" do
       payment = Fabricate(:succeeded_payment, pay_method: project.client.primary_pay_method, pays_for: project)
 

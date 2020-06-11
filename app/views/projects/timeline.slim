@@ -12,13 +12,14 @@
   p.lead.mt-4.text-center Your project is currently in progress, so if you need to make any changes to dates or amounts, please <a href='javascript:Intercom("show")'>contact us</a>.
 
 - if @project.retainer?
-  .row.text-center.mt-5
-    .column.w-100
-      = render 'shared/section_heading'
-        strong => l(@project.start_date)
-        = render 'shared/status_badge', class: 'align-text-bottom', record: @project.payments.first || Payment.new
-      .mt-2.mb-3
-        p #{@project.amount.format} deposit from #{@project.client}
+  - (@project.payments || [Payment.new]).each do |payment|
+    .row.text-center.mt-5
+      .column.w-100
+        = render 'shared/section_heading'
+          strong => l(payment.paid_at, format: :date_only)
+          = render 'shared/status_badge', class: 'align-text-bottom', record: payment
+        .mt-2.mb-3
+          p #{payment.amount.format} deposit from #{@project.client}
   .row.text-center.mt-5
     .column.w-100
       = render 'shared/section_heading'
@@ -26,7 +27,8 @@
         = render 'shared/status_badge', class: 'align-text-bottom', record: Payment.new
       .mt-2.mb-3
         p #{@project.freelancer_amount.format} will be transferred to #{@project.freelancer}
-        p #{@project.client} will auto-deposit #{@project.amount.format}
+        - if @project.active?
+          p #{@project.client} will auto-deposit #{@project.amount.format}
 
 - @milestones&.each do |milestone|
   .row.text-center.mt-5

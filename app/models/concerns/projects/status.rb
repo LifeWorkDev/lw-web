@@ -12,6 +12,7 @@ module Projects::Status
       state :contract_sent
       state :client_invited
       state :active
+      state :paused
       state :archived
 
       event :invite_client do
@@ -25,6 +26,14 @@ module Projects::Status
 
       event :activate do
         transitions from: :client_invited, to: :active
+      end
+
+      event :pause do
+        transitions from: :active, to: :paused
+      end
+
+      event :unpause do
+        transitions from: :paused, to: :active
       end
 
       event :archive do
@@ -41,6 +50,10 @@ module Projects::Status
 
     def pending?
       PENDING_STATES.include? status.to_sym
+    end
+
+    def inactive?
+      paused? || archived?
     end
 
     memoize def status_class

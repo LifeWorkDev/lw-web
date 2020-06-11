@@ -89,6 +89,8 @@ class RetainerProject < Project
   alias date next_date
 
   def schedule_deposit
+    return unless active?
+
     Retainer::DepositJob.set(wait_until: deposit_time).perform_later(self)
   end
 
