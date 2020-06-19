@@ -65,23 +65,9 @@ jobs:
           name: Slim Lint
           command: bin/slim-lint app/views
 
-      - restore_cache:
-          name: Restore yarn cache
-          keys:
-            - v1-lifework-yarn-{{ .Branch }}-{{ checksum "yarn.lock" }}
-            - v1-lifework-yarn-{{ .Branch }}-
-            - v1-lifework-yarn-
-
       - run:
           name: Yarn Install
           command: yarn install
-
-      - save_cache:
-          name: Store yarn cache
-          key: v1-lifework-yarn-{{ .Branch }}-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/.cache/yarn
-            - node_modules
 
       - run:
           name: ESLint & StyleLint
