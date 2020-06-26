@@ -30,7 +30,7 @@ Trestle.resource(:milestones) do
     tab :milestone do
       collection_select_with_link :project_id, Project.all, :id, :name
       text_field :description
-      number_field :amount, prepend: "$"
+      number_field :amount, prepend: "$", min: 1, step: 0.01
       select :status, Milestone.aasm.states_for_select
       date_field :date
       auto_field :created_at

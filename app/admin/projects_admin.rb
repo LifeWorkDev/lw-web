@@ -43,7 +43,7 @@ Trestle.resource(:projects) do
       collection_select_with_link :user_id, User.freelancer, :id, :name, label: "Freelancer"
       select :status, Project.aasm.states_for_select
       collection_select :type, Project.subclasses, :to_s, :to_s
-      number_field :amount, prepend: "$"
+      number_field :amount, prepend: "$", min: 1, step: 0.01
       select :currency, Money::Currency.map(&:iso_code)
       number_field :fee_percent, min: 0, max: 1, step: 0.01
       if project.retainer?
