@@ -26,7 +26,7 @@ Trestle.resource(:milestones) do
   end
 
   # Customize the form fields shown on the new/edit views.
-  form do |milestone|
+  form do |record|
     tab :milestone do
       collection_select_with_link :project_id, Project.all, :id, :name
       text_field :description
@@ -37,9 +37,13 @@ Trestle.resource(:milestones) do
       auto_field :updated_at
     end
 
-    tab :comments, badge: milestone.comments.size do
-      table CommentsAdmin.table, collection: milestone.comments
-      concat admin_link_to("New Comment", admin: :comments, action: :new, params: {milestone_id: milestone.id}, class: "btn btn-success mt-3")
+    tab :comments, badge: record.comments.size do
+      table CommentsAdmin.table, collection: record.comments
+      concat admin_link_to("New Comment", admin: :comments, action: :new, params: {milestone_id: record.id}, class: "btn btn-success mt-3")
+    end
+
+    tab :payments, badge: record.payments.size do
+      table PaymentsAdmin.table, collection: record.payments
     end
   end
 

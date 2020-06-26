@@ -34,7 +34,7 @@ Trestle.resource(:projects) do
 
   # Customize the form fields shown on the new/edit views.
   #
-  form do |project|
+  form do |record|
     tab :project do
       text_field :name
       auto_field :slug
@@ -46,7 +46,7 @@ Trestle.resource(:projects) do
       number_field :amount, prepend: "$", min: 1, step: 0.01
       select :currency, Money::Currency.map(&:iso_code)
       number_field :fee_percent, min: 0, max: 1, step: 0.01
-      if project.retainer?
+      if record.retainer?
         number_field :disbursement_day, min: 1, max: 31, required: true
         date_field :start_date, required: true
       end
@@ -54,10 +54,16 @@ Trestle.resource(:projects) do
       auto_field :updated_at
     end
 
-    if project.milestone?
-      tab :milestones, badge: project.milestones.size do
-        table MilestonesAdmin.table, collection: project.milestones
-        concat admin_link_to("New Milestone", admin: :milestones, action: :new, params: {project_id: project.id}, class: "btn btn-success mt-3")
+    if record.milestone?
+      tab :milestones, badge: record.milestones.size do
+        table MilestonesAdmin.table, collection: record.milestones
+        concat admin_link_to("New Milestone", admin: :milestones, action: :new, params: {project_id: record.id}, class: "btn btn-success mt-3")
+      end
+    end
+
+    if record.retainer?
+      tab :payments, badge: record.payments.size do
+        table PaymentsAdmin.table, collection: record.payments
       end
     end
   end

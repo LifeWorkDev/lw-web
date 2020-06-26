@@ -16,6 +16,7 @@ private
     value = super
     value = I18n.l(value) if value.respond_to?(:strftime) # Date/Time
     value = admin_link_to(value, value) if value.is_a? ApplicationRecord
+    value = value.format if value.is_a? Money
     value
   end
 end

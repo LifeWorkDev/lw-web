@@ -18,7 +18,7 @@ Trestle.resource(:orgs) do
 
   # Customize the form fields shown on the new/edit views.
 
-  form do |org|
+  form do |record|
     tab :org do
       text_field :name
       auto_field :slug
@@ -32,18 +32,22 @@ Trestle.resource(:orgs) do
       auto_field :work_frequency
     end
 
-    tab :users, badge: org.users.size do
-      table UsersAdmin.table, collection: org.users
-      concat admin_link_to("New User", admin: :users, action: :new, params: {org_id: org.id}, class: "btn btn-success mt-3")
+    tab :users, badge: record.users.size do
+      table UsersAdmin.table, collection: record.users
+      concat admin_link_to("New User", admin: :users, action: :new, params: {org_id: record.id}, class: "btn btn-success mt-3")
     end
 
-    tab :projects, badge: org.projects.size do
-      table ProjectsAdmin.table, collection: org.projects
-      concat admin_link_to("New Project", admin: :projects, action: :new, params: {org_id: org.id}, class: "btn btn-success mt-3")
+    tab :projects, badge: record.projects.size do
+      table ProjectsAdmin.table, collection: record.projects
+      concat admin_link_to("New Project", admin: :projects, action: :new, params: {org_id: record.id}, class: "btn btn-success mt-3")
     end
 
-    tab :pay_methods, badge: org.pay_methods.size do
-      table PayMethodsAdmin.table, collection: org.pay_methods
+    tab :pay_methods, badge: record.pay_methods.size do
+      table PayMethodsAdmin.table, collection: record.pay_methods
+    end
+
+    tab :payments, badge: record.payments.size do
+      table PaymentsAdmin.table, collection: record.payments
     end
   end
 

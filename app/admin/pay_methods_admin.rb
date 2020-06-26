@@ -11,15 +11,21 @@ Trestle.resource(:pay_methods) do
 
   # Customize the form fields shown on the new/edit views.
   #
-  form do
-    auto_field :display_type, label: :Type
-    auto_field :name
-    auto_field :issuer
-    auto_field :kind
-    auto_field :last_4
-    auto_field :expires
-    number_field :fee_percent, min: 0, max: 1, step: 0.01
-    auto_field :created_at
-    auto_field :updated_at
+  form do |record|
+    tab :pay_method do
+      auto_field :display_type, label: :Type
+      auto_field :name
+      auto_field :issuer
+      auto_field :kind
+      auto_field :last_4
+      auto_field :expires
+      number_field :fee_percent, min: 0, max: 1, step: 0.01
+      auto_field :created_at
+      auto_field :updated_at
+    end
+
+    tab :payments, badge: record.payments.size do
+      table PaymentsAdmin.table, collection: record.payments
+    end
   end
 end
