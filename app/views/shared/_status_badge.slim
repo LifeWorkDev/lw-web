@@ -9,6 +9,9 @@ ruby:
     badge_text = 'Deposit Required'
   end
   
-  badge_text = 'Deposited' if record.is_a?(Payment) && record.succeeded?
+  if record.is_a?(Payment)
+    badge_text = 'Deposited' if record.succeeded?
+    badge_title = 'Funds are currently in transit. This status will update when they are received by LifeWork.' if record.pending?
+  end
 
-.badge class="badge-#{badge_class} #{local_assigns[:class]}" = badge_text
+.badge class="badge-#{badge_class} #{local_assigns[:class]}" title=badge_title = badge_text

@@ -104,7 +104,7 @@ RSpec.describe "Client views", type: :system do
     end
 
     context "without existing pay method" do
-      it "prompts to create a new bank account" do
+      it "prompts to link one" do
         shared_expectations
         expect(page).to have_current_path "/c/pay_methods?project=#{project.slug}"
       end

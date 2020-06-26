@@ -5,14 +5,20 @@ class Client::ProjectsController < ProjectsController
   end
 
   def deposit
+    template = "client/#{@project.type.underscore.pluralize}/deposit"
+    @add_pay_method = "/c/pay_methods?project=#{@project.slug}"
     if request.post?
-      @project.deposit!(current_user)
-      redirect_to [current_namespace, Project], notice: "Your deposit was received. #{@project.freelancer} has been notified so they can start work on your project."
+      if @project.deposit!(current_user)
+        redirect_to [current_namespace, Project], notice: "Your deposit was received. #{@project.freelancer} has been notified so they can start work on your project."
+      else
+        @payment_error = @project.payments.last.note
+        render template, status: :unprocessable_entity
+      end
     elsif current_org.primary_pay_method
-      render "client/#{@project.type.underscore.pluralize}/deposit"
+      render template
     else
       flash.keep :notice
-      redirect_to "/c/pay_methods?project=#{@project.slug}"
+      redirect_to @add_pay_method
     end
   end
 

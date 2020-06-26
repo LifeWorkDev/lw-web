@@ -10,6 +10,7 @@ module Payments::Status
       state :succeeded
       state :disbursed
       state :failed
+      state :refunded
 
       event :fail do
         before do |note|
@@ -30,14 +31,23 @@ module Payments::Status
           end
         end
       end
+
+      event :refund do
+        transitions from: %i[pending succeeded], to: :refunded do
+          guard do
+            stripe_id.present? && Stripe::Refund.create(charge: stripe_id)
+          end
+        end
+      end
     end
 
     memoize def status_class
       if scheduled? then :secondary
-      elsif pending? then :warning
-      elsif succeeded? then :info
-      elsif disbursed? then :success
+      elsif pending? then :info
+      elsif succeeded? then :success
+      elsif disbursed? then :primary
       elsif failed? then :danger
+      elsif refunded? then :dark
       end
     end
   end

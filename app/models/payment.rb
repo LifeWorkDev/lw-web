@@ -22,7 +22,7 @@ class Payment < ApplicationRecord
     true
   rescue Stripe::CardError => e
     fail!(e.error.message)
-    Errbase.report(e, {payment: self})
+    Errbase.report(e, {payment_id: id})
     false
   end
 
@@ -34,12 +34,6 @@ class Payment < ApplicationRecord
       from: client.account_cash,
       to: freelancer.account_receivable,
     )
-  end
-
-  def refund!
-    return if stripe_id.blank?
-
-    Payments::RefundJob.perform_later(stripe_id)
   end
 
   def set_stripe_fields(charge)
