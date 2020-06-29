@@ -21,7 +21,7 @@ gem "friendly_id", github: "swrobel/friendly_id", branch: "non-distinct-history"
 gem "goldiloader" # Automatic eager-loading to avoid N+1s
 gem "intercom", "~> 3.9.5"
 gem "intercom-rails" # TODO: Remove as this gem has perf issues
-gem "jsonb_accessor", github: "madeintandem/jsonb_accessor", tag: "v1.1.0" # Store arbitrary model data in jsonb fields
+gem "jsonb_accessor" # Store arbitrary model data in jsonb fields
 gem "logidze" # version tracking
 gem "lograge" # one-line logs
 gem "memery" # Memoization
