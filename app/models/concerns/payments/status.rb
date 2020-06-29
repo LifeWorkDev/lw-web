@@ -35,7 +35,7 @@ module Payments::Status
       event :refund do
         transitions from: %i[pending succeeded], to: :refunded do
           guard do
-            stripe_id.present? && Stripe::Refund.create(charge: stripe_id)
+            stripe_id.present? && record_refund!(Stripe::Refund.create(charge: stripe_id))
           end
         end
       end

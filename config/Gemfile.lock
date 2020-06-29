@@ -7,16 +7,6 @@ GIT
       rubocop (~> 0.20)
 
 GIT
-  remote: https://github.com/envato/double_entry.git
-  revision: 4ee0d7f9707a84e0b43932a94187617d32e02618
-  specs:
-    double_entry (2.0.0.beta4)
-      activerecord (>= 3.2.0)
-      activesupport (>= 3.2.0)
-      money (>= 6.0.0)
-      railties (>= 3.2.0)
-
-GIT
   remote: https://github.com/swrobel/bootstrap-email.git
   revision: 400739d40fc1590fcdacd7e365532f269f494bcd
   specs:
@@ -25,6 +15,17 @@ GIT
       nokogiri (~> 1.6)
       premailer-rails (~> 1.9)
       rails (>= 3)
+
+GIT
+  remote: https://github.com/swrobel/double_entry.git
+  revision: 6fe3433d4670fb144d4cf0efe3592ac1c875b3e2
+  branch: transfer-return-value
+  specs:
+    double_entry (2.0.0.beta4)
+      activerecord (>= 3.2.0)
+      activesupport (>= 3.2.0)
+      money (>= 6.0.0)
+      railties (>= 3.2.0)
 
 GIT
   remote: https://github.com/swrobel/friendly_id.git

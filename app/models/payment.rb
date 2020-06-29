@@ -36,6 +36,17 @@ class Payment < ApplicationRecord
     )
   end
 
+  def record_refund!(refund)
+    DoubleEntry.transfer(
+      amount,
+      code: :refund,
+      detail: self,
+      from: freelancer.account_receivable,
+      to: client.account_cash,
+      metadata: {refund_id: refund.id},
+    )
+  end
+
   def set_stripe_fields(charge)
     self.status = charge.status
     self.stripe_id = charge.id
