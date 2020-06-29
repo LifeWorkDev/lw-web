@@ -22,7 +22,6 @@ class Payment < ApplicationRecord
     true
   rescue Stripe::CardError => e
     fail!(e.error.message)
-    Errbase.report(e, {payment_id: id})
     false
   end
 
