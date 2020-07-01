@@ -1,5 +1,8 @@
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
+import classNames from 'classnames'
+
+import formatCurrency from 'utils/formatCurrency'
 
 const Milestone = PropTypes.shape({
   amount: PropTypes.number,
@@ -8,20 +11,18 @@ const Milestone = PropTypes.shape({
   id: PropTypes.number.isRequired,
 })
 
-const formatCurrency = (value) =>
-  value
-    .toLocaleString('en-US', {
-      currency: 'USD',
-      style: 'currency',
-    })
-    .replace('$', '')
-    .replace('.00', '')
-
-const PaymentsForm = (props) => {
+const PaymentsForm = ({
+  isClient,
+  lifeworkFee,
+  maxPayment,
+  projectFee,
+  ...props
+}) => {
   const [milestones, setMilestones] = useState(props.milestones)
   const [total, setTotal] = useState(Number(props.total))
   const submitButton = document.getElementById('submit-form')
   const ErrorBoundary = window.Bugsnag.getPlugin('react')
+  const feesWaived = projectFee == 0 && lifeworkFee > 0
   let errorText
   let sum = 0
 
@@ -38,7 +39,7 @@ const PaymentsForm = (props) => {
         key={index}
         {...{
           index,
-          maxPayment: props.maxPayment,
+          maxPayment: maxPayment,
           milestone,
           total,
           updateAmount,
@@ -89,7 +90,7 @@ const PaymentsForm = (props) => {
       {milestoneRows}
       <PaymentsFormRow
         firstClass='mb-3 mb-sm-0 text-right'
-        firstContent={'Total:'}
+        firstContent='Total:'
         secondContent={
           <div className='input-group input-group-sm font-weight-bold'>
             <div className='input-group-prepend'>
@@ -118,19 +119,26 @@ const PaymentsForm = (props) => {
           <span className='font-sans-serif text-danger'>{errorText}</span>
         }
       />
-      {!props.isClient && props.lifeworkFee > 0 && (
+      {!isClient && lifeworkFee > 0 && (
         <>
           <PaymentsFormRow
             firstClass='mb-3 mb-sm-0 text-right'
             firstContent={
               <>
-                <span className='my-auto mx-2'>Fee:</span>
                 <span
-                  className='rubber-stamp'
-                  title="Thanks for being one of our early customers! As a token of our appreciation, we're waiving our platform fees for your first few projects."
+                  className='my-auto'
+                  title='We charge this fee to cover our costs of running the platform. We only get paid when you do!'
                 >
-                  Waived!
+                  Fee:
                 </span>
+                {feesWaived && (
+                  <span
+                    className='rubber-stamp ml-2 mt-2 mt-lg-0'
+                    title="Thanks for being one of our early customers! As a token of our appreciation, we're waiving our platform fees for your first few projects."
+                  >
+                    Waived!
+                  </span>
+                )}
               </>
             }
             secondContent={
@@ -140,8 +148,10 @@ const PaymentsForm = (props) => {
                 </div>
                 <input
                   disabled
-                  className='form-control strike-through'
-                  value={formatCurrency(sum * props.lifeworkFee)}
+                  className={classNames('form-control', {
+                    'strike-through': feesWaived,
+                  })}
+                  value={formatCurrency(sum * (projectFee || lifeworkFee))}
                 />
               </div>
             }
@@ -149,8 +159,10 @@ const PaymentsForm = (props) => {
               <div className='input-group input-group-sm'>
                 <input
                   disabled
-                  className='form-control text-right strike-through'
-                  value='2'
+                  className={classNames('form-control', 'text-right', {
+                    'strike-through': feesWaived,
+                  })}
+                  value={(projectFee || lifeworkFee) * 100}
                 />
                 <div className='input-group-append'>
                   <span className='input-group-text'>%</span>
@@ -158,7 +170,7 @@ const PaymentsForm = (props) => {
               </div>
             }
           />
-          {/*
+          {projectFee > 0 && (
             <PaymentsFormRow
               firstClass='mb-3 mb-sm-0'
               firstContent='Net:'
@@ -170,12 +182,12 @@ const PaymentsForm = (props) => {
                   <input
                     disabled
                     className='form-control'
-                    value={formatCurrency(sum * (1 - props.lifeworkFee))}
+                    value={formatCurrency(sum * (1 - projectFee))}
                   />
                 </div>
               }
             />
-          */}
+          )}
         </>
       )}
     </ErrorBoundary>
@@ -186,6 +198,7 @@ PaymentsForm.propTypes = {
   lifeworkFee: PropTypes.number.isRequired,
   maxPayment: PropTypes.number.isRequired,
   milestones: PropTypes.arrayOf(Milestone),
+  projectFee: PropTypes.number.isRequired,
   total: PropTypes.number,
 }
 

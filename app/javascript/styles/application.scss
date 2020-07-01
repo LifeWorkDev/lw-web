@@ -108,8 +108,14 @@ $body-bg: $theme-background; // Don't apply to mailer body
 }
 
 .input-group {
-  .input-group-prepend ~ input {
-    border-left: none;
+  .input-group-prepend {
+    & ~ input {
+      border-left: none;
+    }
+
+    .input-group-text {
+      border-right: none;
+    }
   }
 
   input:not(:last-child) {

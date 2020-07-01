@@ -18,7 +18,7 @@ class User < ApplicationRecord
     :rememberable, :trackable, :validatable
 
   jsonb_accessor :metadata,
-    fee_percent: [:float, default: LIFEWORK_FEE],
+    fee_percent: :float,
     work_category: [:string, array: true, default: []],
     work_type: :string
 

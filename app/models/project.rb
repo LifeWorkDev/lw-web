@@ -68,7 +68,7 @@ class Project < ApplicationRecord
 private
 
   def set_defaults
-    self.fee_percent ||= freelancer.fee_percent
+    self.fee_percent ||= freelancer.fee_percent || LIFEWORK_FEE
   end
 
   def should_generate_new_friendly_id?

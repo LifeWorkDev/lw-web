@@ -3,7 +3,7 @@
 = render 'shared/env_alerts/demo'
 
 .text-center
-  h2 Review before we send to your client.
+  h2 Review before we email your client:
 
 .row.pb-4
   .card.bg-transparent.mx-auto.shadow
@@ -20,5 +20,7 @@
     .card-body.mw-600px.p-0 = render template: 'mailers/client/invite', layout: 'mailers/_body'
 
 .mw-600px.mx-auto
+  - if @project.fee_percent > 0
+    p.text-center Note that the amounts above reflect what your client will be charged. The amounts you receive will be net of our #{number_to_percentage(@project.fee_percent * 100, precision: 0)} fee.
   = bootstrap_form_with(url: [:invite, current_namespace, @project.becomes(Project)], class: 'w-100 mt-2', control_col: 'col-sm-6 col-md-3', label_col: 'col-sm-6 text-sm-right', layout: :horizontal, local: true, method: :patch) do |f|
     = render 'shared/form_buttons', f: f, back: after_create_or_update_path(@project), submit_val: :payment

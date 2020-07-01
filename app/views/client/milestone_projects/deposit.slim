@@ -4,8 +4,8 @@
 ol.lead
   li
     | Today we'll withdraw #{first_milestone.client_amount&.format} from your #{current_org.primary_pay_method}, the payment for the first milestone
-    - if LIFEWORK_FEE > 0
-      |  (including our #{number_to_percentage(LIFEWORK_FEE * 100, precision: 0)} fee)
+    - if @project.client_pays_fees && @project.fee_percent > 0
+      |  (including our #{number_to_percentage(@project.fee_percent * 100, precision: 0)} fee)
     | , and hold it in our account.
 
   li Three days before the due date, we'll email you to remind you about the upcoming payment, and give you the opportunity to communicate with #{@project.freelancer.name} to make sure everything is on track.
