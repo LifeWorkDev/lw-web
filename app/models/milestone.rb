@@ -31,7 +31,7 @@ class Milestone < ApplicationRecord
   end
 
   def payment
-    payments.pending_or_succeeded.first
+    payments.successful.last
   end
 
   def percent

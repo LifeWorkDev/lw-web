@@ -77,7 +77,7 @@ class RetainerProject < Project
   end
 
   def latest_payment
-    payments.pending_or_succeeded.last
+    payments.successful.last
   end
 
   def next_date

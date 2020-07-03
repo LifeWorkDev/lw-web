@@ -41,6 +41,8 @@ module Payments::Status
       end
     end
 
+    scope :successful, -> { where(status: %i[pending succeeded disbursed refunded]) }
+
     memoize def status_class
       if scheduled? then :secondary
       elsif pending? then :info

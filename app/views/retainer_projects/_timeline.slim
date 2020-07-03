@@ -1,0 +1,21 @@
+- (@project.payments.successful || (@project.active? ? [Payment.new(paid_at: @project.start_date)] : [])).each do |payment|
+  .row.text-center.mt-5
+    .column.w-100
+      = render 'shared/section_heading'
+        strong => l(payment.paid_at, format: :date_only)
+        = render 'shared/status_badge', class: 'align-text-bottom', record: payment
+      .mt-2.mb-3
+        p #{payment.amount.format} deposit from #{@project.client}
+- if @project.payments.successful.any?
+  - next_date = @project.next_date
+  .row.text-center.mt-5
+    .column.w-100
+      = render 'shared/section_heading'
+        strong => l(next_date)
+        - unless next_date.past?
+          = render 'shared/status_badge', class: 'align-text-bottom', record: Payment.new
+      .mt-2.mb-3
+        - mid_text = next_date.past? ? 'was transferred' : 'will be transferred'
+        p #{@project.freelancer_amount.format} #{mid_text} to #{@project.freelancer}
+        - if @project.active? && !next_date.past?
+          p #{@project.client} will auto-deposit #{@project.amount.format}
