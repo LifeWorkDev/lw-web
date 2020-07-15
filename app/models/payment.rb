@@ -92,14 +92,16 @@ class Payment < ApplicationRecord
         metadata: {transfer_id: transfer.id},
       )
 
-      DoubleEntry.transfer(
-        platform_fee,
-        code: :platform,
-        detail: self,
-        from: freelancer.account_receivable,
-        to: ACCOUNT_FEES,
-        metadata: {transfer_id: transfer.id},
-      )
+      if platform_fee.positive?
+        DoubleEntry.transfer(
+          platform_fee,
+          code: :platform,
+          detail: self,
+          from: freelancer.account_receivable,
+          to: ACCOUNT_FEES,
+          metadata: {transfer_id: transfer.id},
+        )
+      end
 
       if processing_fee.positive?
         DoubleEntry.transfer(
