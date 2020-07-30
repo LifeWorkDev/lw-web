@@ -22,7 +22,7 @@ javascript:
     var linkHandler = Plaid.create({
       clientName: 'LifeWork',
       env: '#{PLAID_ENV}',
-      key: '072c1503058ebaaaf4d0fc44f7c159',
+      key: '#{Rails.application.credentials.plaid[:public_key]}',
       product: ['auth'],
       onExit: function(error, metadata) {
         if (error) {

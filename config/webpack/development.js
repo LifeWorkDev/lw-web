@@ -1,6 +1,6 @@
 process.env.NODE_ENV = process.env.NODE_ENV || 'development'
 
-const merge = require('webpack-merge')
+const { merge } = require('webpack-merge')
 const environment = require('./environment')
 
 const EslintPlugin = require('eslint-webpack-plugin')
@@ -28,9 +28,11 @@ const chokidar = require('chokidar')
 environment.config.devServer.before = (app, server) => {
   chokidar
     .watch(['config/locales/*.yml', 'app/helpers/**/*', 'app/views/**/*'])
-    .on('change', () => setTimeout(() => {
-      server.sockWrite(server.sockets, 'content-changed')
-    }, 100))
+    .on('change', () =>
+      setTimeout(() => {
+        server.sockWrite(server.sockets, 'content-changed')
+      }, 100),
+    )
 }
 
 module.exports = merge(environment.toWebpackConfig(), {

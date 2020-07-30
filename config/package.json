@@ -42,7 +42,7 @@
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-react": "^7.14.3",
     "eslint-plugin-sort-keys-fix": "^1.0.1",
-    "eslint-webpack-plugin": "^1.0.0",
+    "eslint-webpack-plugin": "^2.0.0",
     "object-hash": "^2.0.0",
     "prettier": "^2.0.0",
     "stylelint": "^13.0.0",
@@ -53,6 +53,6 @@
     "stylelint-scss": "^3.9.4",
     "stylelint-webpack-plugin": "^2.0.0",
     "webpack-dev-server": "^3.7.2",
-    "webpack-merge": "^4.2.1"
+    "webpack-merge": "^5.0.9"
   }
 }
