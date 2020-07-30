@@ -52,7 +52,7 @@ module.exports = {
   settings: {
     'import/resolver': {
       webpack: {
-        config: path.resolve('config/webpack/development.js'),
+        config: path.resolve(`config/webpack/test.js`),
       },
     },
     react: { version: 'detect' },

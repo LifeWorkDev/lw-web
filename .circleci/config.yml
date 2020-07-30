@@ -7,9 +7,9 @@ jobs:
         environment:
           PGHOST: 127.0.0.1
           PGUSER: lifework
+          NODE_ENV: test
           RAILS_ENV: test
           RUBYOPT: -W:no-deprecated
-          NODE_ENV: development
       - image: circleci/postgres:12-alpine-ram
         environment:
           POSTGRES_USER: lifework
@@ -76,12 +76,12 @@ jobs:
       - restore_cache:
           name: Restore webpacker cache
           keys:
-            - v1-lifework-webpacker-{{ .Branch }}-
-            - v1-lifework-webpacker-
+            - v3-lifework-webpacker-{{ .Branch }}-
+            - v3-lifework-webpacker-
 
       - restore_cache:
           name: Restore compiled packs
-          key: v1-lifework-packs-{{ checksum "tmp/cache/webpacker/last-compilation-digest-test" }}
+          key: v3-lifework-packs-{{ checksum "tmp/cache/webpacker/last-compilation-digest-test" }}
 
       - run:
           name: Wait for DB
@@ -99,13 +99,13 @@ jobs:
 
       - save_cache:
           name: Store webpacker cache
-          key: v1-lifework-webpacker-{{ .Branch }}-{{ epoch }}
+          key: v3-lifework-webpacker-{{ .Branch }}-{{ epoch }}
           paths:
             - tmp/cache/webpacker
 
       - save_cache:
           name: Store compiled packs
-          key: v1-lifework-packs-{{ checksum "tmp/cache/webpacker/last-compilation-digest-test" }}
+          key: v3-lifework-packs-{{ checksum "tmp/cache/webpacker/last-compilation-digest-test" }}
           paths:
             - public/packs-test
 

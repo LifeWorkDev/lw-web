@@ -1,4 +1,4 @@
-module.exports = function(api) {
+module.exports = function (api) {
   let validEnv = ['development', 'test', 'production']
   let currentEnv = api.env()
   let isDevelopmentEnv = api.env('development')
@@ -64,7 +64,6 @@ module.exports = function(api) {
             node: 'current',
           },
         },
-        '@babel/preset-react',
       ],
       (isProductionEnv || isDevelopmentEnv) && [
         '@babel/preset-env',
