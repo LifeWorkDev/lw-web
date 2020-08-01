@@ -7,6 +7,7 @@ h2.mb-4 Welcome! We've put together a quick video guide to help you set up your 
     - video_id = ENV.fetch('FREELANCER_WALKTHROUGH_VIDEO_ID', 'zlzjlxohe4')
     <script src="https://fast.wistia.com/embed/medias/#{video_id}.jsonp" async></script><script src="https://fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:79.06% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_zlzjlxohe4 seo=false videoFoam=true" style="height:100%;position:relative;width:100%"><div class="wistia_swatch" style="height:100%;left:0;opacity:0;overflow:hidden;position:absolute;top:0;transition:opacity 200ms;width:100%;"><img src="https://fast.wistia.com/embed/medias/#{video_id}/swatch" style="filter:blur(5px);height:100%;object-fit:contain;width:100%;" alt="" aria-hidden="true" onload="this.parentNode.style.opacity=1;" /></div></div></div></div>
 
-.form-buttons.mt-4
-  = link_to 'Continue >', new_freelancer_org_path, class: 'btn btn-primary float-right'
-  = link_to '< Back', :back, class: 'btn btn-outline-secondary mr-sm-2 mt-3 mt-sm-0 float-left'
+- if user_signed_in?
+  .form-buttons.mt-4
+    = link_to 'Continue >', new_freelancer_org_path, class: 'btn btn-primary float-right'
+    = link_to '< Back', :back, class: 'btn btn-outline-secondary mr-sm-2 mt-3 mt-sm-0 float-left'
