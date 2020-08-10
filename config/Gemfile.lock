@@ -18,8 +18,7 @@ GIT
 
 GIT
   remote: https://github.com/swrobel/double_entry.git
-  revision: 6fe3433d4670fb144d4cf0efe3592ac1c875b3e2
-  branch: transfer-return-value
+  revision: 194ec1948e95d80a35eff01d2576d281d59633a0
   specs:
     double_entry (2.0.0.beta4)
       activerecord (>= 3.2.0)

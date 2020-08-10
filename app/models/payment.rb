@@ -7,6 +7,10 @@ class Payment < ApplicationRecord
   belongs_to :pays_for, polymorphic: true
   belongs_to :pay_method
   belongs_to :user, optional: true
+  has_one :disbursement_line, -> { credits.where(code: :disbursement) }, as: :detail, class_name: "DoubleEntry::Line", dependent: :destroy, inverse_of: :detail
+  has_one :payment_line, -> { credits.where(code: :payment) }, as: :detail, class_name: "DoubleEntry::Line", dependent: :destroy, inverse_of: :detail
+  has_one :refund_line, -> { credits.where(code: :refund) }, as: :detail, class_name: "DoubleEntry::Line", dependent: :destroy, inverse_of: :detail
+  has_many :lines, -> { credits }, as: :detail, class_name: "DoubleEntry::Line", dependent: :delete_all, inverse_of: :detail
 
   delegate :client, :freelancer, :platform_fee, :processing_fee, to: :pays_for
 

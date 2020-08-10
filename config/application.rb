@@ -81,6 +81,26 @@ module LifeWork
       config.hosts << host
       Rails.application.routes.default_url_options = {host: server_url, protocol: "https"}
     end
+
+    config.after_initialize do
+      DoubleEntry::Line.class_eval do
+        include Memery
+
+        memoize def stripe_obj
+          get_stripe_obj
+        end
+
+        def get_stripe_obj
+          return nil if metadata.blank?
+          @stripe_obj ||= case code
+                          when :disbursement
+                            Stripe::Transfer.retrieve(metadata["transfer_id"])
+                          when :refund
+                            Stripe::Refund.retrieve(metadata["refund_id"])
+          end
+        end
+      end
+    end
   end
 end
 
