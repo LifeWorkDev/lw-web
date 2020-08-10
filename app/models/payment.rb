@@ -10,7 +10,7 @@ class Payment < ApplicationRecord
   has_one :disbursement_line, -> { credits.where(code: :disbursement) }, as: :detail, class_name: "DoubleEntry::Line", dependent: :destroy, inverse_of: :detail
   has_one :payment_line, -> { credits.where(code: :payment) }, as: :detail, class_name: "DoubleEntry::Line", dependent: :destroy, inverse_of: :detail
   has_one :refund_line, -> { credits.where(code: :refund) }, as: :detail, class_name: "DoubleEntry::Line", dependent: :destroy, inverse_of: :detail
-  has_many :lines, -> { credits }, as: :detail, class_name: "DoubleEntry::Line", dependent: :delete_all, inverse_of: :detail
+  has_many :lines, as: :detail, class_name: "DoubleEntry::Line", dependent: :delete_all, inverse_of: :detail
 
   delegate :client, :freelancer, :platform_fee, :processing_fee, to: :pays_for
 
@@ -86,6 +86,8 @@ class Payment < ApplicationRecord
   end
 
   def record_transfer!(transfer)
+    metadata = transfer_metadata(transfer)
+
     DoubleEntry.lock_accounts(freelancer.account_receivable, freelancer.account_disbursement, ACCOUNT_FEES) do
       DoubleEntry.transfer(
         transfer_amount,
@@ -93,7 +95,7 @@ class Payment < ApplicationRecord
         detail: self,
         from: freelancer.account_receivable,
         to: freelancer.account_disbursement,
-        metadata: {transfer_id: transfer.id},
+        metadata: metadata,
       )
 
       if platform_fee.positive?
@@ -103,7 +105,7 @@ class Payment < ApplicationRecord
           detail: self,
           from: freelancer.account_receivable,
           to: ACCOUNT_FEES,
-          metadata: {transfer_id: transfer.id},
+          metadata: metadata,
         )
       end
 
@@ -114,15 +116,32 @@ class Payment < ApplicationRecord
           detail: self,
           from: freelancer.account_receivable,
           to: ACCOUNT_FEES,
-          metadata: {transfer_id: transfer.id},
+          metadata: metadata,
         )
       end
     end
+  end
+
+  def update_disbursement_metadata!
+    return false unless disbursement_line.present?
+
+    lines.where(code: :disbursement).update_all(metadata: transfer_metadata(disbursement_line.stripe_obj)) # rubocop:disable Rails/SkipsModelValidations
   end
 
 private
 
   def transfer_amount
     pays_for.freelancer_amount
+  end
+
+  def transfer_metadata(transfer)
+    {
+      transfer_id: transfer.id,
+      destination_account_id: transfer.destination,
+      destination_payment_id: transfer.destination_payment,
+      source_transaction_id: transfer.source_transaction,
+      transfer_group_id: transfer.transfer_group,
+      balance_transaction_id: transfer.balance_transaction,
+    }
   end
 end
