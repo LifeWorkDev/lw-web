@@ -61,7 +61,7 @@ Rails.application.routes.draw do
 
   resources :comments, only: :update
 
-  %w[stripe].each do |source|
+  %w[stripe stripe_connect].each do |source|
     post "webhooks/#{source}", controller: :webhooks
   end
 

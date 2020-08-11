@@ -2,10 +2,20 @@ class WebhooksController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def stripe
+    process_stripe(:webhook_secret)
+  end
+
+  def stripe_connect
+    process_stripe(:connect_webhook_secret)
+  end
+
+private
+
+  def process_stripe(secret_key)
     Stripe::Webhook::Signature.verify_header(
       request_data,
       request_headers["HTTP_STRIPE_SIGNATURE"],
-      Rails.application.credentials.stripe[:webhook_secret],
+      Rails.application.credentials.stripe[secret_key],
     )
 
     webhook.event = webhook.data["type"]
@@ -16,8 +26,6 @@ class WebhooksController < ApplicationController
     Errbase.report(e, {headers: request_headers, data: request_data})
     head :bad_request && return
   end
-
-private
 
   def request_data
     @request_data ||= request.body.read
