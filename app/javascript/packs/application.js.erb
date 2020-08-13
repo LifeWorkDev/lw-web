@@ -17,6 +17,7 @@ import 'styles/application.scss'
 
 document.addEventListener('turbolinks:load', function() {
   BSN.initCallback()
+  typeof fbq === 'function' && fbq('track', 'PageView');
 })
 
 window.createPayMethod = function(data) {
