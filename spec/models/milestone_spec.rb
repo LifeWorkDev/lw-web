@@ -28,70 +28,109 @@ RSpec.describe Milestone, type: :model do
     end
   end
 
-  describe "state machine" do
+  context "with payment attached" do
     subject(:milestone) { project.milestones.first }
 
     let(:client) { project.client }
     let(:freelancer) { Fabricate(:active_freelancer, project_type: :milestone) }
     let(:pay_method) { client.primary_pay_method }
     let(:project) { freelancer.projects.first }
-    let(:payment) { Payment.last }
     let(:user) { client.primary_contact }
 
-    describe "#deposit!" do
-      it "doesn't schedule milestone approaching emails if they would be in the past" do
-        milestone.update!(date: Date.current)
-        expect {
-          milestone.deposit!
-        }.to not_enqueue_mail(FreelancerMailer, :milestone_approaching) &
-          not_enqueue_mail(ClientMailer, :milestone_approaching)
-      end
+    describe "callbacks" do
+      describe "before_update" do
+        it "does nothing if not deposited" do
+          allow(milestone).to receive(:refund_difference_when_amount_changed)
+          milestone.update!(amount: milestone.amount + 1.to_money)
+          expect(milestone).not_to have_received(:refund_difference_when_amount_changed)
+        end
 
-      it "charges client's primary pay method, activates project, emails freelancer, emails client" do
-        expect {
-          milestone.deposit!
-        }.to enqueue_mail(FreelancerMailer, :milestone_deposited).once &
-          enqueue_mail(ClientMailer, :milestone_deposited).once &
-          enqueue_mail(FreelancerMailer, :milestone_approaching).once.at(milestone.freelancer_reminder_time) &
-          enqueue_mail(ClientMailer, :milestone_approaching).once.at(milestone.client_reminder_time) &
-          enqueue_job(Milestones::PayJob).once.at(milestone.payment_time)
-        expect(project.reload.active?).to be true
-        expect(payment.amount).to eq milestone.client_amount
-        expect(payment.pays_for).to eq milestone
-        expect(payment.pay_method).to eq milestone.client.primary_pay_method
-        expect(payment.user).to be_nil
-      end
+        context "when deposited" do
+          before { milestone.deposit! }
 
-      it "sets a user if provided" do
-        milestone.deposit!(user)
-        expect(payment.user).to eq user
+          it "partially refunds if amount was reduced" do
+            old_amount = milestone.amount
+            new_amount = milestone.amount / 2
+            payment = Payment.last
+
+            allow(milestone).to receive(:payment) { payment }
+            allow(payment).to receive(:partially_refund!)
+            milestone.update!(amount: new_amount)
+            expect(payment).to have_received(:partially_refund!).with(old_amount - new_amount).once
+            expect(milestone.amount).to eq new_amount
+          end
+
+          it "raises if amount was increased" do
+            expect { milestone.update(amount: milestone.amount + 1.to_money) }.to raise_error(StandardError, "Increase the amount of an already-deposited milestone")
+          end
+
+          it "does nothing if amount was unchanged" do
+            allow(milestone).to receive(:refund_difference_when_amount_changed)
+            milestone.update(description: Faker::Lorem.sentence)
+            expect(milestone).not_to have_received(:refund_difference_when_amount_changed)
+          end
+        end
       end
     end
 
-    describe "#pay!" do
-      shared_examples :pay do
-        it "creates Stripe transfers, emails client & freelancer, schedules next deposit" do
-          milestone.update(status: :deposited)
-          allow(Stripe::Transfer).to receive(:create).and_call_original
+    describe "state machine" do
+      let(:payment) { milestone.payment }
+
+      describe "#deposit!" do
+        it "doesn't schedule milestone approaching emails if they would be in the past" do
+          milestone.update!(date: Date.current)
           expect {
-            milestone.pay!
-          }.to enqueue_mail(ClientMailer, :milestone_paid).once &
-            enqueue_mail(FreelancerMailer, :milestone_paid).once &
-            enqueue_job(Milestones::DepositJob).once.at(milestone.deposit_time)
-          expect(Stripe::Transfer).to have_received(:create).once
+            milestone.deposit!
+          }.to not_enqueue_mail(FreelancerMailer, :milestone_approaching) &
+            not_enqueue_mail(ClientMailer, :milestone_approaching)
+        end
+
+        it "charges client's primary pay method, activates project, emails freelancer, emails client" do
+          expect {
+            milestone.deposit!
+          }.to enqueue_mail(FreelancerMailer, :milestone_deposited).once &
+            enqueue_mail(ClientMailer, :milestone_deposited).once &
+            enqueue_mail(FreelancerMailer, :milestone_approaching).once.at(milestone.freelancer_reminder_time) &
+            enqueue_mail(ClientMailer, :milestone_approaching).once.at(milestone.client_reminder_time) &
+            enqueue_job(Milestones::PayJob).once.at(milestone.payment_time)
+          expect(project.reload.active?).to be true
+          expect(payment.amount).to eq milestone.client_amount
+          expect(payment.pays_for).to eq milestone
+          expect(payment.pay_method).to eq milestone.client.primary_pay_method
+          expect(payment.user).to be_nil
+        end
+
+        it "sets a user if provided" do
+          milestone.deposit!(user)
+          expect(payment.user).to eq user
         end
       end
 
-      context "with pending payment" do
-        before { Fabricate(:pending_payment, pays_for: milestone) }
+      describe "#pay!" do
+        shared_examples :pay do
+          it "creates Stripe transfers, emails client & freelancer, schedules next deposit" do
+            milestone.update(status: :deposited)
+            allow(Stripe::Transfer).to receive(:create).and_call_original
+            expect {
+              milestone.pay!
+            }.to enqueue_mail(ClientMailer, :milestone_paid).once &
+              enqueue_mail(FreelancerMailer, :milestone_paid).once &
+              enqueue_job(Milestones::DepositJob).once.at(milestone.deposit_time)
+            expect(Stripe::Transfer).to have_received(:create).once
+          end
+        end
 
-        include_examples :pay
-      end
+        context "with pending payment" do
+          before { Fabricate(:pending_payment, pays_for: milestone) }
 
-      context "with succeeded payment" do
-        before { Fabricate(:succeeded_payment, pays_for: milestone) }
+          include_examples :pay
+        end
 
-        include_examples :pay
+        context "with succeeded payment" do
+          before { Fabricate(:succeeded_payment, pays_for: milestone) }
+
+          include_examples :pay
+        end
       end
     end
   end
