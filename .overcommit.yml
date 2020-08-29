@@ -1,4 +1,5 @@
 gemfile: .overcommit_gems.rb
+verify_signatures: false
 
 CommitMsg:
   TextWidth:
@@ -6,11 +7,12 @@ CommitMsg:
 
 PreCommit:
   RuboCop:
-    command:
-      - bin/rubocop-daemon
+    command: bin/rubocop-daemon-wrapper
+    enabled: true
+    flags:
+      - --disable-pending-cops
       - --parallel
       - --config=config/rubocop_strict.yml
-    enabled: true
     on_warn: fail
 
   SlimLint:

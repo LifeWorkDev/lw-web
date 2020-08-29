@@ -170,6 +170,9 @@ Style/FrozenStringLiteralComment:
 Style/HashEachMethods:
   Enabled: true
 
+Style/HashLikeCase:
+  Enabled: false # Stylistic choice, no perf difference: https://github.com/rubocop-hq/rubocop/issues/8247#issuecomment-662269071
+
 Style/HashTransformKeys:
   Enabled: true
 

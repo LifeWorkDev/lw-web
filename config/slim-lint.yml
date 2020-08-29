@@ -1,5 +1,6 @@
 exclude:
   - app/views/application/styleguide.slim
+  - app/views/layouts/mailer.slim
   - bin/**/*
   - node_modules/**/*
   - tmp/**/*

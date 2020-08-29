@@ -29,7 +29,7 @@ guard :shell, first_match: true do
   end
 end
 
-guard :rubocop, all_on_start: true, cli: %w[--auto-correct --display-cop-names --config=config/rubocop_standard.yml], executable: "bin/rubocop-daemon" do
+guard :rubocop, all_on_start: true, cli: %w[--auto-correct --display-cop-names --config=config/rubocop_standard.yml], executable: "bin/rubocop-daemon-wrapper" do
   watch(/.+\.(rb|rake)$/)
   watch("config/Gemfile")
   watch(%r{(?:.+/)?\.?rubocop(?:_(\w+))?\.yml$}) { "." }
