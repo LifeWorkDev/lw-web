@@ -10,6 +10,7 @@ module Payments::Status
       state :succeeded
       state :disbursed
       state :failed
+      state :partially_refunded
       state :refunded
 
       event :fail do
@@ -25,23 +26,31 @@ module Payments::Status
       end
 
       event :disburse do
-        transitions from: %i[pending succeeded], to: :disbursed do
+        transitions from: %i[pending succeeded partially_refunded], to: :disbursed do
           guard do
             transfer!
           end
         end
       end
 
+      event :partially_refund do
+        transitions from: %i[pending succeeded partially_refunded], to: :partially_refunded do
+          guard do |refund_amount|
+            process_refund!(refund_amount)
+          end
+        end
+      end
+
       event :refund do
-        transitions from: %i[pending succeeded], to: :refunded do
+        transitions from: %i[pending succeeded partially_refunded], to: :refunded do
           guard do
-            stripe_id.present? && record_refund!(Stripe::Refund.create(charge: stripe_id)) # Can add reverse_transfer: true to support refunding disbursed payments, but need to add additional accounting lines
+            process_refund!
           end
         end
       end
     end
 
-    scope :successful, -> { where(status: %i[pending succeeded disbursed refunded]) }
+    scope :successful, -> { where(status: %i[pending succeeded disbursed partially_refunded refunded]) }
 
     memoize def status_class
       if scheduled? then :secondary
@@ -49,6 +58,7 @@ module Payments::Status
       elsif succeeded? then :success
       elsif disbursed? then :primary
       elsif failed? then :danger
+      elsif partially_refunded? then :light
       elsif refunded? then :dark
       end
     end

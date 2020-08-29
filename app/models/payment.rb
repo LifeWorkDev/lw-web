@@ -27,6 +27,16 @@ class Payment < ApplicationRecord
     false
   end
 
+  def process_refund!(refund_amount = amount)
+    return false unless stripe_id.present?
+
+    # Can add reverse_transfer: true to support refunding disbursed payments, but need to add additional accounting lines
+    stripe_refund = Stripe::Refund.create({
+      amount: refund_amount.cents, charge: stripe_id
+    }, idempotency_key: "refund-#{refund_amount.cents}-of-payment-#{id}")
+    record_refund!(stripe_refund)
+  end
+
   def record_charge!
     DoubleEntry.transfer(
       amount,
@@ -39,7 +49,7 @@ class Payment < ApplicationRecord
 
   def record_refund!(refund)
     DoubleEntry.transfer(
-      amount,
+      Money.new(refund.amount),
       code: :refund,
       detail: self,
       from: freelancer.account_receivable,
