@@ -22,8 +22,9 @@ Trestle.resource(:payments) do
 
   form do |payment|
     auto_field :pays_for
-    if payment.scheduled?
-      number_field :amount, prepend: "$", min: 1, step: 0.01
+    if payment.scheduled? || payment.succeeded? || payment.partially_refunded?
+      help_text = payment.scheduled? ? nil : '<span class="text-danger">Updating the amount of a deposited payment will immediately issue a refund</span>'.html_safe
+      number_field :amount, prepend: "$", min: 1, step: 0.01, help: help_text
     else
       auto_field :amount
     end
