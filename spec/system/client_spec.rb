@@ -21,6 +21,7 @@ RSpec.describe "Client views", type: :system do
         fill_in "user[password]", with: Faker::Internet.password(special_characters: true)
         select time_zone, from: "user[time_zone]"
         find(:checkbox, "user[email_opt_in]").set(user_opt_in)
+        take_screenshot
         expect {
           click_sign_up edit_client_org_path
         }.to change { user.reload.name }.to(new_name) &

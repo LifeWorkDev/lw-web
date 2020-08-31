@@ -4,7 +4,8 @@ Fabricator(:payment) do
 
   after_build do |payment|
     payment.user ||= payment.pay_method.org.primary_contact || Fabricate.build(:user)
-    payment.pays_for ||= Fabricate.build(:active_retainer_project)
+    pays_for = Fabricate.build("active_#{%w[milestone retainer].sample}_project")
+    payment.pays_for ||= pays_for.milestone? ? pays_for.milestones.first : pays_for
   end
 end
 

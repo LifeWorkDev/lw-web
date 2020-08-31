@@ -1,7 +1,7 @@
 class ClientMailer < ApplicationMailer
   before_action do
     @for_client = true
-    @freelancer_name = (@milestone || @project)&.freelancer&.name
+    @freelancer_name = @project&.freelancer&.name
   end
 
   def invite
@@ -22,6 +22,10 @@ class ClientMailer < ApplicationMailer
   def milestone_paid
     @next_milestone = @milestone.next
     make_bootstrap_mail(subject: t(".subject", freelancer: @freelancer_name, project: @milestone.project))
+  end
+
+  def payment_refunded
+    make_bootstrap_mail(subject: t(".subject", project: @project, partially: @payment.partially_refunded? ? "partially " : ""))
   end
 
   def retainer_deposited

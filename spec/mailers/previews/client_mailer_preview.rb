@@ -10,6 +10,7 @@ class ClientMailerPreview < ActionMailer::Preview
   delegate :milestone_approaching, to: :milestone_mailer
   delegate :milestone_deposited, to: :milestone_mailer
   delegate :milestone_paid, to: :milestone_mailer
+  delegate :payment_refunded, to: :payment_mailer
   delegate :retainer_deposited, to: :retainer_mailer
   delegate :retainer_disbursed, to: :retainer_mailer
 
@@ -22,11 +23,13 @@ private
   end
 
   def milestone_mailer
-    ClientMailer.with(milestone_params)
+    ClientMailer.with({recipient: User.client.sample, milestone: Milestone.deposited.sample})
   end
 
-  def milestone_params
-    {recipient: User.client.sample, milestone: Milestone.deposited.sample}
+  def payment_mailer
+    payment = Payment.where(status: %i[refunded partially_refunded]).sample
+    amount = Money.new(rand(1..payment.amount_cents))
+    ClientMailer.with({recipient: User.client.sample, payment: payment, refund_amount: amount})
   end
 
   def random_retainer_project
@@ -34,10 +37,6 @@ private
   end
 
   def retainer_mailer
-    ClientMailer.with(retainer_params)
-  end
-
-  def retainer_params
-    {recipient: User.client.sample, project: random_retainer_project}
+    ClientMailer.with({recipient: User.client.sample, project: random_retainer_project})
   end
 end

@@ -15,8 +15,10 @@ private
 
   def set_params
     @milestone = params[:milestone]
-    @project = params[:project]
+    @payment = params[:payment]
+    @project = params[:project] || @milestone&.project || @payment&.project
     @recipient = params[:recipient]
+    @refund_amount = Money.new(params[:refund_amount], @payment.currency) if @payment
   end
 
   def use_recipient_zone

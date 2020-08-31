@@ -1,8 +1,8 @@
 en:
   date:
     formats:
-      default: "%-m/%-d/%Y"
-      text_without_year: "%B %-d"
+      default: '%-m/%-d/%Y'
+      text_without_year: '%B %-d'
   project:
     status:
       writing_proposal:
@@ -30,18 +30,20 @@ en:
       end: and disbursed on the %{day} day of every month thereafter
   time:
     formats:
-      date_only: "%-m/%-d/%Y"
-      default: "%-m/%-d/%Y %-l:%M%P"
+      date_only: '%-m/%-d/%Y'
+      default: '%-m/%-d/%Y %-l:%M%P'
   client_mailer:
     invite:
       reminder: Reminder
-      subject: "%{freelancer} has invited you to %{project}"
+      subject: '%{freelancer} has invited you to %{project}'
     milestone_approaching:
       subject: A milestone payment for "%{project}" is approaching
     milestone_deposited:
       subject: A deposit for %{freelancer} project "%{project}" was made
     milestone_paid:
       subject: A payment for "%{project}" was made to %{freelancer}
+    payment_refunded:
+      subject: A payment for "%{project}" was %{partially}refunded
     retainer_deposited:
       subject: A deposit for %{freelancer} project "%{project}" was made
     retainer_disbursed:
@@ -56,8 +58,10 @@ en:
       subject: Milestone deposit received for "%{project}"
     milestone_paid:
       subject: Milestone payment disbursed for "%{project}"
+    payment_refunded:
+      subject: A payment for "%{project}" was %{partially}refunded
     retainer_agreed:
-      subject: "%{client} has set up payment for your retainer"
+      subject: '%{client} has set up payment for your retainer'
     retainer_deposited:
       subject: Deposit received for your retainer with %{client}
     retainer_disbursed:

@@ -13,6 +13,10 @@ class FreelancerMailer < ApplicationMailer
     make_bootstrap_mail(subject: t(".subject", project: @milestone.project))
   end
 
+  def payment_refunded
+    make_bootstrap_mail(subject: t(".subject", project: @project, partially: @payment.partially_refunded? ? "partially " : ""))
+  end
+
   def retainer_agreed
     make_bootstrap_mail(reply_to: @project.comment_reply_address, subject: t(".subject", client: @project.client))
   end

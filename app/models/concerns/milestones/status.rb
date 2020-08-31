@@ -28,7 +28,7 @@ module Milestones::Status
       event :pay do
         transitions from: :deposited, to: :paid do
           guard do
-            payment.disburse!
+            latest_payment.disburse!
           end
         end
 

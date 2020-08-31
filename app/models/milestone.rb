@@ -13,8 +13,6 @@ class Milestone < ApplicationRecord
   delegate :currency, :client_pays_fees?, :fee_percent, to: :project
   monetize :amount_cents, with_model_currency: :currency, allow_nil: true, numericality: {greater_than_or_equal_to: 0}
 
-  before_update :refund_difference_when_amount_changed, if: -> { deposited? && amount_cents_changed? }
-
   def as_json(*)
     {
       id: id,
@@ -32,7 +30,7 @@ class Milestone < ApplicationRecord
     project.milestones.pending.where.not(id: id).first
   end
 
-  def payment
+  def latest_payment
     payments.successful.last
   end
 
@@ -77,14 +75,5 @@ class Milestone < ApplicationRecord
 
   def stripe_metadata
     {'Milestone ID': id}
-  end
-
-private
-
-  def refund_difference_when_amount_changed
-    refund_amount = amount_cents_was - amount_cents
-    raise "Increase the amount of an already-deposited milestone" if refund_amount <= 0
-
-    payment.partially_refund!(Money.new(refund_amount))
   end
 end

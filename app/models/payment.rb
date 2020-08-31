@@ -12,7 +12,9 @@ class Payment < ApplicationRecord
   has_one :refund_line, -> { credits.where(code: :refund) }, as: :detail, class_name: "DoubleEntry::Line", dependent: :destroy, inverse_of: :detail
   has_many :lines, as: :detail, class_name: "DoubleEntry::Line", dependent: :delete_all, inverse_of: :detail
 
-  delegate :client, :freelancer, :platform_fee, :processing_fee, to: :pays_for
+  delegate :client, :client_amount, :freelancer, :freelancer_amount, :platform_fee, :processing_fee, to: :pays_for
+
+  before_update :refund_difference, if: -> { deposited? && amount_cents_changed? }
 
   def charge!
     set_stripe_fields pay_method.charge!(
@@ -32,9 +34,10 @@ class Payment < ApplicationRecord
 
     # Can add reverse_transfer: true to support refunding disbursed payments, but need to add additional accounting lines
     stripe_refund = Stripe::Refund.create({
-      amount: refund_amount.cents, charge: stripe_id
+      amount: refund_amount.cents,
+      charge: stripe_id,
     }, idempotency_key: "refund-#{refund_amount.cents}-of-payment-#{id}")
-    record_refund!(stripe_refund)
+    Payments::RecordRefundJob.perform_later(self, stripe_refund.amount, stripe_refund.id)
   end
 
   def record_charge!
@@ -47,14 +50,14 @@ class Payment < ApplicationRecord
     )
   end
 
-  def record_refund!(refund)
+  def record_refund!(refund_amount, refund_id)
     DoubleEntry.transfer(
-      Money.new(refund.amount),
+      Money.new(refund_amount),
       code: :refund,
       detail: self,
       from: freelancer.account_receivable,
       to: client.account_cash,
-      metadata: {refund_id: refund.id},
+      metadata: {refund_id: refund_id},
     )
   end
 
@@ -78,6 +81,10 @@ class Payment < ApplicationRecord
     else
       raise "Unrecognized Stripe ID type: #{stripe_id}"
     end
+  end
+
+  def project
+    pays_for.try(:project) || pays_for
   end
 
   def transfer!
@@ -139,6 +146,20 @@ class Payment < ApplicationRecord
   end
 
 private
+
+  def refund_difference
+    difference = amount_cents_was - amount_cents
+    raise "Can't increase the amount of a deposited payment" if difference <= 0
+    # There may be fees to refund to the client
+    refund_amount = client_amount(Money.new(difference, currency))
+
+    partially_refund!(refund_amount)
+
+    pays_for.update!(amount: amount) if pays_for.class == Milestone
+
+    ClientMailer.with(recipient: client.primary_contact, payment: self, refund_amount: refund_amount.cents).payment_refunded.deliver_later
+    FreelancerMailer.with(recipient: freelancer, payment: self, refund_amount: difference).payment_refunded.deliver_later
+  end
 
   def transfer_amount
     pays_for.freelancer_amount

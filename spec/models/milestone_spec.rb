@@ -37,44 +37,8 @@ RSpec.describe Milestone, type: :model do
     let(:project) { freelancer.projects.first }
     let(:user) { client.primary_contact }
 
-    describe "callbacks" do
-      describe "before_update" do
-        it "does nothing if not deposited" do
-          allow(milestone).to receive(:refund_difference_when_amount_changed)
-          milestone.update!(amount: milestone.amount + 1.to_money)
-          expect(milestone).not_to have_received(:refund_difference_when_amount_changed)
-        end
-
-        context "when deposited" do
-          before { milestone.deposit! }
-
-          it "partially refunds if amount was reduced" do
-            old_amount = milestone.amount
-            new_amount = milestone.amount / 2
-            payment = Payment.last
-
-            allow(milestone).to receive(:payment) { payment }
-            allow(payment).to receive(:partially_refund!)
-            milestone.update!(amount: new_amount)
-            expect(payment).to have_received(:partially_refund!).with(old_amount - new_amount).once
-            expect(milestone.amount).to eq new_amount
-          end
-
-          it "raises if amount was increased" do
-            expect { milestone.update(amount: milestone.amount + 1.to_money) }.to raise_error(StandardError, "Increase the amount of an already-deposited milestone")
-          end
-
-          it "does nothing if amount was unchanged" do
-            allow(milestone).to receive(:refund_difference_when_amount_changed)
-            milestone.update(description: Faker::Lorem.sentence)
-            expect(milestone).not_to have_received(:refund_difference_when_amount_changed)
-          end
-        end
-      end
-    end
-
     describe "state machine" do
-      let(:payment) { milestone.payment }
+      let(:payment) { milestone.latest_payment }
 
       describe "#deposit!" do
         it "doesn't schedule milestone approaching emails if they would be in the past" do
