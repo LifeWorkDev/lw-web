@@ -17,7 +17,7 @@ class Webhook < ApplicationRecord
               payment_id = data.dig("data", "object", "id")
 
               if payment_id.start_with? "py_" # ACH payments only
-                Payment.find_by(stripe_id: payment_id).succeed!
+                Payment.find_by(stripe_id: payment_id)&.succeed!
               else true; end
             else
               raise "No handler for Stripe event #{event}"
