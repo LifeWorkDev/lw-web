@@ -1,14 +1,14 @@
 .container.py-3
   - logo = image_pack_tag 'lifework-logo.png', height: 26, width: 150
-  - if @for_client
-    = link_to logo, root_url, target: :_blank, rel: :noopener
-  - else
+  - if @is_preview
     = logo
+  - else
+    = link_to logo, root_url, target: :_blank, rel: :noopener
     
 .container.py-3
   = yield
 .container.p-0
   = yield :no_gutters
-- if @for_client
+- unless @is_preview
   .container.bg-dark.py-3
     .text-center.text-muted &copy; #{Time.zone.today.year} LifeWork Holdings, Inc.

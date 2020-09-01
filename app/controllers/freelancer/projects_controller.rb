@@ -14,6 +14,7 @@ class Freelancer::ProjectsController < ProjectsController
   # GET /f/projects/1/preview
   def preview
     @for_client = false
+    @is_preview = true
   end
 
   def show
