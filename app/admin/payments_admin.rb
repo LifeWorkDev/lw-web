@@ -20,16 +20,11 @@ Trestle.resource(:payments) do
 
   # Customize the form fields shown on the new/edit views.
 
-  form do |payment|
+  form do |record|
     auto_field :pays_for
-    if payment.scheduled? || payment.succeeded? || payment.partially_refunded?
-      help_text = payment.scheduled? ? nil : '<span class="text-danger">Updating the amount of a deposited payment will immediately issue a refund</span>'.html_safe
-      number_field :amount, prepend: "$", min: 1, step: 0.01, help: help_text
-    else
-      auto_field :amount
-    end
+    auto_field :amount
     static_field :status do
-      status_tag(payment.status.humanize, payment.status_class)
+      status_tag(record.status.humanize, record.status_class)
     end
     auto_field :scheduled_for
     auto_field :paid_at

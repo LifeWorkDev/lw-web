@@ -4,6 +4,8 @@ verify_signatures: false
 CommitMsg:
   TextWidth:
     enabled: false
+  TrailingPeriod:
+    enabled: false
 
 PreCommit:
   RuboCop:

@@ -18,7 +18,7 @@ private
     @payment = params[:payment]
     @project = params[:project] || @milestone&.project || @payment&.project
     @recipient = params[:recipient]
-    @refund_amount = Money.new(params[:refund_amount], @payment.currency) if @payment
+    @refund_amount = Money.new(params[:refund_amount_cents], @payment.currency) if @payment
   end
 
   def use_recipient_zone

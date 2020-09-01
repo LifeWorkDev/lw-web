@@ -37,6 +37,45 @@ RSpec.describe Milestone, type: :model do
     let(:project) { freelancer.projects.first }
     let(:user) { client.primary_contact }
 
+    describe "callbacks" do
+      describe "before_update" do
+        it "does nothing if not deposited" do
+          allow(milestone).to receive(:update_payment_amount)
+          milestone.amount += 1.to_money
+          milestone.save
+          expect(milestone).not_to have_received(:update_payment_amount)
+        end
+
+        context "when deposited" do
+          before { milestone.deposit! }
+
+          it "partially refunds if amount was reduced" do
+            old_amount = milestone.amount
+            new_amount = old_amount / 2
+            refund_amount = old_amount - new_amount
+
+            payment = milestone.latest_payment
+            allow(milestone).to receive(:latest_payment) { payment }
+            allow(payment).to receive(:issue_refund!)
+            milestone.update(amount: new_amount)
+            expect(milestone.amount).to eq new_amount
+            expect(payment).to have_received(:issue_refund!).with(new_amount: milestone.client_amount, freelancer_refund_cents: refund_amount.cents).once
+          end
+
+          it "raises exception if amount was increased" do
+            milestone.amount += 1.to_money
+            expect { milestone.save }.to raise_error(StandardError, "Can't increase the amount of a deposited milestone")
+          end
+
+          it "does nothing if amount was unchanged" do
+            allow(milestone).to receive(:update_payment_amount)
+            milestone.update(description: Faker::Lorem.sentence)
+            expect(milestone).not_to have_received(:update_payment_amount)
+          end
+        end
+      end
+    end
+
     describe "state machine" do
       let(:payment) { milestone.latest_payment }
 

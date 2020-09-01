@@ -13,6 +13,8 @@ class Milestone < ApplicationRecord
   delegate :currency, :client_pays_fees?, :fee_percent, to: :project
   monetize :amount_cents, with_model_currency: :currency, allow_nil: true, numericality: {greater_than_or_equal_to: 0}
 
+  before_update :update_payment_amount, if: -> { deposited? && amount_cents_changed? }
+
   def as_json(*)
     {
       id: id,
@@ -75,5 +77,13 @@ class Milestone < ApplicationRecord
 
   def stripe_metadata
     {'Milestone ID': id}
+  end
+
+private
+
+  def update_payment_amount
+    raise "Can't increase the amount of a deposited milestone" if amount_cents > amount_cents_was
+
+    latest_payment.issue_refund!(new_amount: client_amount, freelancer_refund_cents: amount_cents_was - amount_cents)
   end
 end

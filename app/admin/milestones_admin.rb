@@ -30,7 +30,12 @@ Trestle.resource(:milestones) do
     tab :milestone do
       collection_select_with_link :project_id, Project.all, :id, :name
       text_field :description
-      number_field :amount, prepend: "$", min: 1, step: 0.01
+      if record.deposited? || record.pending?
+        help_text = record.deposited? ? nil : '<span class="text-danger">Updating the amount of a deposited milestone will immediately issue a refund for the difference</span>'.html_safe
+        number_field :amount, prepend: "$", min: 1, step: 0.01, help: help_text
+      else
+        auto_field :amount
+      end
       select :status, Milestone.aasm.states_for_select
       date_field :date
       auto_field :created_at

@@ -3,14 +3,21 @@ module Fees
 
   included do
     def client_amount(total = amount)
-      total += platform_fee(total) if client_pays_fees?
-      total += processing_fee(total)
-      total
+      total + client_fees(total)
+    end
+
+    def client_fees(amount = self.amount)
+      total = 0
+      total += platform_fee(amount) if client_pays_fees?
+      total + processing_fee(amount)
     end
 
     def freelancer_amount(total = amount)
-      total -= platform_fee(total) unless client_pays_fees?
-      total
+      total - freelancer_fees(total)
+    end
+
+    def freelancer_fees(amount = self.amount)
+      client_pays_fees? ? 0 : platform_fee(amount)
     end
 
     def platform_fee(total = amount)
