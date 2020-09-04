@@ -8,7 +8,7 @@ gem "aasm" # Acts as State Machine
 gem "active_model_serializers", "~> 0.10.0" # JSON serializer for activerecord
 gem "after_commit_everywhere", "~> 0.1", ">= 0.1.5" # AASM dependency when using w/ Rails
 gem "argon2" # More secure password hashing than default bcrypt
-gem "bootstrap-email", github: "swrobel/bootstrap-email"
+gem "bootstrap-email", github: "swrobel/bootstrap-email", branch: "align-utilities"
 gem "bootstrap_form"
 gem "bugsnag" # Exception tracking
 gem "business", "~> 1.18.0" # Business day calculations

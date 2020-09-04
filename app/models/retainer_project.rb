@@ -86,7 +86,7 @@ class RetainerProject < Project
     next_date += 1.month if next_date <= current_date
     next_date.safe_change_day(disbursement_day)
   end
-  alias date next_date
+  alias_method :date, :next_date
 
   def schedule_deposit
     return unless active?

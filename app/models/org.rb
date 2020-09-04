@@ -14,7 +14,7 @@ class Org < ApplicationRecord
   has_many :users, dependent: :nullify
   accepts_nested_attributes_for :users
 
-  alias orig_nilify_blanks nilify_blanks
+  alias_method :orig_nilify_blanks, :nilify_blanks
 
   validates :name, presence: true
 
