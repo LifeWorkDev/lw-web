@@ -19,3 +19,7 @@
         p #{@project.freelancer_amount.format} #{mid_text} to #{@project.freelancer}
         - if @project.active? && !next_date.past?
           p #{@project.client} will auto-deposit #{@project.amount.format}
+- if @project.client_invited?
+  .text-center.mt-4
+    = mdi_svg 'timer-sand', size: 48
+    p.mt-4 We're awaiting the first deposit from your client. We'll send them a daily reminder until they do so, so sit tight!
