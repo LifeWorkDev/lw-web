@@ -33,6 +33,8 @@ Trestle.resource(:payments) do
     auto_field :stripe_fee
     auto_field :pay_method
     auto_field :user, label: "Initiated by"
+    auto_field :created_at
+    auto_field :updated_at
   end
 
   # By default, all parameters passed to the update and create actions will be
