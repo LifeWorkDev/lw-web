@@ -26,6 +26,7 @@ Trestle.resource(:payments) do
     static_field :status do
       status_tag(record.status.humanize, record.status_class)
     end
+    auto_field :note
     auto_field :scheduled_for
     auto_field :paid_at
     auto_field :stripe_id
