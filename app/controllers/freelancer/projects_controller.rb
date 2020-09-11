@@ -3,7 +3,7 @@ class Freelancer::ProjectsController < ProjectsController
 
   # PATCH/PUT /f/projects/1/invite
   def invite
-    notice = "Your client has been emailed an invitation to join the project." if @project.invite_client!
+    notice = "Your client has been emailed an invitation to join the project. If they don't follow up, we'll send them daily reminders." if @project.invite_client!
     redirect_to [current_namespace, Project], notice: notice
   end
 
