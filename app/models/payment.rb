@@ -23,7 +23,9 @@ class Payment < ApplicationRecord
     record_charge!
     true
   rescue Stripe::CardError => e
-    fail!(e.error.message)
+    err = e.error
+    self.note = err.message
+    set_stripe_fields(err.payment_intent&.charges&.first || err.charge)
     false
   end
 
@@ -43,8 +45,8 @@ class Payment < ApplicationRecord
   def set_stripe_fields(charge)
     self.status = charge.status
     self.stripe_id = charge.id
-    self.stripe_fee = Money.new(charge.balance_transaction.fee, charge.balance_transaction.fee_details.first.currency)
     self.paid_at = Time.zone.at(charge.created)
+    self.stripe_fee = Money.new(charge.balance_transaction.fee, charge.balance_transaction.fee_details.first.currency) if charge.balance_transaction
     save!
   end
 
