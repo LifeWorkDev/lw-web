@@ -33,21 +33,21 @@ Trestle.resource(:orgs) do
     end
 
     tab :users, badge: record.users.size do
-      table UsersAdmin.table, collection: record.users
+      table UsersAdmin.table, collection: record.users.order(:id)
       concat admin_link_to("New User", admin: :users, action: :new, params: {org_id: record.id}, class: "btn btn-success mt-3")
     end
 
     tab :projects, badge: record.projects.size do
-      table ProjectsAdmin.table, collection: record.projects
+      table ProjectsAdmin.table, collection: record.projects.order(:id)
       concat admin_link_to("New Project", admin: :projects, action: :new, params: {org_id: record.id}, class: "btn btn-success mt-3")
     end
 
     tab :pay_methods, badge: record.pay_methods.size do
-      table PayMethodsAdmin.table, collection: record.pay_methods
+      table PayMethodsAdmin.table, collection: record.pay_methods.order(:id)
     end
 
     tab :payments, badge: record.payments.size do
-      table PaymentsAdmin.table, collection: record.payments
+      table PaymentsAdmin.table, collection: record.payments.order(:id)
     end
   end
 

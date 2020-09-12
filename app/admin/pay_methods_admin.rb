@@ -25,7 +25,7 @@ Trestle.resource(:pay_methods) do
     end
 
     tab :payments, badge: record.payments.size do
-      table PaymentsAdmin.table, collection: record.payments
+      table PaymentsAdmin.table, collection: record.payments.order(:id)
     end
   end
 end

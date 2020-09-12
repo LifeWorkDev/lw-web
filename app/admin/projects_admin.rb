@@ -56,14 +56,14 @@ Trestle.resource(:projects) do
 
     if record.milestone?
       tab :milestones, badge: record.milestones.size do
-        table MilestonesAdmin.table, collection: record.milestones
+        table MilestonesAdmin.table, collection: record.milestones.order(:id)
         concat admin_link_to("New Milestone", admin: :milestones, action: :new, params: {project_id: record.id}, class: "btn btn-success mt-3")
       end
     end
 
     if record.retainer?
       tab :payments, badge: record.payments.size do
-        table PaymentsAdmin.table, collection: record.payments
+        table PaymentsAdmin.table, collection: record.payments.order(:id)
       end
     end
   end

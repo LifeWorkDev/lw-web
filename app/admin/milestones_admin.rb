@@ -43,12 +43,12 @@ Trestle.resource(:milestones) do
     end
 
     tab :comments, badge: record.comments.size do
-      table CommentsAdmin.table, collection: record.comments
+      table CommentsAdmin.table, collection: record.comments.order(:id)
       concat admin_link_to("New Comment", admin: :comments, action: :new, params: {milestone_id: record.id}, class: "btn btn-success mt-3")
     end
 
     tab :payments, badge: record.payments.size do
-      table PaymentsAdmin.table, collection: record.payments
+      table PaymentsAdmin.table, collection: record.payments.order(:id)
     end
   end
 
