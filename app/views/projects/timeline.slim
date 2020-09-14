@@ -11,4 +11,9 @@
 - if @project.active?
   p.lead.mt-4.text-center Your project is currently in progress, so if you need to make any changes to dates or amounts, please <a href='javascript:Intercom("show")'>contact us</a>.
 
+- if @project.client_invited?
+  .text-center.mt-4
+    = mdi_svg 'timer-sand', size: 48
+    p.mt-4 We're awaiting the first deposit from your client. We'll send them a daily reminder until they do so, so sit tight!
+
 = render partial: "#{@project.type.underscore.pluralize}/timeline"
