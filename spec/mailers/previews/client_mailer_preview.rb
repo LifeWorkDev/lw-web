@@ -28,8 +28,8 @@ private
 
   def payment_mailer
     payment = Payment.where(status: %i[refunded partially_refunded]).sample
-    amount = Money.new(rand(1..payment.amount_cents))
-    ClientMailer.with({recipient: User.client.sample, payment: payment, refund_amount: amount})
+    refund_amount = Money.new(rand(1..payment.amount_cents))
+    ClientMailer.with({recipient: User.client.sample, payment: payment, refund_amount: refund_amount})
   end
 
   def random_retainer_project

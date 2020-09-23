@@ -41,7 +41,7 @@ RSpec.describe "Freelancer views", type: :system do
 
   context "when auth'd" do
     let(:user) { Fabricate(:active_user) }
-    let(:amount) { Money.new(rand(100_00..1_000_00)) }
+    let(:amount) { Money.new(Fabricate.attributes_for(:milestone)[:amount_cents]) }
     let(:name) { Faker::Commerce.product_name }
     let(:new_project) { Project.last }
     let(:new_milestone) { Milestone.last }

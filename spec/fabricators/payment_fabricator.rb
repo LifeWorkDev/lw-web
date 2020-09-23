@@ -1,5 +1,7 @@
+require_relative "helpers"
+
 Fabricator(:payment) do
-  amount_cents { Faker::Commerce.price(range: 500..1_000) }
+  amount_cents { random_amount_cents }
   pay_method(fabricator: %i[bank_account_pay_method card_pay_method].sample)
 
   after_build do |payment|

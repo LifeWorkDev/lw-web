@@ -1,3 +1,5 @@
+require_relative "helpers"
+
 Fabricator(:project) do
   name { Faker::Commerce.product_name }
   client(fabricator: :named_org_with_users)
@@ -35,13 +37,13 @@ def random_date_this_month
 end
 
 Fabricator(:retainer_project, from: :project, class_name: :retainer_project) do
-  amount { Faker::Commerce.price(range: 500..1_000) }
+  amount_cents { random_amount_cents }
   disbursement_day { rand(1..31) }
   start_date { random_date_this_month }
 end
 
 Fabricator(:active_retainer_project, from: :active_project, class_name: :retainer_project) do
-  amount { Faker::Commerce.price(range: 500..1_000) }
+  amount_cents { random_amount_cents }
   disbursement_day { rand(1..31) }
   start_date { random_date_this_month }
 end

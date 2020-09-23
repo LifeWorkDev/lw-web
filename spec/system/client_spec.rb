@@ -40,8 +40,9 @@ RSpec.describe "Client views", type: :system do
 
       context "to a milestone project" do
         let(:project) { Fabricate(:milestone_project_with_milestones) }
-        let(:new_project_amount) { project.amount - milestone.amount + new_milestone_amount }
-        let(:new_milestone_amount) { Money.new(((100_00..1_000_00).to_a - [milestone.amount]).sample) }
+        let(:milestone_amount_difference) { [-1, 1].sample.to_money }
+        let(:new_project_amount) { project.amount + milestone_amount_difference }
+        let(:new_milestone_amount) { milestone.amount + milestone_amount_difference }
         let(:milestone_index) { rand(0..project.milestones.size - 1) }
         let(:milestone) { project.reload.milestones[milestone_index] }
 

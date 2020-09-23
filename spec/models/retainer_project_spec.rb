@@ -51,7 +51,7 @@ RSpec.describe RetainerProject, type: :model do
     end
 
     context "when start_date.day != disbursement_day" do
-      subject(:project) { Fabricate(:retainer_project, amount: 15_000, disbursement_day: 1, start_date: "2020-05-25") }
+      subject(:project) { Fabricate(:retainer_project, amount_cents: 15_000_00, disbursement_day: 1, start_date: "2020-05-25") }
 
       it "calculates correctly" do
         expect(project.first_amount).to eq(3_387.10.to_money)

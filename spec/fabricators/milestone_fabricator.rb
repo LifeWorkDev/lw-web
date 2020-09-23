@@ -1,6 +1,8 @@
+require_relative "helpers"
+
 Fabricator(:milestone) do
   date { Faker::Date.between(from: 10.days.ago, to: 30.days.from_now) }
-  amount_cents { Faker::Commerce.price(range: 500..1_000) }
+  amount_cents { random_amount_cents }
   description { Faker::Company.catch_phrase }
 
   after_build do |milestone|

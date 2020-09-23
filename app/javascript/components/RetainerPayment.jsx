@@ -34,7 +34,7 @@ export default function RetainerPayment({
           onChange={(e) => setAmount(Number(e.target.value) || '')}
           name='retainer_project[amount]'
           style={{ width: '4.4rem' }}
-          min='1'
+          min='10'
           max={achMax}
           step='0.01'
           inputMode='decimal'

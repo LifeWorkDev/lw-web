@@ -76,7 +76,7 @@ const PaymentsForm = ({
               defaultValue={total}
               id='milestone_project_amount'
               inputMode='decimal'
-              min='1'
+              min='10'
               name='milestone_project[amount]'
               onChange={(e) => setTotal(Number(e.target.value))}
               placeholder='0.00'
@@ -232,6 +232,7 @@ const PaymentForm = React.memo(
                 value={milestone.amount ? Number(milestone.amount) : ''}
                 className='form-control'
                 inputMode='decimal'
+                min='10'
                 max={maxPayment}
                 name={`milestone_project[milestones_attributes][${index}][amount]`}
                 onChange={(e) =>
