@@ -1,10 +1,9 @@
-environment ENV.fetch("RAILS_ENV") { "development" }
 port ENV.fetch("PORT", 3000)
-workers Integer(ENV.fetch("WEB_WORKERS", 2))
-threads_count = Integer(ENV.fetch("RAILS_MAX_THREADS", 5))
-threads threads_count, threads_count
 
 if Rails.env.development?
+  threads 1, 1
+  workers 1
+
   # Allow puma to be restarted by `rails restart` command.
   plugin :tmp_restart
 
@@ -15,14 +14,8 @@ if Rails.env.development?
     # Trick Webpack into reloading browser
     `touch config/locales/en.yml`
   end
-else
-  preload_app!
-
+elsif !Rails.env.test?
   before_fork do
     @que_pid ||= spawn("bin/que")
-  end
-
-  on_worker_boot do
-    ActiveRecord::Base.establish_connection
   end
 end

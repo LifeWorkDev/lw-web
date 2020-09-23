@@ -24,6 +24,10 @@ Lint/AmbiguousBlockAssociation:
   Exclude:
     - spec/**/*
 
+Lint/ConstantDefinitionInBlock:
+  Exclude:
+    - app/models/concerns/**/*
+
 Lint/Debugger:
   Enabled: false
 
