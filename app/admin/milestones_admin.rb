@@ -30,8 +30,8 @@ Trestle.resource(:milestones) do
     tab :milestone do
       collection_select_with_link :project_id, Project.all, :id, :name
       text_field :description
-      if record.deposited? || record.pending?
-        help_text = record.deposited? ? nil : '<span class="text-danger">Updating the amount of a deposited milestone will immediately issue a refund for the difference</span>'.html_safe
+      if record.pending? || record.deposited? || record.paid?
+        help_text = record.pending? ? nil : '<span class="text-danger">Updating the amount of a deposited milestone will immediately issue a refund for the difference</span>'.html_safe
         number_field :amount, prepend: "$", min: 1, step: 0.01, help: help_text
       else
         auto_field :amount

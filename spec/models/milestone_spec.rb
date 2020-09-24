@@ -39,16 +39,14 @@ RSpec.describe Milestone, type: :model do
 
     describe "callbacks" do
       describe "before_update" do
-        it "does nothing if not deposited" do
+        it "does nothing if pending" do
           allow(milestone).to receive(:update_payment_amount)
           milestone.amount += 1.to_money
           milestone.save
           expect(milestone).not_to have_received(:update_payment_amount)
         end
 
-        context "when deposited" do
-          before { milestone.deposit! }
-
+        shared_examples :refund do
           it "partially refunds if amount was reduced" do
             old_amount = milestone.amount
             new_amount = old_amount / 2
@@ -64,7 +62,7 @@ RSpec.describe Milestone, type: :model do
 
           it "raises exception if amount was increased" do
             milestone.amount += 1.to_money
-            expect { milestone.save }.to raise_error(StandardError, "Can't increase the amount of a deposited milestone")
+            expect { milestone.save }.to raise_error(StandardError, "Can't increase the amount of a #{milestone.status} milestone")
           end
 
           it "does nothing if amount was unchanged" do
@@ -72,6 +70,21 @@ RSpec.describe Milestone, type: :model do
             milestone.update(description: Faker::Lorem.sentence)
             expect(milestone).not_to have_received(:update_payment_amount)
           end
+        end
+
+        context "when deposited" do
+          before { milestone.deposit! }
+
+          include_examples :refund
+        end
+
+        context "when paid" do
+          before do
+            milestone.deposit!
+            milestone.pay!
+          end
+
+          include_examples :refund
         end
       end
     end

@@ -4,6 +4,8 @@ module Payments::Status
   included do
     include AasmStatus
 
+    REFUNDABLE_STATUSES = %i[pending succeeded disbursed partially_refunded].freeze
+
     aasm do
       state :scheduled, initial: true
       state :pending
@@ -34,17 +36,17 @@ module Payments::Status
       end
 
       event :partially_refund do
-        transitions from: %i[pending succeeded partially_refunded], to: :partially_refunded do
-          guard do |refund_amount_cents|
-            process_refund!(refund_amount_cents)
+        transitions from: REFUNDABLE_STATUSES, to: :partially_refunded do
+          guard do |client_refund_cents, freelancer_refund_cents|
+            process_refund!(freelancer_refund_cents, client_refund_cents)
           end
         end
       end
 
       event :refund do
-        transitions from: %i[pending succeeded partially_refunded], to: :refunded do
-          guard do
-            process_refund!
+        transitions from: REFUNDABLE_STATUSES, to: :refunded do
+          guard do |freelancer_refund_cents|
+            process_refund!(freelancer_refund_cents)
           end
         end
       end
@@ -52,12 +54,12 @@ module Payments::Status
 
     scope :successful, -> { where(status: %i[pending succeeded disbursed partially_refunded refunded]) }
 
-    def deposited?
-      pending? || succeeded? || partially_refunded?
+    def paid?
+      pending? || succeeded? || disbursed? || partially_refunded?
     end
 
     def successful?
-      deposited? || disbursed? || refunded?
+      paid? || refunded?
     end
 
     memoize def status_class

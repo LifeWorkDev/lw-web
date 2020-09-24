@@ -30,13 +30,15 @@ class Payment < ApplicationRecord
   end
 
   def issue_refund!(new_amount:, freelancer_refund_cents:)
-    raise "Can't issue refund unless payment is deposited" unless deposited?
-    raise "Can't refund a deposited payment" if new_amount > amount
+    raise "new_amount must be type Money" unless new_amount.is_a? Money
+    raise "freelancer_refund_cents must be type Integer" unless freelancer_refund_cents.is_a? Integer
+    raise "Can't refund a #{status} payment" unless paid?
+    raise "Can't increase the amount of a #{status} payment" if new_amount > amount
 
     client_refund_cents = (amount - new_amount).cents
     self.amount = new_amount
 
-    amount.zero? ? refund! : partially_refund!(client_refund_cents)
+    amount.zero? ? refund!(freelancer_refund_cents) : partially_refund!(client_refund_cents, freelancer_refund_cents)
 
     ClientMailer.with(recipient: client.primary_contact, payment: self, refund_amount_cents: client_refund_cents).payment_refunded.deliver_later
     FreelancerMailer.with(recipient: freelancer, payment: self, refund_amount_cents: freelancer_refund_cents).payment_refunded.deliver_later
@@ -68,21 +70,25 @@ class Payment < ApplicationRecord
     pays_for.try(:project) || pays_for
   end
 
-  def record_refund!(refund_amount_cents, refund_id)
-    DoubleEntry.transfer(
-      Money.new(refund_amount_cents, currency),
-      code: :refund,
-      detail: self,
-      from: freelancer.account_receivable,
-      to: client.account_cash,
-      metadata: {refund_id: refund_id},
-    )
+  def record_refund!(client_refund_cents:, metadata:, freelancer_refund_cents: nil, platform_refund_cents: nil)
+    if freelancer_refund_cents.present? # Disbursed payment
+      record_reversed_transfer!(Money.new(client_refund_cents, currency), Money.new(freelancer_refund_cents, currency), Money.new(platform_refund_cents, currency), metadata)
+    else # Deposited payment
+      DoubleEntry.transfer(
+        Money.new(client_refund_cents, currency),
+        code: :refund,
+        detail: self,
+        from: freelancer.account_receivable,
+        to: client.account_cash,
+        metadata: metadata,
+      )
+    end
   end
 
   def transfer!
     record_transfer! Stripe::Transfer.create(
       {
-        amount: transfer_amount.cents,
+        amount: freelancer_amount.cents,
         currency: currency.to_s,
         description: pays_for.to_s,
         destination: freelancer.stripe_id,
@@ -96,15 +102,45 @@ class Payment < ApplicationRecord
 
 private
 
-  def process_refund!(refund_amount_cents = amount_cents)
+  def process_refund!(freelancer_refund_cents, client_refund_cents = amount_cents)
     return false unless stripe_id.present?
 
     stripe_refund = Stripe::Refund.create({
-      amount: refund_amount_cents,
+      amount: client_refund_cents,
       charge: stripe_id,
-      # Can add reverse_transfer: true to support refunding disbursed payments, but need to add additional accounting lines
-    }, idempotency_key: "refund-#{refund_amount_cents}-of-payment-#{id}")
-    Payments::RecordRefundJob.perform_later(self, stripe_refund.amount, stripe_refund.id)
+      metadata: pays_for.stripe_metadata,
+      reason: :requested_by_customer,
+    }, idempotency_key: "refund-#{client_refund_cents}-of-payment-#{id}")
+
+    record_job_args = {
+      payment: self,
+      client_refund_cents: stripe_refund.amount,
+      metadata: {refund_id: stripe_refund.id},
+    }
+
+    # Has payment been disbursed? Withdraw freelancer refund portion from their account.
+    if (transfer_id = disbursement_line&.metadata&.dig("transfer_id"))
+      platform_refund_cents = Money.new(platform_fee(freelancer_refund_cents), currency).cents
+      reversal_amount_cents = freelancer_refund_cents - platform_refund_cents
+      reversal = Stripe::Transfer.create_reversal(transfer_id,
+        {amount: reversal_amount_cents,
+         metadata: pays_for.stripe_metadata.merge({
+           'Refund ID': stripe_refund.id,
+           'Refund cents': stripe_refund.amount,
+         })},
+        idempotency_key: "reversal-#{reversal_amount_cents}-of-transfer-#{transfer_id}")
+
+      record_job_args[:freelancer_refund_cents] = reversal.amount
+      record_job_args[:platform_refund_cents] = platform_refund_cents
+      record_job_args[:metadata].merge!({
+        balance_transaction_id: reversal.balance_transaction,
+        destination_payment_refund_id: reversal.destination_payment_refund,
+        transfer_id: reversal.transfer,
+        transfer_reversal_id: reversal.id,
+      })
+    end
+
+    Payments::RecordRefundJob.perform_later(record_job_args)
   end
 
   def record_charge!
@@ -122,7 +158,7 @@ private
 
     DoubleEntry.lock_accounts(freelancer.account_receivable, freelancer.account_disbursement, ACCOUNT_FEES) do
       DoubleEntry.transfer(
-        transfer_amount,
+        freelancer_amount,
         code: :disbursement,
         detail: self,
         from: freelancer.account_receivable,
@@ -154,8 +190,40 @@ private
     end
   end
 
-  def transfer_amount
-    pays_for.freelancer_amount
+  def record_reversed_transfer!(client_refund, freelancer_refund, platform_refund, metadata)
+    DoubleEntry.lock_accounts(client.account_cash, freelancer.account_disbursement, ACCOUNT_FEES) do
+      DoubleEntry.transfer(
+        freelancer_refund - platform_refund,
+        code: :disbursement_refund,
+        detail: self,
+        from: freelancer.account_disbursement,
+        to: client.account_cash,
+        metadata: metadata,
+      )
+
+      if platform_refund.positive?
+        DoubleEntry.transfer(
+          platform_refund,
+          code: :platform_refund,
+          detail: self,
+          from: ACCOUNT_FEES,
+          to: client.account_cash,
+          metadata: metadata,
+        )
+      end
+
+      processing_refund = client_refund - freelancer_refund
+      if processing_refund.positive?
+        DoubleEntry.transfer(
+          processing_refund,
+          code: :processing_refund,
+          detail: self,
+          from: ACCOUNT_FEES,
+          to: client.account_cash,
+          metadata: metadata,
+        )
+      end
+    end
   end
 
   def transfer_metadata(transfer)
