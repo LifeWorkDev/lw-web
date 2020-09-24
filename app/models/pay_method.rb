@@ -9,7 +9,7 @@ class PayMethod < ApplicationRecord
   validates :last_4, numericality: {integer_only: true}
   validates :issuer, :kind, :stripe_id, presence: true
 
-  after_create -> { org.activate! }
+  after_create -> { org.activate! if org.may_activate? }
 
   SUBCLASS_FILES = "app/models/pay_methods/*.rb".freeze
 

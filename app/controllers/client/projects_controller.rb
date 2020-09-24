@@ -1,6 +1,6 @@
 class Client::ProjectsController < ProjectsController
   def activate
-    @project.activate!
+    @project.activate! if @project.may_activate?
     redirect_to [current_namespace, Project], notice: "Your project with #{@project.freelancer} is good to go! We'll notify you on #{l(@project.start_date, format: :text_without_year)} when the first deposit is withdrawn."
   end
 

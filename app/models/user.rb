@@ -28,7 +28,7 @@ class User < ApplicationRecord
   WORK_TYPES = ["Part-Time", "Full-Time", "Team Leader"].freeze
 
   def after_database_authentication
-    activate! unless active?
+    activate! if may_activate?
   end
 
   memoize def account_disbursement
