@@ -11,7 +11,7 @@ class Project < ApplicationRecord
 
   before_validation :set_defaults, on: :create
 
-  monetize :amount_cents, with_model_currency: :currency, allow_nil: true, numericality: {greater_than_or_equal_to: 0}
+  monetize :amount_cents, with_model_currency: :currency, allow_nil: true, numericality: {greater_than_or_equal_to: 10}
 
   jsonb_accessor :metadata,
     fee_percent: :float,

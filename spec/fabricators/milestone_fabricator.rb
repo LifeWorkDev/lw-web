@@ -6,7 +6,7 @@ Fabricator(:milestone) do
   description { Faker::Company.catch_phrase }
 
   after_build do |milestone|
-    milestone.project ||= Fabricate.build(:active_milestone_project, count: 0)
+    milestone.project ||= Fabricate.build(:active_milestone_project, amount_cents: milestone.amount_cents, count: 0)
   end
 end
 
