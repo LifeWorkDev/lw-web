@@ -4,6 +4,8 @@ class RetainerProject < Project
 
   has_many :payments, as: :pays_for, dependent: :destroy
 
+  before_destroy -> { Milestone.where(project_id: id).destroy_all }
+
   jsonb_accessor :metadata,
     disbursement_day: :integer,
     start_date: :date
