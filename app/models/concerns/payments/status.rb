@@ -29,7 +29,7 @@ module Payments::Status
 
       event :disburse do
         transitions from: %i[pending succeeded partially_refunded], to: :disbursed do
-          guard do
+          after do
             transfer!
           end
         end
@@ -37,7 +37,7 @@ module Payments::Status
 
       event :partially_refund do
         transitions from: REFUNDABLE_STATUSES, to: :partially_refunded do
-          guard do |client_refund_cents, freelancer_refund_cents|
+          after do |client_refund_cents, freelancer_refund_cents|
             process_refund!(freelancer_refund_cents, client_refund_cents)
           end
         end
@@ -45,7 +45,7 @@ module Payments::Status
 
       event :refund do
         transitions from: REFUNDABLE_STATUSES, to: :refunded do
-          guard do |freelancer_refund_cents|
+          after do |freelancer_refund_cents|
             process_refund!(freelancer_refund_cents)
           end
         end

@@ -12,7 +12,7 @@ module Milestones::Status
 
       event :deposit do
         transitions from: :pending, to: :deposited do
-          guard do |user|
+          after do |user|
             payments.create!(amount: client_amount, pay_method: pay_method, user: user).charge!
           end
         end
@@ -27,7 +27,7 @@ module Milestones::Status
 
       event :pay do
         transitions from: :deposited, to: :paid do
-          guard do
+          after do
             latest_payment.disburse!
           end
         end

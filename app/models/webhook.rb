@@ -9,7 +9,7 @@ class Webhook < ApplicationRecord
 
     event :process do
       transitions from: :received, to: :processed do
-        guard do
+        after do
           case source
           when "stripe"
             case event
