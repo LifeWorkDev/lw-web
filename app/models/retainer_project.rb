@@ -40,7 +40,7 @@ class RetainerProject < Project
 
     send_deposit_emails
     schedule_disbursement
-    activate!
+    activate! if may_activate?
   end
 
   def disburse!
