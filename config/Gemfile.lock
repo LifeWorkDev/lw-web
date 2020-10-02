@@ -7,6 +7,14 @@ GIT
       rubocop (~> 0.20)
 
 GIT
+  remote: https://github.com/statianzo/que-web.git
+  revision: d663559b46f0afa9215a1cb8a0e2418197b66342
+  specs:
+    que-web (0.9.3)
+      que (~> 1.0.0.beta3)
+      sinatra
+
+GIT
   remote: https://github.com/swrobel/bootstrap-email.git
   revision: ac9012621204564192acf5b4acb898195e4dd456
   branch: align-utilities
@@ -358,9 +366,6 @@ GEM
     puma (5.0.2)
       nio4r (~> 2.0)
     que (1.0.0.beta4)
-    que-web (0.9.3)
-      que (~> 1.0.0.beta3)
-      sinatra
     rack (2.2.3)
     rack-brotli (1.0.0)
       brotli (>= 0.1.7)
@@ -631,7 +636,7 @@ DEPENDENCIES
   pretender
   puma
   que (~> 1.0.0.beta4)
-  que-web
+  que-web!
   rack-brotli
   rack-toolbar!
   rails (~> 6.0.0)

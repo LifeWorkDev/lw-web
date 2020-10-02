@@ -35,7 +35,7 @@ gem "plaid" # Easy bank account linking
 gem "pretender" # Impersonate users
 gem "puma"
 gem "que", "~> 1.0.0.beta4" # Background job processor
-gem "que-web"
+gem "que-web", github: "statianzo/que-web"
 gem "react-rails"
 gem "redcarpet" # Markdown parser
 gem "route_downcaser" # Make routes case-insensitive
