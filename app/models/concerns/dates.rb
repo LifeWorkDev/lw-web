@@ -8,6 +8,13 @@ module Dates
       deposit_date.to_time(:utc).change(hour: 20, min: 45)
     end
 
+    def payable?
+      client.primary_contact.use_zone do
+        date <= Date.current
+      end
+    end
+    alias_method :disbursable?, :payable?
+
     def payment_date?
       client.primary_contact.use_zone do
         date == Date.current
