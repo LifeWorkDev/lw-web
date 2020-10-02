@@ -15,6 +15,10 @@ if Rails.env.development?
     `touch config/locales/en.yml`
   end
 elsif !Rails.env.test?
+  fork_worker
+  nakayoshi_fork
+  workers Integer(ENV["WEB_CONCURRENCY"] || 1)
+
   before_fork do
     @que_pid ||= spawn("bin/que")
   end
