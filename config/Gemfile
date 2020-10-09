@@ -31,7 +31,7 @@ gem "more_possessive" # Call .possessive on a string
 gem "nilify_blanks", github: "swrobel/nilify_blanks"
 gem "oj" # Faster json parsing/generation library
 gem "pg", ">= 0.18", "< 2.0"
-gem "plaid" # Easy bank account linking
+gem "plaid", "< 12" # Easy bank account linking
 gem "pretender" # Impersonate users
 gem "puma"
 gem "que", "~> 1.0.0.beta4" # Background job processor

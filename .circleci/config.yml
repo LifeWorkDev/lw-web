@@ -9,7 +9,6 @@ jobs:
           PGUSER: lifework
           NODE_ENV: test
           RAILS_ENV: test
-          RUBYOPT: -W:no-deprecated
       - image: circleci/postgres:12-alpine-ram
         environment:
           POSTGRES_USER: lifework

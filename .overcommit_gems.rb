@@ -1,3 +1,5 @@
+source "https://rubygems.org"
+
 group :development do
   gem "overcommit" # Git commit hooks
   gem "rubocop-daemon", require: false # Run rubocop as a daemon so it starts up faster
