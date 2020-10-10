@@ -16,7 +16,9 @@ require('react_ujs').useContext(require.context('components', true))
 import 'styles/application.scss'
 
 document.addEventListener('turbolinks:load', function() {
-  new Collapse('[data-toggle="collapse"]')
+  const navToggler = document.getElementById('navbar-toggler')
+  navToggler && new Collapse(navToggler)
+
   typeof fbq === 'function' && fbq('track', 'PageView');
 })
 

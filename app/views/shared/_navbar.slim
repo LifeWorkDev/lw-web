@@ -7,7 +7,7 @@ nav#top-nav.navbar.navbar-expand-sm.navbar-light.bg-white.mb-3.flex-shrink-0
       span.ml-1 = render 'shared/environment_badge'
     - if user_signed_in?
       - if full_nav
-        button.navbar-toggler data-toggle='collapse' data-target='#navbar-collapse'
+        button.navbar-toggler#navbar-toggler data-toggle='collapse' data-target='#navbar-collapse'
           = mdi_svg 'menu', size: 32
         #navbar-collapse.collapse.navbar-collapse
           ul.navbar-nav.justify-content-end.w-100
