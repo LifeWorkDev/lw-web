@@ -628,7 +628,7 @@ DEPENDENCIES
   nilify_blanks!
   norobots
   oj
-  overcommit
+  overcommit!
   partially_useful
   pg (>= 0.18, < 2.0)
   pgreset
@@ -649,20 +649,20 @@ DEPENDENCIES
   rspec-instafail
   rspec-rails (~> 4.0.0.beta3)
   rspec_junit_formatter
-  rubocop
-  rubocop-daemon
-  rubocop-performance
-  rubocop-rails
-  rubocop-rspec
+  rubocop!
+  rubocop-daemon!
+  rubocop-performance!
+  rubocop-rails!
+  rubocop-rspec!
   safely_block
   sassc-rails
   selenium-webdriver
   shoulda-matchers
   simplecov
   slim-rails
-  slim_lint
+  slim_lint!
   sprockets (< 4.0)
-  standard (>= 0.3)
+  standard (>= 0.3)!
   stripe
   stripe-ruby-mock!
   strong_migrations
@@ -680,4 +680,4 @@ RUBY VERSION
    ruby 2.7.2p137
 
 BUNDLED WITH
-   2.0.2
+   2.1.4
