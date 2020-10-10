@@ -258,6 +258,12 @@ label.list-group-item {
       max-width: 150px;
     }
   }
+
+  @include media-breakpoint-up(sm) {
+    .navbar-nav .nav-item:not(:last-child) {
+      border-right: $border-width solid $border-color !important;
+    }
+  }
 }
 
 .neg-margin {

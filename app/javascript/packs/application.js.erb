@@ -1,4 +1,4 @@
-import 'bootstrap.native/dist/bootstrap-native-v4'
+import Collapse from 'bootstrap.native/dist/components/collapse-native.esm'
 import Bugsnag from '@bugsnag/js'
 import BugsnagPluginReact from '@bugsnag/plugin-react'
 import React from 'react'
@@ -16,7 +16,7 @@ require('react_ujs').useContext(require.context('components', true))
 import 'styles/application.scss'
 
 document.addEventListener('turbolinks:load', function() {
-  BSN.initCallback()
+  new Collapse('[data-toggle="collapse"]')
   typeof fbq === 'function' && fbq('track', 'PageView');
 })
 

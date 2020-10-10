@@ -12,13 +12,13 @@ nav#top-nav.navbar.navbar-expand-sm.navbar-light.bg-white.mb-3.flex-shrink-0
         #navbar-collapse.collapse.navbar-collapse
           ul.navbar-nav.justify-content-end.w-100
             - if current_user.admin?
-              li.nav-item.border-right
+              li.nav-item
                 a.nav-link href='/admin' Admin
             = render 'shared/nav_link_unless_current', text: 'Projects', path: [current_user.type, Project]
             - if current_user.freelancer?
               = render 'shared/nav_link_unless_current', text: 'Clients', path: [current_user.type, Org]
               - if current_user.stripe_id.present?
-                li.nav-item.border-right
+                li.nav-item
                   = link_to 'Balance', freelancer_stripe_dashboard_path, class: 'nav-link', rel: :noopener, target: :_blank
             = render 'shared/nav_link_unless_current', text: 'Profile', path: edit_user_path
             li.nav-item
