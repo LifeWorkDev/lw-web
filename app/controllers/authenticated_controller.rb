@@ -35,11 +35,17 @@ private
       if current_user.client? && current_user.org.work_frequency.blank?
         edit_client_org_path
       elsif current_user.finished_onboarding?
-        [current_user.type, Project]
-      elsif current_entity.projects.size == 1
-        [current_user.type, current_entity.projects.first.becomes(Project)]
+        [current_user.type, Project] # Dashboard
       elsif current_user.freelancer?
-        new_freelancer_org_path
+        if current_user.projects.size == 1
+          [current_user.type, current_entity.projects.first.becomes(Project)]
+        else
+          new_freelancer_org_path
+        end
+      elsif current_org.projects.client_invited.any?
+        [current_user.type, current_entity.projects.client_invited.last.becomes(Project)]
+      else
+        [current_user.type, Project] # Dashboard
       end
     elsif current_user.freelancer?
       edit_freelancer_user_path
