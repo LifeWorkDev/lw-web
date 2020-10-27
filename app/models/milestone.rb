@@ -7,6 +7,7 @@ class Milestone < ApplicationRecord
 
   belongs_to :project, class_name: "MilestoneProject"
   has_one :client, through: :project
+  has_many :client_users, through: :client, source: :users
   has_one :freelancer, through: :project
   has_many :payments, as: :pays_for, dependent: :destroy
 
@@ -14,6 +15,15 @@ class Milestone < ApplicationRecord
   monetize :amount_cents, with_model_currency: :currency, allow_nil: true, numericality: {greater_than_or_equal_to: 10}
 
   before_update :update_payment_amount, if: -> { (deposited? || paid?) && amount_cents_changed? }
+
+  pg_search_scope :pg_search,
+    against: %i[description],
+    associated_against: {
+      client: %i[name],
+      client_users: %i[name email],
+      freelancer: %i[name email],
+      project: %i[name],
+    }
 
   def as_json(*)
     {

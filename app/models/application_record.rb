@@ -4,6 +4,7 @@ class ApplicationRecord < ActiveRecord::Base
   include JsonbAccessor
   include JsonbAccessor::QueryBuilder
   include Memery
+  include PgSearch::Model
   include StringEnum
 
   delegate :l, :t, to: I18n, private: true

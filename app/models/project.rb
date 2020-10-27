@@ -7,6 +7,7 @@ class Project < ApplicationRecord
   friendly_id :name, use: :scoped, scope: :user_id
 
   belongs_to :client, class_name: "Org", foreign_key: :org_id, inverse_of: :projects
+  has_many :client_users, through: :client, source: :users
   belongs_to :freelancer, class_name: "User", foreign_key: :user_id, inverse_of: :projects
 
   before_validation :set_defaults, on: :create
@@ -16,6 +17,14 @@ class Project < ApplicationRecord
   jsonb_accessor :metadata,
     fee_percent: :float,
     client_pays_fees: [:boolean, default: false]
+
+  pg_search_scope :pg_search,
+    against: %i[name],
+    associated_against: {
+      client: %i[name],
+      client_users: %i[name email],
+      freelancer: %i[name email],
+    }
 
   class << self
     delegate :fa_url, :mdi_url, to: "ApplicationController.helpers", private: true

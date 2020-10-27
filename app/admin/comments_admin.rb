@@ -16,6 +16,10 @@ Trestle.resource(:comments) do
 
   collection { Comment.order(id: :asc) }
 
+  search do |query|
+    query ? collection.pg_search(query) : collection
+  end
+
   table do
     column :id, sort: {default: true, default_order: :asc}
     column :commenter, sort: :commenter_id

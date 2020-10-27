@@ -12,7 +12,13 @@ class Payment < ApplicationRecord
   has_one :refund_line, -> { credits.where(code: :refund) }, as: :detail, class_name: "DoubleEntry::Line", dependent: :destroy, inverse_of: :detail
   has_many :lines, as: :detail, class_name: "DoubleEntry::Line", dependent: :delete_all, inverse_of: :detail
 
-  delegate :client, :client_amount, :client_fees, :freelancer, :freelancer_amount, :freelancer_fees, :platform_fee, :processing_fee, to: :pays_for
+  delegate :client, :client_amount, :client_fees, :client_users, :freelancer, :freelancer_amount, :freelancer_fees, :platform_fee, :processing_fee, to: :pays_for
+
+  pg_search_scope :pg_search,
+    against: %i[stripe_id],
+    associated_against: {
+      pay_method: %i[name issuer kind last_4 stripe_id],
+    }
 
   def charge!
     set_stripe_fields pay_method.charge!(

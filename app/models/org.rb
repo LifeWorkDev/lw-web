@@ -22,6 +22,10 @@ class Org < ApplicationRecord
     work_category: [:string, array: true, default: []],
     work_frequency: :string
 
+  pg_search_scope :pg_search,
+    against: %i[name],
+    associated_against: {users: %i[name email]}
+
   WORK_FREQUENCY = ["Regularly", "Sometimes", "Rarely", "Just this once"].freeze
 
   memoize def account_cash

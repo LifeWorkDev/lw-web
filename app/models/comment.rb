@@ -6,6 +6,10 @@ class Comment < ApplicationRecord
 
   validates :comment, presence: true
 
+  pg_search_scope :pg_search,
+    against: %i[comment],
+    associated_against: {commenter: %i[name]}
+
   def formatted_created_at
     l(created_at)
   end

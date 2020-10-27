@@ -31,6 +31,7 @@ gem "more_possessive" # Call .possessive on a string
 gem "nilify_blanks", github: "swrobel/nilify_blanks"
 gem "oj" # Faster json parsing/generation library
 gem "pg", ">= 0.18", "< 2.0"
+gem "pg_search" # Postgres full-text search support
 gem "plaid", "< 12" # Easy bank account linking
 gem "pretender" # Impersonate users
 gem "puma"
@@ -46,6 +47,7 @@ gem "sprockets", "< 4.0", require: false
 gem "stripe"
 gem "symbol-fstring", require: "fstring/all" # Improve performance of Symbol#to_s
 gem "trestle"
+gem "trestle-search"
 gem "turbolinks", "~> 5.2"
 gem "webpacker"
 

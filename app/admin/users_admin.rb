@@ -10,6 +10,10 @@ Trestle.resource(:users) do
 
   collection { User.order(id: :asc) }
 
+  search do |query|
+    query ? collection.pg_search(query) : collection
+  end
+
   table do
     column :id, sort: {default: true, default_order: :asc}
     column :name
