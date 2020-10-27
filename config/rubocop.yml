@@ -159,6 +159,9 @@ Style/AsciiComments:
 Style/ClassAndModuleChildren:
   Enabled: false
 
+Style/ClassEqualityComparison:
+  Enabled: false
+
 Style/Documentation:
   Enabled: false
 

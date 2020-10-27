@@ -1,12 +1,4 @@
 GIT
-  remote: https://github.com/Novtopro/guard-rubocop.git
-  revision: 222582edef1c1999ce848e7338a558bf4a5504f7
-  specs:
-    guard-rubocop (1.3.0)
-      guard (~> 2.0)
-      rubocop (~> 0.20)
-
-GIT
   remote: https://github.com/statianzo/que-web.git
   revision: d663559b46f0afa9215a1cb8a0e2418197b66342
   specs:
@@ -44,6 +36,14 @@ GIT
       activerecord (>= 4.0.0)
 
 GIT
+  remote: https://github.com/swrobel/guard-rubocop.git
+  revision: 7c1c48067999f2529566866c34c6cd184346063c
+  specs:
+    guard-rubocop (1.4.0)
+      guard (~> 2.0)
+      rubocop (< 2.0)
+
+GIT
   remote: https://github.com/swrobel/nilify_blanks.git
   revision: 33fe3904e38b01b11fc4452ba434d9f210963179
   specs:
@@ -60,7 +60,7 @@ GIT
 
 GIT
   remote: https://github.com/swrobel/stripe-ruby-mock.git
-  revision: 8c582584d60fd35ef9cb1718cf383d0a857551a0
+  revision: fc2bff81b5f2a1fc18a50159ac9272e065dfaf69
   specs:
     stripe-ruby-mock (3.0.1)
       dante (>= 0.2.0)
@@ -154,7 +154,7 @@ GEM
       activemodel (>= 5.2)
     brakeman (4.10.0)
     brotli (0.2.3)
-    bugsnag (6.17.0)
+    bugsnag (6.18.0)
       concurrent-ruby (~> 1.0)
     builder (3.2.4)
     business (1.18.0)
@@ -364,7 +364,7 @@ GEM
       coderay (~> 1.1)
       method_source (~> 1.0)
     public_suffix (4.0.6)
-    puma (5.0.2)
+    puma (5.0.4)
       nio4r (~> 2.0)
     que (1.0.0.beta4)
     rack (2.2.3)
@@ -456,16 +456,16 @@ GEM
     rspec-support (3.9.4)
     rspec_junit_formatter (0.4.1)
       rspec-core (>= 2, < 4, != 2.12.0)
-    rubocop (0.92.0)
+    rubocop (1.0.0)
       parallel (~> 1.10)
       parser (>= 2.7.1.5)
       rainbow (>= 2.2.2, < 4.0)
-      regexp_parser (>= 1.7)
+      regexp_parser (>= 1.8)
       rexml
-      rubocop-ast (>= 0.5.0)
+      rubocop-ast (>= 0.6.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 1.4.0, < 2.0)
-    rubocop-ast (1.0.1)
+    rubocop-ast (1.1.0)
       parser (>= 2.7.1.5)
     rubocop-daemon (0.3.2)
       rubocop
@@ -476,9 +476,8 @@ GEM
       activesupport (>= 4.2.0)
       rack (>= 1.1)
       rubocop (>= 0.87.0)
-    rubocop-rspec (1.44.1)
-      rubocop (~> 0.87)
-      rubocop-ast (>= 0.7.1)
+    rubocop-rspec (1.42.0)
+      rubocop (>= 0.87.0)
     ruby-progressbar (1.10.1)
     ruby2_keywords (0.0.2)
     ruby_dep (1.5.0)
@@ -502,7 +501,7 @@ GEM
     shellany (0.0.1)
     shoulda-matchers (4.4.1)
       activesupport (>= 4.2.0)
-    simplecov (0.19.0)
+    simplecov (0.19.1)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
     simplecov-html (0.12.3)
@@ -528,11 +527,11 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    standard (0.7)
-      rubocop (= 0.92)
+    standard (0.8.1)
+      rubocop (= 1.0.0)
       rubocop-performance (= 1.8.1)
     stripe (5.28.0)
-    strong_migrations (0.7.1)
+    strong_migrations (0.7.2)
       activerecord (>= 5)
     symbol-fstring (1.0.0)
     systemu (2.6.5)
@@ -542,7 +541,7 @@ GEM
     thor (1.0.1)
     thread_safe (0.3.6)
     tilt (2.0.10)
-    trestle (0.9.3)
+    trestle (0.9.4)
       activemodel (>= 4.2.0)
       kaminari (>= 1.1.0)
       railties (>= 4.2.0)

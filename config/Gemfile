@@ -11,7 +11,7 @@ gem "argon2" # More secure password hashing than default bcrypt
 gem "bootstrap-email", github: "swrobel/bootstrap-email", branch: "align-utilities"
 gem "bootstrap_form"
 gem "bugsnag" # Exception tracking
-gem "business", "~> 1.18.0" # Business day calculations
+gem "business", "~> 1.18.0" # Business day calculations. US ACH calendar valid until EOY 2023
 gem "devise" # Authentication
 gem "devise_invitable"
 gem "double_entry", github: "swrobel/double_entry"
@@ -65,7 +65,7 @@ group :development do
   gem "gindex" # rails g index <table> <column(s)>
   gem "guard"
   gem "guard-rspec", require: false
-  gem "guard-rubocop", github: "Novtopro/guard-rubocop", require: false
+  gem "guard-rubocop", github: "swrobel/guard-rubocop", require: false
   gem "guard-shell", require: false
   gem "guard-slimlint", require: false
   gem "invoker"

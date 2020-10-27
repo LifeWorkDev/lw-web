@@ -22,18 +22,18 @@ GEM
       ast (~> 2.4.1)
     rack (2.2.3)
     rainbow (3.0.0)
-    regexp_parser (1.8.1)
+    regexp_parser (1.8.2)
     rexml (3.2.4)
-    rubocop (0.92.0)
+    rubocop (1.0.0)
       parallel (~> 1.10)
       parser (>= 2.7.1.5)
       rainbow (>= 2.2.2, < 4.0)
-      regexp_parser (>= 1.7)
+      regexp_parser (>= 1.8)
       rexml
-      rubocop-ast (>= 0.5.0)
+      rubocop-ast (>= 0.6.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 1.4.0, < 2.0)
-    rubocop-ast (0.7.1)
+    rubocop-ast (1.1.0)
       parser (>= 2.7.1.5)
     rubocop-daemon (0.3.2)
       rubocop
@@ -44,17 +44,17 @@ GEM
       activesupport (>= 4.2.0)
       rack (>= 1.1)
       rubocop (>= 0.87.0)
-    rubocop-rspec (1.43.2)
-      rubocop (~> 0.87)
+    rubocop-rspec (1.42.0)
+      rubocop (>= 0.87.0)
     ruby-progressbar (1.10.1)
     slim (4.1.0)
       temple (>= 0.7.6, < 0.9)
       tilt (>= 2.0.6, < 2.1)
-    slim_lint (0.20.1)
+    slim_lint (0.20.2)
       rubocop (>= 0.78.0)
       slim (>= 3.0, < 5.0)
-    standard (0.7)
-      rubocop (= 0.92)
+    standard (0.8.1)
+      rubocop (= 1.0.0)
       rubocop-performance (= 1.8.1)
     temple (0.8.2)
     thread_safe (0.3.6)
@@ -70,14 +70,14 @@ PLATFORMS
   x86_64-darwin-19
 
 DEPENDENCIES
-  overcommit
-  rubocop
-  rubocop-daemon
-  rubocop-performance
-  rubocop-rails
-  rubocop-rspec
-  slim_lint
-  standard (>= 0.3)
+  overcommit!
+  rubocop!
+  rubocop-daemon!
+  rubocop-performance!
+  rubocop-rails!
+  rubocop-rspec!
+  slim_lint!
+  standard (>= 0.3)!
 
 BUNDLED WITH
-   2.0.2
+   2.1.4
