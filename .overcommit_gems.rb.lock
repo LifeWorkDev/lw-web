@@ -44,8 +44,8 @@ GEM
       activesupport (>= 4.2.0)
       rack (>= 1.1)
       rubocop (>= 0.87.0)
-    rubocop-rspec (1.42.0)
-      rubocop (>= 0.87.0)
+    rubocop-rspec (2.0.0.pre)
+      rubocop (~> 1.0)
     ruby-progressbar (1.10.1)
     slim (4.1.0)
       temple (>= 0.7.6, < 0.9)
@@ -62,7 +62,7 @@ GEM
     tzinfo (1.2.7)
       thread_safe (~> 0.1)
     unicode-display_width (1.7.0)
-    zeitwerk (2.4.0)
+    zeitwerk (2.4.1)
 
 PLATFORMS
   ruby
@@ -75,7 +75,7 @@ DEPENDENCIES
   rubocop-daemon!
   rubocop-performance!
   rubocop-rails!
-  rubocop-rspec!
+  rubocop-rspec (~> 2.0.0.pre)!
   slim_lint!
   standard (>= 0.3)!
 
