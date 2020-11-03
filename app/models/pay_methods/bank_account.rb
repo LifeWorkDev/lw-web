@@ -17,7 +17,7 @@ class PayMethods::BankAccount < PayMethod
   end
 
   def charge!(amount:, idempotency_key: "", metadata: {})
-    safely context: {pay_method_id: id}, only: Plaid::ItemError do
+    safely context: {pay_method: id}, only: Plaid::ItemError do
       raise "Insufficent balance for Bank Account #{id}. Attempted to charge #{amount.format} to account with balance #{balance.format}" if Rails.env.production? && balance < amount
     end
 

@@ -30,6 +30,7 @@ class Payment < ApplicationRecord
     save!
     true
   rescue Stripe::CardError => e
+    Errbase.report(e, {payment: id})
     err = e.error
     self.note = err.message
     charge = err.payment_intent&.charges&.first || err.charge
