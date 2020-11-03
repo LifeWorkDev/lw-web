@@ -1,7 +1,7 @@
 class Payment < ApplicationRecord
   include Payments::Status
 
-  monetize :amount_cents, with_model_currency: :currency, numericality: {greater_than: 0}
+  monetize :amount_cents, with_model_currency: :currency, numericality: {greater_than_or_equal_to: 0}
   monetize :stripe_fee_cents, numericality: {greater_than_or_equal_to: 0}
 
   belongs_to :pays_for, polymorphic: true
@@ -108,7 +108,7 @@ class Payment < ApplicationRecord
 
 private
 
-  def process_refund!(freelancer_refund_cents, client_refund_cents = amount_cents)
+  def process_refund!(freelancer_refund_cents, client_refund_cents = amount_cents_was)
     return false unless stripe_id.present?
 
     stripe_refund = Stripe::Refund.create({

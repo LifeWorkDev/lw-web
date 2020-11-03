@@ -13,8 +13,10 @@ end
 
 Fabricator(:pending_payment, from: :payment) do
   status :pending
+  stripe_id { Faker::Crypto.md5 }
 end
 
 Fabricator(:succeeded_payment, from: :payment) do
   status :succeeded
+  stripe_id { Faker::Crypto.md5 }
 end
