@@ -52,6 +52,7 @@ module Payments::Status
       end
     end
 
+    scope :paid, -> { where(status: %i[pending succeeded disbursed partially_refunded]) }
     scope :successful, -> { where(status: %i[pending succeeded disbursed partially_refunded refunded]) }
 
     def paid?

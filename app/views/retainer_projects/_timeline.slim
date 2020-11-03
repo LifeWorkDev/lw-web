@@ -6,7 +6,7 @@
         = render 'shared/status_badge', class: 'align-text-bottom', record: payment
       .mt-2.mb-3
         p #{payment.amount.format} deposit from #{@project.client}
-- if @project.payments.successful.any?
+- if @project.payments.paid.any?
   - next_date = @project.next_date
   .row.text-center.mt-5
     .column.w-100
