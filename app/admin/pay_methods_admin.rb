@@ -13,6 +13,7 @@ Trestle.resource(:pay_methods) do
   #
   form do |record|
     tab :pay_method do
+      auto_field :org
       auto_field :display_type, label: :Type
       auto_field :name
       auto_field :issuer
