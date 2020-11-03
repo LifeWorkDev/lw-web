@@ -57,7 +57,7 @@ Metrics/BlockLength:
     - db/**/*
     - '**/*file'
     - '**/*.rake'
-    - spec/*_helper.rb
+    - spec/**/*
     - lib/data_integration/capta/import.rb
     - app/admin/**/*
   ExcludedMethods:

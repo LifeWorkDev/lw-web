@@ -47,6 +47,17 @@ RSpec.describe Milestone, type: :model do
         end
 
         shared_examples :refund do
+          it "fully refunds if amount was changed to 0" do
+            old_amount = milestone.amount
+
+            payment = milestone.latest_payment
+            allow(milestone).to receive(:latest_payment) { payment }
+            allow(payment).to receive(:issue_refund!)
+            milestone.update(amount: 0)
+            expect(milestone.reload.amount).to eq 0
+            expect(payment).to have_received(:issue_refund!).with(new_amount: milestone.client_amount, freelancer_refund_cents: old_amount.cents).once
+          end
+
           it "partially refunds if amount was reduced" do
             old_amount = milestone.amount
             new_amount = old_amount / 2
@@ -56,7 +67,7 @@ RSpec.describe Milestone, type: :model do
             allow(milestone).to receive(:latest_payment) { payment }
             allow(payment).to receive(:issue_refund!)
             milestone.update(amount: new_amount)
-            expect(milestone.amount).to eq new_amount
+            expect(milestone.reload.amount).to eq new_amount
             expect(payment).to have_received(:issue_refund!).with(new_amount: milestone.client_amount, freelancer_refund_cents: refund_amount.cents).once
           end
 
@@ -149,5 +160,9 @@ RSpec.describe Milestone, type: :model do
         end
       end
     end
+  end
+
+  describe "validations" do
+    it { should validate_numericality_of(:amount).is_greater_than_or_equal_to(10).on(:create) }
   end
 end
