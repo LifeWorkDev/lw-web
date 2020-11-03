@@ -4,5 +4,6 @@
     css_class = { 'dev' => :dark,
                   'staging' => :warning,
                   'demo' => :info,
+                  'test' => :error,
                 }[env]
   span.badge class="badge-#{css_class}" = env.humanize
