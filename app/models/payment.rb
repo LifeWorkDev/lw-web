@@ -27,18 +27,18 @@ class Payment < ApplicationRecord
       metadata: pays_for.stripe_metadata,
     )
     record_charge!
+    save!
     true
   rescue Stripe::CardError => e
-    safely context: {stripe_error: e.json_body} do
-      err = e.error
-      self.note = err.message
-      charge = err.payment_intent&.charges&.first || err.charge
-      if charge
-        set_stripe_fields(charge)
-      else
-        self.status = "failed"
-      end
+    err = e.error
+    self.note = err.message
+    charge = err.payment_intent&.charges&.first || err.charge
+    if charge
+      set_stripe_fields(charge)
+    else
+      self.status = "failed"
     end
+    save!
     false
   end
 
@@ -62,7 +62,6 @@ class Payment < ApplicationRecord
     self.stripe_id = charge.id
     self.paid_at = Time.zone.at(charge.created)
     self.stripe_fee = Money.new(charge.balance_transaction.fee, charge.balance_transaction.fee_details.first.currency) if charge.balance_transaction
-    save!
   end
 
   memoize def stripe_obj
