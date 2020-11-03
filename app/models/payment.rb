@@ -29,9 +29,11 @@ class Payment < ApplicationRecord
     record_charge!
     true
   rescue Stripe::CardError => e
-    err = e.error
-    self.note = err.message
-    set_stripe_fields(err.payment_intent&.charges&.first || err.charge)
+    safely context: {stripe_error: e.json_body} do
+      err = e.error
+      self.note = err.message
+      set_stripe_fields(err.payment_intent&.charges&.first || err.charge)
+    end
     false
   end
 
