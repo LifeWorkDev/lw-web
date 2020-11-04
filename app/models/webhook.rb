@@ -1,7 +1,7 @@
 class Webhook < ApplicationRecord
   include AasmStatus
 
-  after_create_commit -> { ProcessWebhook.perform_later(self) }
+  after_create_commit -> { ProcessWebhook.perform_later(self) if may_process? }
 
   aasm do
     state :received, initial: true
@@ -9,6 +9,8 @@ class Webhook < ApplicationRecord
 
     event :process do
       transitions from: :received, to: :processed do
+        guard { source == "stripe" }
+
         after do
           case source
           when "stripe"

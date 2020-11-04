@@ -58,7 +58,7 @@ RSpec.describe CommentRepliesMailbox, type: :mailbox do
     subject(:inbound_email) do
       receive_inbound_email_from_mail(
         from: user.email,
-        to: "comments-foobar-1@#{REPLIES_HOST}",
+        to: "comments-foobar-1@#{REPLIES_DOMAIN}",
         subject: subject_line,
         body: body,
       )
@@ -74,7 +74,7 @@ RSpec.describe CommentRepliesMailbox, type: :mailbox do
     subject(:inbound_email) do
       receive_inbound_email_from_mail(
         from: "testing@mailinator.com",
-        to: "comments-foobar-1@#{REPLIES_HOST}",
+        to: "comments-foobar-1@#{REPLIES_DOMAIN}",
         subject: subject_line,
         body: body,
       )
@@ -90,7 +90,7 @@ RSpec.describe CommentRepliesMailbox, type: :mailbox do
     subject(:inbound_email) do
       receive_inbound_email_from_mail(
         from: user.email,
-        to: "comments-1@#{REPLIES_HOST}",
+        to: "comments-1@#{REPLIES_DOMAIN}",
         subject: subject_line,
         body: body,
       )
