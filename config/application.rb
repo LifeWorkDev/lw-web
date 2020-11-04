@@ -82,7 +82,7 @@ module LifeWork
     unless Rails.env.test?
       config.action_mailer.asset_host = SERVER_URL
       config.hosts << SERVER_DOMAIN
-      Rails.application.routes.default_url_options = {SERVER_DOMAIN: SERVER_URL, protocol: "https"}
+      Rails.application.routes.default_url_options = {host: SERVER_URL, protocol: "https"}
     end
 
     config.after_initialize do
