@@ -2,8 +2,8 @@ class WebhooksController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def plaid
-    webhook.event = "#{webhook.data["webhook_type"]}.#{webhook.data["webhook_code"]}"
-    webhook.save!
+    webhook.event = "#{webhook.data["webhook_type"]}.#{webhook.data["webhook_code"]}".downcase
+    webhook.save! unless webhook.event == "item.webhook_update_acknowledged"
     head :ok
   end
 
