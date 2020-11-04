@@ -8,7 +8,7 @@ h2.text-center.mt-2 = title
 
 .row
   .container.text-center
-    p.lead.my-4 Our partner, Plaid, makes it easy to link your bank account quickly & securely. There are no micro-deposits to hassle with, and you can always update your payment account in the future.
+    p.lead.my-4 Our partner, <a href='https://plaid.com/why-is-plaid-involved/' target='_blank' rel='noopener'>Plaid</a>, makes it easy to link your bank account quickly & securely. There are no micro-deposits to hassle with, and you can always update your payment account in the future.
     - unless Rails.env.production?
       .alert.alert-warning.d-table.mx-auto.shadow-none Use these <a href='https://plaid.com/docs/#testing-auth' target='_blank' rel='noopener' class='alert-link'>plaid credentials</a> to test the system.
     button.btn.btn-primary#link-button
@@ -17,13 +17,21 @@ h2.text-center.mt-2 = title
     .col-sm-6.mx-auto
       = render 'stripe_message'
 
+ruby:
+  plaid_token = PLAID_CLIENT.link_token.create(
+    {
+      user: { client_user_id: current_user.id.to_s },
+      client_name: 'LifeWork',
+      country_codes: ['US'],
+      language: 'en',
+      env: PLAID_ENV,
+      products: %w[auth],
+    })['link_token']
+
 javascript:
   document.addEventListener('DOMContentLoaded', function() {
     var linkHandler = Plaid.create({
-      clientName: 'LifeWork',
-      env: '#{PLAID_ENV}',
-      key: '#{Rails.application.credentials.plaid[:public_key]}',
-      product: ['auth'],
+      token: '#{plaid_token}',
       onExit: function(error, metadata) {
         if (error) {
           window.Bugsnag.addMetadata('custom', { error: error, metadata: metadata })
