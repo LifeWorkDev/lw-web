@@ -25,10 +25,13 @@ DoubleEntry.configure do |config|
     tx.define code: :payment, from: :cash, to: :receivable
     tx.define code: :platform, from: :receivable, to: :fees
     tx.define code: :platform_refund, from: :fees, to: :cash
+    tx.define code: :platform_reversal, from: :fees, to: :receivable
     tx.define code: :processing, from: :receivable, to: :fees
     tx.define code: :processing_refund, from: :fees, to: :cash
+    tx.define code: :processing_reversal, from: :fees, to: :receivable
     tx.define code: :disbursement, from: :receivable, to: :disbursement
     tx.define code: :disbursement_refund, from: :disbursement, to: :cash
+    tx.define code: :disbursement_reversal, from: :disbursement, to: :receivable
     tx.define code: :refund, from: :receivable, to: :cash
   end
 end
