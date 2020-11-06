@@ -29,7 +29,7 @@ module Fees
     end
 
     def pay_method
-      try(:latest_payment)&.pay_method || client.primary_pay_method
+      client.primary_pay_method
     end
   end
 end
