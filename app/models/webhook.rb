@@ -14,15 +14,20 @@ class Webhook < ApplicationRecord
         after do
           case source
           when "stripe"
+            stripe_obj = Stripe::Event.construct_from(data).data.object
             case event
             when "charge.succeeded"
-              payment_id = data.dig("data", "object", "id")
-              payment = Payment.find_by(stripe_id: payment_id)
-              raise "No payment found with stripe id #{payment_id}" if !payment && Rails.env.production?
+              payment = Payment.find_by(stripe_id: stripe_obj.id)
+              raise "No payment found with stripe id #{stripe_obj.id}" if !payment && Rails.env.production?
 
-              if payment_id.start_with? "py_" # ACH payments only
+              if stripe_obj.id.start_with? "py_" # ACH payments only
                 payment&.succeed! unless payment&.disbursed?
               else true; end
+            when "payment_method.automatically_updated"
+              pay_method = PayMethods::Card.find_by(stripe_id: stripe_obj.id)
+              raise "No card found with stripe id #{stripe_obj.id}" if !pay_method && Rails.env.production?
+
+              pay_method.update_from_stripe_object!(stripe_obj)
             else
               raise "No handler for Stripe event #{event}"
             end
