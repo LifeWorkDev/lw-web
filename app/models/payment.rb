@@ -203,6 +203,38 @@ private
     end
   end
 
+  # WIP: used once to reverse a disbursed milestone for Marina Emery. Check/clean up before using
+  def record_reversed_disbursement!(transfer_amount, metadata)
+    DoubleEntry.lock_accounts(freelancer.account_receivable, freelancer.account_disbursement, ACCOUNT_FEES) do
+      DoubleEntry.transfer(
+        transfer_amount,
+        code: :disbursement_reversal,
+        detail: self,
+        from: freelancer.account_disbursement,
+        to: freelancer.account_receivable,
+        metadata: metadata,
+      )
+
+      DoubleEntry.transfer(
+        platform_amount,
+        code: :platform_reversal,
+        detail: self,
+        from: ACCOUNT_FEES,
+        to: freelancer.account_receivable,
+        metadata: metadata,
+      )
+
+      DoubleEntry.transfer(
+        processing_amount,
+        code: :processing_reversal,
+        detail: self,
+        from: ACCOUNT_FEES,
+        to: freelancer.account_receivable,
+        metadata: metadata,
+      )
+    end
+  end
+
   def record_reversed_transfer!(client_refund, freelancer_refund, platform_refund, metadata)
     DoubleEntry.lock_accounts(client.account_cash, freelancer.account_disbursement, ACCOUNT_FEES) do
       DoubleEntry.transfer(
