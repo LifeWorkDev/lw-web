@@ -60,6 +60,7 @@ Metrics/BlockLength:
     - spec/**/*
     - lib/data_integration/capta/import.rb
     - app/admin/**/*
+    - app/models/webhook.rb
   ExcludedMethods:
     [
       'aasm',

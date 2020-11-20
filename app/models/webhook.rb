@@ -31,6 +31,13 @@ class Webhook < ApplicationRecord
             else
               raise "No handler for Stripe event #{event}"
             end
+          when "stripe_connect"
+            case event
+            when "payout.paid"
+              Stripe::BalanceTransaction.list({payout: "po_1HF9QQEdQ2VcgcgnKRFJxHI5", limit: 100, type: "payment"}, {stripe_account: "acct_1H32LCEdQ2Vcgcgn"}).map(&:source)
+            else
+              raise "No handler for Stripe Connect event #{event}"
+            end
           end
         end
       end
