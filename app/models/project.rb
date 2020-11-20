@@ -27,8 +27,6 @@ class Project < ApplicationRecord
     }
 
   class << self
-    delegate :fa_url, :mdi_url, to: "ApplicationController.helpers", private: true
-
     memoize def for_select
       subclasses.map do |c|
         OpenStruct.new(c::FOR_SELECT.merge(value: c.to_s))

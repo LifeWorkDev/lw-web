@@ -5,6 +5,8 @@ class PayMethods::BankAccount < PayMethod
 
   before_validation :exchange_plaid_link_token, on: :create
 
+  ICON = mdi_url("bank").freeze
+
   def bank_account?
     true
   end

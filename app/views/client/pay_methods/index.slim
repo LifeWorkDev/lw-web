@@ -8,12 +8,12 @@ h2.text-center.mt-2 = title
     .col-auto.d-table.mx-auto
       .row
         = link_to "/c/bank_accounts/new?project=#{params[:project]}", class: 'btn btn-dark mt-4 w-100'
-          = mdi_svg 'bank'
+          = svg_inject PayMethods::BankAccount::ICON
           '  Bank
           span.badge.badge-info 3% discount
       .row
         = link_to "/c/cards/new?project=#{params[:project]}", class: 'btn btn-outline-dark mt-4', id: 'card-button'
-          = mdi_svg 'credit-card-outline'
+          = svg_inject PayMethods::Card::ICON
           |  Credit/Debit Card
       .row
         = render 'stripe_message'

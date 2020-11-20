@@ -12,6 +12,8 @@ class ApplicationRecord < ActiveRecord::Base
   class << self
     include Memery
 
+    delegate :fa_url, :mdi_url, to: "ApplicationController.helpers", private: true
+
     def callbacks_of_type(type, kind: :all)
       send("_#{type}_callbacks").select { |cb|
         [:all, cb.kind].include? kind

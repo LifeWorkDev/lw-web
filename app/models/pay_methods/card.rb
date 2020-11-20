@@ -6,6 +6,8 @@ class PayMethods::Card < PayMethod
 
   validates :exp_month, :exp_year, numericality: {integer_only: true}
 
+  ICON = mdi_url("credit-card-outline").freeze
+
   def card?
     true
   end
