@@ -1,7 +1,7 @@
 h2.text-center Payment is on the way!
 
 markdown:
-  We've transferred **#{@project.amount&.format}** to your Stripe account for your retainer with **#{@project.client.name}**. You should see it hit your bank account within a few business days.
+  We've transferred **#{@project.freelancer_amount&.format}** to your Stripe account for your retainer with **#{@project.client.name}**. You should see it hit your bank account within a few business days.
 
 - if @project.active?
   markdown:

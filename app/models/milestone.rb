@@ -38,6 +38,10 @@ class Milestone < ApplicationRecord
     date && l(date)
   end
 
+  def overdue?
+    pending? && Time.current >= date
+  end
+
   def next
     project.milestones.pending.where.not(id: id).first
   end
