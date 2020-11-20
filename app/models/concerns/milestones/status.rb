@@ -12,6 +12,8 @@ module Milestones::Status
 
       event :deposit do
         transitions from: :pending, to: :deposited do
+          guard { !project.inactive? }
+
           after do |user|
             payments.create!(amount: client_amount, pay_method: pay_method, user: user).charge!
           end

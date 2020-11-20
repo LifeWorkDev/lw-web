@@ -31,6 +31,7 @@ class RetainerProject < Project
   end
 
   def deposit!(user = nil)
+    raise "Can't deposit for inactive project #{id}" if inactive?
     return unless payments.create!(
       amount: latest_payment ? client_amount : first_client_amount,
       pay_method: pay_method,
