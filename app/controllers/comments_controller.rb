@@ -4,7 +4,6 @@ class CommentsController < AuthenticatedController
   def create
     @comment = current_user.comments.new(comment_params)
     if @comment.save
-      CommentMailer.with(recipient: @comment.recipient, milestone: @comment.commentable).notify_new_comment.deliver_later
       redirect_to [current_namespace, @project.becomes(Project), :comments]
     else
       redirect_to [current_namespace, @project.becomes(Project), :comments], alert: "Failed to create comment, #{@comment.errors.full_message.join(", ")}"

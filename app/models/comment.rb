@@ -6,6 +6,8 @@ class Comment < ApplicationRecord
 
   validates :comment, presence: true
 
+  after_create_commit -> { CommentMailer.with(recipient: recipient, milestone: commentable).notify_new_comment.deliver_later(wait: 5.minutes) if commentable.is_a? Milestone }
+
   pg_search_scope :pg_search,
     against: %i[comment],
     associated_against: {commenter: %i[name]}
