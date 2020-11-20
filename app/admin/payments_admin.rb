@@ -12,14 +12,17 @@ Trestle.resource(:payments) do
   table do
     column :id, sort: {default: true, default_order: :asc}
     column :pays_for, sort: false
-    column :status, sort: :status, align: :center do |payment|
-      status_tag(payment.status.humanize, payment.status_class)
+    column :status, sort: :status, align: :center do |record|
+      status_tag(record.status.humanize, record.status_class)
     end
-    column :amount, align: :right, sort: :amount_cents do |obj|
-      obj.amount&.format
+    column :amount, align: :right, sort: :amount_cents do |record|
+      record.amount&.format
     end
-    column :scheduled_for, align: :center
-    column :paid_at, align: :center
+    column :pay_method, align: :center, header: nil, sort: false do |record|
+      icon "fa fa-#{record.pay_method.card? ? :"credit-card" : :university}"
+    end
+    column :scheduled_for, header: "Scheduled", align: :center
+    column :paid_at, header: "Paid", align: :center
   end
 
   # Customize the form fields shown on the new/edit views.
