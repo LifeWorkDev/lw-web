@@ -98,7 +98,7 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # Disable asset compilation on-demand
-  # config.assets.compile = false # Need to keep enabled until #169212464 completed
+  config.assets.compile = false
 
   config.middleware.use Rack::Brotli::Deflater
 
