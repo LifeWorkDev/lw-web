@@ -9,10 +9,10 @@ class Payment < ApplicationRecord
   belongs_to :user, optional: true
   has_one :disbursement_line, -> { credits.where(code: :disbursement) }, as: :detail, class_name: "DoubleEntry::Line", dependent: :destroy, inverse_of: :detail
   has_one :payment_line, -> { credits.where(code: :payment) }, as: :detail, class_name: "DoubleEntry::Line", dependent: :destroy, inverse_of: :detail
-  has_one :refund_line, -> { credits.where(code: :refund) }, as: :detail, class_name: "DoubleEntry::Line", dependent: :destroy, inverse_of: :detail
+  has_many :refund_lines, -> { credits.where(code: :refund) }, as: :detail, class_name: "DoubleEntry::Line", dependent: :destroy, inverse_of: :detail
   has_many :lines, as: :detail, class_name: "DoubleEntry::Line", dependent: :delete_all, inverse_of: :detail
 
-  delegate :client, :client_amount, :client_fees, :client_users, :freelancer, :freelancer_amount, :freelancer_fees, :platform_fee, :processing_fee, to: :pays_for
+  delegate :client, :client_amount, :client_refund_amount, :client_fees, :client_users, :freelancer, :freelancer_amount, :freelancer_fees, :platform_fee, :processing_fee, to: :pays_for
 
   pg_search_scope :pg_search,
     against: %i[stripe_id],

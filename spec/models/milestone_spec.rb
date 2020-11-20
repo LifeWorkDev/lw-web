@@ -68,7 +68,7 @@ RSpec.describe Milestone, type: :model do
             allow(payment).to receive(:issue_refund!)
             milestone.update(amount: new_amount)
             expect(milestone.reload.amount).to eq new_amount
-            expect(payment).to have_received(:issue_refund!).with(new_amount: milestone.client_amount, freelancer_refund_cents: refund_amount.cents).once
+            expect(payment).to have_received(:issue_refund!).with(new_amount: milestone.client_refund_amount, freelancer_refund_cents: refund_amount.cents).once
           end
 
           it "raises exception if amount was increased" do

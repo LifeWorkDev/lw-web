@@ -2,30 +2,34 @@ module Fees
   extend ActiveSupport::Concern
 
   included do
-    def client_amount(total = amount)
-      total + client_fees(total)
+    def client_amount(amount = self.amount)
+      amount + client_fees(amount)
     end
 
     def client_fees(amount = self.amount)
-      total = 0
-      total += platform_fee(amount) if client_pays_fees?
-      total + processing_fee(amount)
+      fees = 0
+      fees += platform_fee(amount) if client_pays_fees?
+      fees + processing_fee(amount)
     end
 
-    def freelancer_amount(total = amount)
-      total - freelancer_fees(total)
+    def client_refund_amount(amount = self.amount)
+      amount + (client_pays_fees? ? platform_fee(amount) : 0)
+    end
+
+    def freelancer_amount(amount = self.amount)
+      amount - freelancer_fees(amount)
     end
 
     def freelancer_fees(amount = self.amount)
       client_pays_fees? ? 0 : platform_fee(amount)
     end
 
-    def platform_fee(total = amount)
-      total * fee_percent
+    def platform_fee(amount = self.amount)
+      amount * fee_percent
     end
 
-    def processing_fee(total = amount)
-      total * (pay_method&.fee_percent || 0)
+    def processing_fee(amount = self.amount)
+      amount * (pay_method&.fee_percent || 0)
     end
 
     def pay_method

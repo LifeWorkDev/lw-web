@@ -94,6 +94,6 @@ private
   def update_payment_amount
     raise "Can't increase the amount of a #{status} milestone" if amount_cents > amount_cents_was
 
-    latest_payment.issue_refund!(new_amount: client_amount, freelancer_refund_cents: amount_cents_was - amount_cents)
+    latest_payment.issue_refund!(new_amount: client_refund_amount, freelancer_refund_cents: amount_cents_was - amount_cents)
   end
 end
