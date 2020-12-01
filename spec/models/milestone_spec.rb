@@ -6,11 +6,21 @@ RSpec.describe Milestone, type: :model do
   describe "#next" do
     subject(:milestone) { project.milestones.first }
 
+    let(:next_milestone) { project.milestones.second }
     let(:project) { Fabricate(:milestone_project_with_milestones) }
 
-    it "returns the next milestone by date" do
-      project.reload # Make sure milestones are loaded from the DB in correct order
-      expect(milestone.next.date).to eq(project.milestones.pluck(:date).second)
+    context "when next is pending" do
+      it "returns the next milestone by date" do
+        expect(milestone.next).to eq(next_milestone)
+      end
+    end
+
+    context "when next is deposited" do
+      before { next_milestone.update!(status: :deposited) }
+
+      it "returns the next milestone by date" do
+        expect(milestone.next).to be_nil
+      end
     end
   end
 

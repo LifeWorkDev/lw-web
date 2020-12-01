@@ -39,7 +39,9 @@ class Milestone < ApplicationRecord
   end
 
   def next
-    project.milestones.pending.where.not(id: id).first
+    this_idx = project.milestones.index(self)
+    nxt = project.milestones[this_idx + 1]
+    nxt if nxt&.pending?
   end
 
   def latest_payment
@@ -74,7 +76,7 @@ class Milestone < ApplicationRecord
   end
 
   def schedule_deposit(schedule_for = deposit_time)
-    Milestones::DepositJob.set(wait_until: schedule_for).perform_later(self)
+    Milestones::DepositJob.set(wait_until: schedule_for).perform_later(self) if pending?
   end
 
   def schedule_payment
