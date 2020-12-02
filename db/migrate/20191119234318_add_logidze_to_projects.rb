@@ -1,6 +1,5 @@
 class AddLogidzeToProjects < ActiveRecord::Migration[5.0]
   require "logidze/migration"
-  include Logidze::Migration
 
   def up
     add_column :projects, :log_data, :jsonb
@@ -9,7 +8,7 @@ class AddLogidzeToProjects < ActiveRecord::Migration[5.0]
       execute <<-SQL
         CREATE TRIGGER logidze_on_projects
         BEFORE UPDATE OR INSERT ON projects FOR EACH ROW
-        WHEN (coalesce(#{current_setting("logidze.disabled")}, '') <> 'on')
+        WHEN (coalesce(current_setting('logidze.disabled', true), '') <> 'on')
         EXECUTE PROCEDURE logidze_logger(null, 'updated_at', '{id,created_at,updated_at}');
       SQL
 

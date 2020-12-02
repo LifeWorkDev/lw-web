@@ -47,6 +47,7 @@ gem "sassc-rails"
 gem "slim-rails" # Template language, lightweight alternative to erb/haml
 gem "sprockets", "< 4.0", require: false
 gem "stripe"
+gem "strong_migrations" # complains about migration worst-practices
 gem "symbol-fstring", require: "fstring/all" # Improve performance of Symbol#to_s
 gem "trestle"
 gem "trestle-search"
@@ -79,7 +80,6 @@ group :development do
   gem "listen", ">= 3.0.5", "< 3.2"
   gem "partially_useful" # Add html comments around partials
   gem "rack-toolbar", github: "swrobel/rack-toolbar", branch: "rails-pages" # Insert arbitrary code into Rails pages
-  gem "strong_migrations" # complains about migration worst-practices
   install_if -> { RUBY_PLATFORM =~ /darwin/ } do
     gem "terminal-notifier" # System notifications for Mac
     gem "terminal-notifier-guard"

@@ -1,20 +1,17 @@
 class LogidzeInstall < ActiveRecord::Migration[5.0]
   require "logidze/migration"
-  include Logidze::Migration
 
   def up
     safety_assured do
-      unless current_setting_missing_supported?
-        execute <<-SQL
-          DO $$
-            BEGIN
-            EXECUTE 'ALTER DATABASE ' || quote_ident(current_database()) || ' SET logidze.disabled=' || quote_literal('');
-            EXECUTE 'ALTER DATABASE ' || quote_ident(current_database()) || ' SET logidze.meta=' || quote_literal('');
-            END;
-          $$
-          LANGUAGE plpgsql;
-        SQL
-      end
+      execute <<-SQL
+        DO $$
+          BEGIN
+          EXECUTE 'ALTER DATABASE ' || quote_ident(current_database()) || ' SET logidze.disabled=' || quote_literal('');
+          EXECUTE 'ALTER DATABASE ' || quote_ident(current_database()) || ' SET logidze.meta=' || quote_literal('');
+          END;
+        $$
+        LANGUAGE plpgsql;
+      SQL
 
       execute <<-SQL
         CREATE OR REPLACE FUNCTION logidze_version(v bigint, data jsonb, ts timestamp with time zone, blacklist text[] DEFAULT '{}') RETURNS jsonb AS $body$
@@ -29,7 +26,7 @@ class LogidzeInstall < ActiveRecord::Migration[5.0]
                       'c',
                       logidze_exclude_keys(data, VARIADIC array_append(blacklist, 'log_data'))
                      );
-            IF coalesce(#{current_setting("logidze.meta")}, '') <> '' THEN
+            IF coalesce(current_setting('logidze.meta', true), '') <> '' THEN
               buf := jsonb_set(buf, ARRAY['m'], current_setting('logidze.meta')::jsonb);
             END IF;
             RETURN buf;

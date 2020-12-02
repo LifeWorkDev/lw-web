@@ -14,7 +14,7 @@ class Fields::CollectionSelectWithLink < Trestle::Form::Fields::CollectionSelect
   end
 
   def default_html_options
-    Trestle::Options.new(class: ["form-control"], disabled: admin.readonly?, data: {enable_custom_select2: true})
+    Trestle::Options.new(class: ["form-control"], disabled: admin.readonly?, data: {enable_custom_select2: true}) # rubocop:disable Naming/VariableNumber
   end
 
   def field
