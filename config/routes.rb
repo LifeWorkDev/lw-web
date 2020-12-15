@@ -86,6 +86,10 @@ Rails.application.routes.draw do
 
   authenticate :user, ->(u) { u.admin? } do
     mount Que::Web, at: "admin/que"
+    unless Rails.env.development?
+      get "admin/mailers", to: "rails/mailers#index"
+      get "rails/mailers/*path", to: "rails/mailers#preview"
+    end
   end
 
   get :styleguide, to: "application#styleguide" unless Rails.env.production?

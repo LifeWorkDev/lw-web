@@ -74,6 +74,21 @@ Rails.application.configure do
     enable_starttls_auto: true,
   }
 
+  # Enable mailer previews
+  config.action_mailer.logger = ActiveSupport::Logger.new($stdout) if ENV["RAILS_LOG_TO_STDOUT"].present?
+  config.action_mailer.preview_path = "#{::Rails.root}/spec/mailers/previews"
+  ActiveSupport::Dependencies.autoload_paths << config.action_mailer.preview_path
+
+  config.after_initialize do
+    Rails::MailersController.class_eval do
+    private
+
+      def show_previews?
+        true
+      end
+    end
+  end
+
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
   config.i18n.fallbacks = true
