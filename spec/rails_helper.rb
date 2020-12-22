@@ -67,6 +67,7 @@ RSpec.configure do |config|
   config.before(:all, type: :system) do
     Capybara.server = :puma, {Silent: true, Threads: "1:1"}
     Capybara.raise_server_errors = false # Render error pages instead of blowing up
+    Capybara.default_set_options = {clear: :backspace} if RUBY_PLATFORM.match?(/darwin/) # https://github.com/teamcapybara/capybara/issues/2419#issuecomment-738798878
   end
 
   config.before(:each, type: :system) do
