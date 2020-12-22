@@ -5,6 +5,7 @@ jobs:
     docker:
       - image: circleci/ruby:2.7-buster-node-browsers
         environment:
+          PARALLEL_TEST_PROCESSORS: 4
           PGHOST: 127.0.0.1
           PGUSER: lifework
           NODE_ENV: test
@@ -99,7 +100,7 @@ jobs:
 
       - run:
           name: Database setup
-          command: bin/rake db:setup --trace
+          command: bin/rake parallel:create parallel:load_structure --trace
 
       - run:
           name: Compile packs
@@ -119,10 +120,7 @@ jobs:
 
       - run:
           name: Ruby tests
-          command: CODECOV_FLAG=ruby bin/rspec spec/ --format progress --format RspecJunitFormatter -o ~/test-results/rspec/rspec.xml
-
-      - store_test_results:
-          path: ~/test-results/rspec/
+          command: CODECOV_FLAG=ruby bundle exec turbo_tests
 
       - store_artifacts:
           path: tmp/screenshots
