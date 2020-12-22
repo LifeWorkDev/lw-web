@@ -7,6 +7,6 @@ p.lead
   = "#{@project.description(for_client: true)}."
 
 = bootstrap_form_with(url: [:activate, current_namespace, @project.becomes(Project)], layout: :horizontal, local: true, method: :patch) do |f|
-  = f.primary class: 'btn btn-success float-right', id: 'submit-form', render_as_button: true
+  = f.primary class: 'btn btn-success float-right', id: 'submit-form', render_as_button: true, data: { disable: true }
     = mdi_svg 'handshake'
     |  Agree to this schedule

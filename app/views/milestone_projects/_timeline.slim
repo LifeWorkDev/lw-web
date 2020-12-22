@@ -15,5 +15,5 @@
             = f.hidden_field :commentable_type
             = f.text_area :comment, hide_label: true, placeholder: 'Add a comment', required: true, control_col: 'col-sm-12'
             .form-group
-              = f.primary 'Submit', class: 'btn btn-primary float-right', id: 'submit-form', render_as_button: true
+              = f.primary 'Submit', class: 'btn btn-primary float-right', id: 'submit-form', render_as_button: true, data: { disable: true }
               .clearfix

@@ -3,6 +3,6 @@
     => @payment_error
     = link_to 'Click here if you need to update your payment method.', @add_pay_method, class: 'alert-link'
 = bootstrap_form_with(url: [:deposit, current_namespace, @project.becomes(Project)], layout: :horizontal, local: true) do |f|
-  = f.primary class: 'btn btn-success float-right', id: 'submit-form', render_as_button: true, value: :deposit
+  = f.primary class: 'btn btn-success float-right', id: 'submit-form', render_as_button: true, value: :deposit, data: { disable: true }
     = mdi_svg 'bank-transfer-out'
     |  Deposit #{amount&.format(no_cents: true)} now

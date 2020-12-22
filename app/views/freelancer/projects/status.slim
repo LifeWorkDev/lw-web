@@ -3,5 +3,5 @@
 p.lead = t("#{key}.help_html", default: '')
 = bootstrap_form_with(model: [:status, current_namespace, @project.becomes(Project)], class: 'mt-4 text-center', local: true) do |f|
   - if (fail_status = t("#{key}.fail.status", default: '')).present?
-    = f.button t("#{key}.fail.text"), class: 'btn btn-outline-danger mr-0 mr-lg-4 mb-4 mb-lg-0', value: fail_status
-  = f.primary t("#{key}.success.text"), class: 'btn btn-primary', id: 'submit-form', render_as_button: true, value: t("#{key}.success.status")
+    = f.button t("#{key}.fail.text"), class: 'btn btn-outline-danger mr-0 mr-lg-4 mb-4 mb-lg-0', value: fail_status, data: { disable: true }
+  = f.primary t("#{key}.success.text"), class: 'btn btn-primary', id: 'submit-form', render_as_button: true, value: t("#{key}.success.status"), data: { disable: true }
