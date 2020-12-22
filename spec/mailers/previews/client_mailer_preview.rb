@@ -1,10 +1,10 @@
-class ClientMailerPreview < ActionMailer::Preview
+class ClientMailerPreview < ApplicationMailerPreview
   def milestone_invite
-    invite(MilestoneProject.not_pending.sample)
+    invite(milestone_project)
   end
 
   def retainer_invite
-    invite(random_retainer_project)
+    invite(retainer_project)
   end
 
   delegate :milestone_approaching, to: :milestone_mailer
@@ -17,26 +17,21 @@ class ClientMailerPreview < ActionMailer::Preview
 private
 
   def invite(project)
-    params = {recipient: User.active.sample, project: project}
-    params[:reminder] = true if [true, false].sample
+    params = {recipient: project.freelancer, project: project}
+    params[:reminder] = [true, nil].sample
     ClientMailer.with(params).invite
   end
 
   def milestone_mailer
-    ClientMailer.with({recipient: User.client.sample, milestone: Milestone.deposited.sample})
+    ClientMailer.with({recipient: milestone.client.primary_contact, milestone: milestone})
   end
 
   def payment_mailer
-    payment = Payment.where(status: %i[refunded partially_refunded]).sample
     refund_amount = Money.new(rand(1..payment.amount_cents))
-    ClientMailer.with({recipient: User.client.sample, payment: payment, refund_amount: refund_amount})
-  end
-
-  def random_retainer_project
-    RetainerProject.not_pending.sample
+    ClientMailer.with({recipient: payment.client.primary_contact, payment: payment, refund_amount: refund_amount})
   end
 
   def retainer_mailer
-    ClientMailer.with({recipient: User.client.sample, project: random_retainer_project})
+    ClientMailer.with({recipient: retainer_project.client.primary_contact, project: retainer_project})
   end
 end

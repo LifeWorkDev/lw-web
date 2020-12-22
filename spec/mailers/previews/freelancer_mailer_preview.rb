@@ -1,4 +1,4 @@
-class FreelancerMailerPreview < ActionMailer::Preview
+class FreelancerMailerPreview < ApplicationMailerPreview
   delegate :milestone_approaching, to: :milestone_mailer
   delegate :milestone_deposited, to: :milestone_mailer
   delegate :milestone_paid, to: :milestone_mailer
@@ -10,16 +10,15 @@ class FreelancerMailerPreview < ActionMailer::Preview
 private
 
   def milestone_mailer
-    FreelancerMailer.with({recipient: User.freelancer.sample, milestone: Milestone.deposited.sample})
+    FreelancerMailer.with({recipient: milestone.freelancer, milestone: milestone})
   end
 
   def payment_mailer
-    payment = Payment.where(status: %i[refunded partially_refunded]).sample
     refund_amount = Money.new(rand(1..payment.amount_cents))
-    FreelancerMailer.with({recipient: User.freelancer.sample, payment: payment, refund_amount: refund_amount})
+    FreelancerMailer.with({recipient: payment.freelancer, payment: payment, refund_amount: refund_amount})
   end
 
   def retainer_mailer
-    FreelancerMailer.with({recipient: User.freelancer.sample, project: RetainerProject.not_pending.sample})
+    FreelancerMailer.with({recipient: retainer_project.freelancer, project: retainer_project})
   end
 end
