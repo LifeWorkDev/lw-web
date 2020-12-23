@@ -1,7 +1,14 @@
 h2.text-center Payment is on the way!
 
+p We've been holding your client's deposit for the following milestone, which was completed today. We've disbursed the net amount shown below - you should see it hit your bank account within a few business days:
+
 markdown:
-  We've transferred **#{@milestone.amount.format}** to your Stripe account for the successful completion of **#{@milestone.description}** for **#{@milestone.client.name}**. You should see it hit your bank account within a few business days.
+  **Completed Milestone:** #{@milestone.description}  
+  **Project:** #{@milestone.project.name}  
+  **Client:** #{@milestone.project.client}  
+  **Amount:** #{@milestone.amount&.format}  
+  **Fees:** #{@milestone.freelancer_fees&.format}  
+  **Net Amount:** #{@milestone.freelancer_amount&.format}  
 
 - if @next_milestone
   markdown:

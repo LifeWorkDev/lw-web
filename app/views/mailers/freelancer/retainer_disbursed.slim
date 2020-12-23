@@ -1,7 +1,13 @@
 h2.text-center Payment is on the way!
 
+p We've been holding your client's deposit, and have disbursed the net amount shown below - you should see it hit your bank account within a few business days:
+
 markdown:
-  We've transferred **#{@project.amount&.format}** to your Stripe account for your retainer with **#{@project.client.name}**. You should see it hit your bank account within a few business days.
+  **Project:** #{@project.name}  
+  **Client:** #{@project.client}  
+  **Amount:** #{@project.amount&.format}  
+  **Fees:** #{@project.freelancer_fees&.format}  
+  **Net Amount:** #{@project.freelancer_amount&.format}  
 
 - if @project.active?
   markdown:
