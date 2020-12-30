@@ -2,11 +2,12 @@ h2.text-center Payment is on the way!
 
 p We've been holding your client's deposit, and have disbursed the net amount shown below - you should see it hit your bank account within a few business days:
 
+- amount = @project.first_payment? ? @project.first_amount : @project.amount
 markdown:
   **Project:** #{@project.name}  
   **Client:** #{@project.client}  
-  **Amount:** #{@project.amount&.format}  
-  **Fees:** #{@project.freelancer_fees&.format}  
+  **Amount:** #{amount&.format}  
+  **Fees:** #{@project.freelancer_fees(amount)&.format}  
   **Net Amount:** #{@project.freelancer_amount&.format}  
 
 - if @project.active?

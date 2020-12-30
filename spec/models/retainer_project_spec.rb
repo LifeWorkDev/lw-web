@@ -41,20 +41,56 @@ RSpec.describe RetainerProject, type: :model do
     end
   end
 
-  describe "#first_amount" do
-    context "when start_date.day == disbursement_day" do
-      subject(:project) { Fabricate(:retainer_project, disbursement_day: 1, start_date: "2020-05-01") }
+  context "when start_date.day == disbursement_day" do
+    subject(:project) { Fabricate(:retainer_project, amount_cents: 15_000_00, disbursement_day: 1, start_date: "2020-05-01") }
 
+    describe "#client_amount" do
+      it { expect(project.client_amount).to be >= project.amount }
+    end
+
+    describe "#first_amount" do
       it "equals amount" do
-        expect(project.first_amount).to eq(project.amount)
+        expect(project.first_amount).to eq(15_000.to_money)
       end
     end
 
-    context "when start_date.day != disbursement_day" do
-      subject(:project) { Fabricate(:retainer_project, amount_cents: 15_000_00, disbursement_day: 1, start_date: "2020-05-25") }
-
+    describe "#freelancer_amount" do
       it "calculates correctly" do
+        expect(project.freelancer_amount).to eq(14_700.to_money)
+      end
+    end
+  end
+
+  context "when start_date.day != disbursement_day" do
+    subject(:project) { Fabricate(:retainer_project, amount_cents: 15_000_00, disbursement_day: 1, start_date: "2020-05-25") }
+
+    describe "#client_amount" do
+      it { expect(project.client_amount).to be < project.amount }
+    end
+
+    describe "#first_amount" do
+      it "prorates correctly" do
         expect(project.first_amount).to eq(3_387.10.to_money)
+      end
+    end
+
+    describe "#freelancer_amount" do
+      it "calculates correctly" do
+        expect(project.freelancer_amount).to eq(3_319.358.to_money)
+      end
+    end
+
+    context "with a disbursed payment" do
+      before { Fabricate(:disbursed_payment, pays_for: project) }
+
+      describe "#client_amount" do
+        it { expect(project.client_amount).to be >= project.amount }
+      end
+
+      describe "#freelancer_amount" do
+        it "calculates correctly" do
+          expect(project.freelancer_amount).to eq(14_700.to_money)
+        end
       end
     end
   end

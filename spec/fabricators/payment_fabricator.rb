@@ -6,17 +6,25 @@ Fabricator(:payment) do
 
   after_build do |payment|
     payment.user ||= payment.pay_method.org.primary_contact || Fabricate.build(:user)
-    pays_for = Fabricate.build("active_#{%w[milestone retainer].sample}_project")
-    payment.pays_for ||= pays_for.milestone? ? pays_for.milestones.first : pays_for
+    unless payment.pays_for.present?
+      pays_for = Fabricate.build("active_#{%w[milestone retainer].sample}_project")
+      payment.pays_for = pays_for.milestone? ? pays_for.milestones.first : pays_for
+    end
   end
 end
 
-Fabricator(:pending_payment, from: :payment) do
-  status :pending
+Fabricator(:stripe_payment, from: :payment) do
   stripe_id { Faker::Crypto.md5 }
 end
 
-Fabricator(:succeeded_payment, from: :payment) do
+Fabricator(:pending_payment, from: :stripe_payment) do
+  status :pending
+end
+
+Fabricator(:succeeded_payment, from: :stripe_payment) do
   status :succeeded
-  stripe_id { Faker::Crypto.md5 }
+end
+
+Fabricator(:disbursed_payment, from: :stripe_payment) do
+  status :disbursed
 end

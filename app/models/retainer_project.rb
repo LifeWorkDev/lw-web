@@ -33,7 +33,7 @@ class RetainerProject < Project
   def deposit!(user = nil)
     raise "Can't deposit for inactive project #{id}" if inactive?
     return unless payments.create!(
-      amount: latest_payment ? client_amount : first_client_amount,
+      amount: client_amount,
       pay_method: pay_method,
       scheduled_for: deposit_time(latest_payment ? next_date : start_date),
       user: user,
@@ -56,7 +56,18 @@ class RetainerProject < Project
     "#{t("retainer_project.description.begin")} #{(for_client ? client_amount : amount).format(no_cents_if_whole: true)} #{"will then be" if for_client} #{t("retainer_project.description.middle", pay_method: for_client && pay_method ? " from your #{pay_method} " : " ")} #{l(next_date, format: :text_without_year)}, #{t("retainer_project.description.end", day: disbursement_day.ordinalize)}"
   end
 
-  def first_amount
+  alias_method :orig_client_amount, :client_amount
+  def client_amount(total = nil)
+    return orig_client_amount(total) if total
+
+    if first_payment?
+      first_client_amount
+    else
+      orig_client_amount
+    end
+  end
+
+  memoize def first_amount
     return amount if start_date.day == disbursement_day
 
     days = Time.days_in_month(start_date.month, start_date.year)
@@ -64,11 +75,26 @@ class RetainerProject < Project
   end
 
   memoize def first_client_amount
-    client_amount(first_amount)
+    orig_client_amount(first_amount)
   end
 
   memoize def first_description(for_client: false)
     "The first payment of #{(for_client ? first_client_amount : first_amount).format(no_cents_if_whole: true)} is due on #{l(start_date, format: :text_without_year)}, and will be disbursed to #{freelancer.name} on #{l(next_date, format: :text_without_year)}."
+  end
+
+  memoize def first_payment?
+    payments.disbursed.size == 0
+  end
+
+  alias_method :orig_freelancer_amount, :freelancer_amount
+  def freelancer_amount(total = nil)
+    return orig_freelancer_amount(total) if total
+
+    if first_payment?
+      orig_freelancer_amount(first_amount)
+    else
+      orig_freelancer_amount
+    end
   end
 
   def for_subject

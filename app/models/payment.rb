@@ -108,7 +108,7 @@ class Payment < ApplicationRecord
         metadata: pays_for.stripe_metadata,
         source_transaction: stripe_id,
       },
-      idempotency_key: "#{pays_for.idempotency_key}-transfer",
+      idempotency_key: "#{pays_for.idempotency_key}-transfer-of-#{freelancer_amount.cents}",
     )
     true
   end
