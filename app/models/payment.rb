@@ -27,6 +27,7 @@ class Payment < ApplicationRecord
       metadata: pays_for.stripe_metadata,
     )
     record_charge!
+    record_stripe_fees!
     save!
     true
   rescue Stripe::CardError => e
@@ -163,6 +164,16 @@ private
       detail: self,
       from: client.account_cash,
       to: freelancer.account_receivable,
+    )
+  end
+
+  def record_stripe_fees!
+    DoubleEntry.transfer(
+      stripe_fee,
+      code: :stripe_processing,
+      detail: self,
+      from: ACCOUNT_FEES,
+      to: ACCOUNT_STRIPE_FEES,
     )
   end
 

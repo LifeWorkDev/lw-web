@@ -7,8 +7,8 @@ RSpec.describe Payment, type: :model do
   it { is_expected.to monetize(:stripe_fee) }
 
   describe "#charge!" do
-    it "creates acccounting records, changes status" do
-      expect { payment.charge! }.to change { DoubleEntry::Line.count }.by(2) &
+    it "creates accounting records, changes status" do
+      expect { payment.charge! }.to change { DoubleEntry::Line.count }.by(4) &
         change { payment.status }.from("scheduled").to("succeeded")
       expect(payment.stripe_id).to be_present
     end
