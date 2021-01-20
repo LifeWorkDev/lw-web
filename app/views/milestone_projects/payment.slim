@@ -3,14 +3,10 @@
 .text-center
   h2 = @heading
   p.lead Feel free to enter percentages, and we’ll calculate the amounts, or vice-versa.
-  p
-    | Please note that we can only accept individual milestones of up to
-    strong =<> ACH_MAX.format(no_cents: true)
-    | at this time.
 
 .container.no-gutters.d-flex.flex-column.justify-content-center
   = bootstrap_form_with(model: [current_namespace, @project], class: 'w-100 mt-2', control_col: 'col-sm-6 col-md-3', label_col: 'col-sm-6 text-sm-right', layout: :horizontal, local: true) do |f|
-    = react_component('PaymentsForm', isClient: client_namespace?, lifeworkFee: LIFEWORK_FEE, maxPayment: ACH_MAX.to_i, milestones: @project.milestones, projectFee: @project.fee_percent, total: @project.amount.to_f)
+    = react_component('PaymentsForm', isClient: client_namespace?, lifeworkFee: LIFEWORK_FEE, milestones: @project.milestones, projectFee: @project.fee_percent, total: @project.amount.to_f)
     .neg-margin = render 'shared/form_buttons', f: f, back: @back, submit_val: :payment
 
 = render partial: 'shared/form_back_confirm'

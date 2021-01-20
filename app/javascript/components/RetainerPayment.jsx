@@ -9,7 +9,6 @@ import formatCurrency from 'utils/formatCurrency'
 import 'styles/DayPicker.scss'
 
 export default function RetainerPayment({
-  achMax,
   beginText,
   endText,
   middleText,
@@ -35,7 +34,6 @@ export default function RetainerPayment({
           name='retainer_project[amount]'
           style={{ width: '4.4rem' }}
           min='10'
-          max={achMax}
           step='0.01'
           inputMode='decimal'
         />
@@ -122,7 +120,6 @@ export default function RetainerPayment({
 }
 
 RetainerPayment.propTypes = {
-  achMax: PropTypes.number.isRequired,
   amount: PropTypes.number,
   beginText: PropTypes.string.isRequired,
   disbursementDay: PropTypes.number,

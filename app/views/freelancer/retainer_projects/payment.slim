@@ -2,13 +2,9 @@
 
 .text-center
   h2 = @heading
-  p.lead
-    | Please note that we can only accept monthly payments of up to
-    strong =<> ACH_MAX.format(no_cents: true)
-    | at this time.
     
 = bootstrap_form_with(model: [current_namespace, @project], layout: :horizontal, local: true) do |f|
-  = react_component 'RetainerPayment', { achMax: ACH_MAX.to_i, amount: @project.amount.to_f, beginText: t('retainer_project.description.begin'), middleText: t('retainer_project.description.middle', pay_method: ' '), endText: t('retainer_project.description.end').split('%{day} day'), projectFee: @project.fee_percent, startDate: @project.start_date, disbursementDay: @project.disbursement_day }, { class: 'd-inline-block mb-4 text-center w-100', style: 'line-height: 2.5;' }
+  = react_component 'RetainerPayment', { amount: @project.amount.to_f, beginText: t('retainer_project.description.begin'), middleText: t('retainer_project.description.middle', pay_method: ' '), endText: t('retainer_project.description.end').split('%{day} day'), projectFee: @project.fee_percent, startDate: @project.start_date, disbursementDay: @project.disbursement_day }, { class: 'd-inline-block mb-4 text-center w-100', style: 'line-height: 2.5;' }
   = render 'shared/form_buttons', f: f, back: edit_path(@project)
 
 = render partial: 'shared/form_back_confirm'
