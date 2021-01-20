@@ -3,14 +3,14 @@ Trestle.resource(:orgs) do
     item :orgs, icon: "fa fa-building", priority: 1
   end
 
-  collection { Org.order(id: :asc) }
+  collection { Org.order(id: :desc) }
 
   search do |query|
     query ? collection.pg_search(query) : collection
   end
 
   table do
-    column :id, sort: {default: true, default_order: :asc}
+    column :id, sort: {default: true, default_order: :desc}
     column :name
     column :status, sort: :status, align: :center do |org|
       status_tag(org.status.humanize, org.status_class)

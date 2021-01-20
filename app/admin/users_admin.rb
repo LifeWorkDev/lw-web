@@ -8,14 +8,14 @@ Trestle.resource(:users) do
     scope.new(attrs)
   end
 
-  collection { User.order(id: :asc) }
+  collection { User.order(id: :desc) }
 
   search do |query|
     query ? collection.pg_search(query) : collection
   end
 
   table do
-    column :id, sort: {default: true, default_order: :asc}
+    column :id, sort: {default: true, default_order: :desc}
     column :name
     column :email
     column :status, sort: :status, align: :center do |user|

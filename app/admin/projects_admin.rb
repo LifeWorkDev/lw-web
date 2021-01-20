@@ -14,14 +14,14 @@ Trestle.resource(:projects) do
     scope.new(attrs)
   end
 
-  collection { Project.order(id: :asc) }
+  collection { Project.order(id: :desc) }
 
   search do |query|
     query ? collection.pg_search(query) : collection
   end
 
   table do
-    column :id, sort: {default: true, default_order: :asc}
+    column :id, sort: {default: true, default_order: :desc}
     column :name
     column :status, sort: :status, align: :center do |project|
       status_tag(project.status.humanize, project.status_class)

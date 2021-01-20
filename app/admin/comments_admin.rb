@@ -14,14 +14,14 @@ Trestle.resource(:comments) do
     scope.new(attrs)
   end
 
-  collection { Comment.order(id: :asc) }
+  collection { Comment.order(id: :desc) }
 
   search do |query|
     query ? collection.pg_search(query) : collection
   end
 
   table do
-    column :id, sort: {default: true, default_order: :asc}
+    column :id, sort: {default: true, default_order: :desc}
     column :commenter, sort: :commenter_id
     column :commentable, header: "Commented on", sort: :commentable_id
     column :comment, sort: false

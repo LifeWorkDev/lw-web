@@ -3,14 +3,14 @@ Trestle.resource(:payments) do
     item :payments, icon: "fa fa-money-bill-wave", priority: 5
   end
 
-  collection { Payment.order(id: :asc) }
+  collection { Payment.order(id: :desc) }
 
   search do |query|
     query ? collection.pg_search(query) : collection
   end
 
   table do
-    column :id, sort: {default: true, default_order: :asc}
+    column :id, sort: {default: true, default_order: :desc}
     column :pays_for, sort: false
     column :status, sort: :status, align: :center do |record|
       status_tag(record.status.humanize, record.status_class)

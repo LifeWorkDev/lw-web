@@ -8,14 +8,14 @@ Trestle.resource(:milestones) do
     scope.new(attrs)
   end
 
-  collection { Milestone.order(id: :asc) }
+  collection { Milestone.order(id: :desc) }
 
   search do |query|
     query ? collection.pg_search(query) : collection
   end
 
   table do
-    column :id, sort: {default: true, default_order: :asc}
+    column :id, sort: {default: true, default_order: :desc}
     column :project
     column :date
     column :status, sort: :status, align: :center do |milestone|
