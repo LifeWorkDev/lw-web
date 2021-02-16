@@ -8,7 +8,7 @@ source "https://rubygems.org" do
     gem "rubocop", require: false
     gem "rubocop-performance", require: false
     gem "rubocop-rails", require: false
-    gem "rubocop-rspec", "~> 2.0.0.pre", require: false
+    gem "rubocop-rspec", "~> 2.2.0", require: false
     gem "slim_lint", require: false
     gem "standard", ">= 0.3", require: false
   end

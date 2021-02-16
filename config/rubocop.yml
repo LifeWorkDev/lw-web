@@ -60,7 +60,7 @@ Metrics/BlockLength:
     - spec/**/*
     - lib/data_integration/capta/import.rb
     - app/admin/**/*
-  ExcludedMethods:
+  IgnoredMethods:
     [
       'aasm',
       'context',
