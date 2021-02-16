@@ -7,9 +7,11 @@ class Payment < ApplicationRecord
   belongs_to :pays_for, polymorphic: true
   belongs_to :pay_method
   belongs_to :user, optional: true
-  has_one :disbursement_line, -> { credits.where(code: :disbursement) }, as: :detail, class_name: "DoubleEntry::Line", dependent: :destroy, inverse_of: :detail
-  has_one :payment_line, -> { credits.where(code: :payment) }, as: :detail, class_name: "DoubleEntry::Line", dependent: :destroy, inverse_of: :detail
-  has_one :refund_line, -> { credits.where(code: :refund) }, as: :detail, class_name: "DoubleEntry::Line", dependent: :destroy, inverse_of: :detail
+  has_one :disbursement_line, -> { credits.where(code: :disbursement).order(id: :desc) }, as: :detail, class_name: "DoubleEntry::Line", inverse_of: :detail
+  has_one :payment_line, -> { credits.where(code: :payment).order(id: :desc) }, as: :detail, class_name: "DoubleEntry::Line", inverse_of: :detail
+  has_one :refund_line, -> { credits.where(code: :refund).order(id: :desc) }, as: :detail, class_name: "DoubleEntry::Line", inverse_of: :detail
+  has_one :platform_fee_line, -> { credits.where(code: :platform_fee).order(id: :desc) }, as: :detail, class_name: "DoubleEntry::Line", inverse_of: :detail
+  has_one :processing_fee_line, -> { credits.where(code: :processing_fee).order(id: :desc) }, as: :detail, class_name: "DoubleEntry::Line", inverse_of: :detail
   has_many :lines, as: :detail, class_name: "DoubleEntry::Line", dependent: :delete_all, inverse_of: :detail
 
   delegate :client, :client_amount, :client_fees, :client_users, :freelancer, :freelancer_amount, :freelancer_fees, :platform_fee, :processing_fee, to: :pays_for
