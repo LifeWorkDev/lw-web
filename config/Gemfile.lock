@@ -136,7 +136,7 @@ GEM
       zeitwerk (~> 2.2, >= 2.2.2)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
-    after_commit_everywhere (0.1.5)
+    after_commit_everywhere (1.0.0)
       activerecord (>= 4.2)
     argon2 (2.0.3)
       ffi (~> 1.14)
@@ -622,7 +622,7 @@ DEPENDENCIES
   aasm
   actionpack-cloudflare
   active_model_serializers (~> 0.10.0)
-  after_commit_everywhere (~> 0.1, >= 0.1.5)
+  after_commit_everywhere (~> 1.0)
   argon2
   awesome_print
   aws-sdk-s3
