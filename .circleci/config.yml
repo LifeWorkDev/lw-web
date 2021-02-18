@@ -77,7 +77,7 @@ jobs:
 
       - run:
           name: Wait for yarn install
-          command: dockerize -wait file://$(pwd)/.yarn-finished -timeout 1m
+          command: dockerize -wait file://$(pwd)/.yarn-finished -timeout 2m
 
       - run:
           name: ESLint & StyleLint
