@@ -31,40 +31,34 @@ class RetainerProject < Project
   end
 
   def deposit!(user = nil)
-    raise "Can't deposit for inactive project #{id}" if inactive?
-    return unless payments.create!(
-      amount: client_amount,
+    raise "Can't deposit inactive retainer project #{id}" if inactive?
+    payment_amount = latest_payment ? client_amount : first_client_amount
+    payment = payments.create!(
+      amount: payment_amount,
+      platform_fee: platform_fee(payment_amount),
+      processing_fee: processing_fee(payment_amount),
+      client_pays_fees: client_pays_fees?,
       pay_method: pay_method,
       scheduled_for: deposit_time(latest_payment ? next_date : start_date),
       user: user,
     ).charge!
+    return payment if payment.failed?
 
-    send_deposit_emails
-    schedule_disbursement
+    payment.send_deposit_emails
+    Retainer::DisburseJob.set(wait_until: disbursement_time).perform_later(payment)
     activate! if may_activate?
   end
 
-  def disburse!
-    return unless latest_payment
+  def disburse!(payment = latest_payment)
+    return unless payment
 
-    latest_payment.disburse!
-    send_disbursement_emails
+    payment.disburse!
+    payment.send_disbursement_emails
     schedule_deposit
   end
 
   memoize def description(for_client: false)
     "#{t("retainer_project.description.begin")} #{(for_client ? client_amount : amount).format(no_cents_if_whole: true)} #{"will then be" if for_client} #{t("retainer_project.description.middle", pay_method: for_client && pay_method ? " from your #{pay_method} " : " ")} #{l(next_date, format: :text_without_year)}, #{t("retainer_project.description.end", day: disbursement_day.ordinalize)}"
-  end
-
-  alias_method :orig_client_amount, :client_amount
-  def client_amount(total = nil)
-    return orig_client_amount(total) if total
-
-    if first_payment?
-      first_client_amount
-    else
-      orig_client_amount
-    end
   end
 
   memoize def first_amount
@@ -75,26 +69,11 @@ class RetainerProject < Project
   end
 
   memoize def first_client_amount
-    orig_client_amount(first_amount)
+    client_amount(first_amount)
   end
 
   memoize def first_description(for_client: false)
     "The first payment of #{(for_client ? first_client_amount : first_amount).format(no_cents_if_whole: true)} is due on #{l(start_date, format: :text_without_year)}, and will be disbursed to #{freelancer.name} on #{l(next_date, format: :text_without_year)}."
-  end
-
-  memoize def first_payment?
-    payments.disbursed.size == 0
-  end
-
-  alias_method :orig_freelancer_amount, :freelancer_amount
-  def freelancer_amount(total = nil)
-    return orig_freelancer_amount(total) if total
-
-    if first_payment?
-      orig_freelancer_amount(first_amount)
-    else
-      orig_freelancer_amount
-    end
   end
 
   def for_subject
@@ -109,8 +88,8 @@ class RetainerProject < Project
     payments.successful.last
   end
 
-  def next_date
-    current_date = latest_payment&.scheduled_for&.to_date || start_date
+  def next_date(current_date = nil)
+    current_date ||= latest_payment&.scheduled_for&.to_date || start_date
     next_date = current_date.safe_change_day(disbursement_day)
     next_date += 1.month if next_date <= current_date
     next_date.safe_change_day(disbursement_day)
@@ -121,20 +100,6 @@ class RetainerProject < Project
     return unless active?
 
     Retainer::DepositJob.set(wait_until: deposit_time).perform_later(self)
-  end
-
-  def schedule_disbursement
-    Retainer::DisburseJob.set(wait_until: disbursement_time).perform_later(self)
-  end
-
-  def send_disbursement_emails
-    ClientMailer.with(recipient: client.primary_contact, project: self).retainer_disbursed.deliver_later
-    FreelancerMailer.with(recipient: freelancer, project: self).retainer_disbursed.deliver_later
-  end
-
-  def send_deposit_emails
-    FreelancerMailer.with(recipient: freelancer, project: self).retainer_deposited.deliver_later
-    ClientMailer.with(recipient: client.primary_contact, project: self).retainer_deposited.deliver_later
   end
 
   def stripe_metadata

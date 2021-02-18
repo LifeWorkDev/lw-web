@@ -5,7 +5,7 @@
         strong => l(payment.paid_at, format: :date_only)
         = render 'shared/status_badge', class: 'align-text-bottom', record: payment
       .mt-2.mb-3
-        p #{payment.amount.format} deposit from #{@project.client}
+        p #{payment.base_amount.format} deposit from #{@project.client}
 - if @project.payments.paid.any?
   - next_date = @project.next_date
   .row.text-center.mt-5

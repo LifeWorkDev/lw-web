@@ -14,8 +14,8 @@ class ApplicationMailer < ActionMailer::Base
 private
 
   def set_params
-    @milestone = params[:milestone]
     @payment = params[:payment]
+    @milestone = params[:milestone] || @payment&.milestone
     @project = params[:project] || @milestone&.project || @payment&.project
     @recipient = params[:recipient]
     @refund_amount = Money.new(params[:refund_amount_cents], @payment.currency) if @payment

@@ -32,6 +32,6 @@ private
   end
 
   def retainer_mailer
-    ClientMailer.with({recipient: retainer_project.client.primary_contact, project: retainer_project})
+    ClientMailer.with({recipient: retainer_project.client.primary_contact, payment: retainer_payment})
   end
 end

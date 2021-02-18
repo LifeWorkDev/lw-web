@@ -19,6 +19,6 @@ private
   end
 
   def retainer_mailer
-    FreelancerMailer.with({recipient: retainer_project.freelancer, project: retainer_project})
+    FreelancerMailer.with({recipient: retainer_project.freelancer, payment: retainer_payment})
   end
 end

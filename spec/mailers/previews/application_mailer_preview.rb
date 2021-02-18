@@ -9,12 +9,20 @@ private
     Milestone.find_by(id: params[:id]) || Milestone.deposited.sample
   end
 
+  def milestone_payment
+    Payment.find_by(id: params[:id]) || Payment.milestone.successful.sample
+  end
+
   def milestone_project
     MilestoneProject.find_by(id: params[:id]) || MilestoneProject.not_pending.sample
   end
 
   def payment
-    Payment.find_by(id: params[:id]) || Payment.where(status: %i[refunded partially_refunded]).sample
+    Payment.find_by(id: params[:id]) || Payment.successful.sample
+  end
+
+  def retainer_payment
+    Payment.find_by(id: params[:id]) || Payment.project.successful.sample
   end
 
   def retainer_project

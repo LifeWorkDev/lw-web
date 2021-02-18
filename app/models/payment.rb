@@ -2,19 +2,29 @@ class Payment < ApplicationRecord
   include Payments::Status
 
   monetize :amount_cents, with_model_currency: :currency, numericality: {greater_than_or_equal_to: 0}
+  monetize :platform_fee_cents, with_model_currency: :currency, numericality: {greater_than_or_equal_to: 0}
+  monetize :processing_fee_cents, with_model_currency: :currency, numericality: {greater_than_or_equal_to: 0}
   monetize :stripe_fee_cents, numericality: {greater_than_or_equal_to: 0}
 
   belongs_to :pays_for, polymorphic: true
   belongs_to :pay_method
   belongs_to :user, optional: true
   has_one :disbursement_line, -> { credits.where(code: :disbursement).order(id: :desc) }, as: :detail, class_name: "DoubleEntry::Line", inverse_of: :detail
+  has_one :disbursement_refund_line, -> { credits.where(code: :disbursement_refund).order(id: :desc) }, as: :detail, class_name: "DoubleEntry::Line", inverse_of: :detail
   has_one :payment_line, -> { credits.where(code: :payment).order(id: :desc) }, as: :detail, class_name: "DoubleEntry::Line", inverse_of: :detail
   has_one :refund_line, -> { credits.where(code: :refund).order(id: :desc) }, as: :detail, class_name: "DoubleEntry::Line", inverse_of: :detail
   has_one :platform_fee_line, -> { credits.where(code: :platform_fee).order(id: :desc) }, as: :detail, class_name: "DoubleEntry::Line", inverse_of: :detail
+  has_one :platform_refund_line, -> { credits.where(code: :platform_refund).order(id: :desc) }, as: :detail, class_name: "DoubleEntry::Line", inverse_of: :detail
   has_one :processing_fee_line, -> { credits.where(code: :processing_fee).order(id: :desc) }, as: :detail, class_name: "DoubleEntry::Line", inverse_of: :detail
+  has_one :processing_refund_line, -> { credits.where(code: :processing_refund).order(id: :desc) }, as: :detail, class_name: "DoubleEntry::Line", inverse_of: :detail
   has_many :lines, as: :detail, class_name: "DoubleEntry::Line", dependent: :delete_all, inverse_of: :detail
 
-  delegate :client, :client_amount, :client_fees, :client_users, :freelancer, :freelancer_amount, :freelancer_fees, :platform_fee, :processing_fee, to: :pays_for
+  scope :milestone, -> { where(pays_for_type: "Milestone") }
+  scope :project, -> { where(pays_for_type: "Project") }
+
+  delegate :client, :client_users, :freelancer, to: :pays_for
+
+  alias_method :client_amount, :amount
 
   pg_search_scope :pg_search,
     against: %i[stripe_id],
@@ -22,28 +32,61 @@ class Payment < ApplicationRecord
       pay_method: %i[name issuer kind last_4 stripe_id],
     }
 
+  def milestone?
+    pays_for_type == "Milestone"
+  end
+
+  def milestone
+    pays_for if milestone?
+  end
+
+  def project?
+    pays_for_type == "Project"
+  end
+
+  memoize def project
+    pays_for.try(:project) || pays_for
+  end
+
+  memoize def client_fee
+    processing_fee + (client_pays_fees? ? platform_fee : 0)
+  end
+
+  memoize def base_amount
+    amount - client_fee
+  end
+
+  memoize def freelancer_fee
+    client_pays_fees? ? 0 : platform_fee
+  end
+
+  memoize def freelancer_amount
+    base_amount - freelancer_fee
+  end
+
   def charge!
-    set_stripe_fields pay_method.charge!(
-      amount: amount,
-      idempotency_key: pays_for.idempotency_key,
-      metadata: pays_for.stripe_metadata,
-    )
-    record_charge!
-    record_stripe_fees!
-    save!
-    true
-  rescue Stripe::CardError => e
-    Errbase.report(e, {payment: id})
-    err = e.error
-    self.note = err.message
-    charge = err.payment_intent&.charges&.first || err.charge
-    if charge
-      set_stripe_fields(charge)
-    else
-      self.status = "failed"
+    begin
+      set_stripe_fields pay_method.charge!(
+        amount: amount,
+        idempotency_key: pays_for.idempotency_key,
+        metadata: pays_for.stripe_metadata,
+      )
+      record_charge!
+      record_stripe_fees!
+      save!
+    rescue Stripe::CardError => e
+      Errbase.report(e, {payment: id})
+      err = e.error
+      self.note = err.message
+      charge = err.payment_intent&.charges&.first || err.charge
+      if charge
+        set_stripe_fields(charge)
+      else
+        self.status = :failed
+      end
     end
     save!
-    false
+    self
   end
 
   def issue_refund!(new_amount:, freelancer_refund_cents:)
@@ -82,10 +125,6 @@ class Payment < ApplicationRecord
     end
   end
 
-  def project
-    pays_for.try(:project) || pays_for
-  end
-
   def record_refund!(client_refund_cents:, metadata:, freelancer_refund_cents: nil, platform_refund_cents: nil)
     if freelancer_refund_cents.present? # Disbursed payment
       record_reversed_transfer!(Money.new(client_refund_cents, currency), Money.new(freelancer_refund_cents, currency), Money.new(platform_refund_cents, currency), metadata)
@@ -114,6 +153,18 @@ class Payment < ApplicationRecord
       idempotency_key: "#{pays_for.idempotency_key}-transfer-of-#{freelancer_amount.cents}",
     )
     true
+  end
+
+  def send_disbursement_emails
+    mailer = milestone? ? :milestone_paid : :retainer_disbursed
+    ClientMailer.with(recipient: client.primary_contact, payment: self).send(mailer).deliver_later
+    FreelancerMailer.with(recipient: freelancer, payment: self).send(mailer).deliver_later
+  end
+
+  def send_deposit_emails
+    mailer = milestone? ? :milestone_deposited : :retainer_deposited
+    ClientMailer.with(recipient: client.primary_contact, payment: self).send(mailer).deliver_later
+    FreelancerMailer.with(recipient: freelancer, payment: self).send(mailer).deliver_later
   end
 
 private

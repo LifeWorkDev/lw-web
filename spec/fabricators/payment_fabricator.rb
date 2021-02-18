@@ -2,6 +2,8 @@ require_relative "helpers"
 
 Fabricator(:payment) do
   amount_cents { random_amount_cents }
+  platform_fee_cents { random_fee_cents }
+  processing_fee_cents { random_fee_cents }
   pay_method(fabricator: %i[bank_account_pay_method card_pay_method].sample)
 
   after_build do |payment|

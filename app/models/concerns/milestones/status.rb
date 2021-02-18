@@ -15,7 +15,7 @@ module Milestones::Status
           guard { !project.inactive? }
 
           after do |user|
-            payments.create!(amount: client_amount, pay_method: pay_method, user: user).charge!
+            payments.create!(amount: client_amount, platform_fee: platform_fee, processing_fee: processing_fee, client_pays_fees: client_pays_fees?, pay_method: pay_method, user: user).charge!
           end
         end
 

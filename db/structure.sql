@@ -1016,7 +1016,10 @@ CREATE TABLE public.payments (
     pay_method_id bigint NOT NULL,
     user_id bigint,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    platform_fee_cents integer DEFAULT 0 NOT NULL,
+    processing_fee_cents integer DEFAULT 0 NOT NULL,
+    client_pays_fees boolean DEFAULT false NOT NULL
 );
 
 
@@ -1960,6 +1963,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201202041803'),
 ('20201202041827'),
 ('20201202041841'),
-('20201202041855');
+('20201202041855'),
+('20210204005654');
 
 
