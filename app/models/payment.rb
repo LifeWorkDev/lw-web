@@ -13,9 +13,9 @@ class Payment < ApplicationRecord
   has_one :disbursement_refund_line, -> { credits.where(code: :disbursement_refund).order(id: :desc) }, as: :detail, class_name: "DoubleEntry::Line", inverse_of: :detail
   has_one :payment_line, -> { credits.where(code: :payment).order(id: :desc) }, as: :detail, class_name: "DoubleEntry::Line", inverse_of: :detail
   has_one :refund_line, -> { credits.where(code: :refund).order(id: :desc) }, as: :detail, class_name: "DoubleEntry::Line", inverse_of: :detail
-  has_one :platform_fee_line, -> { credits.where(code: :platform_fee).order(id: :desc) }, as: :detail, class_name: "DoubleEntry::Line", inverse_of: :detail
+  has_one :platform_fee_line, -> { credits.where(code: :platform).order(id: :desc) }, as: :detail, class_name: "DoubleEntry::Line", inverse_of: :detail
   has_one :platform_refund_line, -> { credits.where(code: :platform_refund).order(id: :desc) }, as: :detail, class_name: "DoubleEntry::Line", inverse_of: :detail
-  has_one :processing_fee_line, -> { credits.where(code: :processing_fee).order(id: :desc) }, as: :detail, class_name: "DoubleEntry::Line", inverse_of: :detail
+  has_one :processing_fee_line, -> { credits.where(code: :processing).order(id: :desc) }, as: :detail, class_name: "DoubleEntry::Line", inverse_of: :detail
   has_one :processing_refund_line, -> { credits.where(code: :processing_refund).order(id: :desc) }, as: :detail, class_name: "DoubleEntry::Line", inverse_of: :detail
   has_many :lines, as: :detail, class_name: "DoubleEntry::Line", dependent: :delete_all, inverse_of: :detail
 
