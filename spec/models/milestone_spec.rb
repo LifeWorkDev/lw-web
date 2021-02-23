@@ -111,9 +111,11 @@ RSpec.describe Milestone, type: :model do
     end
 
     describe "state machine" do
-      let(:payment) { milestone.latest_payment }
+      let(:payment) { milestone.payments.last }
 
       describe "#deposit!" do
+        before { project.update!(status: :client_invited) }
+
         it "doesn't schedule milestone approaching emails if they would be in the past" do
           milestone.update!(date: Date.current)
           expect {
@@ -123,14 +125,39 @@ RSpec.describe Milestone, type: :model do
         end
 
         it "charges client's primary pay method, activates project, emails freelancer, emails client" do
+          deposit_return_value = nil
           expect {
-            milestone.deposit!
+            deposit_return_value = milestone.deposit!
           }.to enqueue_mail(FreelancerMailer, :milestone_deposited).once &
             enqueue_mail(ClientMailer, :milestone_deposited).once &
             enqueue_mail(FreelancerMailer, :milestone_approaching).once.at(milestone.freelancer_reminder_time) &
             enqueue_mail(ClientMailer, :milestone_approaching).once.at(milestone.client_reminder_time) &
             enqueue_job(Milestones::PayJob).once.at(milestone.payment_time)
+          expect(deposit_return_value).to be true
           expect(project.reload.active?).to be true
+          expect(payment.successful?).to be true
+          expect(payment.amount).to eq milestone.client_amount
+          expect(payment.pays_for).to eq milestone
+          expect(payment.pay_method).to eq milestone.client.primary_pay_method
+          expect(payment.user).to be_nil
+        end
+
+        it "doesn't activate project, email freelancer, or email client if payment fails" do
+          # Stripe-Ruby-Mock doesn't support forcing failures for PaymentIntents (used by Card payments) yet
+          Fabricate(:bank_account_pay_method, org: client)
+          StripeMock.prepare_card_error(:card_declined)
+
+          deposit_return_value = nil
+          expect {
+            deposit_return_value = milestone.deposit!
+          }.to not_enqueue_mail(FreelancerMailer, :milestone_deposited) &
+            not_enqueue_mail(ClientMailer, :milestone_deposited) &
+            not_enqueue_mail(FreelancerMailer, :milestone_approaching) &
+            not_enqueue_mail(ClientMailer, :milestone_approaching) &
+            not_enqueue_job(Milestones::PayJob)
+          expect(deposit_return_value).to be false
+          expect(project.reload.active?).to be false
+          expect(payment.failed?).to be true
           expect(payment.amount).to eq milestone.client_amount
           expect(payment.pays_for).to eq milestone
           expect(payment.pay_method).to eq milestone.client.primary_pay_method

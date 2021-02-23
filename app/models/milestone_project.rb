@@ -1,7 +1,7 @@
 class MilestoneProject < Project
   has_many :milestones, -> { order(:date) }, dependent: :destroy, foreign_key: :project_id, inverse_of: :project
   has_many :comments, through: :milestones
-  has_many :payments, through: :milestones
+  has_many :payments, -> { order(id: :asc) }, through: :milestones
   accepts_nested_attributes_for :milestones, reject_if: :existing_milestone?, allow_destroy: true
 
   ICON = mdi_url("flag-checkered").freeze

@@ -2,7 +2,7 @@ class RetainerProject < Project
   include Commentable
   include Dates
 
-  has_many :payments, as: :pays_for, dependent: :destroy
+  has_many :payments, -> { order(id: :asc) }, as: :pays_for, dependent: :destroy
 
   before_destroy -> { Milestone.where(project_id: id).destroy_all }
 
@@ -42,11 +42,12 @@ class RetainerProject < Project
       scheduled_for: deposit_time(latest_payment ? next_date : start_date),
       user: user,
     ).charge!
-    return payment if payment.failed?
+    return false if payment.failed?
 
     payment.send_deposit_emails
     Retainer::DisburseJob.set(wait_until: disbursement_time).perform_later(payment)
     activate! if may_activate?
+    true
   end
 
   def disburse!(payment = latest_payment)

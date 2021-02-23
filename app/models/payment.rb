@@ -73,7 +73,6 @@ class Payment < ApplicationRecord
       )
       record_charge!
       record_stripe_fees!
-      save!
     rescue Stripe::CardError => e
       Errbase.report(e, {payment: id})
       err = e.error
