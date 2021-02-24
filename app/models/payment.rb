@@ -320,7 +320,7 @@ private
         )
       end
 
-      processing_refund = client_refund - freelancer_refund
+      processing_refund = client_refund - freelancer_refund - platform_refund
       if processing_refund.positive?
         DoubleEntry.transfer(
           processing_refund,
