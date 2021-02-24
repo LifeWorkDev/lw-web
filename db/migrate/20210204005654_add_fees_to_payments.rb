@@ -9,12 +9,14 @@ class AddFeesToPayments < ActiveRecord::Migration[6.0]
         Payment.reset_column_information
 
         Payment.disbursed.each do |payment|
-          payment.platform_fee = payment.platform_fee_line.amount - (payment.platform_refund_line&.amount || 0)
-          payment.processing_fee = payment.processing_fee_line.amount - (payment.processing_refund_line&.amount || 0)
+          Bugsnag.leave_breadcrumb "processing payment #{payment.id}"
+          payment.platform_fee = payment.lines.credits.where(code: :platform).sum(:amount) - payment.lines.credits.where(code: :platform_refund).sum(:amount)
+          payment.processing_fee = payment.lines.credits.where(code: :processing).sum(:amount) - payment.lines.credits.where(code: :processing_refund).sum(:amount)
           payment.save!
         end
 
         Payment.where(status: %i[pending succeeded failed]).each do |payment|
+          Bugsnag.leave_breadcrumb "processing payment #{payment.id}"
           payment.platform_fee = payment.pays_for.platform_fee
           payment.processing_fee = payment.pays_for.processing_fee
           payment.save!
