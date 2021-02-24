@@ -1,0 +1,3 @@
+- if Date.current > @project.next_date
+  markdown:
+    This payment was originally scheduled to be disbursed on #{l(@project.next_date, format: :text_without_year)}, but was delayed due to an issue with our back-end systems. Please be assured that this _will not_ affect the timeliness of future payments.

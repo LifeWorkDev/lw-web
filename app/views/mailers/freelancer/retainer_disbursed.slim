@@ -9,6 +9,8 @@ markdown:
   **Fees:** #{@payment.freelancer_fee.format}  
   **Net Amount:** #{@payment.freelancer_amount.format}  
 
+= render 'mailers/retainer_delay_message'
+
 - if @project.active?
   markdown:
     At the end of today, we will automatically withdraw **#{@project.amount.format}** from your client's saved payment method, and hold that until **#{l(@project.next_date(@project.next_date), format: :text_without_year)}**. Look for another message from us when that occurs, so that you know your next payment is secure.

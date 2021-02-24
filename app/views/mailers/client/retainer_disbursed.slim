@@ -5,6 +5,8 @@ markdown:
   **Project:** #{@project.name}  
   **Freelancer:** #{@freelancer_name}  
 
+= render 'mailers/retainer_delay_message'
+
 - if @project.active?
   markdown:
     At the end of today, we will automatically withdraw **#{@project.client_amount.format}** from your #{@project.pay_method}, and hold that until **#{l(@project.next_date(@project.next_date), format: :text_without_year)}**.
