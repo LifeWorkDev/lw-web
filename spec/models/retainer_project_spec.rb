@@ -37,7 +37,7 @@ RSpec.describe RetainerProject, type: :model do
       }.to change { payment.reload.status }.to("disbursed") &
         enqueue_mail(ClientMailer, :retainer_disbursed).once &
         enqueue_mail(FreelancerMailer, :retainer_disbursed).once &
-        enqueue_job(Retainer::DepositJob).once.at(project.deposit_time)
+        enqueue_job(Retainer::DepositJob).once
     end
   end
 

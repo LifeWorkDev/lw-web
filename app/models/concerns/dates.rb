@@ -4,7 +4,10 @@ module Dates
   included do
     # Stripe cuts off ACH for the day at 21:00 UTC
     # https://stripe.com/docs/ach#ach-payments-workflow
-    def deposit_time(deposit_date = date)
+    def deposit_time(deposit_date = nil)
+      client.primary_contact.use_zone do
+        deposit_date ||= Date.current
+      end
       deposit_date.to_time(:utc).change(hour: 20, min: 45)
     end
 

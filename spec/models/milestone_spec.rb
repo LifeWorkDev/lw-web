@@ -179,7 +179,7 @@ RSpec.describe Milestone, type: :model do
               milestone.pay!
             }.to enqueue_mail(ClientMailer, :milestone_paid).once &
               enqueue_mail(FreelancerMailer, :milestone_paid).once &
-              enqueue_job(Milestones::DepositJob).once.at(milestone.deposit_time)
+              enqueue_job(Milestones::DepositJob).once
             expect(Stripe::Transfer).to have_received(:create).once
           end
         end

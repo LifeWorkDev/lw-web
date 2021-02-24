@@ -76,6 +76,7 @@ class Milestone < ApplicationRecord
   end
 
   def schedule_deposit(schedule_for = deposit_time)
+    schedule_for = Time.current + 3.hours if schedule_for.past?
     Milestones::DepositJob.set(wait_until: schedule_for).perform_later(self) if pending?
   end
 

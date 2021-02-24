@@ -97,10 +97,11 @@ class RetainerProject < Project
   end
   alias_method :date, :next_date
 
-  def schedule_deposit
+  def schedule_deposit(schedule_for = deposit_time)
     return unless active?
 
-    Retainer::DepositJob.set(wait_until: deposit_time).perform_later(self)
+    schedule_for = Time.current + 3.hours if schedule_for.past?
+    Retainer::DepositJob.set(wait_until: schedule_for).perform_later(self)
   end
 
   def stripe_metadata
