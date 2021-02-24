@@ -30,6 +30,8 @@ Trestle.resource(:payments) do
   form do |record|
     auto_field :pays_for
     auto_field :amount
+    auto_field :platform_fee
+    auto_field :processing_fee
     static_field :status do
       status_tag(record.status.humanize, record.status_class)
     end
