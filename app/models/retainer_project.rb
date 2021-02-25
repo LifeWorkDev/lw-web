@@ -51,7 +51,7 @@ class RetainerProject < Project
   end
 
   def disburse!(payment = latest_payment)
-    return unless payment
+    raise "Payment #{payment&.id} does not belong to Project #{id}" unless payment&.pays_for == self
 
     payment.disburse!
     payment.send_disbursement_emails
