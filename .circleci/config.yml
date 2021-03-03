@@ -18,24 +18,8 @@ jobs:
       - checkout
 
       - run:
-          name: Log versions
-          command: |
-            ruby -v
-            bundle -v
-            node -v
-            yarn -v
-            chromedriver -v
-            google-chrome --version
-          background: true
-
-      - run:
           name: Yarn install
           command: yarn install && touch .yarn-finished
-          background: true
-
-      - run:
-          name: Install Bundler
-          command: gem install bundler -v=$(cat Gemfile.lock | tail -1 | tr -d " ")
           background: true
 
       - run:
@@ -44,6 +28,21 @@ jobs:
             cp config/database.yml.example config/database.yml
             sudo apt-get update
             sudo apt-get install -y postgresql-client-common postgresql-client
+          background: true
+
+      - run:
+          name: Install Bundler
+          command: gem install bundler -v=$(cat Gemfile.lock | tail -1 | tr -d " ")
+
+      - run:
+          name: Log versions
+          command: |
+            ruby -v
+            bundle -v
+            node -v
+            yarn -v
+            chromedriver -v
+            google-chrome --version
           background: true
 
       - restore_cache:
