@@ -8,7 +8,6 @@ module.exports = {
   },
   extends: [
     'plugin:prettier/recommended',
-    'prettier/react',
     'eslint:recommended',
     'plugin:react/recommended',
     'plugin:import/errors',
