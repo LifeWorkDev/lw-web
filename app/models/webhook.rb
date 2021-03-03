@@ -29,7 +29,7 @@ class Webhook < ApplicationRecord
 
               pay_method.update_from_stripe_object!(stripe_obj)
             else
-              raise "No handler for Stripe event #{event}"
+              raise "No handler for Stripe event #{event} for #{stripe_obj.id}"
             end
           end
         end
