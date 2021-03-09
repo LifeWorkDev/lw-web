@@ -1,10 +1,23 @@
 - content_for :title, 'Connect with Stripe'
+ruby:
+  name_parts = current_user.name.split
+  stripe_url = Stripe::OAuth.authorize_url(
+    {
+      redirect_uri: freelancer_stripe_callback_url,
+      stripe_user: {
+        email: current_user.email,
+        first_name: name_parts.first,
+        last_name: name_parts.last,
+      },
+    },
+    express: true,
+  )
 
 .text-center
   h2 Connect with Stripe to receive payments
   p.lead We'll send you to Stripe's site and automatically bring you back here to continue the process when you're finished.
 
   .mt-4
-    = link_to Stripe::OAuth.authorize_url({ redirect_uri: freelancer_stripe_callback_url, suggested_capabilities: %i[card_payments transfers tax_reporting_us_1099_k] }, express: true), class: 'btn btn-primary'
+    = link_to stripe_url, class: 'btn btn-primary'
       = mdi_svg 'vector-link'
       |  Connect Now
