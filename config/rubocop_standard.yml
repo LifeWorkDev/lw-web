@@ -4,4 +4,4 @@ inherit_gem:
   standard: config/base.yml
 
 require:
-  - standard/cop/semantic_blocks
+  - standard/cop/block_single_line_braces
