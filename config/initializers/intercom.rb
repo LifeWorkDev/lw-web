@@ -55,6 +55,7 @@ IntercomRails.config do |config|
     email_opt_in: :email_opt_in,
     project_status: :max_pending_project_status,
     work_type: :work_type,
+    how_did_you_hear_about_us: :how_did_you_hear_about_us,
   }
 
   # == Current company method/variable

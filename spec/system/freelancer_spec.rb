@@ -26,6 +26,7 @@ RSpec.describe "Freelancer views", type: :system do
       expect(user.email).to eq user_email
       expect(user.email_opt_in).to eq(user_opt_in)
       select user_time_zone, from: "user[time_zone]"
+      fill_in "user[how_did_you_hear_about_us]", with: Faker::Lorem.sentence
       WORK_CATEGORIES.sample(rand(1..WORK_CATEGORIES.size)).each do |category|
         check category, allow_label_click: true
       end
@@ -33,6 +34,7 @@ RSpec.describe "Freelancer views", type: :system do
       expect {
         click_continue
       }.to change { user.reload.time_zone }.to(user_time_zone) &
+        change { user.how_did_you_hear_about_us } &
         change { user.work_category } &
         change { user.work_type }
       expect(page).to have_current_path "/f/content/walkthrough"

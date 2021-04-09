@@ -21,6 +21,6 @@ class Freelancer::UsersController < AuthenticatedController
 private
 
   def attributes
-    params.require(:user).permit(:time_zone, :work_type, work_category: [])
+    params.require(:user).permit(:time_zone, :how_did_you_hear_about_us, :work_type, work_category: [])
   end
 end

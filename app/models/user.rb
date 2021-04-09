@@ -19,6 +19,7 @@ class User < ApplicationRecord
 
   jsonb_accessor :metadata,
     fee_percent: :float,
+    how_did_you_hear_about_us: :string,
     work_category: [:string, array: true, default: []],
     work_type: :string
 

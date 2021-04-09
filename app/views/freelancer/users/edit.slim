@@ -8,6 +8,7 @@ h2.text-center.mt-2
 = bootstrap_form_with(model: [current_namespace, current_user]) do |f|
   = hidden_field_tag :client, params[:client] if params[:client].present?
   = render 'shared/time_zone_select', f: f, user: current_user
+  = f.text_field :how_did_you_hear_about_us, label: 'How did you hear about us?'
   = render 'shared/work_category_select', f: f, label: 'What kinds of freelance work do you do?'
   .form-group.mb-0
     label.required What type of freelancer are you?

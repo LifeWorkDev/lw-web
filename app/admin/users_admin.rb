@@ -56,6 +56,7 @@ Trestle.resource(:users) do
     end
 
     tab :questionnaire do
+      auto_field :how_did_you_hear_about_us
       select :work_category, WORK_CATEGORIES, {}, disabled: true, multiple: true
       auto_field :work_type
     end
