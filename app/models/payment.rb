@@ -124,6 +124,34 @@ class Payment < ApplicationRecord
     end
   end
 
+  memoize def payout_amount
+    (platform_fee + processing_fee - stripe_fee - 0.25.to_money) * (1 - 0.0025)
+  end
+
+  def payout!
+    return unless payout_amount.positive?
+
+    safely do
+      payout = Stripe::Payout.create(
+        {
+          amount: payout_amount.cents,
+          currency: currency.to_s,
+          description: pays_for.to_s,
+          source_type: pay_method.model_name.element,
+          statement_descriptor: "Payment #{id}",
+          metadata: pays_for.stripe_metadata,
+        },
+        idempotency_key: "#{pays_for.idempotency_key}-payout-of-#{payout_amount.cents}",
+      )
+
+      if payout.status == "failed"
+        raise "Payout of #{payout_amount.format} failed with '#{payout.failure_message}' (#{payout.failure_code})"
+      else
+        record_payout!(payout)
+      end
+    end
+  end
+
   def record_refund!(client_refund_cents:, metadata:, freelancer_refund_cents: nil, platform_refund_cents: nil)
     if freelancer_refund_cents.present? # Disbursed payment
       record_reversed_transfer!(Money.new(client_refund_cents, currency), Money.new(freelancer_refund_cents, currency), Money.new(platform_refund_cents, currency), metadata)
@@ -216,6 +244,21 @@ private
       detail: self,
       from: client.account_cash,
       to: freelancer.account_receivable,
+    )
+  end
+
+  def record_payout!(payout)
+    DoubleEntry.transfer(
+      payout_amount,
+      code: :lw_payout,
+      detail: self,
+      from: ACCOUNT_FEES,
+      to: ACCOUNT_BANK,
+      metadata: {
+        payout_id: payout.id,
+        balance_transaction_id: payout.balance_transaction,
+        destination_id: payout.destination,
+      },
     )
   end
 

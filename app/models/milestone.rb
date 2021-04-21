@@ -84,11 +84,11 @@ class Milestone < ApplicationRecord
     Milestones::PayJob.set(wait_until: payment_time).perform_later(self)
   end
 
-  def idempotency_key
-    "milestone-#{id}"
+  memoize def idempotency_key
+    "milestone-#{id}".freeze
   end
 
-  def stripe_metadata
+  memoize def stripe_metadata
     {'Milestone ID': id}
   end
 

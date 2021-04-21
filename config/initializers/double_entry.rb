@@ -10,6 +10,9 @@ DoubleEntry.configure do |config|
       end
     end
 
+    acct.define identifier: :lw_bank
+    ACCOUNT_BANK ||= DoubleEntry.account :lw_bank
+
     acct.define identifier: :fees
     ACCOUNT_FEES ||= DoubleEntry.account :fees
 
@@ -20,15 +23,18 @@ DoubleEntry.configure do |config|
     acct.define identifier: :cash, scope_identifier: org_scope
 
     user_scope = class_scope("User")
-    acct.define identifier: :receivable, scope_identifier: user_scope
     acct.define identifier: :disbursement, scope_identifier: user_scope
+    acct.define identifier: :receivable, scope_identifier: user_scope
+    acct.define identifier: :bank, scope_identifier: user_scope
   end
 
   config.define_transfers do |tx|
     tx.define code: :disbursement, from: :receivable, to: :disbursement
     tx.define code: :disbursement_refund, from: :disbursement, to: :cash
     tx.define code: :disbursement_reversal, from: :disbursement, to: :receivable
+    tx.define code: :lw_payout, from: :fees, to: :lw_bank
     tx.define code: :payment, from: :cash, to: :receivable
+    tx.define code: :payout, from: :disbursement, to: :bank
     tx.define code: :platform, from: :receivable, to: :fees
     tx.define code: :platform_refund, from: :fees, to: :cash
     tx.define code: :platform_reversal, from: :fees, to: :receivable

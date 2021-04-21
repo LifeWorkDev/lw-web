@@ -29,6 +29,7 @@ module Payments::Status
         transitions from: %i[pending succeeded partially_refunded], to: :disbursed do
           after do
             transfer!
+            payout!
           end
         end
       end

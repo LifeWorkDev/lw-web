@@ -81,8 +81,8 @@ class RetainerProject < Project
     "a new engagement".freeze
   end
 
-  def idempotency_key
-    "retainer-#{id}"
+  memoize def idempotency_key
+    "retainer-#{id}".freeze
   end
 
   def latest_payment
@@ -104,7 +104,7 @@ class RetainerProject < Project
     Retainer::DepositJob.set(wait_until: schedule_for).perform_later(self)
   end
 
-  def stripe_metadata
+  memoize def stripe_metadata
     {'Retainer Project ID': id}
   end
 end
