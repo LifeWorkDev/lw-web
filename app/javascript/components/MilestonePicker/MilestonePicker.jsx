@@ -118,6 +118,12 @@ const MilestonePicker = (props) => {
   return (
     <ErrorBoundary>
       <div className='text-center'>
+        <DayPicker
+          selectedDays={selectedDays}
+          onDayClick={handleDayClick}
+          numberOfMonths={isMobile ? 1 : 2}
+          disabledDays={isDisabled}
+        />
         <div>
           {deletedMilestones.map((milestone, key) => {
             return (
@@ -144,7 +150,7 @@ const MilestonePicker = (props) => {
           {orderedDays.map((day, key) => {
             return (
               <span
-                className='badge badge-primary badge-pill date-pill mr-2 mb-2'
+                className='badge badge-primary badge-pill date-pill mr-2 mt-2'
                 key={key}
               >
                 <span>{day.toLocaleDateString()}</span>
@@ -164,12 +170,6 @@ const MilestonePicker = (props) => {
             )
           })}
         </div>
-        <DayPicker
-          selectedDays={selectedDays}
-          onDayClick={handleDayClick}
-          numberOfMonths={isMobile ? 1 : 2}
-          disabledDays={isDisabled}
-        />
       </div>
     </ErrorBoundary>
   )
