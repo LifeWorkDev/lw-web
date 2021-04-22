@@ -51,6 +51,7 @@ Trestle.resource(:users) do
       end
       auto_field :current_sign_in_at
       auto_field :current_sign_in_ip
+      auto_field :sign_in_count
       auto_field :created_at
       auto_field :updated_at
       concat link_to '<i class="fa fa-mask"></i> Impersonate'.html_safe, main_app.users_impersonate_path(instance), method: :post, class: "btn btn-secondary", title: "Impersonate user" unless instance == current_user || instance.new_record?
