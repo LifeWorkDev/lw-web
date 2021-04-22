@@ -5,6 +5,11 @@
   line-height: 1.25;
 }
 
+.DayPicker-Day {
+  width: 36px;
+  height: 36px;
+}
+
 .DayPicker-Day--today:not(.DayPicker-Day--outside) {
   color: unset;
 
