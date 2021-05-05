@@ -17,7 +17,7 @@ class ClientMailerPreview < ApplicationMailerPreview
 private
 
   def invite(project)
-    params = {recipient: project.freelancer, project: project}
+    params = {recipient: project.client.primary_contact, project: project}
     params[:reminder] = [true, nil].sample
     ClientMailer.with(params).invite
   end
