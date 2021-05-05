@@ -48,7 +48,7 @@ gem "slim-rails" # Template language, lightweight alternative to erb/haml
 gem "sprockets", "< 4.0", require: false
 gem "stripe"
 gem "strong_migrations" # complains about migration worst-practices
-gem "symbol-fstring", require: "fstring/all" # Improve performance of Symbol#to_s
+gem "symbol-fstring", "1.0.0", require: "fstring/all" # Improve performance of Symbol#to_s
 gem "trestle"
 gem "trestle-search"
 gem "turbolinks", "~> 5.2"

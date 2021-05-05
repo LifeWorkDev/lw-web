@@ -34,6 +34,9 @@ Lint/Debugger:
 Lint/EmptyWhen:
   Enabled: false
 
+Lint/OrAssignmentToConstant:
+  Enabled: false
+
 Lint/RaiseException:
   Enabled: true
 
@@ -107,6 +110,9 @@ Rails/DynamicFindBy:
     - find_by_email
   Exclude:
     - spec/system/**/*
+
+Rails/EnvironmentVariableAccess:
+  AllowReads: true
 
 Rails/LexicallyScopedActionFilter:
   Enabled: false
