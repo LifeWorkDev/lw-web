@@ -5,7 +5,7 @@ class ClientMailer < ApplicationMailer
   end
 
   def invite
-    @recipient.invite! unless @recipient.active? # Generate new invitation token
+    @recipient.invite! unless @recipient.active? || @preview # Generate new invitation token
 
     @get_started_url = @recipient.raw_invitation_token.present? ? accept_user_invitation_url(invitation_token: @recipient.raw_invitation_token) : [:payment, :client, @project]
     make_bootstrap_mail(subject: "#{"[#{t(".reminder")}] " if params[:reminder]}#{t(".subject", freelancer: @project.freelancer.name, project: @project.for_subject)}")

@@ -5,6 +5,10 @@ private
     Comment.find_by(id: params[:id]) || Comment.sample
   end
 
+  def mailer_with_params
+    self.class.to_s.gsub("Preview", "").constantize.with(@mailer_params.merge(preview: true))
+  end
+
   def milestone
     Milestone.find_by(id: params[:id]) || Milestone.deposited.sample
   end

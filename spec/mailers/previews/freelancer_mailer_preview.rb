@@ -10,15 +10,18 @@ class FreelancerMailerPreview < ApplicationMailerPreview
 private
 
   def milestone_mailer
-    FreelancerMailer.with({recipient: milestone.freelancer, milestone: milestone})
+    @mailer_params = {recipient: milestone.freelancer, milestone: milestone}
+    mailer_with_params
   end
 
   def payment_mailer
     refund_amount = Money.new(rand(1..payment.amount_cents))
-    FreelancerMailer.with({recipient: payment.freelancer, payment: payment, refund_amount: refund_amount})
+    @mailer_params = {recipient: payment.freelancer, payment: payment, refund_amount: refund_amount}
+    mailer_with_params
   end
 
   def retainer_mailer
-    FreelancerMailer.with({recipient: retainer_project.freelancer, payment: retainer_payment})
+    @mailer_params = {recipient: retainer_project.freelancer, payment: retainer_payment}
+    mailer_with_params
   end
 end

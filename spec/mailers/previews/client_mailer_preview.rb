@@ -17,21 +17,23 @@ class ClientMailerPreview < ApplicationMailerPreview
 private
 
   def invite(project)
-    params = {recipient: project.client.primary_contact, project: project}
-    params[:reminder] = [true, nil].sample
-    ClientMailer.with(params).invite
+    @mailer_params = {recipient: project.client.primary_contact, project: project, reminder: [true, nil].sample}
+    mailer_with_params.invite
   end
 
   def milestone_mailer
-    ClientMailer.with({recipient: milestone.client.primary_contact, milestone: milestone})
+    @mailer_params = {recipient: milestone.client.primary_contact, milestone: milestone}
+    mailer_with_params
   end
 
   def payment_mailer
     refund_amount = Money.new(rand(1..payment.amount_cents))
-    ClientMailer.with({recipient: payment.client.primary_contact, payment: payment, refund_amount: refund_amount})
+    @mailer_params = {recipient: payment.client.primary_contact, payment: payment, refund_amount: refund_amount}
+    mailer_with_params
   end
 
   def retainer_mailer
-    ClientMailer.with({recipient: retainer_project.client.primary_contact, payment: retainer_payment})
+    @mailer_params = {recipient: retainer_project.client.primary_contact, payment: retainer_payment}
+    mailer_with_params
   end
 end
