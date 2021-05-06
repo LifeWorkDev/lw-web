@@ -24,17 +24,17 @@ class ApplicationController < ActionController::Base
   end
 
   def current_namespace
-    self.class.module_parent.to_s.underscore
+    self.class.module_parent.to_s.underscore.to_sym
   end
   helper_method :current_namespace
 
   def client_namespace?
-    current_namespace == "client"
+    current_namespace == :client
   end
   helper_method :client_namespace?
 
   def freelancer_namespace?
-    current_namespace == "freelancer"
+    current_namespace == :freelancer
   end
   helper_method :freelancer_namespace?
 
