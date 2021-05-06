@@ -12,6 +12,11 @@ module STIPreload
         super
       end
 
+      def subclasses
+        preload_sti unless preloaded
+        super
+      end
+
       def preload_sti
         self.preloaded = true
         Dir[const_get(:SUBCLASS_FILES)].each { |f| f.delete_prefix("app/models/").delete_suffix(".rb").camelize.constantize }
