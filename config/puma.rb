@@ -7,6 +7,19 @@ if Rails.env.development?
   # Allow puma to be restarted by `rails restart` command.
   plugin :tmp_restart
 
+  # Puma::Single.class_eval do
+  #   alias :orig_run :run
+  #   def run
+  #     pp @launcher.events
+  #     @launcher.events.on_booted do
+  #       title = "Bakesy server started"
+  #       defined?(TerminalNotifier) && TerminalNotifier::Guard.success("", title: title)
+  #       defined?(Libnotify) && Libnotify.show(summary: title)
+  #     end
+  #     orig_run
+  #   end
+  # end
+
   after_worker_boot do
     title = "LifeWork server started"
     defined?(TerminalNotifier) && TerminalNotifier::Guard.success("", title: title)
