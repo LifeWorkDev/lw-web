@@ -26,6 +26,7 @@ RSpec.describe Payment, type: :model do
       }))
       payment.issue_refund!(new_amount: 0.to_money, freelancer_refund_cents: payment.pays_for.amount_cents)
       expect(payment.reload.amount).to eq 0
+      expect(payment.platform_fee).to eq 0
       expect(Stripe::Refund).to have_received(:create).with({
         amount: old_amount.cents,
         charge: payment.stripe_id,

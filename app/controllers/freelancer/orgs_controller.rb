@@ -15,7 +15,7 @@ class Freelancer::OrgsController < AuthenticatedController
   # GET /orgs/new
   def new
     @org = Org.new
-    @org.projects.build
+    @org.projects.build(freelancer: current_user)
     @org.users.build
   end
 

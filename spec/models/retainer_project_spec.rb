@@ -56,7 +56,7 @@ RSpec.describe RetainerProject, type: :model do
   end
 
   context "when start_date.day != disbursement_day" do
-    subject(:project) { Fabricate(:retainer_project, amount_cents: 15_000_00, disbursement_day: 1, start_date: "2020-05-25") }
+    subject(:project) { Fabricate(:active_retainer_project, amount_cents: 15_000_00, disbursement_day: 1, start_date: "2020-05-25") }
 
     describe "#first_client_amount" do
       it { expect(project.first_client_amount).to be < project.amount }

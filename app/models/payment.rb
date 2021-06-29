@@ -96,6 +96,7 @@ class Payment < ApplicationRecord
 
     client_refund_cents = (amount - new_amount).cents
     self.amount = new_amount
+    self.platform_fee_cents -= project.platform_fee(amount: freelancer_refund_cents)
 
     amount.zero? ? refund!(freelancer_refund_cents) : partially_refund!(client_refund_cents, freelancer_refund_cents)
 
@@ -214,7 +215,7 @@ private
 
     # Has payment been disbursed? Withdraw freelancer refund portion from their account.
     if (transfer_id = disbursement_line&.metadata&.dig("transfer_id"))
-      platform_refund_cents = Money.new(platform_fee(freelancer_refund_cents), currency).cents
+      platform_refund_cents = Money.new(platform_fee(amount: freelancer_refund_cents), currency).cents
       reversal_amount_cents = freelancer_refund_cents - platform_refund_cents
       reversal = Stripe::Transfer.create_reversal(transfer_id,
         {amount: reversal_amount_cents,

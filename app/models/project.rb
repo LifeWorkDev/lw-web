@@ -10,6 +10,7 @@ class Project < ApplicationRecord
   has_many :client_users, through: :client, source: :users
   belongs_to :freelancer, class_name: "User", foreign_key: :user_id, inverse_of: :projects
 
+  after_initialize :set_defaults, if: :new_record?
   before_validation :set_defaults, on: :create
 
   monetize :amount_cents, with_model_currency: :currency, allow_nil: true, numericality: {greater_than_or_equal_to: 10}

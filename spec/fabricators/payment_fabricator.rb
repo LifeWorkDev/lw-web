@@ -1,17 +1,17 @@
 require_relative "helpers"
 
 Fabricator(:payment) do
-  amount_cents { random_amount_cents }
-  platform_fee_cents { random_fee_cents }
-  processing_fee_cents { random_fee_cents }
-  pay_method(fabricator: %i[bank_account_pay_method card_pay_method].sample)
-
   after_build do |payment|
-    payment.user ||= payment.pay_method.org.primary_contact || Fabricate.build(:user)
     unless payment.pays_for.present?
-      pays_for = Fabricate.build("active_#{%w[milestone retainer].sample}_project")
-      payment.pays_for = pays_for.milestone? ? pays_for.milestones.first : pays_for
+      project = Fabricate.build("active_#{%w[milestone retainer].sample}_project")
+      payment.pays_for = project.milestone? ? project.milestones.first : project
     end
+    project ||= payment.project
+    payment.pay_method ||= project.client.primary_pay_method
+    payment.amount = pays_for.client_amount(pay_method: payment.pay_method) unless payment.amount.positive?
+    payment.platform_fee = project.platform_fee(amount: payment.amount) unless payment.platform_fee.positive?
+    payment.processing_fee = project.processing_fee(amount: payment.amount, pay_method: payment.pay_method) unless payment.processing_fee.positive?
+    payment.user ||= payment.pay_method.org.primary_contact || Fabricate.build(:user)
   end
 end
 
