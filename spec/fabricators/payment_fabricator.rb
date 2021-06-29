@@ -9,7 +9,7 @@ Fabricator(:payment) do
     project ||= payment.project
     payment.pay_method ||= project.client.primary_pay_method
     payment.amount = pays_for.client_amount(pay_method: payment.pay_method) unless payment.amount.positive?
-    payment.platform_fee = project.platform_fee(amount: payment.amount) unless payment.platform_fee.positive?
+    payment.platform_fee = project.platform_fee(amount: pays_for.amount) unless payment.platform_fee.positive?
     payment.processing_fee = project.processing_fee(amount: payment.amount, pay_method: payment.pay_method) unless payment.processing_fee.positive?
     payment.user ||= payment.pay_method.org.primary_contact || Fabricate.build(:user)
   end
