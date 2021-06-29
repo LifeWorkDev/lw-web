@@ -7,8 +7,8 @@ class RetainerProject < Project
   before_destroy -> { Milestone.where(project_id: id).destroy_all }
 
   jsonb_accessor :metadata,
-    disbursement_day: :integer,
-    start_date: :date
+                 disbursement_day: :integer,
+                 start_date: :date
 
   ICON = mdi_url("autorenew").freeze
   NAME = "Monthly Retainer".freeze

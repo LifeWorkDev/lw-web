@@ -17,13 +17,13 @@ class Milestone < ApplicationRecord
   before_update :update_payment_amount, if: -> { (deposited? || paid?) && amount_cents_changed? }
 
   pg_search_scope :pg_search,
-    against: %i[description],
-    associated_against: {
-      client: %i[name],
-      client_users: %i[name email],
-      freelancer: %i[name email],
-      project: %i[name],
-    }
+                  against: %i[description],
+                  associated_against: {
+                    client: %i[name],
+                    client_users: %i[name email],
+                    freelancer: %i[name email],
+                    project: %i[name],
+                  }
 
   def as_json(*)
     {

@@ -14,21 +14,21 @@ class User < ApplicationRecord
   before_validation :set_defaults, on: :create
 
   devise :database_authenticatable, :lockable,
-    :invitable, :registerable, :recoverable,
-    :rememberable, :trackable, :validatable
+         :invitable, :registerable, :recoverable,
+         :rememberable, :trackable, :validatable
 
   jsonb_accessor :metadata,
-    fee_percent: :float,
-    how_did_you_hear_about_us: :string,
-    work_category: [:string, array: true, default: []],
-    work_type: :string
+                 fee_percent: :float,
+                 how_did_you_hear_about_us: :string,
+                 work_category: [:string, array: true, default: []],
+                 work_type: :string
 
   scope :client, -> { where.not(org_id: nil) }
   scope :freelancer, -> { where(org_id: nil) }
 
   pg_search_scope :pg_search,
-    against: %i[name email],
-    associated_against: {org: %i[name]}
+                  against: %i[name email],
+                  associated_against: {org: %i[name]}
 
   WORK_TYPES = ["Part-Time", "Full-Time", "Team Leader"].freeze
 

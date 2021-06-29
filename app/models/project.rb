@@ -16,16 +16,16 @@ class Project < ApplicationRecord
   monetize :amount_cents, with_model_currency: :currency, allow_nil: true, numericality: {greater_than_or_equal_to: 10}
 
   jsonb_accessor :metadata,
-    fee_percent: :float,
-    client_pays_fees: [:boolean, default: false]
+                 fee_percent: :float,
+                 client_pays_fees: [:boolean, default: false]
 
   pg_search_scope :pg_search,
-    against: %i[name],
-    associated_against: {
-      client: %i[name],
-      client_users: %i[name email],
-      freelancer: %i[name email],
-    }
+                  against: %i[name],
+                  associated_against: {
+                    client: %i[name],
+                    client_users: %i[name email],
+                    freelancer: %i[name email],
+                  }
 
   class << self
     memoize def for_select

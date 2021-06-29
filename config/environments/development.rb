@@ -73,7 +73,7 @@ Rails.application.configure do
   dev_server = Webpacker.config.dev_server
   WEBPACK_SCRIPT_TAG ||= "<script src='#{"http" + (dev_server[:https] && "s")}://#{dev_server[:host]}:#{dev_server[:port]}/webpack-dev-server.js'></script>".freeze
   config.middleware.insert_before ActionDispatch::ShowExceptions, Rack::Toolbar,
-    snippet: WEBPACK_SCRIPT_TAG,
-    insertion_point: "</head>",
-    insertion_method: :before
+                                  snippet: WEBPACK_SCRIPT_TAG,
+                                  insertion_point: "</head>",
+                                  insertion_method: :before
 end

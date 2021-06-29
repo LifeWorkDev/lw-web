@@ -27,10 +27,10 @@ class Payment < ApplicationRecord
   alias_method :client_amount, :amount
 
   pg_search_scope :pg_search,
-    against: %i[stripe_id],
-    associated_against: {
-      pay_method: %i[name issuer kind last_4 stripe_id],
-    }
+                  against: %i[stripe_id],
+                  associated_against: {
+                    pay_method: %i[name issuer kind last_4 stripe_id],
+                  }
 
   def milestone?
     pays_for_type == "Milestone"
@@ -218,12 +218,12 @@ private
       platform_refund_cents = Money.new(platform_fee(amount: freelancer_refund_cents), currency).cents
       reversal_amount_cents = freelancer_refund_cents - platform_refund_cents
       reversal = Stripe::Transfer.create_reversal(transfer_id,
-        {amount: reversal_amount_cents,
-         metadata: pays_for.stripe_metadata.merge({
-           'Refund ID': stripe_refund.id,
-           'Refund cents': stripe_refund.amount,
-         })},
-        idempotency_key: "reversal-#{reversal_amount_cents}-of-transfer-#{transfer_id}")
+                                                  {amount: reversal_amount_cents,
+                                                   metadata: pays_for.stripe_metadata.merge({
+                                                     'Refund ID': stripe_refund.id,
+                                                     'Refund cents': stripe_refund.amount,
+                                                   })},
+                                                  idempotency_key: "reversal-#{reversal_amount_cents}-of-transfer-#{transfer_id}")
 
       record_job_args[:freelancer_refund_cents] = reversal.amount
       record_job_args[:platform_refund_cents] = platform_refund_cents

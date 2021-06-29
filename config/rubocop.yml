@@ -24,6 +24,9 @@ Lint/AmbiguousBlockAssociation:
   Exclude:
     - spec/**/*
 
+Layout/ArgumentAlignment:
+  EnforcedStyle: with_first_argument
+
 Lint/ConstantDefinitionInBlock:
   Exclude:
     - app/models/concerns/**/*

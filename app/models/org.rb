@@ -19,12 +19,12 @@ class Org < ApplicationRecord
   validates :name, presence: true
 
   jsonb_accessor :metadata,
-    work_category: [:string, array: true, default: []],
-    work_frequency: :string
+                 work_category: [:string, array: true, default: []],
+                 work_frequency: :string
 
   pg_search_scope :pg_search,
-    against: %i[name],
-    associated_against: {users: %i[name email]}
+                  against: %i[name],
+                  associated_against: {users: %i[name email]}
 
   WORK_FREQUENCY = ["Regularly", "Sometimes", "Rarely", "Just this once"].freeze
 
