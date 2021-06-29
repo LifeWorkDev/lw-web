@@ -148,7 +148,7 @@ GEM
     ast (2.4.2)
     awesome_print (1.9.2)
     aws-eventstream (1.1.1)
-    aws-partitions (1.471.0)
+    aws-partitions (1.472.0)
     aws-sdk-core (3.115.0)
       aws-eventstream (~> 1, >= 1.0.2)
       aws-partitions (~> 1, >= 1.239.0)
@@ -387,7 +387,7 @@ GEM
       activerecord (>= 5.2)
       activesupport (>= 5.2)
     pgreset (0.3)
-    plaid (12.0.0)
+    plaid (13.2.0)
       faraday
       faraday_middleware
       hashie (>= 3.4.3)
@@ -496,13 +496,13 @@ GEM
     rspec-support (3.10.2)
     rspec_junit_formatter (0.4.1)
       rspec-core (>= 2, < 4, != 2.12.0)
-    rubocop (1.14.0)
+    rubocop (1.17.0)
       parallel (~> 1.10)
       parser (>= 3.0.0.0)
       rainbow (>= 2.2.2, < 4.0)
       regexp_parser (>= 1.8, < 3.0)
       rexml
-      rubocop-ast (>= 1.5.0, < 2.0)
+      rubocop-ast (>= 1.7.0, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 1.4.0, < 3.0)
     rubocop-ast (1.7.0)
@@ -512,7 +512,7 @@ GEM
     rubocop-performance (1.11.2)
       rubocop (>= 1.7.0, < 2.0)
       rubocop-ast (>= 0.4.0)
-    rubocop-rails (2.11.0)
+    rubocop-rails (2.11.1)
       activesupport (>= 4.2.0)
       rack (>= 1.1)
       rubocop (>= 1.7.0, < 2.0)
@@ -571,8 +571,8 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    standard (1.1.1)
-      rubocop (= 1.14.0)
+    standard (1.1.2)
+      rubocop (= 1.17.0)
       rubocop-performance (= 1.11.2)
     stripe (5.34.0)
     strong_migrations (0.7.7)
@@ -682,7 +682,7 @@ DEPENDENCIES
   pg (>= 0.18, < 2.0)
   pg_search
   pgreset
-  plaid (~> 12.0)
+  plaid (~> 13.2)
   pretender
   puma
   que (~> 1.0.0.beta4)
