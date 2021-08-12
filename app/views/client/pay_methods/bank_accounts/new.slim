@@ -34,7 +34,7 @@ javascript:
       token: '#{plaid_token}',
       onExit: function(error, metadata) {
         if (error) {
-          window.Bugsnag.addMetadata('custom', { error: error, metadata: metadata })
+          window.Bugsnag.addMetadata('Plaid', { error: error, metadata: metadata })
           window.Bugsnag.notify(new Error(error.message))
         }
       },
