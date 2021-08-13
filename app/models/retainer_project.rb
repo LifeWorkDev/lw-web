@@ -35,8 +35,8 @@ class RetainerProject < Project
     payment_amount = latest_payment ? client_amount : first_client_amount
     payment = payments.create!(
       amount: payment_amount,
-      platform_fee: platform_fee(amount: payment_amount),
-      processing_fee: processing_fee(amount: payment_amount),
+      platform_fee: platform_fee,
+      processing_fee: processing_fee,
       client_pays_fees: client_pays_fees?,
       pay_method: pay_method,
       scheduled_for: deposit_time(latest_payment ? next_date : start_date),
