@@ -43,7 +43,7 @@ Trestle.resource(:users) do
       collection_select_with_link :org_id, Org.all, :id, :name, include_blank: true
       phone_field :phone
       text_field :address
-      number_field :fee_percent, min: 0, max: 1, step: 0.01
+      number_field :fee_percent, min: 0, max: 1, step: :any
       auto_field :stripe_id
       if user.invited_by_id.present?
         auto_field :invited_by

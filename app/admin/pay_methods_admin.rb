@@ -20,7 +20,7 @@ Trestle.resource(:pay_methods) do
       auto_field :kind
       auto_field :last_4
       auto_field :expires
-      number_field :fee_percent, min: 0, max: 1, step: 0.01
+      number_field :fee_percent, min: 0, max: 1, step: :any
       auto_field :created_at
       auto_field :updated_at
     end
