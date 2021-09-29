@@ -26,6 +26,7 @@ ruby:
       language: 'en',
       env: PLAID_ENV,
       products: %w[auth],
+      redirect_uri: "#{root_url}c/bank_accounts/new",
     })['link_token']
 
 javascript:
