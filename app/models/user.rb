@@ -85,6 +85,10 @@ class User < ApplicationRecord
     nil
   end
 
+  def received_payments
+    Payment.where(id: DoubleEntry::Line.credits.where(code: :disbursement).jsonb_where(:metadata, destination_account_id: stripe_id).pluck(:detail_id))
+  end
+
   def time_zone_with_fallback
     time_zone || "Pacific Time (US & Canada)"
   end

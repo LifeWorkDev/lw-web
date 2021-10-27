@@ -26,6 +26,7 @@ Rails.application.routes.draw do
 
   namespace :freelancer, path: "f" do
     resource :user, only: %i[edit update] do
+      get :payments, on: :member
       get :waitlist, on: :member
     end
     resources :orgs, path: :clients
