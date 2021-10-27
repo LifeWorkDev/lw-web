@@ -2,8 +2,8 @@
   "name": "LifeWork",
   "private": true,
   "engines": {
-    "node": ">= 8",
-    "yarn": ">= 1"
+    "node": ">= 12.16.2",
+    "yarn": ">= 1.22.4"
   },
   "scripts": {
     "lint": "eslint app/javascript --ext .js,.jsx; eslint=$?; stylelint \"app/javascript/**/*.scss\"; exit $eslint || $?"
@@ -30,13 +30,13 @@
     "uglify-js": "^3.6.0"
   },
   "devDependencies": {
-    "babel-eslint": "^10.0.2",
+    "@babel/eslint-parser": "^7.15.8",
     "chokidar": "^3.3.1",
     "eslint": "^7.0.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-import-resolver-webpack": "^0.13.0",
     "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.14.3",
     "eslint-plugin-sort-keys-fix": "^1.0.1",
     "eslint-webpack-plugin": "^2.0.0",

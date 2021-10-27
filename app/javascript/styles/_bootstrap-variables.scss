@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 $blue: #3b9de3;
 $light: #b7b7b7;
 $dark: #5d5d5d;
@@ -43,4 +45,4 @@ $input-padding-y: 0.5rem;
 $nav-link-font-size: $btn-font-size * 0.95;
 
 $mute-percent: 20%;
-$text-muted: lighten($dark, $mute-percent);
+$text-muted: color.adjust($dark, $lightness: $mute-percent);

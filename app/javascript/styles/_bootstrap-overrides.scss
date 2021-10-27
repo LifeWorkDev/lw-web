@@ -1,9 +1,11 @@
+@use 'sass:color';
+
 .badge {
   letter-spacing: $font-size-base * 0.04;
 }
 
 .bg-dark .text-muted {
-  color: darken(white, $mute-percent) !important;
+  color: color.adjust(white, $lightness: - $mute-percent) !important;
 }
 
 .btn,

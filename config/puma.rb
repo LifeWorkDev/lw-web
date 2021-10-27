@@ -1,6 +1,7 @@
 port ENV.fetch("PORT", 3000)
 
 if Rails.env.development?
+  silence_single_worker_warning
   threads 1, 1
   workers 1
 
