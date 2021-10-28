@@ -26,8 +26,7 @@ Rails.application.routes.draw do
 
   namespace :freelancer, path: "f" do
     resource :user, only: %i[edit update] do
-      get :payments, on: :member
-      get :waitlist, on: :member
+      get :waitlist
     end
     resources :orgs, path: :clients
     resources :milestones
@@ -58,6 +57,8 @@ Rails.application.routes.draw do
       get :connect
       get :dashboard
     end
+    get :reports, to: "reports#index"
+    get "reports/payments", to: "reports#payments"
   end
 
   resources :comments, only: :update

@@ -6,7 +6,7 @@ module ApplicationHelper
   end
 
   memoize def fa_url(icon)
-    "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/svgs/#{icon}.svg"
+    "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/svgs/#{icon}.svg"
   end
 
   memoize def mdi_svg(icon, options = {})
@@ -14,7 +14,7 @@ module ApplicationHelper
   end
 
   memoize def mdi_url(icon)
-    "https://cdn.jsdelivr.net/npm/@mdi/svg@5.0.45/svg/#{icon}.svg"
+    "https://cdn.jsdelivr.net/npm/@mdi/svg@6.3.95/svg/#{icon}.svg"
   end
 
   memoize def svg_inject(url, options = {})

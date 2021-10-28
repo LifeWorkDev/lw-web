@@ -63,6 +63,10 @@ class User < ApplicationRecord
     max_status && all_statuses[max_status]
   end
 
+  def payouts
+    DoubleEntry::Line.credits.where(code: :disbursement).jsonb_where(:metadata, destination_account_id: stripe_id)
+  end
+
   def projects_collection
     client? ? org_projects : projects
   end
@@ -86,7 +90,7 @@ class User < ApplicationRecord
   end
 
   def received_payments
-    Payment.where(id: DoubleEntry::Line.credits.where(code: :disbursement).jsonb_where(:metadata, destination_account_id: stripe_id).pluck(:detail_id))
+    Payment.where(id: payouts.pluck(:detail_id))
   end
 
   def time_zone_with_fallback

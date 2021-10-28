@@ -20,6 +20,8 @@ nav#top-nav.navbar.navbar-expand-sm.navbar-light.bg-white.mb-3.flex-shrink-0
               - if current_user.stripe_id.present?
                 li.nav-item
                   = link_to 'Balance', freelancer_stripe_dashboard_path, class: 'nav-link', rel: :noopener, target: :_blank
+                li.nav-item
+                  = link_to 'Reports', freelancer_reports_path, class: 'nav-link'
             = render 'shared/nav_link_unless_current', text: 'Profile', path: edit_user_path
             li.nav-item
               a.nav-link href='/logout' Log out
