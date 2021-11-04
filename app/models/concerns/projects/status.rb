@@ -64,7 +64,8 @@ module Projects::Status
       elsif contract_sent? then :primary
       elsif active? then :success
       elsif client_invited? then :dark
-      else :light
+      else
+        :light
       end
     end
   end

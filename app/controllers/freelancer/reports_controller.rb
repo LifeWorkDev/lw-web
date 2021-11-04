@@ -16,6 +16,6 @@ class Freelancer::ReportsController < AuthenticatedController
         ]
       end
     end
-    send_data(csv_data, filename: "payments-#{Date.today}.csv")
+    send_data(csv_data, filename: "payments-#{Time.zone.today}.csv")
   end
 end

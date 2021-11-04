@@ -73,7 +73,7 @@ class User < ApplicationRecord
 
   def reconcilation_report
     Stripe::Payout.list({limit: 100}, stripe_account: stripe_id).each do |payout|
-      puts "#{Money.new(payout.amount).format} on #{Time.at(payout.arrival_date).to_date}" # rubocop:disable Rails/Output
+      puts "#{Money.new(payout.amount).format} on #{Time.zone.at(payout.arrival_date).to_date}" # rubocop:disable Rails/Output
       Stripe::BalanceTransaction.list(
         {
           payout: payout.id,

@@ -2,7 +2,7 @@ require_relative "helpers"
 
 Fabricator(:payment) do
   after_build do |payment|
-    unless payment.pays_for.present?
+    if payment.pays_for.blank?
       project = Fabricate.build("active_#{%w[milestone retainer].sample}_project")
       payment.pays_for = project.milestone? ? project.milestones.first : project
     end

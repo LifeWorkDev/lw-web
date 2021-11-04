@@ -9,14 +9,14 @@ class Payment < ApplicationRecord
   belongs_to :pays_for, polymorphic: true
   belongs_to :pay_method
   belongs_to :user, optional: true
-  has_one :disbursement_line, -> { credits.where(code: :disbursement).order(id: :desc) }, as: :detail, class_name: "DoubleEntry::Line", inverse_of: :detail
-  has_one :disbursement_refund_line, -> { credits.where(code: :disbursement_refund).order(id: :desc) }, as: :detail, class_name: "DoubleEntry::Line", inverse_of: :detail
-  has_one :payment_line, -> { credits.where(code: :payment).order(id: :desc) }, as: :detail, class_name: "DoubleEntry::Line", inverse_of: :detail
-  has_one :refund_line, -> { credits.where(code: :refund).order(id: :desc) }, as: :detail, class_name: "DoubleEntry::Line", inverse_of: :detail
-  has_one :platform_fee_line, -> { credits.where(code: :platform).order(id: :desc) }, as: :detail, class_name: "DoubleEntry::Line", inverse_of: :detail
-  has_one :platform_refund_line, -> { credits.where(code: :platform_refund).order(id: :desc) }, as: :detail, class_name: "DoubleEntry::Line", inverse_of: :detail
-  has_one :processing_fee_line, -> { credits.where(code: :processing).order(id: :desc) }, as: :detail, class_name: "DoubleEntry::Line", inverse_of: :detail
-  has_one :processing_refund_line, -> { credits.where(code: :processing_refund).order(id: :desc) }, as: :detail, class_name: "DoubleEntry::Line", inverse_of: :detail
+  has_one :disbursement_line, -> { credits.where(code: :disbursement).order(id: :desc) }, as: :detail, class_name: "DoubleEntry::Line", inverse_of: :detail, dependent: :nullify
+  has_one :disbursement_refund_line, -> { credits.where(code: :disbursement_refund).order(id: :desc) }, as: :detail, class_name: "DoubleEntry::Line", inverse_of: :detail, dependent: :nullify
+  has_one :payment_line, -> { credits.where(code: :payment).order(id: :desc) }, as: :detail, class_name: "DoubleEntry::Line", inverse_of: :detail, dependent: :nullify
+  has_one :refund_line, -> { credits.where(code: :refund).order(id: :desc) }, as: :detail, class_name: "DoubleEntry::Line", inverse_of: :detail, dependent: :nullify
+  has_one :platform_fee_line, -> { credits.where(code: :platform).order(id: :desc) }, as: :detail, class_name: "DoubleEntry::Line", inverse_of: :detail, dependent: :nullify
+  has_one :platform_refund_line, -> { credits.where(code: :platform_refund).order(id: :desc) }, as: :detail, class_name: "DoubleEntry::Line", inverse_of: :detail, dependent: :nullify
+  has_one :processing_fee_line, -> { credits.where(code: :processing).order(id: :desc) }, as: :detail, class_name: "DoubleEntry::Line", inverse_of: :detail, dependent: :nullify
+  has_one :processing_refund_line, -> { credits.where(code: :processing_refund).order(id: :desc) }, as: :detail, class_name: "DoubleEntry::Line", inverse_of: :detail, dependent: :nullify
   has_many :lines, as: :detail, class_name: "DoubleEntry::Line", dependent: :delete_all, inverse_of: :detail
 
   scope :milestone, -> { where(pays_for_type: "Milestone") }
@@ -198,7 +198,7 @@ class Payment < ApplicationRecord
 private
 
   def process_refund!(freelancer_refund_cents, client_refund_cents = amount_cents_was)
-    return false unless stripe_id.present?
+    return false if stripe_id.blank?
 
     stripe_refund = Stripe::Refund.create({
       amount: client_refund_cents,

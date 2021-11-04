@@ -36,7 +36,7 @@ class Client::PayMethodsController < AuthenticatedController
       end
       render json: {location: location}
     else
-      render json: {error: @pay_method.errors.full_messages.join(", ")}, status: 400
+      render json: {error: @pay_method.errors.full_messages.join(", ")}, status: :bad_request
     end
   end
 

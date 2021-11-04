@@ -56,7 +56,7 @@ RSpec.describe Milestone, type: :model do
           expect(milestone).not_to have_received(:update_payment_amount)
         end
 
-        shared_examples :refund do
+        shared_examples "refund" do
           it "fully refunds if amount was changed to 0" do
             old_amount = milestone.amount
 
@@ -96,7 +96,7 @@ RSpec.describe Milestone, type: :model do
         context "when deposited" do
           before { milestone.deposit! }
 
-          include_examples :refund
+          include_examples "refund"
         end
 
         context "when paid" do
@@ -105,7 +105,7 @@ RSpec.describe Milestone, type: :model do
             milestone.pay!
           end
 
-          include_examples :refund
+          include_examples "refund"
         end
       end
     end
@@ -171,7 +171,7 @@ RSpec.describe Milestone, type: :model do
       end
 
       describe "#pay!" do
-        shared_examples :pay do
+        shared_examples "pay" do
           it "creates Stripe transfers, emails client & freelancer, schedules next deposit" do
             milestone.update(status: :deposited)
             allow(Stripe::Transfer).to receive(:create).and_call_original
@@ -187,19 +187,19 @@ RSpec.describe Milestone, type: :model do
         context "with pending payment" do
           before { Fabricate(:pending_payment, pays_for: milestone) }
 
-          include_examples :pay
+          include_examples "pay"
         end
 
         context "with succeeded payment" do
           before { Fabricate(:succeeded_payment, pays_for: milestone) }
 
-          include_examples :pay
+          include_examples "pay"
         end
       end
     end
   end
 
   describe "validations" do
-    it { should validate_numericality_of(:amount).is_greater_than_or_equal_to(10).on(:create) }
+    it { is_expected.to validate_numericality_of(:amount).is_greater_than_or_equal_to(10).on(:create) }
   end
 end

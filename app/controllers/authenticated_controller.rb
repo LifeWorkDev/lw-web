@@ -44,7 +44,7 @@ private
         end
       elsif current_org.projects.client_invited.any?
         [current_user.type, current_entity.projects.client_invited.last.becomes(Project)]
-      else # rubocop:disable Lint/DuplicateBranch
+      else
         [current_user.type, Project] # Dashboard
       end
     elsif current_user.freelancer?

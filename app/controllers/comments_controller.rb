@@ -15,7 +15,7 @@ class CommentsController < AuthenticatedController
     if comment.update(comment: params[:comment])
       render json: {message: "Comment successfully updated."}
     else
-      render json: {error: comment.errors.full_messages.join(", ")}, status: 400
+      render json: {error: comment.errors.full_messages.join(", ")}, status: :bad_request
     end
   end
 

@@ -22,7 +22,9 @@ class Webhook < ApplicationRecord
 
               if stripe_obj.id.start_with? "py_" # ACH payments only
                 payment&.succeed! if payment&.may_succeed?
-              else true; end
+              else
+                true
+              end
             when "payment_method.automatically_updated"
               pay_method = PayMethods::Card.find_by(stripe_id: stripe_obj.id)
               raise "No card found with stripe id #{stripe_obj.id}" if !pay_method && Rails.env.production?

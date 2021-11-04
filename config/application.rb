@@ -80,7 +80,7 @@ module LifeWork
       exceptions = %w[_method action authenticity_token base code commit controller format id mode path utf8]
       params = event.payload[:params].except(*exceptions)
       # gsub is to use less-verbose new hash syntax
-      params.present? ? {params: params.deep_symbolize_keys.to_s.gsub(/(:(\w+)\s?=>\s?)/, '\\2: ')} : nil
+      params.present? ? {params: params.deep_symbolize_keys.to_s.gsub(/(:(\w+)\s?=>\s?)/, "\\2: ")} : nil
     end
 
     unless Rails.env.test?

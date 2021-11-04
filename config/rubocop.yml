@@ -43,6 +43,9 @@ Lint/OrAssignmentToConstant:
 Lint/RaiseException:
   Enabled: true
 
+Lint/RedundantCopDisableDirective:
+  Enabled: false
+
 Lint/StructNewOverride:
   Enabled: true
 
@@ -102,6 +105,10 @@ Naming/FileName:
 Naming/VariableNumber:
   EnforcedStyle: snake_case
 
+Rails/BulkChangeTable:
+  Exclude:
+    - db/**/*
+
 Rails/CreateTableWithTimestamps:
   Exclude:
     - db/migrate/*pghero*
@@ -131,12 +138,19 @@ Rails/SkipsModelValidations:
   Exclude:
     - db/**/*
 
+Rails/SquishedSQLHeredocs:
+  Exclude:
+    - db/**/*
+
 Rails/UnknownEnv:
   Environments:
     - development
     - production
     - staging
     - test
+
+RSpec/ContextWording:
+  Enabled: false
 
 RSpec/DescribeClass:
   Enabled: false
@@ -156,10 +170,16 @@ RSpec/ExpectChange:
 RSpec/Focus:
   Enabled: false
 
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+
 RSpec/MultipleExpectations:
   Enabled: false
 
 RSpec/NestedGroups:
+  Enabled: false
+
+RSpec/SubjectStub:
   Enabled: false
 
 Style/AsciiComments:

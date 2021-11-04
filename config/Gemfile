@@ -11,7 +11,7 @@ gem "argon2" # More secure password hashing than default bcrypt
 gem "bootstrap-email", github: "swrobel/bootstrap-email", branch: "align-utilities"
 gem "bootstrap_form"
 gem "bugsnag" # Exception tracking
-gem "business", "~> 1.18.0" # Business day calculations. US ACH calendar valid until EOY 2023
+gem "business", "~> 1.18.0" # Business day calculations. TODO: Replace eventually as US ACH calendar valid until EOY 2023
 gem "devise" # Authentication
 gem "devise_invitable"
 gem "double_entry", github: "swrobel/double_entry"

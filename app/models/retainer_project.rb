@@ -2,7 +2,7 @@ class RetainerProject < Project
   include Commentable
   include Dates
 
-  has_many :payments, -> { order(id: :asc) }, as: :pays_for, dependent: :destroy
+  has_many :payments, -> { order(id: :asc) }, as: :pays_for, dependent: :destroy, inverse_of: :pays_for
 
   before_destroy -> { Milestone.where(project_id: id).destroy_all }
 
