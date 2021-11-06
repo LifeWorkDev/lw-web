@@ -75,28 +75,6 @@ class User < ApplicationRecord
     client? ? org_projects : projects
   end
 
-  def reconcilation_report
-    Stripe::Payout.list({limit: 100}, stripe_account: stripe_id).each do |payout|
-      puts "#{Money.new(payout.amount).format} on #{Time.zone.at(payout.arrival_date).to_date}" # rubocop:disable Rails/Output
-      Stripe::BalanceTransaction.list(
-        {
-          payout: payout.id,
-          type: "payment",
-          expand: ["data.source.source_transfer"],
-        },
-        stripe_account: stripe_id,
-      ).each do |baltxn|
-        transfer = baltxn.source.source_transfer
-        puts "  #{Money.new(transfer.amount).format} for #{transfer.description}" # rubocop:disable Rails/Output
-      end
-    end
-    nil
-  end
-
-  def received_payments
-    Payment.where(id: payouts.pluck(:detail_id))
-  end
-
   def time_zone_with_fallback
     time_zone || "Pacific Time (US & Canada)"
   end
