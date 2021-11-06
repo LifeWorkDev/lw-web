@@ -20,6 +20,7 @@ module Milestones::Status
               processing_fee: processing_fee,
               client_pays_fees: client_pays_fees?,
               pay_method: pay_method,
+              scheduled_for: date,
               user: user,
             ).charge!.failed?
           end
