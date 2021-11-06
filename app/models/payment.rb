@@ -171,6 +171,25 @@ class Payment < ApplicationRecord
     end
   end
 
+  def record_payout!(payout)
+    DoubleEntry.transfer(
+      freelancer_amount,
+      code: :payout,
+      detail: self,
+      from: freelancer.account_disbursement,
+      to: freelancer.account_bank,
+      metadata: {
+        amount: payout.amount,
+        arrival_date: Time.zone.at(payout.arrival_date),
+        automatic: payout.automatic,
+        balance_transaction_id: payout.balance_transaction,
+        destination_id: payout.destination.id,
+        payout_id: payout.id,
+        statement_descriptor: payout.statement_descriptor,
+      },
+    )
+  end
+
   def record_refund!(client_refund_cents:, metadata:, freelancer_refund_cents: nil, platform_refund_cents: nil)
     if freelancer_refund_cents.present? # Disbursed payment
       record_reversed_transfer!(Money.new(client_refund_cents, currency), Money.new(freelancer_refund_cents, currency), Money.new(platform_refund_cents, currency), metadata)
@@ -283,25 +302,6 @@ private
         payout_id: payout.id,
         balance_transaction_id: payout.balance_transaction,
         destination_id: payout.destination,
-      },
-    )
-  end
-
-  def record_payout!(payout)
-    DoubleEntry.transfer(
-      freelancer_amount,
-      code: :payout,
-      detail: self,
-      from: freelancer.account_disbursement,
-      to: freelancer.account_bank,
-      metadata: {
-        amount: payout.amount,
-        arrival_date: Time.zone.at(payout.arrival_date),
-        automatic: payout.automatic,
-        balance_transaction_id: payout.balance_transaction,
-        destination_id: payout.destination.id,
-        payout_id: payout.id,
-        statement_descriptor: payout.statement_descriptor,
       },
     )
   end
