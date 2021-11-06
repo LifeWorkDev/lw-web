@@ -17,7 +17,7 @@ class Freelancer::ReportsController < AuthenticatedController
           p.project,
           p.client,
           p.disbursement_line&.created_at,
-          payout_metadata&.dig("arrival_date"),
+          ActiveSupport::JSON.send(:convert_dates_from, payout_metadata&.dig("arrival_date")),
           Money.new(payout_metadata&.dig("amount")),
         ]
       end
