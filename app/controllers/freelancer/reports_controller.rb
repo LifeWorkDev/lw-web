@@ -7,7 +7,7 @@ class Freelancer::ReportsController < AuthenticatedController
   def payments
     csv_data = CSV.generate(headers: true) do |csv|
       csv << ["Deposited", "Amount", "Status", "Project", "Client", "Disbursed", "Received", "Total payout amount"]
-      current_user.payments.includes(:disbursement_line, :payout_line).successful.find_each do |p|
+      current_user.payments_received.includes(:disbursement_line, :payout_line).successful.find_each do |p|
         csv << [
           p.paid_at,
           p.amount,

@@ -5,7 +5,8 @@ class User < ApplicationRecord
   include WorkCategoryToIntercomTags
 
   belongs_to :org, optional: true
-  has_many :payments, dependent: :destroy
+  has_many :payments_made, class_name: "Payment", foreign_key: :paid_by_id, dependent: :destroy, inverse_of: :paid_by
+  has_many :payments_received, class_name: "Payment", foreign_key: :recipient_id, dependent: :destroy, inverse_of: :recipient
   has_many :projects, dependent: :destroy, inverse_of: :freelancer
   has_many :clients, -> { distinct }, through: :projects
   has_many :org_projects, through: :org, source: :projects

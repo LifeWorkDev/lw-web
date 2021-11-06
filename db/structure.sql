@@ -1045,12 +1045,13 @@ CREATE TABLE public.payments (
     pays_for_type character varying NOT NULL,
     pays_for_id bigint NOT NULL,
     pay_method_id bigint NOT NULL,
-    user_id bigint,
+    paid_by_id bigint,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     platform_fee_cents integer DEFAULT 0 NOT NULL,
     processing_fee_cents integer DEFAULT 0 NOT NULL,
-    client_pays_fees boolean DEFAULT false NOT NULL
+    client_pays_fees boolean DEFAULT false NOT NULL,
+    recipient_id bigint NOT NULL
 );
 
 
@@ -1707,6 +1708,13 @@ CREATE INDEX index_payments_on_pays_for_type_and_pays_for_id ON public.payments 
 
 
 --
+-- Name: index_payments_on_recipient_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_payments_on_recipient_id ON public.payments USING btree (recipient_id);
+
+
+--
 -- Name: index_projects_on_metadata; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1907,7 +1915,7 @@ CREATE TRIGGER que_state_notify AFTER INSERT OR DELETE OR UPDATE ON public.que_j
 --
 
 ALTER TABLE ONLY public.payments
-    ADD CONSTRAINT fk_rails_081dc04a02 FOREIGN KEY (user_id) REFERENCES public.users(id);
+    ADD CONSTRAINT fk_rails_081dc04a02 FOREIGN KEY (paid_by_id) REFERENCES public.users(id);
 
 
 --
@@ -1916,6 +1924,14 @@ ALTER TABLE ONLY public.payments
 
 ALTER TABLE ONLY public.projects
     ADD CONSTRAINT fk_rails_4ab09e4d6e FOREIGN KEY (org_id) REFERENCES public.orgs(id);
+
+
+--
+-- Name: payments fk_rails_571452d541; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.payments
+    ADD CONSTRAINT fk_rails_571452d541 FOREIGN KEY (recipient_id) REFERENCES public.users(id);
 
 
 --
@@ -2028,6 +2044,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210204005654'),
 ('20210420013001'),
 ('20210420013002'),
-('20211106041201');
+('20211106041201'),
+('20211106215941'),
+('20211106221238');
 
 

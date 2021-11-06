@@ -8,7 +8,8 @@ class Payment < ApplicationRecord
 
   belongs_to :pays_for, polymorphic: true
   belongs_to :pay_method
-  belongs_to :user, optional: true
+  belongs_to :paid_by, class_name: "User", optional: true, inverse_of: :payments_made
+  belongs_to :recipient, class_name: "User", inverse_of: :payments_received
   has_one :disbursement_line, -> { credits.where(code: :disbursement).order(id: :desc) }, as: :detail, class_name: "DoubleEntry::Line", inverse_of: :detail, dependent: :nullify
   has_one :disbursement_refund_line, -> { credits.where(code: :disbursement_refund).order(id: :desc) }, as: :detail, class_name: "DoubleEntry::Line", inverse_of: :detail, dependent: :nullify
   has_one :payment_line, -> { credits.where(code: :payment).order(id: :desc) }, as: :detail, class_name: "DoubleEntry::Line", inverse_of: :detail, dependent: :nullify

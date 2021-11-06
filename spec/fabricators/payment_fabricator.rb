@@ -11,7 +11,8 @@ Fabricator(:payment) do
     payment.amount = pays_for.client_amount(pay_method: payment.pay_method) unless payment.amount.positive?
     payment.platform_fee = payment.pays_for.platform_fee unless payment.platform_fee.positive?
     payment.processing_fee = payment.pays_for.processing_fee(pay_method: payment.pay_method) unless payment.processing_fee.positive?
-    payment.user ||= payment.pay_method.org.primary_contact || Fabricate.build(:user)
+    payment.paid_by ||= payment.pay_method.org.primary_contact || Fabricate.build(:user)
+    payment.recipient ||= payment.freelancer || Fabricate.build(:user)
   end
 end
 

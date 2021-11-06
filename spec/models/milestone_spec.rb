@@ -139,7 +139,7 @@ RSpec.describe Milestone, type: :model do
           expect(payment.amount).to eq milestone.client_amount
           expect(payment.pays_for).to eq milestone
           expect(payment.pay_method).to eq milestone.client.primary_pay_method
-          expect(payment.user).to be_nil
+          expect(payment.paid_by).to be_nil
         end
 
         it "doesn't activate project, email freelancer, or email client if payment fails" do
@@ -161,12 +161,12 @@ RSpec.describe Milestone, type: :model do
           expect(payment.amount).to eq milestone.client_amount
           expect(payment.pays_for).to eq milestone
           expect(payment.pay_method).to eq milestone.client.primary_pay_method
-          expect(payment.user).to be_nil
+          expect(payment.paid_by).to be_nil
         end
 
         it "sets a user if provided" do
           milestone.deposit!(user)
-          expect(payment.user).to eq user
+          expect(payment.paid_by).to eq user
         end
       end
 

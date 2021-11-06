@@ -21,7 +21,8 @@ module Milestones::Status
               client_pays_fees: client_pays_fees?,
               pay_method: pay_method,
               scheduled_for: date,
-              user: user,
+              paid_by: user,
+              recipient: freelancer,
             ).charge!.failed?
           end
         end

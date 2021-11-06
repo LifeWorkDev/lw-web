@@ -40,7 +40,8 @@ class RetainerProject < Project
       client_pays_fees: client_pays_fees?,
       pay_method: pay_method,
       scheduled_for: deposit_time(latest_payment ? next_date : start_date),
-      user: user,
+      paid_by: user,
+      recipient: freelancer,
     ).charge!
     return false if payment.failed?
 
