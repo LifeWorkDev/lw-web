@@ -12,11 +12,12 @@ class Payment < ApplicationRecord
   has_one :disbursement_line, -> { credits.where(code: :disbursement).order(id: :desc) }, as: :detail, class_name: "DoubleEntry::Line", inverse_of: :detail, dependent: :nullify
   has_one :disbursement_refund_line, -> { credits.where(code: :disbursement_refund).order(id: :desc) }, as: :detail, class_name: "DoubleEntry::Line", inverse_of: :detail, dependent: :nullify
   has_one :payment_line, -> { credits.where(code: :payment).order(id: :desc) }, as: :detail, class_name: "DoubleEntry::Line", inverse_of: :detail, dependent: :nullify
-  has_one :refund_line, -> { credits.where(code: :refund).order(id: :desc) }, as: :detail, class_name: "DoubleEntry::Line", inverse_of: :detail, dependent: :nullify
+  has_one :payout_line, -> { credits.where(code: :payout).order(id: :desc) }, as: :detail, class_name: "DoubleEntry::Line", inverse_of: :detail, dependent: :nullify
   has_one :platform_fee_line, -> { credits.where(code: :platform).order(id: :desc) }, as: :detail, class_name: "DoubleEntry::Line", inverse_of: :detail, dependent: :nullify
   has_one :platform_refund_line, -> { credits.where(code: :platform_refund).order(id: :desc) }, as: :detail, class_name: "DoubleEntry::Line", inverse_of: :detail, dependent: :nullify
   has_one :processing_fee_line, -> { credits.where(code: :processing).order(id: :desc) }, as: :detail, class_name: "DoubleEntry::Line", inverse_of: :detail, dependent: :nullify
   has_one :processing_refund_line, -> { credits.where(code: :processing_refund).order(id: :desc) }, as: :detail, class_name: "DoubleEntry::Line", inverse_of: :detail, dependent: :nullify
+  has_one :refund_line, -> { credits.where(code: :refund).order(id: :desc) }, as: :detail, class_name: "DoubleEntry::Line", inverse_of: :detail, dependent: :nullify
   has_many :lines, as: :detail, class_name: "DoubleEntry::Line", dependent: :delete_all, inverse_of: :detail
 
   scope :milestone, -> { where(pays_for_type: "Milestone") }
@@ -69,7 +70,7 @@ class Payment < ApplicationRecord
       set_stripe_fields pay_method.charge!(
         amount: amount,
         idempotency_key: pays_for.idempotency_key,
-        metadata: pays_for.stripe_metadata,
+        metadata: payment_metadata,
       )
       record_charge!
       record_stripe_fees!
@@ -140,7 +141,7 @@ class Payment < ApplicationRecord
           description: pays_for.to_s,
           source_type: pay_method.model_name.element,
           statement_descriptor: "Payment #{id}",
-          metadata: pays_for.stripe_metadata,
+          metadata: payment_metadata,
         },
         idempotency_key: "#{pays_for.idempotency_key}-payout-of-#{payout_amount.cents}",
       )
@@ -148,8 +149,22 @@ class Payment < ApplicationRecord
       if payout.status == "failed"
         raise "Payout of #{payout_amount.format} failed with '#{payout.failure_message}' (#{payout.failure_code})"
       else
-        record_payout!(payout)
+        record_lw_payout!(payout)
       end
+    end
+  end
+
+  def self.record_payout(payout)
+    Stripe::BalanceTransaction.list(
+      {
+        payout: payout.id,
+        type: "payment",
+        expand: ["data.source"],
+      },
+      stripe_account: payout.destination.account,
+    ).each do |baltxn|
+      payment = find_by(stripe_id: baltxn.source.source_transfer)
+      payment.record_payout!(payout)
     end
   end
 
@@ -175,7 +190,7 @@ class Payment < ApplicationRecord
         currency: currency.to_s,
         description: pays_for.to_s,
         destination: freelancer.stripe_id,
-        metadata: pays_for.stripe_metadata,
+        metadata: payment_metadata,
         source_transaction: stripe_id,
       },
       idempotency_key: "#{pays_for.idempotency_key}-transfer-of-#{freelancer_amount.cents}",
@@ -197,13 +212,19 @@ class Payment < ApplicationRecord
 
 private
 
+  def payment_metadata
+    pays_for.stripe_metadata.merge({
+      'Payment ID': id,
+    })
+  end
+
   def process_refund!(freelancer_refund_cents, client_refund_cents = amount_cents_was)
     return false if stripe_id.blank?
 
     stripe_refund = Stripe::Refund.create({
       amount: client_refund_cents,
       charge: stripe_id,
-      metadata: pays_for.stripe_metadata,
+      metadata: payment_metadata,
       reason: :requested_by_customer,
     }, idempotency_key: "refund-#{client_refund_cents}-of-payment-#{id}")
 
@@ -219,7 +240,7 @@ private
       reversal_amount_cents = freelancer_refund_cents - platform_refund_cents
       reversal = Stripe::Transfer.create_reversal(transfer_id,
                                                   {amount: reversal_amount_cents,
-                                                   metadata: pays_for.stripe_metadata.merge({
+                                                   metadata: payment_metadata.merge({
                                                      'Refund ID': stripe_refund.id,
                                                      'Refund cents': stripe_refund.amount,
                                                    })},
@@ -248,7 +269,7 @@ private
     )
   end
 
-  def record_payout!(payout)
+  def record_lw_payout!(payout)
     DoubleEntry.transfer(
       payout_amount,
       code: :lw_payout,
@@ -259,6 +280,25 @@ private
         payout_id: payout.id,
         balance_transaction_id: payout.balance_transaction,
         destination_id: payout.destination,
+      },
+    )
+  end
+
+  def record_payout!(payout)
+    DoubleEntry.transfer(
+      freelancer_amount,
+      code: :payout,
+      detail: self,
+      from: freelancer.account_disbursement,
+      to: freelancer.account_bank,
+      metadata: {
+        amount: payout.amount,
+        arrival_date: Time.zone.at(payout.arrival_date),
+        automatic: payout.automatic,
+        balance_transaction_id: payout.balance_transaction,
+        destination_id: payout.destination.id,
+        payout_id: payout.id,
+        statement_descriptor: payout.statement_descriptor,
       },
     )
   end

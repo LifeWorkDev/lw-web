@@ -36,6 +36,10 @@ class User < ApplicationRecord
     activate! if may_activate?
   end
 
+  memoize def account_bank
+    DoubleEntry.account(:bank, scope: self)
+  end
+
   memoize def account_disbursement
     DoubleEntry.account(:disbursement, scope: self)
   end

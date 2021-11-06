@@ -30,7 +30,7 @@ RSpec.describe Payment, type: :model do
       expect(Stripe::Refund).to have_received(:create).with({
         amount: old_amount.cents,
         charge: payment.stripe_id,
-        metadata: payment.pays_for.stripe_metadata,
+        metadata: payment.send(:payment_metadata),
         reason: :requested_by_customer,
       }, idempotency_key: anything).once
     end

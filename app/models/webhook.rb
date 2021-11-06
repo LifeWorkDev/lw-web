@@ -30,6 +30,9 @@ class Webhook < ApplicationRecord
               raise "No card found with stripe id #{stripe_obj.id}" if !pay_method && Rails.env.production?
 
               pay_method.update_from_stripe_object!(stripe_obj)
+            when "payout.paid"
+              payout = Stripe::Payout.retrieve({id: stripe_obj.id, expand: ["data.destination"]})
+              Payment.record_payout(payout)
             else
               raise "No handler for Stripe event #{event} for #{stripe_obj.id}"
             end

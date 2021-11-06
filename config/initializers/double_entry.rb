@@ -23,9 +23,9 @@ DoubleEntry.configure do |config|
     acct.define identifier: :cash, scope_identifier: org_scope
 
     user_scope = class_scope("User")
+    acct.define identifier: :bank, scope_identifier: user_scope
     acct.define identifier: :disbursement, scope_identifier: user_scope
     acct.define identifier: :receivable, scope_identifier: user_scope
-    acct.define identifier: :bank, scope_identifier: user_scope
   end
 
   config.define_transfers do |tx|
