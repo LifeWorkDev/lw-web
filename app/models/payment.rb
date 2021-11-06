@@ -159,11 +159,14 @@ class Payment < ApplicationRecord
       {
         payout: payout.id,
         type: "payment",
-        expand: ["data.source"],
+        expand: ["data.source.source_transfer"],
       },
       stripe_account: payout.destination.account,
     ).each do |baltxn|
-      payment = find_by(stripe_id: baltxn.source.source_transfer)
+      stripe_id = baltxn.source.source_transfer.source_transaction
+      payment = find_by(stripe_id: stripe_id)
+      raise "Cannot find payment with stripe_id #{stripe_id}" if payment.blank?
+
       payment.record_payout!(payout)
     end
   end
