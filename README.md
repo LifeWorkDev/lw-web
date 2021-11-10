@@ -1,9 +1,12 @@
 # LifeWork Web App
 
-* [About LifeWork](#about-lifework)
-* [Developer setup](#developer-setup)
-* [Workflow](#workflow)
-* [Code standards](#code-standards)
+- [LifeWork Web App](#lifework-web-app)
+  - [About LifeWork](#about-lifework)
+      - [Namespaces](#namespaces)
+  - [Developer setup](#developer-setup)
+  - [Workflow](#workflow)
+  - [Code standards](#code-standards)
+      - [Deviations from the defaults:](#deviations-from-the-defaults)
 
 ## About LifeWork
 
@@ -30,7 +33,7 @@ Controllers & views are namespaced under Client & Freelancer. The routes have sh
 
 ## Developer setup
 
-1. `git clone git@github.com:swrobel/lw-web.git && cd lw-web`
+1. `git clone git@github.com:LifeWorkDev/lw-web.git && cd lw-web`
 1. Install dependencies using [Homebrew](https://brew.sh/): `brew bundle`
 1. If on Linux: `pg_ctl -D /home/linuxbrew/.linuxbrew/var/postgres start`
 1. `mkcert -install`
