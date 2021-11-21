@@ -41,7 +41,8 @@ Trestle.resource(:payments) do
     auto_field :stripe_id
     auto_field :stripe_fee
     auto_field :pay_method
-    auto_field :user, label: "Initiated by"
+    auto_field :paid_by
+    auto_field :recipient
     auto_field :created_at
     auto_field :updated_at
   end
