@@ -53,6 +53,7 @@ Trestle.resource(:projects) do
       if record.retainer?
         number_field :disbursement_day, min: 1, max: 31, required: true
         date_field :start_date, required: true
+        auto_field :next_date
       end
       auto_field :created_at
       auto_field :updated_at
