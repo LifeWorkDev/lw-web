@@ -28,23 +28,39 @@ Trestle.resource(:payments) do
   # Customize the form fields shown on the new/edit views.
 
   form do |record|
-    auto_field :pays_for
-    auto_field :amount
-    auto_field :platform_fee
-    auto_field :processing_fee
-    static_field :status do
-      status_tag(record.status.humanize, record.status_class)
+    tab :payment do
+      static_field :status do
+        status_tag(record.status.humanize, record.status_class)
+      end
+      auto_field :pays_for
+      auto_field :amount
+      auto_field :processing_fee
+      auto_field :base_amount
+      auto_field :platform_fee
+      auto_field :freelancer_amount
+      auto_field :note
+      auto_field :scheduled_for
+      auto_field :paid_at
+      auto_field :stripe_id
+      auto_field :stripe_fee
+      auto_field :pay_method
+      auto_field :paid_by
+      auto_field :recipient
+      auto_field :created_at
+      auto_field :updated_at
     end
-    auto_field :note
-    auto_field :scheduled_for
-    auto_field :paid_at
-    auto_field :stripe_id
-    auto_field :stripe_fee
-    auto_field :pay_method
-    auto_field :paid_by
-    auto_field :recipient
-    auto_field :created_at
-    auto_field :updated_at
+
+    tab :accounting_records do
+      table record.lines.credits do
+        column :code
+        column :amount do |record|
+          record.amount&.format
+        end
+        column :metadata
+        column :created_at
+        column :updated_at
+      end
+    end
   end
 
   # By default, all parameters passed to the update and create actions will be
