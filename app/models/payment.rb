@@ -61,8 +61,9 @@ class Payment < ApplicationRecord
   def amount_before_fees=(new_amount)
     new_amount = new_amount.to_money
     freelancer_refund = amount_before_fees - new_amount
-    new_client_amount = amount - freelancer_refund - project.client_fee(amount: freelancer_refund, pay_method: pay_method, client_pays_fees: client_pays_fees?)
+    return if freelancer_refund.zero?
 
+    new_client_amount = amount - freelancer_refund - project.client_fee(amount: freelancer_refund, pay_method: pay_method, client_pays_fees: client_pays_fees?)
     issue_refund!(new_amount: new_client_amount, freelancer_refund_cents: freelancer_refund.cents)
   end
 
