@@ -36,7 +36,7 @@ module Payments::Status
 
       event :partially_refund do
         transitions from: %i[pending succeeded partially_refunded], to: :partially_refunded do
-          after do |client_refund_cents, freelancer_refund_cents|
+          after do |freelancer_refund_cents, client_refund_cents|
             process_refund!(freelancer_refund_cents, client_refund_cents)
           end
         end

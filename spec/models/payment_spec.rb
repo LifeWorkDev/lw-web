@@ -15,24 +15,53 @@ RSpec.describe Payment, type: :model do
   end
 
   describe "#issue_refund!" do
-    subject(:payment) { Fabricate(:succeeded_payment) }
-
-    it "issues a full refund with new_amount: 0" do
+    def issue_refund(new_amount)
       old_amount = payment.amount
+      new_amount = new_amount.to_money
+      refund_amount = old_amount.cents - new_amount.cents
 
       allow(Stripe::Refund).to receive(:create).and_return(OpenStruct.new({
         id: Faker::Crypto.md5,
-        amount: old_amount.cents,
+        amount: refund_amount,
       }))
-      payment.issue_refund!(new_amount: 0.to_money, freelancer_refund_cents: payment.pays_for.amount_cents)
-      expect(payment.reload.amount).to eq 0
-      expect(payment.platform_fee).to eq 0
+      payment.issue_refund!(new_amount: new_amount, freelancer_refund_cents: payment.pays_for.amount_cents)
+      expect(payment.reload.amount).to eq new_amount
       expect(Stripe::Refund).to have_received(:create).with({
-        amount: old_amount.cents,
+        amount: refund_amount,
         charge: payment.stripe_id,
         metadata: payment.send(:payment_metadata),
         reason: :requested_by_customer,
       }, idempotency_key: anything).once
+    end
+
+    shared_examples "full_refund" do
+      it "issues a full refund with new_amount: 0" do
+        issue_refund(0)
+        expect(payment.refunded?).to eq true
+        expect(payment.platform_fee).to eq 0
+        expect(payment.processing_fee).to eq 0
+      end
+    end
+
+    shared_examples "partial_refund" do |status|
+      it "issues a partial refund with new_amount: half of old amount" do
+        issue_refund(payment.amount / 2)
+        expect(payment.send("#{status}?")).to eq true
+      end
+    end
+
+    context "with a succeeded payment" do
+      subject(:payment) { Fabricate(:succeeded_payment) }
+
+      include_examples "full_refund"
+      include_examples "partial_refund", :partially_refunded
+    end
+
+    context "with a disbursed payment" do
+      subject(:payment) { Fabricate(:disbursed_payment) }
+
+      include_examples "full_refund"
+      include_examples "partial_refund", :disbursed
     end
   end
 end

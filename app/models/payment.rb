@@ -54,8 +54,16 @@ class Payment < ApplicationRecord
     processing_fee + (client_pays_fees? ? platform_fee : 0)
   end
 
-  memoize def base_amount
+  memoize def amount_before_fees
     amount - client_fee
+  end
+
+  def amount_before_fees=(new_amount)
+    new_amount = new_amount.to_money
+    freelancer_refund = amount_before_fees - new_amount
+    new_client_amount = amount - freelancer_refund - project.client_fee(amount: freelancer_refund, pay_method: pay_method, client_pays_fees: client_pays_fees?)
+
+    issue_refund!(new_amount: new_client_amount, freelancer_refund_cents: freelancer_refund.cents)
   end
 
   memoize def freelancer_fee
@@ -63,7 +71,7 @@ class Payment < ApplicationRecord
   end
 
   memoize def freelancer_amount
-    base_amount - freelancer_fee
+    amount_before_fees - freelancer_fee
   end
 
   def charge!
@@ -99,8 +107,16 @@ class Payment < ApplicationRecord
     client_refund_cents = (amount - new_amount).cents
     self.amount = new_amount
     self.platform_fee_cents -= project.platform_fee(amount: freelancer_refund_cents)
+    self.processing_fee_cents -= project.processing_fee(amount: freelancer_refund_cents, pay_method: pay_method)
 
-    amount.zero? ? refund!(freelancer_refund_cents) : partially_refund!(client_refund_cents, freelancer_refund_cents)
+    if amount.zero?
+      refund!(freelancer_refund_cents)
+    elsif disbursed?
+      process_refund!(freelancer_refund_cents, client_refund_cents)
+      save!
+    else
+      partially_refund!(freelancer_refund_cents, client_refund_cents)
+    end
 
     ClientMailer.with(recipient: client.primary_contact, payment: self, refund_amount_cents: client_refund_cents).payment_refunded.deliver_later
     FreelancerMailer.with(recipient: freelancer, payment: self, refund_amount_cents: freelancer_refund_cents).payment_refunded.deliver_later

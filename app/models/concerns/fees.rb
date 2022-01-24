@@ -6,9 +6,9 @@ module Fees
       amount + client_fee(amount: amount, pay_method: pay_method)
     end
 
-    def client_fee(amount: self.amount, pay_method: self.pay_method)
+    def client_fee(amount: self.amount, pay_method: self.pay_method, client_pays_fees: client_pays_fees?)
       total = 0
-      total += platform_fee(amount: amount) if client_pays_fees?
+      total += platform_fee(amount: amount) if client_pays_fees
       total + processing_fee(amount: amount, pay_method: pay_method)
     end
 
