@@ -101,7 +101,7 @@ class RetainerProject < Project
   def schedule_deposit(schedule_for = deposit_time)
     return unless active?
 
-    schedule_for = Time.current + 3.hours if schedule_for.past?
+    schedule_for = 3.hours.from_now if schedule_for.past?
     Retainer::DepositJob.set(wait_until: schedule_for).perform_later(self)
   end
 
