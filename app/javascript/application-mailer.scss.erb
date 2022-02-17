@@ -1,12 +1,15 @@
+@use 'sass:math';
+
 <% import_path = "#{Gem.loaded_specs['bootstrap-email'].full_gem_path}/core" %>
 $font-size-base: 16px;
-$headings-margin-bottom: $font-size-base / 2;
+$headings-margin-bottom: math.div($font-size-base, 2);
 $headings-ratios: (1: 2.5, 2: 2, 3: 1.25, 4: 1.5, 5: 1.25, 6: 1);
 $lead-font-size: $font-size-base * 1.25;
 $lead-font-weight: 300;
 $paragraph-margin-bottom: $font-size-base;
-@import 'fonts';
-@import 'bootstrap-variables';
+$badge-border-radius: null;
+@import 'styles/fonts';
+@import 'styles/bootstrap-variables';
 
 // Vars referencing existing bootstrap vars must
 // go in this block and have the !global flag
@@ -19,7 +22,7 @@ $paragraph-margin-bottom: $font-size-base;
 
 // Needs to be imported after the above scope block
 @import '<%= import_path %>/bootstrap-email';
-@import 'bootstrap-overrides';
+@import 'styles/bootstrap-overrides';
 
 .btn td a {
   vertical-align: text-top; // vertically align text w/in button

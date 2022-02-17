@@ -17,9 +17,11 @@ module.exports = {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
   },
-  parser: '@babel/eslint-parser',
   parserOptions: {
-    ecmaVersion: 2018,
+    ecmaFeatures: {
+      jsx: true,
+    },
+    ecmaVersion: 2020,
     sourceType: 'module',
   },
   plugins: ['sort-keys-fix'],
@@ -51,7 +53,7 @@ module.exports = {
   settings: {
     'import/resolver': {
       webpack: {
-        config: path.resolve(`config/webpack/test.js`),
+        config: path.resolve(`config/webpack/webpack.config.js`),
       },
     },
     react: { version: 'detect' },

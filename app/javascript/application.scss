@@ -3,7 +3,7 @@ $enable-responsive-font-sizes: true;
 $font-size-base: 1rem;
 
 @use 'sass:math';
-@import 'fonts';
+@import 'styles/fonts';
 
 $badge-border-radius: null;
 $input-focus-border-color: null;
@@ -25,10 +25,10 @@ $list-group-border-color: null;
   $list-group-border-color: $gray-500 !global;
 }
 
-@import 'bootstrap-variables';
+@import 'styles/bootstrap-variables';
 $body-bg: $theme-background; // Don't apply to mailer body
 @import '~bootstrap/scss/bootstrap'; // Needs to be imported after the above scope block
-@import 'bootstrap-overrides';
+@import 'styles/bootstrap-overrides';
 
 .alert {
   box-shadow: $box-shadow;
