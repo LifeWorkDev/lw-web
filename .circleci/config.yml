@@ -46,6 +46,7 @@ jobs:
             bundle -v
             node -v
             yarn -v
+            psql -V
             chromedriver -v
             google-chrome --version
           background: true
