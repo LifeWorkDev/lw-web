@@ -54,7 +54,11 @@ jobs:
 
       - run:
           name: Bundle install
-          command: bin/bundle install --path vendor/bundle --jobs 5 --retry 3 --without production development && bin/bundle clean
+          command: |
+            bin/bundle config set --local path 'vendor/bundle'
+            bin/bundle config set --local without 'production development'
+            bin/bundle install --jobs 5 --retry 3
+            bin/bundle clean
 
       - save_cache:
           name: Store bundle cache
