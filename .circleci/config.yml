@@ -11,6 +11,7 @@ jobs:
           PGUSER: lifework
           NODE_ENV: test
           RAILS_ENV: test
+          PSQL_PAGER: ''
       - image: cimg/postgres:13.5
         environment:
           POSTGRES_USER: lifework
@@ -31,8 +32,6 @@ jobs:
           name: Setup database deps
           command: |
             cp config/database.yml.example config/database.yml
-            sudo apt-get update
-            sudo apt-get install -y postgresql-client-common postgresql-client
           background: true
 
       - run:
@@ -42,6 +41,7 @@ jobs:
       - run:
           name: Log versions
           command: |
+            lsb_release -d
             ruby -v
             bundle -v
             node -v
