@@ -17,7 +17,8 @@ jobs:
           POSTGRES_PASSWORD: ''
 
     steps:
-      - browser-tools/install-browser-tools
+      - browser-tools/install-chrome
+      - browser-tools/install-chromedriver
 
       - checkout
 
