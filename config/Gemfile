@@ -77,7 +77,6 @@ group :development do
   install_if -> { RUBY_PLATFORM =~ /linux/ } do
     gem "libnotify" # System notifications for Linux
   end
-  gem "listen", ">= 3.0.5", "< 3.2"
   gem "partially_useful" # Add html comments around partials
   gem "rack-toolbar", github: "swrobel/rack-toolbar", branch: "rails-pages" # Insert arbitrary code into Rails pages
   install_if -> { RUBY_PLATFORM =~ /darwin/ } do

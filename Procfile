@@ -1,2 +1,2 @@
-web: bin/rails server -u puma -p $PORT -e $RAILS_ENV
+web: RUBY_YJIT_ENABLE=1 bin/rails server -p $PORT
 release: bin/rails db:migrate
