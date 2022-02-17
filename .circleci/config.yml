@@ -1,20 +1,24 @@
-version: 2
+version: 2.1
+orbs:
+  browser-tools: circleci/browser-tools@volatile
 jobs:
   build:
     working_directory: ~/lw-web
     docker:
-      - image: circleci/ruby:2.7-buster-node-browsers
+      - image: cimg/ruby:3.1.0-browsers
         environment:
           PGHOST: 127.0.0.1
           PGUSER: lifework
           NODE_ENV: test
           RAILS_ENV: test
-      - image: circleci/postgres:12-alpine-ram
+      - image: cimg/postgres:13.5
         environment:
           POSTGRES_USER: lifework
           POSTGRES_PASSWORD: ''
 
     steps:
+      - browser-tools/install-browser-tools
+
       - checkout
 
       - run:
