@@ -1,4 +1,14 @@
 GIT
+  remote: https://github.com/envato/double_entry.git
+  revision: 19973a5ab980b4d31dbdfae07dda491f6142cb7f
+  specs:
+    double_entry (2.0.0.beta5)
+      activerecord (>= 3.2.0)
+      activesupport (>= 3.2.0)
+      money (>= 6.0.0)
+      railties (>= 3.2.0)
+
+GIT
   remote: https://github.com/statianzo/que-web.git
   revision: d663559b46f0afa9215a1cb8a0e2418197b66342
   specs:
@@ -16,16 +26,6 @@ GIT
       nokogiri (~> 1.6)
       premailer-rails (~> 1.9)
       rails (>= 3)
-
-GIT
-  remote: https://github.com/swrobel/double_entry.git
-  revision: 194ec1948e95d80a35eff01d2576d281d59633a0
-  specs:
-    double_entry (2.0.0.beta4)
-      activerecord (>= 3.2.0)
-      activesupport (>= 3.2.0)
-      money (>= 6.0.0)
-      railties (>= 3.2.0)
 
 GIT
   remote: https://github.com/swrobel/friendly_id.git
