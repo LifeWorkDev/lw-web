@@ -23,7 +23,7 @@ Fabricator(:milestone_project_with_milestones, from: :milestone_project) do
       milestone = Fabricate.build(:milestone, date: date, project: project)
       project.milestones << milestone
     end
-    project.amount ||= project.milestones.sum { |m| m.amount || 0 }
+    project.amount ||= project.milestones.sum(0) { |m| m.amount || 0 }
   end
 end
 
