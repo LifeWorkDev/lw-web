@@ -5,7 +5,7 @@ jobs:
   build:
     working_directory: ~/lw-web
     docker:
-      - image: cimg/ruby:3.1.0-browsers
+      - image: cimg/ruby:2.7-browsers
         environment:
           PGHOST: 127.0.0.1
           PGUSER: lifework

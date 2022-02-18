@@ -30,7 +30,6 @@ gem "lograge" # one-line logs
 gem "memery" # Memoization
 gem "money-rails"
 gem "more_possessive" # Call .possessive on a string
-gem "net-smtp", require: false
 gem "nilify_blanks", github: "swrobel/nilify_blanks"
 gem "oj" # Faster json parsing/generation library
 gem "pg", ">= 0.18", "< 2.0"
@@ -38,7 +37,7 @@ gem "pg_search" # Postgres full-text search support
 gem "plaid", "~> 13.2" # Easy bank account linking
 gem "pretender" # Impersonate users
 gem "puma"
-gem "que", "~> 1.0.0.beta4" # Background job processor
+gem "que", "~> 1.0.0.beta4" # Background jobs - consider moving to good_job as it isn't actively maintained and lacks Ruby 3 compatibility
 gem "que-web", github: "statianzo/que-web"
 gem "react-rails"
 gem "redcarpet" # Markdown parser
