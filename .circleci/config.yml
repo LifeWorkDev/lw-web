@@ -77,10 +77,6 @@ jobs:
           command: bin/rubocop --parallel --config=config/rubocop_strict.yml
 
       - run:
-          name: Zeitwerk check
-          command: bin/rake zeitwerk:check
-
-      - run:
           name: Slim Lint
           command: bin/slim-lint app/views
 
