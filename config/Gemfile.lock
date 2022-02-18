@@ -9,6 +9,57 @@ GIT
       railties (>= 3.2.0)
 
 GIT
+  remote: https://github.com/rspec/rspec-core.git
+  revision: bfd13aa29471713154c969931a85c8695fef3a8c
+  specs:
+    rspec-core (3.12.0.pre)
+      rspec-support (= 3.12.0.pre)
+
+GIT
+  remote: https://github.com/rspec/rspec-expectations.git
+  revision: a022c106b5a9b82a7665e06284b1ee5a7dc004b3
+  specs:
+    rspec-expectations (3.12.0.pre)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (= 3.12.0.pre)
+
+GIT
+  remote: https://github.com/rspec/rspec-mocks.git
+  revision: 7823b0b542456cfd6193293e3f19e01b7eb934ee
+  specs:
+    rspec-mocks (3.12.0.pre)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (= 3.12.0.pre)
+
+GIT
+  remote: https://github.com/rspec/rspec-rails.git
+  revision: b4f58f44170526edd1f3d25bbb918e2fcdaae7a8
+  specs:
+    rspec-rails (6.0.0.pre)
+      actionpack (>= 5.2)
+      activesupport (>= 5.2)
+      railties (>= 5.2)
+      rspec-core (= 3.12.0.pre)
+      rspec-expectations (= 3.12.0.pre)
+      rspec-mocks (= 3.12.0.pre)
+      rspec-support (= 3.12.0.pre)
+
+GIT
+  remote: https://github.com/rspec/rspec-support.git
+  revision: 623608b4f49c063fca2616cb3e35ae62ea5fe5cf
+  specs:
+    rspec-support (3.12.0.pre)
+
+GIT
+  remote: https://github.com/rspec/rspec.git
+  revision: f4393df94d8ddde9a0b68ac29b93d09b85ef9025
+  specs:
+    rspec (3.12.0.pre)
+      rspec-core (= 3.12.0.pre)
+      rspec-expectations (= 3.12.0.pre)
+      rspec-mocks (= 3.12.0.pre)
+
+GIT
   remote: https://github.com/statianzo/que-web.git
   revision: d663559b46f0afa9215a1cb8a0e2418197b66342
   specs:
@@ -155,7 +206,7 @@ GEM
     ast (2.4.2)
     awesome_print (1.9.2)
     aws-eventstream (1.2.0)
-    aws-partitions (1.554.0)
+    aws-partitions (1.555.0)
     aws-sdk-core (3.126.2)
       aws-eventstream (~> 1, >= 1.0.2)
       aws-partitions (~> 1, >= 1.525.0)
@@ -231,7 +282,7 @@ GEM
     fabrication (2.27.0)
     faker (2.19.0)
       i18n (>= 1.6, < 2)
-    faraday (1.9.3)
+    faraday (1.10.0)
       faraday-em_http (~> 1.0)
       faraday-em_synchrony (~> 1.0)
       faraday-excon (~> 1.1)
@@ -506,29 +557,8 @@ GEM
     rexml (3.2.5)
     route_downcaser (1.2.3)
       activesupport (>= 3.2)
-    rspec (3.11.0)
-      rspec-core (~> 3.11.0)
-      rspec-expectations (~> 3.11.0)
-      rspec-mocks (~> 3.11.0)
-    rspec-core (3.11.0)
-      rspec-support (~> 3.11.0)
-    rspec-expectations (3.11.0)
-      diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.11.0)
     rspec-instafail (1.0.0)
       rspec
-    rspec-mocks (3.11.0)
-      diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.11.0)
-    rspec-rails (5.1.0)
-      actionpack (>= 5.2)
-      activesupport (>= 5.2)
-      railties (>= 5.2)
-      rspec-core (~> 3.10)
-      rspec-expectations (~> 3.10)
-      rspec-mocks (~> 3.10)
-      rspec-support (~> 3.10)
-    rspec-support (3.11.0)
     rspec_junit_formatter (0.5.1)
       rspec-core (>= 2, < 4, != 2.12.0)
     rubocop (1.25.1)
@@ -732,8 +762,13 @@ DEPENDENCIES
   referral
   require_all
   route_downcaser
+  rspec!
+  rspec-core!
+  rspec-expectations!
   rspec-instafail
-  rspec-rails
+  rspec-mocks!
+  rspec-rails!
+  rspec-support!
   rspec_junit_formatter
   rubocop!
   rubocop-daemon!

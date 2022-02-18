@@ -62,7 +62,9 @@ group :development, :test do
   gem "faker" # Fake data generation
   gem "pgreset" # Automatically disconnect active pg clients when dropping database
   gem "referral", require: false # Finds definitions & references in Ruby
-  gem "rspec-rails"
+  %w[rspec rspec-core rspec-expectations rspec-mocks rspec-support rspec-rails].each do |lib|
+    gem lib, github: "rspec/#{lib}", require: false
+  end
 end
 
 group :development do
