@@ -16,6 +16,7 @@ jobs:
         environment:
           POSTGRES_USER: lifework
           POSTGRES_PASSWORD: ''
+    resource_class: large
 
     steps:
       - browser-tools/install-chrome
