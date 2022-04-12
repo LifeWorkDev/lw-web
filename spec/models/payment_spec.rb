@@ -37,7 +37,7 @@ RSpec.describe Payment, type: :model do
     shared_examples "full_refund" do
       it "issues a full refund with new_amount: 0" do
         issue_refund(0)
-        expect(payment.refunded?).to eq true
+        expect(payment.refunded?).to be true
         expect(payment.platform_fee).to eq 0
         expect(payment.processing_fee).to eq 0
       end
@@ -46,7 +46,7 @@ RSpec.describe Payment, type: :model do
     shared_examples "partial_refund" do |status|
       it "issues a partial refund with new_amount: half of old amount" do
         issue_refund(payment.amount / 2)
-        expect(payment.send("#{status}?")).to eq true
+        expect(payment.send("#{status}?")).to be true
       end
     end
 

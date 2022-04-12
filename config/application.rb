@@ -101,10 +101,10 @@ module LifeWork
         def get_stripe_obj
           return nil if metadata.blank?
           @stripe_obj ||= case code
-                          when :disbursement
-                            Stripe::Transfer.retrieve(metadata["transfer_id"])
-                          when :refund
-                            Stripe::Refund.retrieve(metadata["refund_id"])
+          when :disbursement
+            Stripe::Transfer.retrieve(metadata["transfer_id"])
+          when :refund
+            Stripe::Refund.retrieve(metadata["refund_id"])
           end
         end
       end

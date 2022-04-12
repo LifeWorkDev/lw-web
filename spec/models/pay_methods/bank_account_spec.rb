@@ -6,11 +6,11 @@ RSpec.describe PayMethods::BankAccount, type: :model do
   let(:amount) { Money.new(rand(10_000..1_000_00)) }
 
   describe "#bank_account?" do
-    it { expect(bank_account.bank_account?).to eq true }
+    it { expect(bank_account.bank_account?).to be true }
   end
 
   describe "#card?" do
-    it { expect(bank_account.card?).to eq false }
+    it { expect(bank_account.card?).to be false }
   end
 
   describe "#to_s" do

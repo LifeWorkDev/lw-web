@@ -14,7 +14,7 @@ RSpec.describe User, type: :model do
 
     it "does not override a provided password" do
       password = Faker::Internet.password
-      expect(Fabricate(:user, password: password).valid_password?(password)).to eq true
+      expect(Fabricate(:user, password: password).valid_password?(password)).to be true
     end
   end
 

@@ -17,24 +17,10 @@ CREATE EXTENSION IF NOT EXISTS citext WITH SCHEMA public;
 
 
 --
--- Name: EXTENSION citext; Type: COMMENT; Schema: -; Owner: -
---
-
-COMMENT ON EXTENSION citext IS 'data type for case-insensitive character strings';
-
-
---
 -- Name: fuzzystrmatch; Type: EXTENSION; Schema: -; Owner: -
 --
 
 CREATE EXTENSION IF NOT EXISTS fuzzystrmatch WITH SCHEMA public;
-
-
---
--- Name: EXTENSION fuzzystrmatch; Type: COMMENT; Schema: -; Owner: -
---
-
-COMMENT ON EXTENSION fuzzystrmatch IS 'determine similarities and distance between strings';
 
 
 --
@@ -45,13 +31,6 @@ CREATE EXTENSION IF NOT EXISTS hstore WITH SCHEMA public;
 
 
 --
--- Name: EXTENSION hstore; Type: COMMENT; Schema: -; Owner: -
---
-
-COMMENT ON EXTENSION hstore IS 'data type for storing sets of (key, value) pairs';
-
-
---
 -- Name: pg_stat_statements; Type: EXTENSION; Schema: -; Owner: -
 --
 
@@ -59,24 +38,10 @@ CREATE EXTENSION IF NOT EXISTS pg_stat_statements WITH SCHEMA public;
 
 
 --
--- Name: EXTENSION pg_stat_statements; Type: COMMENT; Schema: -; Owner: -
---
-
-COMMENT ON EXTENSION pg_stat_statements IS 'track execution statistics of all SQL statements executed';
-
-
---
 -- Name: pgcrypto; Type: EXTENSION; Schema: -; Owner: -
 --
 
 CREATE EXTENSION IF NOT EXISTS pgcrypto WITH SCHEMA public;
-
-
---
--- Name: EXTENSION pgcrypto; Type: COMMENT; Schema: -; Owner: -
---
-
-COMMENT ON EXTENSION pgcrypto IS 'cryptographic functions';
 
 
 --
@@ -405,6 +370,7 @@ CREATE TABLE public.que_jobs (
     expired_at timestamp with time zone,
     args jsonb DEFAULT '[]'::jsonb NOT NULL,
     data jsonb DEFAULT '{}'::jsonb NOT NULL,
+    job_schema_version integer DEFAULT 1,
     CONSTRAINT error_length CHECK (((char_length(last_error_message) <= 500) AND (char_length(last_error_backtrace) <= 10000))),
     CONSTRAINT job_class_length CHECK ((char_length(
 CASE job_class
@@ -416,13 +382,6 @@ END) <= 200)),
     CONSTRAINT valid_data CHECK (((jsonb_typeof(data) = 'object'::text) AND ((NOT (data ? 'tags'::text)) OR ((jsonb_typeof((data -> 'tags'::text)) = 'array'::text) AND (jsonb_array_length((data -> 'tags'::text)) <= 5) AND public.que_validate_tags((data -> 'tags'::text))))))
 )
 WITH (fillfactor='90');
-
-
---
--- Name: TABLE que_jobs; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON TABLE public.que_jobs IS '4';
 
 
 --
@@ -472,7 +431,10 @@ CREATE FUNCTION public.que_job_notify() RETURNS trigger
         FROM (
           SELECT *
           FROM public.que_lockers ql, generate_series(1, ql.worker_count) AS id
-          WHERE listening AND queues @> ARRAY[NEW.queue]
+          WHERE
+            listening AND
+            queues @> ARRAY[NEW.queue] AND
+            ql.job_schema_version = NEW.job_schema_version
           ORDER BY md5(pid::text || id::text)
         ) t1
       ) t2
@@ -1130,7 +1092,8 @@ CREATE TABLE public.que_finished (
     finished_at timestamp with time zone,
     expired_at timestamp with time zone,
     args jsonb,
-    data jsonb
+    data jsonb,
+    job_schema_version integer DEFAULT 1
 );
 
 
@@ -1165,6 +1128,7 @@ CREATE UNLOGGED TABLE public.que_lockers (
     ruby_hostname text NOT NULL,
     queues text[] NOT NULL,
     listening boolean NOT NULL,
+    job_schema_version integer DEFAULT 1,
     CONSTRAINT valid_queues CHECK (((array_ndims(queues) = 1) AND (array_length(queues, 1) IS NOT NULL))),
     CONSTRAINT valid_worker_priorities CHECK (((array_ndims(worker_priorities) = 1) AND (array_length(worker_priorities, 1) IS NOT NULL)))
 );
@@ -1855,6 +1819,13 @@ CREATE INDEX que_poll_idx ON public.que_jobs USING btree (queue, priority, run_a
 
 
 --
+-- Name: que_poll_idx_with_job_schema_version; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX que_poll_idx_with_job_schema_version ON public.que_jobs USING btree (job_schema_version, queue, priority, run_at, id) WHERE ((finished_at IS NULL) AND (expired_at IS NULL));
+
+
+--
 -- Name: comments logidze_on_comments; Type: TRIGGER; Schema: public; Owner: -
 --
 
@@ -2012,7 +1983,6 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190806184610'),
 ('20190807023127'),
 ('20190907180340'),
-('20190910230917'),
 ('20190917130356'),
 ('20190917130357'),
 ('20191004010353'),
@@ -2046,6 +2016,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210420013002'),
 ('20211106041201'),
 ('20211106215941'),
-('20211106221238');
+('20211106221238'),
+('20220412223526');
 
 

@@ -124,6 +124,9 @@ Rails/DynamicFindBy:
 Rails/EnvironmentVariableAccess:
   AllowReads: true
 
+Rails/I18nLocaleTexts:
+  Enabled: false
+
 Rails/LexicallyScopedActionFilter:
   Enabled: false
 
