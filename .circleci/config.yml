@@ -26,7 +26,7 @@ jobs:
 
       - run:
           name: Yarn install
-          command: yarn install && touch .yarn-finished
+          command: yarn install --frozen-lockfile && touch .yarn-finished
           background: true
 
       - run:
