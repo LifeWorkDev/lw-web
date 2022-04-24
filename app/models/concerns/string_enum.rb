@@ -20,7 +20,7 @@ module StringEnum
       definitions[field] = values.index_with(&:to_s)
 
       # Define the enum using Rails' built-in enum method
-      enum(definitions)
+      enum(**definitions)
 
       # We need this to be a string for the rest of the steps anyway
       field = field.to_s
