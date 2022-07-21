@@ -12,7 +12,7 @@ jobs:
           NODE_ENV: test
           RAILS_ENV: test
           PSQL_PAGER: ''
-      - image: cimg/postgres:13.5
+      - image: cimg/postgres:13.7
         environment:
           POSTGRES_USER: lifework
           POSTGRES_PASSWORD: ''
