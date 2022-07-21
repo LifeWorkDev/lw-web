@@ -38,19 +38,19 @@ gem "plaid", "~> 13.2" # Easy bank account linking
 gem "pretender" # Impersonate users
 gem "puma"
 gem "que", "~> 1.4.0" # Background jobs
-gem "que-web", github: "statianzo/que-web"
+gem "que-web"
 gem "react-rails"
 gem "redcarpet" # Markdown parser
 gem "route_downcaser" # Make routes case-insensitive
 gem "safely_block" # Move on from exceptions w/ silent reporting to tracking service
 gem "sassc-rails"
-gem "shakapacker", "6.2.1" # Webpack integration (formerly webpacker)
+gem "shakapacker", "6.5.0" # Webpack integration (formerly webpacker)
 gem "slim-rails" # Template language, lightweight alternative to erb/haml
 gem "sprockets", "< 4.0", require: false
 gem "stripe"
 gem "strong_migrations" # complains about migration worst-practices
 gem "symbol-fstring", "~> 1.0.2", require: "fstring/all" # Improve performance of Symbol#to_s
-gem "trestle"
+gem "trestle", "0.9.5" # 0.9.6 is causing a conflict with sti_preload
 gem "trestle-search"
 gem "turbolinks", "~> 5.2"
 
@@ -61,9 +61,7 @@ group :development, :test do
   gem "faker" # Fake data generation
   gem "pgreset" # Automatically disconnect active pg clients when dropping database
   gem "referral", require: false # Finds definitions & references in Ruby
-  %w[rspec rspec-core rspec-expectations rspec-mocks rspec-support rspec-rails].each do |lib|
-    gem lib, github: "rspec/#{lib}", require: false
-  end
+  gem "rspec-rails", "~> 6.0.0.rc1"
 end
 
 group :development do
