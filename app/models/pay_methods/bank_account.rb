@@ -79,7 +79,7 @@ private
         email: org.primary_contact&.email,
         source: stripe_token,
         metadata: {
-          'Org ID': org.id,
+          "Org ID": org.id,
         },
       )
       self.stripe_id = customer.default_source

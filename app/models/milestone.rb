@@ -89,7 +89,7 @@ class Milestone < ApplicationRecord
   end
 
   memoize def stripe_metadata
-    {'Milestone ID': id}
+    {"Milestone ID": id}
   end
 
 private

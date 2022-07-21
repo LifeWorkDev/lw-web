@@ -106,6 +106,6 @@ class RetainerProject < Project
   end
 
   memoize def stripe_metadata
-    {'Retainer Project ID': id}
+    {"Retainer Project ID": id}
   end
 end

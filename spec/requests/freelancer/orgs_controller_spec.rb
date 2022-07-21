@@ -23,7 +23,7 @@ RSpec.describe Freelancer::OrgsController, type: :request do
     let(:new_user) { User.last }
     let(:project_status) { Project::PENDING_STATES.sample.to_s }
     let(:project_type) { Project.subclasses.sample.to_s }
-    let(:projects_attributes) { {'0': {name: Faker::Commerce.product_name, status: project_status, type: project_type}} }
+    let(:projects_attributes) { {"0": {name: Faker::Commerce.product_name, status: project_status, type: project_type}} }
     let(:params) do
       {
         org: org_attributes.merge(
@@ -34,7 +34,7 @@ RSpec.describe Freelancer::OrgsController, type: :request do
     end
 
     context "with new user" do
-      let(:users_attributes) { {'0': Fabricate.attributes_for(:user)} }
+      let(:users_attributes) { {"0": Fabricate.attributes_for(:user)} }
 
       it "creates org, project, user" do
         expect {
@@ -53,7 +53,7 @@ RSpec.describe Freelancer::OrgsController, type: :request do
 
     context "with existing user" do
       let(:org) { assigns(:org) }
-      let(:users_attributes) { {'0': {email: freelancer.email}} }
+      let(:users_attributes) { {"0": {email: freelancer.email}} }
 
       it "returns errors" do
         expect {

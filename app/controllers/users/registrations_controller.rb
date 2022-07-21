@@ -4,7 +4,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     super do |resource|
       if resource.errors[:email].first == "has already been taken"
         set_flash_message! :alert, :existing_user
-        redirect_to(new_user_session_path('user[email]': resource.email)) && return
+        redirect_to(new_user_session_path("user[email]": resource.email)) && return
       end
     end
   end

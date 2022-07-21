@@ -59,7 +59,7 @@ private
         email: org.primary_contact&.email,
         payment_method: stripe_id,
         metadata: {
-          'Org ID': org.id,
+          "Org ID": org.id,
         },
       )
       if org.persisted?

@@ -254,7 +254,7 @@ private
 
   def payment_metadata
     pays_for.stripe_metadata.merge({
-      'Payment ID': id,
+      "Payment ID": id,
     })
   end
 
@@ -281,8 +281,8 @@ private
       reversal = Stripe::Transfer.create_reversal(transfer_id,
                                                   {amount: reversal_amount_cents,
                                                    metadata: payment_metadata.merge({
-                                                     'Refund ID': stripe_refund.id,
-                                                     'Refund cents': stripe_refund.amount,
+                                                     "Refund ID": stripe_refund.id,
+                                                     "Refund cents": stripe_refund.amount,
                                                    })},
                                                   idempotency_key: "reversal-#{reversal_amount_cents}-of-transfer-#{transfer_id}")
 

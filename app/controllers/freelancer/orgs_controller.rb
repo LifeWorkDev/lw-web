@@ -26,10 +26,10 @@ class Freelancer::OrgsController < AuthenticatedController
   # POST /orgs
   def create
     @org = Org.new(org_params.to_h.deep_merge(
-      projects_attributes: {'0': {
+      projects_attributes: {"0": {
         user_id: current_user.id,
       }},
-      users_attributes: {'0': {
+      users_attributes: {"0": {
         invited_by: current_user,
       }},
     ))
