@@ -36,7 +36,7 @@ Trestle.resource(:payments) do
       auto_field :amount
       auto_field :processing_fee
       if record.paid? && record.project?
-        number_field :amount_before_fees, prepend: "$", min: 1, step: 0.01, help: '<span class="text-danger">Updating the amount of a payment will immediately issue a refund for the difference</span>'.html_safe
+        number_field :amount_before_fees, prepend: "$", min: 0, step: 0.01, help: '<span class="text-danger">Updating the amount of a payment will immediately issue a refund for the difference</span>'.html_safe
       else
         auto_field :amount_before_fees
       end

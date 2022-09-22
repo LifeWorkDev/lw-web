@@ -36,7 +36,7 @@ Trestle.resource(:milestones) do
       text_field :description
       if record.pending? || record.deposited? || record.paid?
         help_text = record.pending? ? nil : '<span class="text-danger">Updating the amount of a deposited milestone will immediately issue a refund for the difference</span>'.html_safe
-        number_field :amount, prepend: "$", min: 1, step: 0.01, help: help_text
+        number_field :amount, prepend: "$", min: 0, step: 0.01, help: help_text
       else
         auto_field :amount
       end
