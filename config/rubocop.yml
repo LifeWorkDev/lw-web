@@ -182,6 +182,9 @@ RSpec/MultipleExpectations:
 RSpec/NestedGroups:
   Enabled: false
 
+RSpec/NoExpectationExample:
+  Enabled: false # Not working w/ system specs
+
 RSpec/SubjectStub:
   Enabled: false
 

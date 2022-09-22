@@ -92,7 +92,7 @@ RSpec.describe "Freelancer views", type: :system do
     def retainer_project_expectations
       expect(new_project.type).to eq "RetainerProject"
       fill_in "retainer_project[amount]", with: amount
-      find("#retainer_project_start_date_picker").click
+      find_by_id("retainer_project_start_date_picker").click
       choose_date
       expect {
         click_continue
