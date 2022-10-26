@@ -95,7 +95,7 @@ group :test do
   gem "require_all" # Easily require entire directories
   gem "rspec-instafail", require: false
   gem "rspec_junit_formatter" # For CircleCI enhanced test output
-  gem "selenium-webdriver"
+  gem "selenium-webdriver", "4.2.1"
   gem "shoulda-matchers"
   gem "simplecov", require: false
   gem "stripe-ruby-mock", require: "stripe_mock", github: "swrobel/stripe-ruby-mock"
