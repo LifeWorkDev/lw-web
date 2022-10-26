@@ -33,7 +33,7 @@ class Org < ApplicationRecord
   end
 
   def primary_contact
-    users.last
+    users.not_disabled.last || users.last
   end
 
   def primary_pay_method
