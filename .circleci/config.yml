@@ -75,7 +75,7 @@ jobs:
 
       - run:
           name: Rubocop
-          command: bin/rubocop --parallel --config=config/rubocop_strict.yml
+          command: bin/rubocop --disable-pending-cops --parallel --config=config/rubocop_strict.yml
 
       - run:
           name: Slim Lint
