@@ -25,7 +25,10 @@ module Status
     scope :not_disabled, -> { where.not(status: :disabled) }
 
     memoize def status_class
-      pending? ? :warning : :success
+      if pending? then :warning
+      elsif active? then :success
+      elsif disabled? then :danger
+      end
     end
   end
 end
