@@ -64,12 +64,12 @@ Trestle.resource(:users) do
     end
 
     tab :projects, badge: user.projects_collection.size do
-      table ProjectsAdmin.table, collection: user.projects_collection.order(:id)
+      table ProjectsAdmin.table, collection: user.projects_collection.order(id: :desc)
       concat admin_link_to("New Project", admin: :projects, action: :new, params: {user_id: user.id}, class: "btn btn-success mt-3")
     end
 
     tab :comments, badge: user.comments.size do
-      table CommentsAdmin.table, collection: user.comments.order(:id)
+      table CommentsAdmin.table, collection: user.comments.order(id: :desc)
     end
   end
 
