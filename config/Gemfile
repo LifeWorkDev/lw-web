@@ -14,7 +14,7 @@ gem "bugsnag" # Exception tracking
 gem "business", "~> 1.18.0" # Business day calculations. TODO: Replace eventually as US ACH calendar valid until EOY 2023
 gem "devise" # Authentication
 gem "devise_invitable"
-gem "double_entry", github: "envato/double_entry"
+gem "double_entry", github: "envato/double_entry", ref: "144e824"
 gem "email_reply_parser"
 gem "errbase" # Generic exception reporting service interface
 gem "fast_blank" # Much faster version of #blank?

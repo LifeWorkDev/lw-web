@@ -1,12 +1,13 @@
 GIT
   remote: https://github.com/envato/double_entry.git
-  revision: b05730aa12e57fbf65eff571d99fb183231cc52e
+  revision: 144e82456f934a138c011289f23962d97e1d6de3
+  ref: 144e824
   specs:
     double_entry (2.0.0.beta5)
-      activerecord (>= 3.2.0)
-      activesupport (>= 3.2.0)
+      activerecord (>= 6.0.0)
+      activesupport (>= 6.0.0)
       money (>= 6.0.0)
-      railties (>= 3.2.0)
+      railties (>= 6.0.0)
 
 GIT
   remote: https://github.com/swrobel/bootstrap-email.git
@@ -642,11 +643,11 @@ GEM
       activemodel (>= 6.0.0)
       bindex (>= 0.4.0)
       railties (>= 6.0.0)
-    webdrivers (5.2.0)
+    webdrivers (5.3.1)
       nokogiri (~> 1.6)
       rubyzip (>= 1.3.0)
-      selenium-webdriver (~> 4.0)
-    websocket (1.2.9)
+      selenium-webdriver (~> 4.0, < 4.11)
+    websocket (1.2.10)
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
