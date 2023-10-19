@@ -72,7 +72,6 @@ Rails.application.routes.draw do
     post :login, to: "users/sessions#create", as: :user_session
     delete :logout, to: "users/sessions#destroy", as: :destroy_user_session
     get :logout, to: "users/sessions#destroy"
-    get :sign_up, to: "users/registrations#new", as: :new_user_registration
   end
   devise_for :users,
              skip: [:sessions],
@@ -99,7 +98,7 @@ Rails.application.routes.draw do
   get "(.well-known)/apple-app-site-association", to: proc { [404, {}, [""]] }
 
   # Redirects
-  %w[signup users].each { |path| get path, to: redirect("/sign_up") }
+  ["signup", "sign_up", "users", "users/sign_up"].each { |path| get path, to: redirect("/login") }
   get "users/password", to: redirect("/passwords/new")
 
   root to: "authenticated#home"

@@ -8,36 +8,9 @@ RSpec.describe "Freelancer views" do
     let(:user_time_zone) { ActiveSupport::TimeZone.basic_us_zone_names.sample }
     let(:user_opt_in) { [true, false].sample }
 
-    it "renders signup form" do
+    it "renders login form" do
       verify_visit "/"
-      expect(page).to have_current_path "/sign_up"
-    end
-
-    it "redirects after sign up to user edit, then onboarding video" do
-      verify_visit "/sign_up"
-      fill_in "user[name]", with: user_name
-      fill_in "user[email]", with: user_email
-      fill_in "user[password]", with: Faker::Internet.password(special_characters: true)
-      find(:checkbox, "user[email_opt_in]").set(user_opt_in)
-      expect {
-        click_sign_up "/f/user/edit"
-      }.to change { User.count }.by(1)
-      expect(user.name).to eq user_name
-      expect(user.email).to eq user_email
-      expect(user.email_opt_in).to eq(user_opt_in)
-      select user_time_zone, from: "user[time_zone]"
-      fill_in "user[how_did_you_hear_about_us]", with: Faker::Lorem.sentence
-      WORK_CATEGORIES.sample(rand(1..WORK_CATEGORIES.size)).each do |category|
-        check category, allow_label_click: true
-      end
-      choose User::WORK_TYPES.sample, allow_label_click: true
-      expect {
-        click_continue
-      }.to change { user.reload.time_zone }.to(user_time_zone) &
-        change { user.how_did_you_hear_about_us } &
-        change { user.work_category } &
-        change { user.work_type }
-      expect(page).to have_current_path "/f/content/walkthrough"
+      expect(page).to have_current_path "/login"
     end
   end
 
