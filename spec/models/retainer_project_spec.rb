@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe RetainerProject, type: :model do
+RSpec.describe RetainerProject do
   subject(:project) { Fabricate(:active_retainer_project, status: :client_invited) }
 
   describe "state machine" do

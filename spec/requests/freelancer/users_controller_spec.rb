@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Freelancer::UsersController, type: :request do
+RSpec.describe Freelancer::UsersController do
   let(:user) { Fabricate(:user) }
 
   before { sign_in user }

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe PayMethod, type: :model do
+RSpec.describe PayMethod do
   let(:org) { Fabricate(:named_org) }
 
   it "activates the org" do

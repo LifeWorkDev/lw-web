@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Milestone, type: :model do
+RSpec.describe Milestone do
   subject(:milestone) { Fabricate(:milestone) }
 
   describe "#next" do

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe PayMethods::BankAccount, type: :model do
+RSpec.describe PayMethods::BankAccount do
   subject(:bank_account) { Fabricate(:bank_account_pay_method) }
 
   let(:amount) { Money.new(rand(10_000..1_000_00)) }

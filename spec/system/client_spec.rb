@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Client views", type: :system do
+RSpec.describe "Client views" do
   context "when unauth'd" do
     context "when invited" do
       let(:client) { project.client }

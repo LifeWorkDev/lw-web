@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe MilestoneProject, type: :model do
+RSpec.describe MilestoneProject do
   subject(:project) { Fabricate(:milestone_project) }
 
   describe "accepts_nested_attributes_for :milestones" do

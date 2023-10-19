@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Freelancer views", type: :system do
+RSpec.describe "Freelancer views" do
   context "when unauth'd" do
     let(:user) { User.last }
     let(:user_name) { Faker::Name.name }

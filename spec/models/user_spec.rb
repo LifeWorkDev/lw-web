@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe User, type: :model do
+RSpec.describe User do
   subject(:user) { Fabricate(:user) }
 
   describe "defaults" do

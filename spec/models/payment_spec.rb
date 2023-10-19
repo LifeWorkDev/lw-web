@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Payment, type: :model do
+RSpec.describe Payment do
   subject(:payment) { Fabricate(:payment) }
 
   it { is_expected.to monetize(:amount).with_model_currency(:currency) }

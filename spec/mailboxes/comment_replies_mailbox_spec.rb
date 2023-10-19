@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe CommentRepliesMailbox, type: :mailbox do
+RSpec.describe CommentRepliesMailbox do
   let(:user) { Fabricate(:user) }
   let(:milestone) { Fabricate(:milestone) }
   let(:project) { Fabricate(:retainer_project) }

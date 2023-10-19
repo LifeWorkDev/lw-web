@@ -11,13 +11,13 @@ class ProjectsController < AuthenticatedController
     redirect_to project_path(@project)
   end
 
-  # GET /projects/1/edit
-  def edit
-  end
-
   # GET /projects/new
   def new
     @project = current_entity.projects.build
+  end
+
+  # GET /projects/1/edit
+  def edit
   end
 
   # POST /projects
